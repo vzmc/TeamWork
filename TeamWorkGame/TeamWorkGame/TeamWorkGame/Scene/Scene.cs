@@ -9,7 +9,7 @@ namespace TeamWorkGame.Scene
     {
         Title,
         TestPlay,
-        GamePlay,
+        PlayScene,
         Ending
     }
 }

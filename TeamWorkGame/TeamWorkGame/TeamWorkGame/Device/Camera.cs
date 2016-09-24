@@ -48,8 +48,8 @@ namespace TeamWorkGame.Device
         /// <param name="aimPos">カメラ注視位置（中心位置）</param>
         public Camera(Vector2 aimPos, bool isLimitView = false)
         {
-            ViewWidth = Screen.Width;
-            ViewHeight = Screen.Height;
+            ViewWidth = Parameter.ScreenWidth;
+            ViewHeight = Parameter.ScreenHeight;
             map = MapManager.GetNowMapData();
             IsLimitView = isLimitView;
             SetData(aimPos);
@@ -107,5 +107,4 @@ namespace TeamWorkGame.Device
             IsLimitView = flag;
         }
     }
-
 }

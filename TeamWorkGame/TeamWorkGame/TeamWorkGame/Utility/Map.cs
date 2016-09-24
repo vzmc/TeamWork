@@ -129,9 +129,9 @@ namespace TeamWorkGame.Utility
         /// <param name="blockIndex">その位置のBlockIndexを返す</param>
         /// <param name="data">指定の地形種類の配列</param>
         /// <returns></returns>
-        public bool IsInBlock(Vector2 pos, out BlockIndex blockIndex, int[] data)
+        public bool IsInBlock(Vector2 pos, ref Vector2 blockPos, int[] data)
         {
-            blockIndex = GetBlockIndex(pos);
+            BlockIndex blockIndex = GetBlockIndex(pos);
             bool flag = false;
 
             if (blockIndex.X == -1 || blockIndex.Y == -1)
@@ -144,6 +144,7 @@ namespace TeamWorkGame.Utility
                 if(d == Data[blockIndex.Y, blockIndex.X])
                 {
                     flag = true;
+                    blockPos = GetBlockPosition(blockIndex);
                     break;
                 }
             }

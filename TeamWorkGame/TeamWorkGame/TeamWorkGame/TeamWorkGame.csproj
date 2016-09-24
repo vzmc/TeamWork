@@ -57,8 +57,10 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor\Character.cs" />
+    <Compile Include="Actor\Player.cs" />
     <Compile Include="Def\MapManager.cs" />
-    <Compile Include="Def\Screen.cs" />
+    <Compile Include="Def\Parameter.cs" />
     <Compile Include="Device\Camera.cs" />
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\InputState.cs" />
@@ -69,6 +71,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Scene\IScene.cs" />
+    <Compile Include="Scene\PlayScene.cs" />
     <Compile Include="Scene\Scene.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Utility\Map.cs" />

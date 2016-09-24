@@ -23,7 +23,8 @@ namespace TeamWorkGame.Device
             renderer = new Renderer(content, graphics);
             input = new InputState();
             sound = new Sound(content);
-            camera = new Camera(new Vector2(Screen.Width / 2, Screen.Height / 2));
+            MapManager.Init();
+            camera = new Camera(new Vector2(Parameter.ScreenWidth / 2, Parameter.ScreenHeight / 2));
         }
 
         public void InitiInitialize()

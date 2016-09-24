@@ -8,6 +8,11 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using TeamWorkGame.Actor;
+using TeamWorkGame.Def;
+using TeamWorkGame.Device;
+using TeamWorkGame.Scene;
+using TeamWorkGame.Utility;
 
 namespace TeamWorkGame
 {
@@ -16,12 +21,21 @@ namespace TeamWorkGame
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        //フィールド
+        private GraphicsDeviceManager graphicsDeviceManager;//グラフィック機器管理者
+        private GameDevice gameDevice;                      //ゲームデバイス
+        private Renderer renderer;                          //描画オブジェクトの宣言
+        private Sound sound;                                //Sound管理
+        private SceneManager sceneManager;                  //シーン管理者
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            //グラフィック機器管理者の実体を生成
+            graphicsDeviceManager = new GraphicsDeviceManager(this);
+            graphicsDeviceManager.PreferredBackBufferWidth = Parameter.ScreenWidth;       //画面横幅
+            graphicsDeviceManager.PreferredBackBufferHeight = Parameter.ScreenHeight;      //画面縦幅
+
+            //コンテンツデータの保存フォルダをContentに設定
             Content.RootDirectory = "Content";
         }
 
@@ -33,9 +47,29 @@ namespace TeamWorkGame
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            //ゲームデバイスの実体生成
+            gameDevice = new GameDevice(Content, GraphicsDevice);
 
-            base.Initialize();
+            sound = gameDevice.GetSound();
+
+            //描画オブジェクトの宣言
+            renderer = gameDevice.GetRenderer();
+
+            //MapManager.Init();
+
+            sceneManager = new SceneManager();
+            IScene playScene = new PlayScene(gameDevice);
+
+            //sceneManager.Add(Scene.Scene.Title, new Title(gameDevice));
+            //sceneManager.Add(Scene.Scene.GamePlay, gamePlay);
+            //sceneManager.Add(Scene.Scene.Ending, new Ending(gameDevice, gamePlay));
+            sceneManager.Add(Scene.Scene.PlayScene, new PlayScene(gameDevice, 1));
+
+            sceneManager.Change(Scene.Scene.PlayScene);
+
+            base.Window.Title = "追いかけっこ";
+
+            base.Initialize();  //絶対に消すな
         }
 
         /// <summary>
@@ -45,7 +79,12 @@ namespace TeamWorkGame
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            renderer.LoadTexture("hero");
+            renderer.LoadTexture("light_off");
+            renderer.LoadTexture("light_on");
+            renderer.LoadTexture("TileMapSource");
+            renderer.LoadTexture("tree");
+            //renderer.LoadTexture("hero");
 
             // TODO: use this.Content to load your game content here
         }
@@ -56,7 +95,7 @@ namespace TeamWorkGame
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            renderer.Unload();
         }
 
         /// <summary>
@@ -66,13 +105,20 @@ namespace TeamWorkGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // Allows the game to exit
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            // 終了処理　Allows the game to exit
+            if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+                || (Keyboard.GetState().IsKeyDown(Keys.Escape)))
+            {
                 this.Exit();
+            }
 
-            // TODO: Add your update logic here
+            //ゲームデバイス更新
+            gameDevice.Update(gameTime);
 
-            base.Update(gameTime);
+            //シーンの更新
+            sceneManager.Update(gameTime);
+
+            base.Update(gameTime);  //絶対に消すな
         }
 
         /// <summary>
@@ -81,11 +127,13 @@ namespace TeamWorkGame
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            //描画クリア時の色を設定
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            //シーンの描画
+            sceneManager.Draw(renderer);
 
-            base.Draw(gameTime);
+            base.Draw(gameTime);    //絶対に消すな
         }
     }
 }
