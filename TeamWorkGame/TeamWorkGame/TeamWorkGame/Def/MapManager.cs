@@ -7,8 +7,12 @@ using TeamWorkGame.Utility;
 using System.Diagnostics;               //Assert
 
 
+
 namespace TeamWorkGame.Def
 {
+    /// <summary>
+    /// Map管理
+    /// </summary>
     public static class MapManager
     {
         private static List<int[,]> mapdatas = new List<int[,]>();
@@ -55,7 +59,6 @@ namespace TeamWorkGame.Def
                 { 1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1 },
             };
             mapdatas.Add(mapdata2);
-
 
             map = new Map(mapdatas[nowMapIndex], blockSize);
         }

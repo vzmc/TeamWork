@@ -55,15 +55,10 @@ namespace TeamWorkGame
             //描画オブジェクトの宣言
             renderer = gameDevice.GetRenderer();
 
-            //MapManager.Init();
-
             sceneManager = new SceneManager();
             IScene playScene = new PlayScene(gameDevice);
 
-            //sceneManager.Add(Scene.Scene.Title, new Title(gameDevice));
-            //sceneManager.Add(Scene.Scene.GamePlay, gamePlay);
-            //sceneManager.Add(Scene.Scene.Ending, new Ending(gameDevice, gamePlay));
-            sceneManager.Add(Scene.Scene.PlayScene, new PlayScene(gameDevice, 1));
+            sceneManager.Add(Scene.Scene.PlayScene, new PlayScene(gameDevice, 0));
 
             sceneManager.Change(Scene.Scene.PlayScene);
 
@@ -83,8 +78,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("light_off");
             renderer.LoadTexture("light_on");
             renderer.LoadTexture("TileMapSource");
+            renderer.LoadTexture("fire");
             renderer.LoadTexture("tree");
-            //renderer.LoadTexture("hero");
 
             // TODO: use this.Content to load your game content here
         }

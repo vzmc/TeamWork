@@ -11,13 +11,13 @@ namespace TeamWorkGame.Utility
         /// <summary>
         /// Mapの障害物との衝突判定
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="width"></param>
-        /// <param name="height"></param>
-        /// <param name="velocity"></param>
-        /// <param name="map"></param>
-        /// <param name="data"></param>
-        /// <returns></returns>
+        /// <param name="position">自分の位置、書き出す</param>
+        /// <param name="width">自分の衝突横幅</param>
+        /// <param name="height">自分の衝突高さ</param>
+        /// <param name="velocity">自分の移動量、書き出す</param>
+        /// <param name="map">所在地図</param>
+        /// <param name="data">衝突地形のデータ</param>
+        /// <returns>衝突したかどうか</returns>
         public static bool MapObstacleCheck(ref Vector2 position, int width, int height, ref Vector2 velocity, ref bool isOnGround, Map map, int[] data)
         {
             bool flag = false;
@@ -105,6 +105,24 @@ namespace TeamWorkGame.Utility
                     isOnGround = false;
                 }
             }
+
+            return flag;
+        }
+
+
+        /// <summary>
+        /// 物達の衝突判定（四角形同士）
+        /// </summary>
+        /// <param name="position1"></param>
+        /// <param name="width1"></param>
+        /// <param name="height1"></param>
+        /// <param name="position2"></param>
+        /// <param name="width2"></param>
+        /// <param name="height2"></param>
+        /// <returns>判定結果</returns>
+        public static bool CollisionCheck(Vector2 position1, int width1, int height1, Vector2 position2, int width2, int height2)
+        {
+            bool flag = false;
 
             return flag;
         }

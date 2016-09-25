@@ -8,7 +8,7 @@ namespace TeamWorkGame.Scene
     enum Scene
     {
         Title,
-        TestPlay,
+        Stage,
         PlayScene,
         Ending
     }

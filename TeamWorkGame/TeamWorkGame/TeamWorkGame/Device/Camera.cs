@@ -46,6 +46,19 @@ namespace TeamWorkGame.Device
         /// コンストラクタ
         /// </summary>
         /// <param name="aimPos">カメラ注視位置（中心位置）</param>
+        public Camera()
+        {
+            ViewWidth = Parameter.ScreenWidth;
+            ViewHeight = Parameter.ScreenHeight;
+            map = MapManager.GetNowMapData();
+            IsLimitView = false;
+            SetData(new Vector2(ViewWidth / 2, ViewHeight / 2));
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="aimPos">カメラ注視位置（中心位置）</param>
         public Camera(Vector2 aimPos, bool isLimitView = false)
         {
             ViewWidth = Parameter.ScreenWidth;

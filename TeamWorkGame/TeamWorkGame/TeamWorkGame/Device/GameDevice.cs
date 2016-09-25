@@ -14,7 +14,6 @@ namespace TeamWorkGame.Device
         private Renderer renderer;  //描画
         private InputState input;   //入力
         private Sound sound;        //サウンド
-        private Camera camera;      //Camera
         private static Random rand = new Random(); //乱数
 
 
@@ -24,7 +23,6 @@ namespace TeamWorkGame.Device
             input = new InputState();
             sound = new Sound(content);
             MapManager.Init();
-            camera = new Camera(new Vector2(Parameter.ScreenWidth / 2, Parameter.ScreenHeight / 2));
         }
 
         public void InitiInitialize()
@@ -63,15 +61,6 @@ namespace TeamWorkGame.Device
         public Sound GetSound()
         {
             return sound;
-        }
-
-        /// <summary>
-        /// カメラの取得
-        /// </summary>
-        /// <returns></returns>
-        public Camera GetCamera()
-        {
-            return camera;
         }
 
         /// <summary>

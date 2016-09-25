@@ -46,9 +46,9 @@ namespace TeamWorkGame.Actor
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
-        public virtual void Draw(Renderer renderer)
+        public virtual void Draw(Renderer renderer, Vector2 offset)
         {
-            renderer.DrawTexture(name, position);
+            renderer.DrawTexture(name, position + offset);
         }
 
         public Vector2 GetPosition()

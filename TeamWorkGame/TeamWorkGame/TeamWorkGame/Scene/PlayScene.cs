@@ -25,6 +25,7 @@ namespace TeamWorkGame.Scene
         private Player player;
         private Camera camera;
         private Map map;
+        private List<Fire> fires;
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
@@ -32,24 +33,27 @@ namespace TeamWorkGame.Scene
             this.mapIndex = mapIndex;
             isEnd = false;
         }
+
         public void Initialize()
         {
             isEnd = false;
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
-            camera = gameDevice.GetCamera();
-            camera.UpDateMap();
-            player = new Player(gameDevice.GetInputState(), camera, new Vector2(100, 100), Vector2.Zero);
-
+            fires = new List<Fire>();
+            camera = new Camera();
+            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
             camera.SetAimPosition(player.GetPosition() + new Vector2(32, 32));
             camera.SetLimitView(true);
-            //camera.SetLimitView(true);
-
         }
 
         public void Update(GameTime gameTime)
         {
             player.Update(gameTime);
+            fires.ForEach(x => x.Update(gameTime));
+            if(gameDevice.GetInputState().IsKeyDown(Keys.C))
+            {
+                fires.Clear();
+            }
             camera.SetAimPosition(player.GetPosition() + new Vector2(32, 32));
             Console.WriteLine(camera.OffSet);
         }
@@ -67,10 +71,12 @@ namespace TeamWorkGame.Scene
                         renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) + camera.OffSet, GetRect(map.Data[i, j]));
                 }
             }
-            player.Draw(renderer);
+
+            player.Draw(renderer, camera.OffSet);
+
+            fires.ForEach(x => x.Draw(renderer, camera.OffSet));
 
             renderer.End();
-
         }
 
         public Rectangle GetRect(int num)
@@ -94,7 +100,5 @@ namespace TeamWorkGame.Scene
         {
             throw new NotImplementedException();
         }
-
-
     }
 }
