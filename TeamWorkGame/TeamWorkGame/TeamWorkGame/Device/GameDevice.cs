@@ -22,7 +22,7 @@ namespace TeamWorkGame.Device
             renderer = new Renderer(content, graphics);
             input = new InputState();
             sound = new Sound(content);
-            MapManager.Init();
+            //MapManager.Init();
         }
 
         public void InitiInitialize()

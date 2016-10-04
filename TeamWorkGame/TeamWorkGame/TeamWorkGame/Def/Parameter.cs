@@ -21,7 +21,7 @@ namespace TeamWorkGame.Def
         public static readonly int ScreenWidth = 1280;      //windowsのSize
         public static readonly int ScreenHeight = 768;      //windowsのSize
         public static readonly float GForce = 1.0f;         //重力の大きさ
-        public static readonly float FireSpeed = 10.0f;     //投げ出す火の速度
-        public static readonly int FireNum = 5;             //火の総量
+        public static readonly float FireSpeed = 15.0f;     //投げ出す火の速度
+        public static readonly int FireMaxNum = 10;             //火の総量
     }
 }

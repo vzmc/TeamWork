@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using TeamWorkGame.Def;
+using TeamWorkGame.Actor;
 
 namespace TeamWorkGame.Utility
 {
@@ -50,22 +52,34 @@ namespace TeamWorkGame.Utility
         public int VerticalBlockNum { get; }    //垂直方向のBlock数
         public int MapWidth { get; }            //地図の横長さ
         public int MapHeight { get; }           //地図の高さ
+        public List<Character> MapThings { get; }       //地図にある物達のデータ
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="data">地図のデータ</param>
         /// <param name="blockSize">地図BlockのSize</param>
-        public Map(int[,] data, int blockSize)
+        public Map(int[,] data, int blockSize, List<Character> things)
         {
             Data = data;
             BlockSize = blockSize;
+            MapThings = things;
             HorizontalBlockNum = data.GetLength(1);
             VerticalBlockNum = data.GetLength(0);
             MapWidth = blockSize * HorizontalBlockNum;
             MapHeight = blockSize * VerticalBlockNum;
         }
 
+        public void Update(GameTime gameTime)
+        {
+            MapThings.RemoveAll(x => x.IsDead);
+        }
+
+        public Goal GetGoal()
+        {
+            Goal goal = (Goal)MapThings.Find(x => x.Tag == "Goal");
+            return goal;
+        }
         /// <summary>
         /// 指定位置からBlockのIndexを調べる
         /// </summary>

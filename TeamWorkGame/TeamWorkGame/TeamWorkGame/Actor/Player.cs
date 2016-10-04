@@ -30,10 +30,22 @@ namespace TeamWorkGame.Actor
         private Timer timer;                    //アニメーションの時間間隔
         private Direction diretion;             //向いている方向
         private float gForce;                   //重力
-        private bool isOnGround;                //地上にいるか？
-        //private bool isOnLadder;
         private List<Fire> fires;               //投げ出した火
-        private int fireNum;                    //火の数
+        private int fireMaxNum;                    //火の総数
+        private int fireNum;                        //持ているひの数
+        private Character onThings;
+
+        public Character OnThings
+        {
+            get
+            {
+                return onThings;
+            }
+            set
+            {
+                onThings = value;
+            }
+        }
         
 
         /// <summary>
@@ -44,7 +56,7 @@ namespace TeamWorkGame.Actor
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
         public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> fires)
-            : base("hero", 64, 64)
+            : base("hero", 50, 52, "Player", true)
         {
             inputState = input;
             this.fires = fires;
@@ -58,13 +70,17 @@ namespace TeamWorkGame.Actor
         /// <param name="velo"></param>
         public override void Initialize(Vector2 pos, Vector2 velo)
         {
+            isTrigger = true;
             map = MapManager.GetNowMapData();
             position = pos;
             velocity = velo;
             gForce = Parameter.GForce;
             isOnGround = false;
+            isDead = false;
             diretion = Direction.RIGHT;
-            fireNum = Parameter.FireNum;
+            fireMaxNum = Parameter.FireMaxNum;
+            fireNum = fireMaxNum;
+            onThings = null;
         }
 
         /// <summary>
@@ -72,33 +88,124 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void ThrowFire()
         {
-            if (fireNum > 0)
+            if (fireNum > 1)
             {
                 if (inputState.IsKeyDown(Keys.X))
                 {
-                    Vector2 firePos = position;
-                    Vector2 fireVelo = new Vector2(1, 1);
+                    Vector2 firePos = Vector2.Zero;
+                    Vector2 fireVelo = Vector2.Zero;
+                    Fire fire = new Fire(firePos, fireVelo);
 
                     if (diretion == Direction.LEFT)
                     {
                         fireVelo = new Vector2(-1, -2);
+                        firePos = new Vector2(position.X - fire.GetWidth() / 2, position.Y - fire.GetHeight());
                     }
                     else if (diretion == Direction.RIGHT)
                     {
                         fireVelo = new Vector2(1, -2);
+                        firePos = new Vector2(position.X + width - fire.GetWidth() / 2, position.Y - fire.GetHeight());
+
                     }
                     else if (diretion == Direction.UP)
                     {
                         fireVelo = new Vector2(0, -2);
+                        firePos = new Vector2((position.X + width)/2 - fire.GetWidth() / 2, position.Y - fire.GetHeight());
                     }
 
                     fireVelo.Normalize();
                     fireVelo *= Parameter.FireSpeed;
 
-                    fires.Add(new Fire(firePos, fireVelo + velocity));
+                    fire.SetPosition(firePos);
+                    fire.SetVelocity(fireVelo + velocity);
+
+                    fires.Insert(0, fire);
                     fireNum--;
                 }
             }
+        }
+
+        public void Teleport()
+        {
+            if(fires.Count > 0)
+            {
+                if(inputState.IsKeyDown(Keys.C))
+                {
+                    fires.Add(new Fire(position, velocity));
+                    position = fires[0].GetPosition();
+                    velocity = fires[0].GetVelocity();
+                    fires.RemoveAt(0);
+                }
+            }
+        }
+
+        public override bool CollisionCheck(Character other)
+        {
+            bool flag = false;
+
+            if (other.IsTrigger)
+            {
+                flag = base.CollisionCheck(other);
+
+                if (flag)
+                {
+                    if (other is Fire)
+                    {
+                        ((Fire)other).IsReturn = true;
+                        fireNum++;
+                    }
+                    else if (other is Light)
+                    {
+                        if (((Light)other).IsOn == false)
+                        {
+                            onThings = other;
+                            velocity = onThings.GetVelocity();
+                            position = onThings.GetPosition() + new Vector2(onThings.GetWidth() / 2 - width / 2, -height);
+                            isOnGround = true;
+                            ((Light)other).ChangeSate(true);
+                        }
+                    }
+                    else if(other is Goal)
+                    {
+                        onThings = other;
+                        ((Goal)other).IsOnFire = true;
+                        velocity = onThings.GetVelocity();
+                        position = onThings.GetPosition() + new Vector2(onThings.GetWidth() / 2 - width / 2, -height);
+                        isOnGround = true;
+                    }
+                }
+            }
+            //else
+            //{
+            //    flag = base.ObstacleCheck(other);
+            //    if(flag)
+            //    {
+            //        if(other is Ice)
+            //        {
+            //            ((Ice)other).ToDeath();
+            //        }
+            //    }
+            //}
+
+            return flag;
+        }
+
+        public override bool ObstacleCheck(Character other)
+        {
+            bool flag = false;
+            if (!other.IsTrigger)
+            {
+                flag = base.ObstacleCheck(other);
+                if (flag)
+                {
+                    if (other is Ice)
+                    {
+                        ((Ice)other).ToDeath();
+                    }
+                }
+            }
+
+            return flag;
         }
 
         /// <summary>
@@ -126,6 +233,7 @@ namespace TeamWorkGame.Actor
                 {
                     velocity.Y = -18;
                     isOnGround = false;
+                    onThings = null;
                 }
             }
 
@@ -133,10 +241,37 @@ namespace TeamWorkGame.Actor
 
             Method.MapObstacleCheck(ref position, width, height, ref velocity, ref isOnGround, map, new int[] { 0, 1, 2 });
 
+            foreach (var m in map.MapThings)
+            {
+                if (!m.IsTrigger)
+                {
+                    ObstacleCheck(m);
+                }
+            }
+
+            //if (onThings != null)
+            //{
+            //    velocity = onThings.GetVelocity();
+            //    if (onThings.Tag == "Light")
+            //        position = position = onThings.GetPosition() + new Vector2(onThings.GetWidth() / 2 - width / 2, -height);
+            //    //onThings = null;
+            //}
+
             position += velocity;
 
+            foreach (var m in map.MapThings)
+            {
+                if (m.IsTrigger)
+                {
+                    CollisionCheck(m);
+                }
+            }
+
+
             ThrowFire();
+            Teleport();
         }
+
 
         public bool GetState()
         {

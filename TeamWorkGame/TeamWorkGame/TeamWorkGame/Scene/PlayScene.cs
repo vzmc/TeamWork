@@ -46,18 +46,48 @@ namespace TeamWorkGame.Scene
             camera.SetLimitView(true);
         }
 
+
         public void Update(GameTime gameTime)
         {
-            player.Update(gameTime);
-            fires.ForEach(x => x.Update(gameTime));
-            if(gameDevice.GetInputState().IsKeyDown(Keys.C))
+            foreach (var m in map.MapThings)
             {
-                fires.Clear();
+                m.Update(gameTime);
             }
-            camera.SetAimPosition(player.GetPosition() + new Vector2(32, 32));
-            Console.WriteLine(camera.OffSet);
-        }
 
+            player.Update(gameTime);
+
+
+            foreach (var x in fires)
+            {
+                x.Update(gameTime);
+
+                foreach (var m in map.MapThings)
+                {
+                    x.CollisionCheck(m);
+                }
+
+                if (player.CollisionCheck(x))
+                {
+                    //x.IsReturn = true;
+                }
+                else
+                {
+                    //x.IsReturn = false;
+                }
+            }
+
+            fires.RemoveAll(x => x.IsReturn || x.IsDead); // && x.IsOnGround 
+
+            map.Update(gameTime);
+
+            camera.SetAimPosition(player.GetPosition() + new Vector2(player.GetWidth()/2, player.GetHeight()/2));
+            //Console.WriteLine(camera.OffSet);
+
+            if(map.GetGoal().IsOnFire)
+            {
+                isEnd = true;
+            }
+        }
 
         public void Draw(Renderer renderer)
         {
@@ -71,6 +101,8 @@ namespace TeamWorkGame.Scene
                         renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) + camera.OffSet, GetRect(map.Data[i, j]));
                 }
             }
+
+            map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
 
             player.Draw(renderer, camera.OffSet);
 
@@ -93,12 +125,12 @@ namespace TeamWorkGame.Scene
 
         public Scene Next()
         {
-            throw new NotImplementedException();
+            return Scene.Ending;
         }
 
         public void ShutDown()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

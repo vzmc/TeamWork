@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using TeamWorkGame.Actor;
 
 namespace TeamWorkGame.Utility
 {
@@ -109,7 +110,6 @@ namespace TeamWorkGame.Utility
             return flag;
         }
 
-
         /// <summary>
         /// 物達の衝突判定（四角形同士）
         /// </summary>
@@ -123,6 +123,84 @@ namespace TeamWorkGame.Utility
         public static bool CollisionCheck(Vector2 position1, int width1, int height1, Vector2 position2, int width2, int height2)
         {
             bool flag = false;
+
+            if((position1.X <= position2.X + width2 - 1 && position1.X + width1 - 1 >= position2.X) || (position2.X <= position1.X + width1 - 1 && position2.X + width2 - 1 >= position1.X))
+            {
+                if((position1.Y <= position2.Y + height2 - 1 && position1.Y + height1 - 1 >= position2.Y) || (position2.Y <= position1.Y + height1 - 1 && position2.Y + height2 - 1 >= position1.Y))
+                {
+                    flag = true;
+                }
+            }
+
+            return flag;
+        }
+
+        /// <summary>
+        /// 障害物との判定
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="obstacle"></param>
+        /// <returns></returns>
+        public static bool ObstacleCheck(Character self, Character obstacle)
+        {
+            bool flag = false;
+
+            Vector2 selfNowPositon = self.GetPosition();
+            Vector2 selfNowVelocity = self.GetVelocity();
+            Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
+            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, selfNowVelocity.Y);
+            int selfWidth = self.GetWidth();
+            int selfHeight = self.GetHeight();
+
+            Vector2 obstaclePosition = obstacle.GetPosition();
+            int obstacleWidth = obstacle.GetWidth();
+            int obstacleHeight = obstacle.GetHeight();
+
+
+            if (selfNowVelocity.X != 0)
+            {
+                if (CollisionCheck(selfNextPositionH, selfWidth, selfHeight, obstaclePosition, obstacleWidth, obstacleHeight))
+                {
+                    flag = true;
+
+                    if (selfNowVelocity.X > 0)
+                    {
+                        self.PositionX = obstaclePosition.X - selfWidth;
+                    }
+                    else
+                    {
+                        self.PositionX = obstaclePosition.X + obstacleWidth;
+                    }
+
+                    self.SetVelocity(0, selfNowVelocity.Y);
+
+                }
+            }
+
+            if (selfNowVelocity.Y != 0)
+            {
+                if (CollisionCheck(selfNextPositionV, selfWidth, selfHeight, obstaclePosition, obstacleWidth, obstacleHeight))
+                {
+                    flag = true;
+
+                    if (selfNowVelocity.Y > 0)
+                    {
+                        self.PositionY = obstaclePosition.Y - selfHeight;
+                        self.SetIsOnGround(true);
+                    }
+                    else
+                    {
+                        self.PositionY = obstaclePosition.Y + obstacleHeight;
+                    }
+
+                    self.SetVelocity(selfNowVelocity.X, 0);
+                }
+            }
+
+            if (flag)
+            {
+                Console.WriteLine("!!!!!!!!!!!!!1");
+            }
 
             return flag;
         }

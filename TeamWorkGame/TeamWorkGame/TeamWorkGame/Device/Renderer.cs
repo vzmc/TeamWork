@@ -9,7 +9,7 @@ using System.Diagnostics;   //Assert用
 
 namespace TeamWorkGame.Device
 {
-    class Renderer
+    public class Renderer
     {
         //フィールド
         private ContentManager contentManager;  //コンテンツ管理者
