@@ -10,22 +10,19 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Ice : Character
+    public class Ice : Object
     {
         private Timer timer;
         private bool isToDeath;
 
-        public Ice(Vector2 pos, Vector2 velo) : base("ice", 64, 64, "Ice")
+        public Ice(Vector2 pos, Vector2 velo) : base("ice", new Size(64, 64), pos, velo, false, "Ice")
         { 
-            Initialize(pos, velo);
         }
 
-        public override void Initialize(Vector2 position, Vector2 velocity)
+        public override void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
         {
+            base.Initialize(pos, velo, isTrigger);
             timer = new Timer(0.1f);
-            this.position = position;
-            this.velocity = velocity;
-            isDead = false;
             isToDeath = false;
         }
 
@@ -47,6 +44,15 @@ namespace TeamWorkGame.Actor
                     isDead = true;
                 }
             }
+        }
+
+        public override void EventHandle(Object other)
+        {
+            if(other is Fire)
+            {
+                other.IsDead = true;
+            }
+            ToDeath();
         }
     }
 }

@@ -1,162 +1,245 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="TeamWorkGame.Game1" Collapsed="true">
-    <Position X="12.25" Y="0.5" Width="1.5" />
+    <Position X="4" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAEAAAAAAAAwCAAAAAAAAAAAAEAAAAAAgABAAAgAQ=</HashCode>
       <FileName>Game1.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="gameDevice" />
+      <Field Name="renderer" />
+      <Field Name="sceneManager" />
+      <Field Name="sound" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="TeamWorkGame.Program" Collapsed="true">
-    <Position X="14" Y="2.5" Width="1.5" />
+    <Position X="13.75" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="TeamWorkGame.Actor.Character" Collapsed="true">
-    <Position X="7" Y="0.5" Width="1.5" />
+  <Class Name="TeamWorkGame.Actor.Object" Collapsed="true">
+    <Position X="6.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAACAAAwQAQAAAIABAABAEAAAAAAQAAEAAAAA=</HashCode>
-      <FileName>Actor\Character.cs</FileName>
+      <HashCode>IgQAACAAAAAgAwAiAIAAMgAAIBAEACAgAAQAICJEAAA=</HashCode>
+      <FileName>Actor\Object.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="imageSize" />
+      <Field Name="colSize" />
+      <Property Name="ColSize" />
+      <Property Name="ImageSize" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="TeamWorkGame.Actor.Fire" Collapsed="true">
-    <Position X="5.75" Y="1.75" Width="1.5" />
+    <Position X="2.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAEAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAIAAAAQA=</HashCode>
+      <HashCode>AAQAEAAAAAAAAwAAAIAAAAAAAAAAAAAAAAAAAABAAQA=</HashCode>
       <FileName>Actor\Fire.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="TeamWorkGame.Actor.Player" Collapsed="true">
-    <Position X="8" Y="1.75" Width="1.5" />
+    <Position X="4.5" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAEEAAAAAAAwAAAAAAAEAAAACAAABAAAgAoAIAAQA=</HashCode>
+      <HashCode>AAQAUEAAAAAAAwAAAIAAAEAAAACAAABAAAgAhAJAAQA=</HashCode>
       <FileName>Actor\Player.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map" />
+      <Field Name="timer" />
+      <Field Name="inputState" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="TeamWorkGame.Def.MapManager" Collapsed="true">
-    <Position X="12.25" Y="1.5" Width="1.5" />
+    <Position X="3.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAEAAAAAgAAAAAIAAAAAAAAAAAABAAIAACACCAAAA=</HashCode>
+      <HashCode>AAAAEAAAAAgAAAAAIAAAAAAACAAAABAAIAgCAACAAAA=</HashCode>
       <FileName>Def\MapManager.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="map" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="TeamWorkGame.Def.Parameter" Collapsed="true">
-    <Position X="10.5" Y="2.5" Width="1.5" />
+    <Position X="17.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAAAAAEAgAAAAAAAAAAAAAABACAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAABAAAAAEAgAAAAAAAAAAAAAABAAAAAAAAAAAAAAEA=</HashCode>
       <FileName>Def\Parameter.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Device.Camera" Collapsed="true">
-    <Position X="10.5" Y="0.5" Width="1.5" />
+    <Position X="1" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AICAEAABAAAAECAAABQAIAAAAAAAAQgAEAAAAACABAA=</HashCode>
       <FileName>Device\Camera.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Device.GameDevice" Collapsed="true">
-    <Position X="14" Y="0.5" Width="1.5" />
+    <Position X="4" Y="8.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAIAAAABABAAEAABAAAAAAAAEADAAAAAAAAAAgAA=</HashCode>
       <FileName>Device\GameDevice.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="input" />
+      <Field Name="sound" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="TeamWorkGame.Device.InputState" Collapsed="true">
-    <Position X="15.75" Y="0.5" Width="1.5" />
+    <Position X="6.25" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AEYEAAAAAAAAAAABAAAAAAAAAAAAAAIAAEQAQAAEAAA=</HashCode>
       <FileName>Device\InputState.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Device.Motion" Collapsed="true">
-    <Position X="15.75" Y="1.5" Width="1.5" />
+    <Position X="15.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAdAAAAIAAAAAUAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Device\Motion.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Device.Renderer" Collapsed="true">
-    <Position X="10.5" Y="3.5" Width="1.5" />
+    <Position X="7" Y="10.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIEAECAAEAAAAAAAAAAAAAEAAAAEAUAAAAAQAAAAAA=</HashCode>
       <FileName>Device\Renderer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Device.Sound" Collapsed="true">
-    <Position X="14" Y="3.5" Width="1.5" />
+    <Position X="1" Y="9.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AQCAQAKAAIAEQABAAQWAAAAEAAAQAQAAAAAASEAAQAA=</HashCode>
       <FileName>Device\Sound.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Scene.PlayScene" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.25" Y="2.5" Width="1.5" />
+    <Position X="4" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgQAMAAAAgAAAwCAAAAAEAAAABAAAAABAAAAwQAAAAA=</HashCode>
       <FileName>Scene\PlayScene.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
+    <ShowAsAssociation>
+      <Field Name="camera" />
+      <Field Name="gameDevice" />
+      <Field Name="map" />
+      <Field Name="player" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="TeamWorkGame.Scene.SceneManager" Collapsed="true">
-    <Position X="12.25" Y="3.5" Width="1.5" />
+    <Position X="4" Y="12.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAYAAAAAAABAAggAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Scene\SceneManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Utility.Map" Collapsed="true">
-    <Position X="10.5" Y="1.5" Width="1.5" />
+    <Position X="3.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAIAAAAAQAAAAAQAAAAAAgAAAABAAAgAAACEAEBA=</HashCode>
+      <HashCode>AAQAAIAAAAAQAAAAAQAQAAAAgAAAABAAAgAAACEAEBA=</HashCode>
       <FileName>Utility\Map.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Utility.Method" Collapsed="true">
-    <Position X="14" Y="1.5" Width="1.5" />
+    <Position X="13.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAABAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAIAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Utility\Method.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Utility.Range" Collapsed="true">
-    <Position X="15.75" Y="2.5" Width="1.5" />
+    <Position X="15.5" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAACAAAAAQAAEAEAAAAAAAAAAAAAAAEAAAAAAAA=</HashCode>
       <FileName>Utility\Range.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="TeamWorkGame.Utility.Timer" Collapsed="true">
-    <Position X="15.75" Y="3.5" Width="1.5" />
+    <Position X="0.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAAABAAQAAAAAAAABAACAAAACAAAAAAAAAEAA=</HashCode>
       <FileName>Utility\Timer.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="TeamWorkGame.Actor.Goal">
+    <Position X="6.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Actor\Goal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamWorkGame.Actor.Ice" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAEgAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Actor\Ice.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamWorkGame.Actor.Light" Collapsed="true">
+    <Position X="11.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAAAgBAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Actor\Light.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TeamWorkGame.Scene.Ending" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="6.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAAAAAwAAAAAAEAAAABAAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Scene\Ending.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="inputState" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="TeamWorkGame.Scene.Title" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgQAAAAAAAAAAwAAAAAAEAAAABAAAABAAAAAAQAAAAA=</HashCode>
+      <FileName>Scene\Title.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="inputState" />
+    </ShowAsAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
   <Struct Name="TeamWorkGame.Utility.BlockIndex" Collapsed="true">
-    <Position X="10.5" Y="4.75" Width="1.5" />
+    <Position X="13.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
       <FileName>Utility\Map.cs</FileName>
     </TypeIdentifier>
   </Struct>
+  <Struct Name="TeamWorkGame.Size" Collapsed="true">
+    <Position X="6.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Size.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
   <Interface Name="TeamWorkGame.Scene.IScene" Collapsed="true">
-    <Position X="10.5" Y="6" Width="1.5" />
+    <Position X="13.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AgQAAAAAAAAAAwAAAAAAEAAAAAAAAAAAAAAAAQAAAAA=</HashCode>
       <FileName>Scene\IScene.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Enum Name="TeamWorkGame.Scene.Scene" Collapsed="true">
-    <Position X="12.25" Y="7" Width="1.5" />
+    <Position X="15.5" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAEAAAAAAAAAACAAAAAAABAgAAAAAAAA=</HashCode>
       <FileName>Scene\Scene.cs</FileName>
     </TypeIdentifier>
   </Enum>
   <Enum Name="TeamWorkGame.Utility.Direction" Collapsed="true">
-    <Position X="10.5" Y="7" Width="1.5" />
+    <Position X="13.75" Y="5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAICAAAgAAAAAAAAAAA=</HashCode>
       <FileName>Utility\Map.cs</FileName>

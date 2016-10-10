@@ -8,7 +8,7 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Light : Character
+    public class Light : Object
     {
         private bool isOn;
 
@@ -24,18 +24,14 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public Light(Vector2 position, bool isOn = false) : base("light_off", 21, 33, "Light", true)
+        public Light(Vector2 pos, bool isOn = false) : base("light_off", new Size(21, 33), pos, Vector2.Zero, true, "Light")
         {
             this.isOn = isOn;
-            Initialize(position, Vector2.Zero);
         }
 
-        public override void Initialize(Vector2 position, Vector2 velocity)
+        public override void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
         {
-            isTrigger = true;
-
-            this.position = position;
-            this.velocity = velocity;
+            base.Initialize(pos, velo, isTrigger);
         }
 
         public override void Update(GameTime gameTime)
@@ -43,33 +39,17 @@ namespace TeamWorkGame.Actor
             isOn = false;
         }
 
-        public override bool CollisionCheck(Character other)
-        {
-            //bool flag = false;
-
-            //if (!isOn)
-            //{
-            //    if (other is Fire || other is Player)
-            //    {
-            //        flag = base.CollisionCheck(other);
-            //        if (flag)
-            //        {
-            //            other.SetVelocity(velocity);
-            //            other.SetPosition(position + new Vector2(width / 2 - other.GetWidth() / 2, -other.GetHeight()));
-            //            //other.SetIsOnGround(true);
-            //        }
-            //    }
-            //}
-
-            return false;
-        }
-
-
-
         public void ChangeSate(bool isOn)
         {
             this.isOn = isOn;
         }
 
+        public override void EventHandle(Object other)
+        {
+            other.Velocity = velocity;
+            other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height);
+            other.IsOnGround = true;
+            isOn = true;
+        }
     }
 }

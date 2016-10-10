@@ -52,14 +52,14 @@ namespace TeamWorkGame.Utility
         public int VerticalBlockNum { get; }    //垂直方向のBlock数
         public int MapWidth { get; }            //地図の横長さ
         public int MapHeight { get; }           //地図の高さ
-        public List<Character> MapThings { get; }       //地図にある物達のデータ
+        public List<Actor.Object> MapThings { get; }       //地図にある物達のデータ
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="data">地図のデータ</param>
         /// <param name="blockSize">地図BlockのSize</param>
-        public Map(int[,] data, int blockSize, List<Character> things)
+        public Map(int[,] data, int blockSize, List<Actor.Object> things)
         {
             Data = data;
             BlockSize = blockSize;

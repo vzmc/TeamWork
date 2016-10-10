@@ -138,25 +138,25 @@ namespace TeamWorkGame.Utility
         /// <summary>
         /// 障害物との判定
         /// </summary>
-        /// <param name="self"></param>
-        /// <param name="obstacle"></param>
+        /// <param name="self">自身</param>
+        /// <param name="obstacle">障害物</param>
         /// <returns></returns>
-        public static bool ObstacleCheck(Character self, Character obstacle)
+        public static bool ObstacleCheck(Actor.Object self, Actor.Object obstacle)
         {
             bool flag = false;
 
-            Vector2 selfNowPositon = self.GetPosition();
-            Vector2 selfNowVelocity = self.GetVelocity();
+            Vector2 selfNowPositon = self.Position;
+            Vector2 selfNowVelocity = self.Velocity;
             Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
             Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, selfNowVelocity.Y);
-            int selfWidth = self.GetWidth();
-            int selfHeight = self.GetHeight();
+            int selfWidth = self.ColSize.Width;
+            int selfHeight = self.ColSize.Height;
 
-            Vector2 obstaclePosition = obstacle.GetPosition();
-            int obstacleWidth = obstacle.GetWidth();
-            int obstacleHeight = obstacle.GetHeight();
+            Vector2 obstaclePosition = obstacle.Position;
+            int obstacleWidth = obstacle.ColSize.Width;
+            int obstacleHeight = obstacle.ColSize.Height;
 
-
+            //横方向の判定
             if (selfNowVelocity.X != 0)
             {
                 if (CollisionCheck(selfNextPositionH, selfWidth, selfHeight, obstaclePosition, obstacleWidth, obstacleHeight))
@@ -172,11 +172,11 @@ namespace TeamWorkGame.Utility
                         self.PositionX = obstaclePosition.X + obstacleWidth;
                     }
 
-                    self.SetVelocity(0, selfNowVelocity.Y);
-
+                    self.VelocityX = 0;
                 }
             }
 
+            //縦方向の判定
             if (selfNowVelocity.Y != 0)
             {
                 if (CollisionCheck(selfNextPositionV, selfWidth, selfHeight, obstaclePosition, obstacleWidth, obstacleHeight))
@@ -186,21 +186,21 @@ namespace TeamWorkGame.Utility
                     if (selfNowVelocity.Y > 0)
                     {
                         self.PositionY = obstaclePosition.Y - selfHeight;
-                        self.SetIsOnGround(true);
+                        self.IsOnGround = true;
                     }
                     else
                     {
                         self.PositionY = obstaclePosition.Y + obstacleHeight;
                     }
 
-                    self.SetVelocity(selfNowVelocity.X, 0);
+                    self.VelocityY = 0;
                 }
             }
 
-            if (flag)
-            {
-                Console.WriteLine("!!!!!!!!!!!!!1");
-            }
+            //if (flag)
+            //{
+            //    Console.WriteLine("!!!!!!!!!!!!!1");
+            //}
 
             return flag;
         }

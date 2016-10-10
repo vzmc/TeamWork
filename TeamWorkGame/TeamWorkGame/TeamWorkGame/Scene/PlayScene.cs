@@ -42,7 +42,7 @@ namespace TeamWorkGame.Scene
             fires = new List<Fire>();
             camera = new Camera();
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
-            camera.SetAimPosition(player.GetPosition() + new Vector2(32, 32));
+            camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
         }
 
@@ -61,26 +61,26 @@ namespace TeamWorkGame.Scene
             {
                 x.Update(gameTime);
 
-                foreach (var m in map.MapThings)
-                {
-                    x.CollisionCheck(m);
-                }
+                //foreach (var m in map.MapThings)
+                //{
+                //    x.CollisionCheck(m);
+                //}
 
-                if (player.CollisionCheck(x))
-                {
-                    //x.IsReturn = true;
-                }
-                else
-                {
-                    //x.IsReturn = false;
-                }
+                //if (player.CollisionCheck(x))
+                //{
+                //    //x.IsReturn = true;
+                //}
+                //else
+                //{
+                //    //x.IsReturn = false;
+                //}
             }
 
-            fires.RemoveAll(x => x.IsReturn || x.IsDead); // && x.IsOnGround 
+            fires.RemoveAll(x =>  x.IsDead); // && x.IsOnGround 
 
             map.Update(gameTime);
 
-            camera.SetAimPosition(player.GetPosition() + new Vector2(player.GetWidth()/2, player.GetHeight()/2));
+            camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width/2, player.ImageSize.Height/2));
             //Console.WriteLine(camera.OffSet);
 
             if(map.GetGoal().IsOnFire)

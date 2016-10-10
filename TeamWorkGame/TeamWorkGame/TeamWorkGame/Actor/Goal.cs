@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace TeamWorkGame.Actor
 {
-    public class Goal : Character
+    public class Goal : Object
     {
         private bool isOnFire;
 
@@ -22,22 +22,27 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public Goal(Vector2 position) : base("goal", 62, 44, "Goal", true)
+        public Goal(Vector2 pos) : base("goal", new Size(62, 44), pos, Vector2.Zero, true, "Goal")
         {
-
-            Initialize(position, Vector2.Zero);
         }
 
-        public override void Initialize(Vector2 position, Vector2 velocity)
+        public override void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
         {
-            this.position = position;
-            this.velocity = velocity;
+            base.Initialize(pos, velo, isTrigger);
             isOnFire = false;
         }
 
         public override void Update(GameTime gameTime)
         {
 
+        }
+
+        public override void EventHandle(Object other)
+        {
+            other.Velocity = velocity;
+            other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height);
+            other.IsOnGround = true;
+            isOnFire = true;
         }
     }
 }

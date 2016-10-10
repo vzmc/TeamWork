@@ -22,7 +22,7 @@ namespace TeamWorkGame.Def
 
         public static void Stage1()
         {
-            List<Character> MapThings = new List<Character>();
+            List<Actor.Object> MapThings = new List<Actor.Object>();
             int[,] mapdata = new int[,]
             {
                 { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
@@ -47,7 +47,7 @@ namespace TeamWorkGame.Def
 
         public static void Stage2()
         {
-            List<Character> MapThings = new List<Character>();
+            List<Actor.Object> MapThings = new List<Actor.Object>();
             int[,] mapdata = new int[,]
             {
                 { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
@@ -84,7 +84,7 @@ namespace TeamWorkGame.Def
 
         public static void Stage3()
         {
-            List<Character> MapThings = new List<Character>();
+            List<Actor.Object> MapThings = new List<Actor.Object>();
             int[,] mapdata = new int[,]
             {
                 { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },

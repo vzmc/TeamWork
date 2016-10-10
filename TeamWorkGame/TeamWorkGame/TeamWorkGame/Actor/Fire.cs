@@ -2,7 +2,7 @@
 // 火のクラス
 // 作成時間：2016年9月25日
 // By 氷見悠人
-// 最終修正時間：2016年9月25日
+// 最終修正時間：2016年10月09日
 // By 氷見悠人
 /////////////////////////////////////////////////
 
@@ -17,132 +17,62 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Fire : Character
+    public class Fire : Object
     {
         private Map map;
         private float gForce;
-        private Character onThings;
 
-
-        public Character OnThings
+        public Fire(Vector2 position, Vector2 velocity) : base("fire", new Size(33, 44), position, velocity, true, "Fire")
         {
-            set
-            {
-                onThings = value;
-            }
-            get
-            {
-                return onThings;
-            }
         }
 
-        public bool IsOnGround
+        public override void Initialize(Vector2 position, Vector2 velocity, bool isTrigger)
         {
-            get
-            {
-                return isOnGround;
-            }
-            set
-            {
-                isOnGround = value;
-            }
-        }
-        public bool IsReturn { get; set; }
-
-        public Fire(Vector2 position, Vector2 velocity) : base("fire", 33, 44, "Fire", true)
-        {
-            Initialize(position, velocity);
-        }
-
-        public override void Initialize(Vector2 position, Vector2 velocity)
-        {
-            this.position = position;
-            this.velocity = velocity;
+            base.Initialize(position, velocity, isTrigger);
             gForce = Parameter.GForce;
-            isOnGround = false;
-            isDead = false;
-            isTrigger = true;
-            onThings = null;
             map = MapManager.GetNowMapData();
         }
 
-        public override void Update(GameTime gameTime)
-        {
-            if (onThings == null)
-            {
-                velocity.Y += gForce;
-                Method.MapObstacleCheck(ref position, width, height, ref velocity, ref isOnGround, map, new int[] { 0, 1, 2 });
-                if (isOnGround)
-                {
-                    velocity = Vector2.Zero;
-                }
-                position += velocity;
-            }
-            else
-            {
-                velocity = onThings.GetVelocity();
-                position = onThings.GetPosition() + new Vector2(onThings.GetWidth()/2 - width/2, -height);
-            }
-            
-        }
-
-        public override bool CollisionCheck(Character other)
+        /// <summary>
+        /// 衝突区域判定
+        /// </summary>
+        /// <param name="other">対象</param>
+        /// <returns></returns>
+        public override bool CollisionCheck(Object other)
         {
             bool flag = false;
 
             if (other.IsTrigger)
             {
                 flag = base.CollisionCheck(other);
+
                 if (flag)
                 {
-                    if (other is Player)
-                    {
-                        //IsReturn = true;
-                        //if(onThings != null)
-                        //{
-                        //    ((Light)onThings).ChangeSate(false);
-                        //}
-                    }
-                    else if (other is Light)
-                    {
-                        if (((Light)other).IsOn == false)
-                        {
-                            onThings = other;
-                            velocity = onThings.GetVelocity();
-                            position = onThings.GetPosition() + new Vector2(onThings.GetWidth() / 2 - width / 2, -height);
-                            isOnGround = true;
-                            ((Light)other).ChangeSate(true);
-                        }
-
-                    }
-                    else if (other is Goal)
-                    {
-                        onThings = other;
-                        ((Goal)other).IsOnFire = true;
-                        velocity = onThings.GetVelocity();
-                        position = onThings.GetPosition() + new Vector2(onThings.GetWidth() / 2 - width / 2, -height);
-                        isOnGround = true;
-                    }
-
-                }
-            }
-            else
-            {
-                flag = base.ObstacleCheck(other);
-                if (flag)
-                {
-                    if (other is Ice)
-                    {
-                        ((Ice)other).ToDeath();
-                        isDead = true;
-                    }
+                    //if (other is Light)
+                    //{
+                    //    if (((Light)other).IsOn == false)
+                    //    {
+                    //        velocity = other.Velocity;
+                    //        position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
+                    //        isOnGround = true;
+                    //        ((Light)other).ChangeSate(true);
+                    //    }
+                    //}
+                    //else if (other is Goal)
+                    //{
+                    //    ((Goal)other).IsOnFire = true;
+                    //    velocity = other.Velocity;
+                    //    position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
+                    //    isOnGround = true;
+                    //}
+                    other.EventHandle(this);
                 }
             }
 
             return flag;
         }
 
-        public override bool ObstacleCheck(Character other)
+        public override bool ObstacleCheck(Object other)
         {
             bool flag = false;
             if (!other.IsTrigger)
@@ -150,16 +80,43 @@ namespace TeamWorkGame.Actor
                 flag = base.ObstacleCheck(other);
                 if (flag)
                 {
-                    if (other is Ice)
-                    {
-                        ((Ice)other).ToDeath();
-                    }
+                    //if (other is Ice)
+                    //{
+                    //    ((Ice)other).ToDeath();
+                    //}
+                    other.EventHandle(this);
                 }
             }
 
             return flag;
         }
 
+
+        public override void Update(GameTime gameTime)
+        {
+            velocity.Y += gForce;
+
+            Method.MapObstacleCheck(ref position, colSize.Width, colSize.Height, ref velocity, ref isOnGround, map, new int[] { 0, 1, 2 });
+
+            //マップ上の物と障害物判定
+            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
+            {
+                ObstacleCheck(m);
+            }
+
+            if (isOnGround)
+            {
+                velocity = Vector2.Zero;
+            }
+
+            position += velocity;
+
+            //マップ上の物と衝突区域判定
+            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            {
+                CollisionCheck(m);
+            }
+        }
 
         /// <summary>
         /// 描画
@@ -168,6 +125,15 @@ namespace TeamWorkGame.Actor
         public override void Draw(Renderer renderer, Vector2 offset)
         {
             renderer.DrawTexture(name, position + offset);
+        }
+
+        public override void EventHandle(Object other)
+        {
+            if(other is Player)
+            {
+                ((Player)other).FireNum++;
+            }
+            isDead = true;
         }
     }
 }
