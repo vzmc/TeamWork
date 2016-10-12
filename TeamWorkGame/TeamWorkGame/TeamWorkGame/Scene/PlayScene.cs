@@ -187,14 +187,14 @@ namespace TeamWorkGame.Scene
             //clear画面の選択肢によって、処理する
             NextScene nextScene;
             if ( clearSelect.GetSelect == 0) {      //Next
-                mapIndex++;
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex - 1);
+                //mapIndex++;
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             }
             else if (clearSelect.GetSelect == 1) {     //RePlay
-                nextScene = new NextScene(SceneType.Title, mapIndex - 1);
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             }
             else {      //World
-                nextScene = new NextScene(SceneType.Ending, mapIndex - 1);
+                nextScene = new NextScene(SceneType.Stage, -1);
             }
              
             return nextScene;
