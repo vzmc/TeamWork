@@ -1,4 +1,9 @@
-﻿using System;
+﻿/////////////////////////////////////////////////
+// 最終修正時間：2016年10月12日
+// By 長谷川修一
+/////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -122,6 +127,16 @@ namespace TeamWorkGame.Def
                 }
                 x++;
                 y--;
+            }
+            //鉄ブロックの追加
+            //By長谷川修一 2016/10/12
+            x = 10;
+            y = 14;
+            for (int i = 0; i < 10; i++)
+            {
+                Iron iron = new Iron(new Vector2(64 * x, 64 * y), Vector2.Zero);
+                MapThings.Add(iron);
+                x++;
             }
 
             MapThings.Add(light);

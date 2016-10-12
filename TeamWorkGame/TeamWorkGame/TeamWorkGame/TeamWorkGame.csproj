@@ -61,6 +61,7 @@
     <Compile Include="Actor\Fire.cs" />
     <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Ice.cs" />
+    <Compile Include="Actor\Iron.cs" />
     <Compile Include="Actor\Light.cs" />
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Def\MapManager.cs" />
