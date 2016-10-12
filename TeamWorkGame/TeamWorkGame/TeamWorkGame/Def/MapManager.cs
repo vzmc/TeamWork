@@ -113,7 +113,8 @@ namespace TeamWorkGame.Def
             Light light2 = new Light(new Vector2(64 * 16, 64 * 8));
             Light light3 = new Light(new Vector2(64 * 21, 64 * 6));
 
-            Goal goal = new Goal(new Vector2(64 * 27, 64 * 4 - 44));
+            //Goal goal = new Goal(new Vector2(64 * 27, 64 * 4 - 44));
+            Goal goal = new Goal(new Vector2(64 * 3, 64 * 12 - 44));
             MapThings.Add(goal);
             int x = 14;
             int y = 12;

@@ -89,7 +89,9 @@ namespace TeamWorkGame
             renderer.LoadTexture("title");
             renderer.LoadTexture("clear");
             renderer.LoadTexture("goal");
-            
+            renderer.LoadTexture("ClearWindow");
+            renderer.LoadTexture("selecter");
+
             // TODO: use this.Content to load your game content here
         }
 

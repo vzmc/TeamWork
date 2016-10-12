@@ -26,6 +26,9 @@ namespace TeamWorkGame.Scene
         private Camera camera;
         private Map map;
         private List<Fire> fires;
+        private InputState inputState;
+        private ClearSelect clearSelect;    //clear後の選択画面
+        
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
@@ -48,6 +51,8 @@ namespace TeamWorkGame.Scene
 
         public void Initialize(int stageIndex)
         {
+            inputState = new InputState();
+            clearSelect = new ClearSelect(inputState);
             mapIndex = stageIndex;
             isEnd = false;
             MapManager.SetNowMap(mapIndex);
@@ -61,6 +66,8 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gameTime)
         {
+            inputState.Update();
+
             //マップ上の物達の更新
             foreach (var m in map.MapThings)
             {
@@ -101,10 +108,12 @@ namespace TeamWorkGame.Scene
             //Console.WriteLine(camera.OffSet);
 
             if(map.GetGoal() != null)
-                if(map.GetGoal().IsOnFire)
-                {
-                    isEnd = true;
+                if(map.GetGoal().IsOnFire) {
+                    clearSelect.IsClear = true;
                 }
+
+            clearSelect.Update();
+            isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
         }
 
         public void Draw(Renderer renderer)
@@ -137,6 +146,9 @@ namespace TeamWorkGame.Scene
 
             fires.ForEach(x => x.Draw(renderer, camera.OffSet));
 
+            clearSelect.Draw(renderer);
+            
+
             renderer.End();
         }
 
@@ -164,9 +176,21 @@ namespace TeamWorkGame.Scene
 
 
 
-        NextScene IScene.Next()
-        {
-            NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex - 1);
+        NextScene IScene.Next() {
+
+            //clear画面の選択肢によって、処理する
+            NextScene nextScene;
+            if ( clearSelect.GetSelect == 0) {      //Next
+                mapIndex++;
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex - 1);
+            }
+            else if (clearSelect.GetSelect == 1) {     //RePlay
+                nextScene = new NextScene(SceneType.Title, mapIndex - 1);
+            }
+            else {      //World
+                nextScene = new NextScene(SceneType.Ending, mapIndex - 1);
+            }
+             
             return nextScene;
         }
     }
