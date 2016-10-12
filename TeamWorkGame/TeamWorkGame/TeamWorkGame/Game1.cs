@@ -59,7 +59,10 @@ namespace TeamWorkGame
             sceneManager = new SceneManager();
             //IScene playScene = new PlayScene(gameDevice);
             sceneManager.Add(SceneType.Title, new Title(gameDevice));
-
+            //ƒXƒe[ƒWƒNƒ‰ƒX‚Ì’Ç‰Á
+            //—t—œ—³‘¾
+            //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
+            sceneManager.Add(SceneType.Stage, new Stage(gameDevice));
             sceneManager.Add(SceneType.PlayScene, new PlayScene(gameDevice, 0));
             sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
 
@@ -89,6 +92,11 @@ namespace TeamWorkGame
             renderer.LoadTexture("title");
             renderer.LoadTexture("clear");
             renderer.LoadTexture("goal");
+            //ƒ[ƒ‹ƒhƒ}ƒbƒv‚Ì’Ç‰Á
+            //—t—œ—³‘¾
+            //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
+            renderer.LoadTexture("worldmap");
+            
             renderer.LoadTexture("ClearWindow");
             renderer.LoadTexture("selecter");
 

@@ -82,6 +82,7 @@
     <Compile Include="Scene\PlayScene.cs" />
     <Compile Include="Scene\SceneType.cs" />
     <Compile Include="Scene\SceneManager.cs" />
+    <Compile Include="Scene\Stage.cs" />
     <Compile Include="Scene\Title.cs" />
     <Compile Include="Size.cs" />
     <Compile Include="Utility\Map.cs" />

@@ -70,8 +70,16 @@ namespace TeamWorkGame.Scene
 
         NextScene IScene.Next()
         {
-            NextScene nextScene = new NextScene(SceneType.PlayScene, 2);
+            //NextScene nextScene = new NextScene(SceneType.PlayScene, 2);
+            //return nextScene;
+
+            //ステージセレクト画面へ移行
+            //Ｂｙ葉梨竜太
+            //２０１６年１０月１２日
+            NextScene nextScene = new NextScene(SceneType.Stage, 2);
             return nextScene;
+
+
         }
     }
 }
