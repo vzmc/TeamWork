@@ -14,6 +14,7 @@ namespace TeamWorkGame.Actor
     {
         private Timer timer;
         private bool isToDeath;
+        private float alpha;
 
         public Ice(Vector2 pos, Vector2 velo) : base("ice", new Size(64, 64), pos, velo, false, "Ice")
         { 
@@ -24,6 +25,7 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             timer = new Timer(0.1f);
             isToDeath = false;
+            alpha = 1.0f;
         }
 
         /// <summary>
