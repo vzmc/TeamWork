@@ -10,7 +10,7 @@ namespace TeamWorkGame.Scene
     class SceneManager
     {
         //複数のシーン
-        private Dictionary<Scene, IScene> scenes = new Dictionary<Scene, IScene>();
+        private Dictionary<SceneType, IScene> scenes = new Dictionary<SceneType, IScene>();
 
         //現在のシーン
         private IScene currentScene = null;
@@ -22,7 +22,7 @@ namespace TeamWorkGame.Scene
         {
         }
 
-        public void Add(Scene name, IScene scene)
+        public void Add(SceneType name, IScene scene)
         {
             if (scenes.ContainsKey(name))
             {
@@ -35,7 +35,25 @@ namespace TeamWorkGame.Scene
             }
         }
 
-        public void Change(Scene name)
+        public void Change(NextScene nxetScene)
+        {
+            if (currentScene != null)
+            {
+                currentScene.ShutDown();
+            }
+
+            currentScene = scenes[nxetScene.sceneType];
+            if (nxetScene.stageIndex >= 0)
+            {
+                currentScene.Initialize(nxetScene.stageIndex);
+            }
+            else
+            {
+                currentScene.Initialize();
+            }
+        }
+
+        public void Change(SceneType name)
         {
             if (currentScene != null)
             {

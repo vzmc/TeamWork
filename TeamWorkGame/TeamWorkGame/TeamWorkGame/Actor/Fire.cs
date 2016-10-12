@@ -17,18 +17,18 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Fire : Object
+    public class Fire : GameObject
     {
-        private Map map;
-        private float gForce;
+        private Map map;        //マップ情報
+        private float gForce;   //重力
 
         public Fire(Vector2 position, Vector2 velocity) : base("fire", new Size(33, 44), position, velocity, true, "Fire")
         {
         }
 
-        public override void Initialize(Vector2 position, Vector2 velocity, bool isTrigger)
+        public override void Initialize()
         {
-            base.Initialize(position, velocity, isTrigger);
+            base.Initialize();
             gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
         }
@@ -38,7 +38,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         /// <param name="other">対象</param>
         /// <returns></returns>
-        public override bool CollisionCheck(Object other)
+        public override bool CollisionCheck(GameObject other)
         {
             bool flag = false;
 
@@ -65,6 +65,8 @@ namespace TeamWorkGame.Actor
                     //    position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
                     //    isOnGround = true;
                     //}
+
+                    //相手の処理を実行する
                     other.EventHandle(this);
                 }
             }
@@ -72,7 +74,7 @@ namespace TeamWorkGame.Actor
             return flag;
         }
 
-        public override bool ObstacleCheck(Object other)
+        public override bool ObstacleCheck(GameObject other)
         {
             bool flag = false;
             if (!other.IsTrigger)
@@ -84,6 +86,8 @@ namespace TeamWorkGame.Actor
                     //{
                     //    ((Ice)other).ToDeath();
                     //}
+
+                    //相手の処理を実行する
                     other.EventHandle(this);
                 }
             }
@@ -104,6 +108,7 @@ namespace TeamWorkGame.Actor
                 ObstacleCheck(m);
             }
 
+            //地面にいると運動停止
             if (isOnGround)
             {
                 velocity = Vector2.Zero;
@@ -127,7 +132,11 @@ namespace TeamWorkGame.Actor
             renderer.DrawTexture(name, position + offset);
         }
 
-        public override void EventHandle(Object other)
+        /// <summary>
+        /// 事件処理
+        /// </summary>
+        /// <param name="other"></param>
+        public override void EventHandle(GameObject other)
         {
             if(other is Player)
             {

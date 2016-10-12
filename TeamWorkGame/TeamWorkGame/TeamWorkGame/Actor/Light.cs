@@ -8,7 +8,7 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Light : Object
+    public class Light : GameObject
     {
         private bool isOn;
 
@@ -29,9 +29,9 @@ namespace TeamWorkGame.Actor
             this.isOn = isOn;
         }
 
-        public override void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
+        public override void Initialize()
         {
-            base.Initialize(pos, velo, isTrigger);
+            base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
@@ -39,17 +39,18 @@ namespace TeamWorkGame.Actor
             isOn = false;
         }
 
-        public void ChangeSate(bool isOn)
+        public override void EventHandle(GameObject other)
         {
-            this.isOn = isOn;
-        }
-
-        public override void EventHandle(Object other)
-        {
-            other.Velocity = velocity;
-            other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height);
-            other.IsOnGround = true;
-            isOn = true;
+            if (other is Fire || other is Player)
+            {
+                if (!isOn)
+                {
+                    other.Velocity = velocity;
+                    other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height + 10);
+                    other.IsOnGround = true;
+                    isOn = true;
+                }
+            }
         }
     }
 }

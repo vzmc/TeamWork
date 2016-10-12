@@ -58,12 +58,13 @@ namespace TeamWorkGame
             MapManager.Init();
             sceneManager = new SceneManager();
             //IScene playScene = new PlayScene(gameDevice);
-            sceneManager.Add(Scene.Scene.Title, new Title(gameDevice));
-            sceneManager.Add(Scene.Scene.PlayScene, new PlayScene(gameDevice, 2));
-            sceneManager.Add(Scene.Scene.Ending, new Ending(gameDevice));
+            sceneManager.Add(SceneType.Title, new Title(gameDevice));
+
+            sceneManager.Add(SceneType.PlayScene, new PlayScene(gameDevice, 0));
+            sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
 
 
-            sceneManager.Change(Scene.Scene.Title);
+            sceneManager.Change(new NextScene(SceneType.Title, -1));
 
             base.Window.Title = "ÉqÅ[ÉçÅ[";
 

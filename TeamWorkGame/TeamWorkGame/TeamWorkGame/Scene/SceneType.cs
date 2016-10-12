@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TeamWorkGame.Scene
 {
-    enum Scene
+    enum SceneType
     {
         Title,
         Stage,

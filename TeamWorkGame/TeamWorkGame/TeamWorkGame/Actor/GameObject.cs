@@ -8,7 +8,10 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public abstract class Object
+    /// <summary>
+    /// マップ上にある物の親クラス
+    /// </summary>
+    public abstract class GameObject
     {
         //フィールド
         protected string name;          //アセット名
@@ -184,16 +187,18 @@ namespace TeamWorkGame.Actor
         /// <param name="velo">移動量</param>
         /// <param name="isTrigger">区域ですか？</param>
         /// <param name="tag">タグ</param>
-        public Object(string name, Size imageSize, Vector2 pos, Vector2 velo, bool isTrigger, string tag = "")
+        public GameObject(string name, Size imageSize, Vector2 pos, Vector2 velo, bool isTrigger, string tag = "")
         {
             this.name = name;
             this.imageSize = imageSize;
+            position = pos;
+            velocity = velo;
             colSize = imageSize;
             colOffset = Vector2.Zero;
             this.tag = tag;
             this.isTrigger = isTrigger;
             
-            Initialize(pos, velo, isTrigger);
+            Initialize();
         }
 
         /// <summary>
@@ -207,29 +212,25 @@ namespace TeamWorkGame.Actor
         /// <param name="colOffset">衝突区域と自身位置の相対位置</param>
         /// <param name="isTrigger">区域ですか？</param>
         /// <param name="tag">タグ</param>
-        public Object(string name, Size imageSize, Vector2 pos, Vector2 velo, Size colSize, Vector2 colOffset, bool isTrigger, string tag = "")
+        public GameObject(string name, Size imageSize, Vector2 pos, Vector2 velo, Size colSize, Vector2 colOffset, bool isTrigger, string tag = "")
         {
             this.name = name;
             this.imageSize = imageSize;
+            position = pos;
+            velocity = velo;
             this.colSize = colSize;
             this.colOffset = colOffset;
             this.tag = tag;
             this.isTrigger = isTrigger;
 
-            Initialize(pos, velo, isTrigger);
+            Initialize();
         }
 
         /// <summary>
-        /// 位置などの初期化処理
+        /// 初期化処理
         /// </summary>
-        /// <param name="pos">位置</param>
-        /// <param name="velo">移動量</param>
-        /// <param name="isTrigger">区域か？</param>
-        public virtual void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
+        public virtual void Initialize()
         {
-            position = pos;
-            velocity = velo;
-            this.isTrigger = isTrigger;
             isDead = false;
             isOnGround = false;
         }
@@ -254,7 +255,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         /// <param name="other">判定する対象</param>
         /// <returns></returns>
-        public virtual bool CollisionCheck(Object other)
+        public virtual bool CollisionCheck(GameObject other)
         {
             bool flag = Method.CollisionCheck(position + colOffset, colSize.Width, colSize.Height, other.position + other.colOffset, other.colSize.Width, other.colSize.Height);
 
@@ -264,9 +265,9 @@ namespace TeamWorkGame.Actor
         /// <summary>
         /// 障害物判定
         /// </summary>
-        /// <param name="other"></param>
+        /// <param name="other">対象</param>
         /// <returns></returns>
-        public virtual bool ObstacleCheck(Object other)
+        public virtual bool ObstacleCheck(GameObject other)
         {
             bool flag = Method.ObstacleCheck(this, other);
 
@@ -277,7 +278,7 @@ namespace TeamWorkGame.Actor
         /// 衝突事件の処理
         /// </summary>
         /// <param name="other">衝突対象/param>
-        public abstract void EventHandle(Object other);
+        public abstract void EventHandle(GameObject other);
         
     }
 }

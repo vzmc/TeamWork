@@ -40,15 +40,20 @@ namespace TeamWorkGame.Scene
             isEnd = false;
         }
 
+        public void Initialize(int index)
+        {
+            isEnd = false;
+        }
+
         public bool IsEnd()
         {
             return isEnd;
         }
         
-        public Scene Next()
-        {
-            return Scene.PlayScene;
-        }
+        //public SceneType Next()
+        //{
+        //    return SceneType.PlayScene;
+        //}
 
         public void ShutDown()
         {
@@ -61,6 +66,12 @@ namespace TeamWorkGame.Scene
             {
                 isEnd = true;
             }
+        }
+
+        NextScene IScene.Next()
+        {
+            NextScene nextScene = new NextScene(SceneType.PlayScene, 2);
+            return nextScene;
         }
     }
 }

@@ -46,20 +46,34 @@ namespace TeamWorkGame.Scene
             camera.SetLimitView(true);
         }
 
+        public void Initialize(int stageIndex)
+        {
+            mapIndex = stageIndex;
+            isEnd = false;
+            MapManager.SetNowMap(mapIndex);
+            map = MapManager.GetNowMapData();
+            fires = new List<Fire>();
+            camera = new Camera();
+            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
+            camera.SetAimPosition(player.Position + new Vector2(32, 32));
+            camera.SetLimitView(true);
+        }
 
         public void Update(GameTime gameTime)
         {
+            //マップ上の物達の更新
             foreach (var m in map.MapThings)
             {
                 m.Update(gameTime);
             }
 
+            //プレイヤーの更新
             player.Update(gameTime);
 
-
-            foreach (var x in fires)
+            //火の更新
+            for(int i = fires.Count-1; i >= 0; i--)
             {
-                x.Update(gameTime);
+                fires[i].Update(gameTime);
 
                 //foreach (var m in map.MapThings)
                 //{
@@ -76,17 +90,21 @@ namespace TeamWorkGame.Scene
                 //}
             }
 
+            //死んだ火を消す
             fires.RemoveAll(x =>  x.IsDead); // && x.IsOnGround 
 
+            //マップの更新
             map.Update(gameTime);
 
+            //カメラの注視位置を更新
             camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width/2, player.ImageSize.Height/2));
             //Console.WriteLine(camera.OffSet);
 
-            if(map.GetGoal().IsOnFire)
-            {
-                isEnd = true;
-            }
+            if(map.GetGoal() != null)
+                if(map.GetGoal().IsOnFire)
+                {
+                    isEnd = true;
+                }
         }
 
         public void Draw(Renderer renderer)
@@ -123,14 +141,22 @@ namespace TeamWorkGame.Scene
             return isEnd;
         }
 
-        public Scene Next()
-        {
-            return Scene.Ending;
-        }
+        //public SceneType Next()
+        //{
+        //    return SceneType.Ending;
+        //}
 
         public void ShutDown()
         {
             
+        }
+
+
+
+        NextScene IScene.Next()
+        {
+            NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex - 1);
+            return nextScene;
         }
     }
 }

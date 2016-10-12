@@ -57,7 +57,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Actor\Object.cs" />
+    <Compile Include="Actor\GameObject.cs" />
     <Compile Include="Actor\Fire.cs" />
     <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Ice.cs" />
@@ -76,8 +76,9 @@
     <Compile Include="Game1.cs" />
     <Compile Include="Scene\Ending.cs" />
     <Compile Include="Scene\IScene.cs" />
+    <Compile Include="Scene\NextScene.cs" />
     <Compile Include="Scene\PlayScene.cs" />
-    <Compile Include="Scene\Scene.cs" />
+    <Compile Include="Scene\SceneType.cs" />
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Scene\Title.cs" />
     <Compile Include="Size.cs" />

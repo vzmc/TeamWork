@@ -52,14 +52,14 @@ namespace TeamWorkGame.Utility
         public int VerticalBlockNum { get; }    //垂直方向のBlock数
         public int MapWidth { get; }            //地図の横長さ
         public int MapHeight { get; }           //地図の高さ
-        public List<Actor.Object> MapThings { get; }       //地図にある物達のデータ
+        public List<Actor.GameObject> MapThings { get; }       //地図にある物達のデータ
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="data">地図のデータ</param>
         /// <param name="blockSize">地図BlockのSize</param>
-        public Map(int[,] data, int blockSize, List<Actor.Object> things)
+        public Map(int[,] data, int blockSize, List<Actor.GameObject> things)
         {
             Data = data;
             BlockSize = blockSize;
@@ -72,6 +72,7 @@ namespace TeamWorkGame.Utility
 
         public void Update(GameTime gameTime)
         {
+            //マップ上に死んだ物を消す
             MapThings.RemoveAll(x => x.IsDead);
         }
 

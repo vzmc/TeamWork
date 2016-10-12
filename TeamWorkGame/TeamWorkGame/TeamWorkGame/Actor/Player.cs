@@ -20,7 +20,7 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    class Player : Object
+    class Player : GameObject
     {
         // フィールド
         private InputState inputState;          //入力管理
@@ -30,7 +30,7 @@ namespace TeamWorkGame.Actor
         private Motion motion;                  //アニメーション管理
         private Timer timer;                    //アニメーションの時間間隔
         private Direction diretion;             //向いている方向
-        private List<Fire> fires;               //投げ出した火
+        private List<Fire> firesList;               //投げ出した火
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持ているひの数
 
@@ -53,21 +53,19 @@ namespace TeamWorkGame.Actor
         /// <param name="position">位置</param>
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
-        public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> fires)
+        public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> firesList)
             : base("hero", new Size(50, 52), position, velocity, true, "Player")
         {
             inputState = input;
-            this.fires = fires;
+            this.firesList = firesList;
         }
 
         /// <summary>
         /// 初期化メソッド
         /// </summary>
-        /// <param name="pos"></param>
-        /// <param name="velo"></param>
-        public override void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
+        public override void Initialize()
         {
-            base.Initialize(pos, velo, isTrigger);
+            base.Initialize();
             map = MapManager.GetNowMapData();
             gForce = Parameter.GForce;
 
@@ -89,6 +87,7 @@ namespace TeamWorkGame.Actor
                     Vector2 fireVelo = Vector2.Zero;
                     Fire fire = new Fire(firePos, fireVelo);
 
+                    //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     if (diretion == Direction.LEFT)
                     {
                         fireVelo = new Vector2(-1, -2);
@@ -112,22 +111,25 @@ namespace TeamWorkGame.Actor
                     fire.Position = firePos;
                     fire.Velocity = fireVelo + velocity;
 
-                    fires.Insert(0, fire);
+                    firesList.Insert(0, fire);
                     fireNum--;
                 }
             }
         }
 
+        /// <summary>
+        /// マップ上いある火と位置交換（最後に投げ出した火は最初に交換）
+        /// </summary>
         public void Teleport()
         {
-            if (fires.Count > 0)
+            if (firesList.Count > 0)
             {
                 if (inputState.IsKeyDown(Keys.C))
                 {
-                    fires.Add(new Fire(position, velocity));
-                    position = fires[0].Position;
-                    velocity = fires[0].Velocity;
-                    fires.RemoveAt(0);
+                    firesList.Add(new Fire(position, velocity));
+                    position = firesList[0].Position;
+                    velocity = firesList[0].Velocity;
+                    firesList.RemoveAt(0);
                 }
             }
         }
@@ -137,7 +139,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         /// <param name="other">対象</param>
         /// <returns></returns>
-        public override bool CollisionCheck(Object other)
+        public override bool CollisionCheck(GameObject other)
         {
             bool flag = false;
 
@@ -169,6 +171,7 @@ namespace TeamWorkGame.Actor
                     //    position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
                     //    isOnGround = true;
                     //}
+
                     other.EventHandle(this);
                 }
             }
@@ -176,7 +179,12 @@ namespace TeamWorkGame.Actor
             return flag;
         }
 
-        public override bool ObstacleCheck(Object other)
+        /// <summary>
+        /// 障害物判定
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
+        public override bool ObstacleCheck(GameObject other)
         {
             bool flag = false;
             if (!other.IsTrigger)
@@ -238,7 +246,7 @@ namespace TeamWorkGame.Actor
             }
 
             //火と衝突判定
-            foreach (var f in fires)
+            foreach (var f in firesList)
             {
                 CollisionCheck(f);
             }
@@ -262,7 +270,7 @@ namespace TeamWorkGame.Actor
             renderer.DrawTexture(name, position + offset);
         }
 
-        public override void EventHandle(Object other)
+        public override void EventHandle(GameObject other)
         {
             
         }

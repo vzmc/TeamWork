@@ -14,7 +14,6 @@ namespace TeamWorkGame.Def
     /// </summary>
     public static class MapManager
     {
-        //private static List<int[,]> mapdatas = new List<int[,]>();
         private static int nowMapIndex = -1;
         private static Map map = null;
         private static int blockSize = 64;
@@ -22,7 +21,7 @@ namespace TeamWorkGame.Def
 
         public static void Stage1()
         {
-            List<Actor.Object> MapThings = new List<Actor.Object>();
+            List<Actor.GameObject> MapThings = new List<Actor.GameObject>();
             int[,] mapdata = new int[,]
             {
                 { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
@@ -47,7 +46,7 @@ namespace TeamWorkGame.Def
 
         public static void Stage2()
         {
-            List<Actor.Object> MapThings = new List<Actor.Object>();
+            List<Actor.GameObject> MapThings = new List<Actor.GameObject>();
             int[,] mapdata = new int[,]
             {
                 { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
@@ -77,14 +76,13 @@ namespace TeamWorkGame.Def
             MapThings.Add(light);
             MapThings.Add(light2);
             MapThings.Add(ice1);
-            //MapThings.Add(ice2);
 
             map = new Map(mapdata, blockSize, MapThings);
         }
 
         public static void Stage3()
         {
-            List<Actor.Object> MapThings = new List<Actor.Object>();
+            List<Actor.GameObject> MapThings = new List<Actor.GameObject>();
             int[,] mapdata = new int[,]
             {
                 { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
@@ -126,27 +124,10 @@ namespace TeamWorkGame.Def
                 y--;
             }
 
-            //Ice ice1 = new Ice(new Vector2(64 * 14, 64 * 12), Vector2.Zero);
-            //Ice ice2 = new Ice(new Vector2(64 * 15, 64 * 12), Vector2.Zero);
-
-            //Ice ice3 = new Ice(new Vector2(64 * 17, 64 * 11), Vector2.Zero);
-            //Ice ice4 = new Ice(new Vector2(64 * 18, 64 * 11), Vector2.Zero);
-
-            //Ice ice5 = new Ice(new Vector2(64 * 20, 64 * 10), Vector2.Zero);
-            //Ice ice6 = new Ice(new Vector2(64 * 21, 64 * 10), Vector2.Zero);
-
             MapThings.Add(light);
             MapThings.Add(light2);
             MapThings.Add(light3);
 
-            //MapThings.Add(ice1);
-            //MapThings.Add(ice2);
-
-            //MapThings.Add(ice3);
-            //MapThings.Add(ice4);
-
-            //MapThings.Add(ice5);
-            //MapThings.Add(ice6);
             map = new Map(mapdata, blockSize, MapThings);
         }
 
@@ -157,46 +138,6 @@ namespace TeamWorkGame.Def
             CreateStage.Add(Stage1);
             CreateStage.Add(Stage2);
             CreateStage.Add(Stage3);
-            //Stage1();
-            //int[,] mapdata1 = new int[,]
-            //{
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1,1,1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,1,1,1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { -1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1 },
-            //    { 2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2 },
-            //};
-            //mapdatas.Add(mapdata1);
-
-            //int[,] mapdata2 = new int[,]
-            //{
-            //    { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,1 },
-            //    { 1,-1,-1,-1,0,0,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,1 },
-            //    { 1,-1,0,0,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,1 },
-            //    { 1,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,0,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,0,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,-1,-1,0,0,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,1 },
-            //    { 1,-1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,0,-1,-1,-1,-1,-1,-1,-1,-1,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,0,-1,-1,-1,-1,0,0,0,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,1 },
-            //    { 1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1 },
-            //};
-            //mapdatas.Add(mapdata2);
-
-            ////map = new Map(mapdatas[nowMapIndex], blockSize, );
         }
 
         public static void SetNowMap(int i)

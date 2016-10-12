@@ -141,7 +141,7 @@ namespace TeamWorkGame.Utility
         /// <param name="self">自身</param>
         /// <param name="obstacle">障害物</param>
         /// <returns></returns>
-        public static bool ObstacleCheck(Actor.Object self, Actor.Object obstacle)
+        public static bool ObstacleCheck(Actor.GameObject self, Actor.GameObject obstacle)
         {
             bool flag = false;
 

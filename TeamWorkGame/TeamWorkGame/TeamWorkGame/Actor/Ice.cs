@@ -10,7 +10,7 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Ice : Object
+    public class Ice : GameObject
     {
         private Timer timer;
         private bool isToDeath;
@@ -19,13 +19,16 @@ namespace TeamWorkGame.Actor
         { 
         }
 
-        public override void Initialize(Vector2 pos, Vector2 velo, bool isTrigger)
+        public override void Initialize()
         {
-            base.Initialize(pos, velo, isTrigger);
+            base.Initialize();
             timer = new Timer(0.1f);
             isToDeath = false;
         }
 
+        /// <summary>
+        /// 死亡開始
+        /// </summary>
         public void ToDeath()
         {
             if(!isToDeath)
@@ -46,7 +49,7 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public override void EventHandle(Object other)
+        public override void EventHandle(GameObject other)
         {
             if(other is Fire)
             {
