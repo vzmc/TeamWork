@@ -23,7 +23,7 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(0.1f);
+            timer = new Timer(1.0f);
             isToDeath = false;
             alpha = 1.0f;
         }
@@ -44,6 +44,7 @@ namespace TeamWorkGame.Actor
             if(isToDeath)
             {
                 timer.Update();
+                alpha -= 0.1f;
                 if(timer.IsTime())
                 {
                     isDead = true;
@@ -58,6 +59,14 @@ namespace TeamWorkGame.Actor
                 other.IsDead = true;
             }
             ToDeath();
+        }
+        /// <summary>
+        /// 透明値をゲットする
+        /// </summary>
+        /// <returns></returns>
+        public float GetAlpha()
+        {
+            return alpha;
         }
     }
 }

@@ -120,7 +120,18 @@ namespace TeamWorkGame.Scene
                 }
             }
 
-            map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
+            //map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
+            foreach(var x in map.MapThings)//By　佐瀬 拓海
+            {
+                if(x is Ice)
+                {
+                    x.Draw(renderer, camera.OffSet, ((Ice)x).GetAlpha());
+                }
+                else
+                {
+                    x.Draw(renderer, camera.OffSet);
+                }
+            }
 
             player.Draw(renderer, camera.OffSet);
 

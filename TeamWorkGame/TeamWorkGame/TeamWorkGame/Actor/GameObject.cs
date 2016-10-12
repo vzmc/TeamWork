@@ -1,4 +1,8 @@
-﻿using System;
+﻿//最終修正時間：１０月１２日
+//By　佐瀬 拓海
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -248,6 +252,15 @@ namespace TeamWorkGame.Actor
         public virtual void Draw(Renderer renderer, Vector2 offset)
         {
             renderer.DrawTexture(name, position + offset);
+        }
+
+        /// <summary>
+        /// 描画(透明値を設定する)    作成者：佐瀬　日付：１０/１２
+        /// </summary>
+        /// <param name="renderer"></param>
+        public virtual void Draw(Renderer renderer, Vector2 offset, float alpha = 1.0f)
+        {
+            renderer.DrawTexture(name, position + offset, alpha);
         }
 
         /// <summary>
