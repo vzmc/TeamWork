@@ -16,7 +16,7 @@ public virtual void Draw(Renderer renderer, Vector2 offset, float alpha = 1.0f)
 // By 氷見悠人
 /////////////////////////////////////////////////
 
-3.SVNコミットの時必ずコメントを書くこと。
+3.SVNコミットの時必ずコメントを書くこと、自分の名前を書く。
 
 4.コミット前に一度更新する。
 
