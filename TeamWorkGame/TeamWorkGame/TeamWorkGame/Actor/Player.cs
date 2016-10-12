@@ -2,7 +2,7 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年10月09日
+// 最終修正時間：2016年10月12日
 // By 氷見悠人
 /////////////////////////////////////////////////
 
@@ -88,7 +88,12 @@ namespace TeamWorkGame.Actor
                     Fire fire = new Fire(firePos, fireVelo);
 
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
-                    if (diretion == Direction.LEFT)
+                    if (diretion == Direction.UP)
+                    {
+                        fireVelo = new Vector2(0, -3);
+                        firePos = new Vector2(position.X + imageSize.Width / 2 - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
+                    }
+                    else if (diretion == Direction.LEFT)
                     {
                         fireVelo = new Vector2(-1, -2);
                         firePos = new Vector2(position.X - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
@@ -97,13 +102,8 @@ namespace TeamWorkGame.Actor
                     {
                         fireVelo = new Vector2(1, -2);
                         firePos = new Vector2(position.X + imageSize.Width - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
+                    }
 
-                    }
-                    else if (diretion == Direction.UP)
-                    {
-                        fireVelo = new Vector2(0, -2);
-                        firePos = new Vector2((position.X + imageSize.Width) / 2 - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
-                    }
 
                     fireVelo.Normalize();
                     fireVelo *= Parameter.FireSpeed;
@@ -216,6 +216,10 @@ namespace TeamWorkGame.Actor
             else if (velocity.X < 0)
             {
                 diretion = Direction.LEFT;
+            }
+            else if(inputState.Velocity().Y < 0)
+            {
+                diretion = Direction.UP;
             }
 
             if (isOnGround)
