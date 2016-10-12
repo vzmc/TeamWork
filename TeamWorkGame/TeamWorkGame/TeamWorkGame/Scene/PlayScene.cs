@@ -1,4 +1,8 @@
-﻿using System;
+﻿//最終更新日：10月12日
+//By　佐瀬　拓海
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -40,10 +44,12 @@ namespace TeamWorkGame.Scene
         public void Initialize()
         {
             isEnd = false;
+            inputState = new InputState();
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
             camera = new Camera();
+            clearSelect = new ClearSelect(inputState);
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
