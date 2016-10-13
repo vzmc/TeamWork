@@ -1,4 +1,4 @@
-﻿//最終更新日：10月12日
+﻿//最終更新日：10月13日
 //By　佐瀬　拓海
 
 
@@ -30,6 +30,8 @@ namespace TeamWorkGame.Scene
         private Camera camera;
         private Map map;
         private List<Fire> fires;
+        private List<GameObject> coals;     //マップに存在した炭の数　By佐瀬拓海
+        private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private InputState inputState;
         private ClearSelect clearSelect;    //clear後の選択画面
         
@@ -48,6 +50,9 @@ namespace TeamWorkGame.Scene
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
+            coals = new List<GameObject>();
+            coals = map.MapThings.FindAll(x => x is Coal);
+            nowCoals = new List<GameObject>();
             camera = new Camera();
             clearSelect = new ClearSelect(inputState);
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
@@ -64,6 +69,9 @@ namespace TeamWorkGame.Scene
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
+            coals = new List<GameObject>();
+            coals = map.MapThings.FindAll(x => x is Coal);
+            nowCoals = new List<GameObject>();
             camera = new Camera();
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
@@ -105,6 +113,9 @@ namespace TeamWorkGame.Scene
 
             //死んだ火を消す
             fires.RemoveAll(x =>  x.IsDead); // && x.IsOnGround 
+
+            //マップ上にある炭の数を取得
+            nowCoals = map.MapThings.FindAll(x => x is Coal);
 
             //マップの更新
             map.Update(gameTime);
@@ -154,7 +165,10 @@ namespace TeamWorkGame.Scene
             fires.ForEach(x => x.Draw(renderer, camera.OffSet));
 
             clearSelect.Draw(renderer);
-            
+
+            //炭の取得数を描画 By佐瀬拓海
+            renderer.DrawTexture("coal", new Vector2(1088, 64));
+            renderer.DrawNumber("number", new Vector2(1152, 64), coals.Count - nowCoals.Count);
 
             //renderer.End();
         }

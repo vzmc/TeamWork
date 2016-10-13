@@ -1,6 +1,6 @@
 ﻿/////////////////////////////////////////////////
 // 最終修正時間：2016年10月13日
-// By 長谷川修一
+// By 佐瀬拓海
 /////////////////////////////////////////////////
 
 using System;
@@ -142,6 +142,14 @@ namespace TeamWorkGame.Def
                 MapThings.Add(iron);
                 x++;
             }
+            //炭の追加
+            //By佐瀬拓海１０月１３日
+            Coal coal1 = new Coal(new Vector2(64 * 10, 64 * 13), Vector2.Zero);
+            Coal coal2 = new Coal(new Vector2(64 * 12, 64 * 13), Vector2.Zero);
+            Coal coal3 = new Coal(new Vector2(64 * 14, 64 * 13), Vector2.Zero);
+            MapThings.Add(coal1);
+            MapThings.Add(coal2);
+            MapThings.Add(coal3);
 
             MapThings.Add(light);
             MapThings.Add(light2);

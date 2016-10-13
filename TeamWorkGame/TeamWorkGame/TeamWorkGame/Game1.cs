@@ -1,6 +1,6 @@
 //////////////////////////////////////////////
 // ゲームの始まりクラス
-// 最終修正時間　2016/10/13　BY氷見悠人　
+// 最終修正時間　2016/10/13　BY佐瀬拓海
 ////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -96,6 +96,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("title");
             renderer.LoadTexture("clear");
             renderer.LoadTexture("goal");
+            renderer.LoadTexture("coal");//佐瀬拓海
+            renderer.LoadTexture("number");//佐瀬拓海
             renderer.LoadTexture("straw");
             //ワールドマップの追加
             //葉梨竜太
