@@ -23,7 +23,7 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(1.0f);
+            timer = new Timer(0.5f);
             isToDeath = false;
             alpha = 1.0f;
         }

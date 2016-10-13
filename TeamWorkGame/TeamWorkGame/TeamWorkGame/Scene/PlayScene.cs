@@ -1,5 +1,7 @@
 ﻿//最終更新日：10月13日
 //By　佐瀬　拓海
+//最終更新日：10月13日
+//By　氷見悠人
 
 
 using System;
@@ -25,11 +27,13 @@ namespace TeamWorkGame.Scene
     {
         private GameDevice gameDevice;
         private bool isEnd;
+        private bool isClear;
         private int mapIndex;
         private Player player;
         private Camera camera;
         private Map map;
         private List<Fire> fires;
+        //private InputState inputState;    //特にいりません　By　氷見悠人
         private List<GameObject> coals;     //マップに存在した炭の数　By佐瀬拓海
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private InputState inputState;
@@ -46,7 +50,8 @@ namespace TeamWorkGame.Scene
         public void Initialize()
         {
             isEnd = false;
-            inputState = new InputState();
+            isClear = false;
+            //inputState = new InputState();
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
@@ -54,7 +59,7 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera();
-            clearSelect = new ClearSelect(inputState);
+            clearSelect = new ClearSelect(gameDevice.GetInputState());　//InputStateはGameDeviceからもらいます　By　氷見悠人
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
@@ -62,10 +67,11 @@ namespace TeamWorkGame.Scene
 
         public void Initialize(int stageIndex)
         {
-            inputState = new InputState();
-            clearSelect = new ClearSelect(inputState);
+            //inputState = new InputState();
+            clearSelect = new ClearSelect(gameDevice.GetInputState());　//InputStateはGameDeviceからもらいます　By　氷見悠人
             mapIndex = stageIndex;
             isEnd = false;
+            isClear = false;
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
@@ -80,55 +86,59 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gameTime)
         {
-            inputState.Update();
-
-            //マップ上の物達の更新
-            foreach (var m in map.MapThings)
-            {
-                m.Update(gameTime);
-            }
-
-            //プレイヤーの更新
-            player.Update(gameTime);
-
-            //火の更新
-            for(int i = fires.Count-1; i >= 0; i--)
-            {
-                fires[i].Update(gameTime);
-
-                //foreach (var m in map.MapThings)
-                //{
-                //    x.CollisionCheck(m);
-                //}
-
-                //if (player.CollisionCheck(x))
-                //{
-                //    //x.IsReturn = true;
-                //}
-                //else
-                //{
-                //    //x.IsReturn = false;
-                //}
-            }
-
-            //死んだ火を消す
-            fires.RemoveAll(x =>  x.IsDead); // && x.IsOnGround 
-
-            //マップ上にある炭の数を取得
-            nowCoals = map.MapThings.FindAll(x => x is Coal);
-
-            //マップの更新
-            map.Update(gameTime);
-
-            //カメラの注視位置を更新
-            camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width/2, player.ImageSize.Height/2));
-            //Console.WriteLine(camera.OffSet);
-
-            if(map.GetGoal() != null)
-                if(map.GetGoal().IsOnFire) {
-                    clearSelect.IsClear = true;
+            //inputState.Update();
+            if (!isClear)
+            {//マップ上の物達の更新
+                foreach (var m in map.MapThings)
+                {
+                    m.Update(gameTime);
                 }
 
+                //プレイヤーの更新
+                player.Update(gameTime);
+
+                //火の更新
+                for (int i = fires.Count - 1; i >= 0; i--)
+                {
+                    fires[i].Update(gameTime);
+
+                    //foreach (var m in map.MapThings)
+                    //{
+                    //    x.CollisionCheck(m);
+                    //}
+
+                    //if (player.CollisionCheck(x))
+                    //{
+                    //    //x.IsReturn = true;
+                    //}
+                    //else
+                    //{
+                    //    //x.IsReturn = false;
+                    //}
+                }
+
+                //死んだ火を消す
+                fires.RemoveAll(x => x.IsDead); // && x.IsOnGround 
+
+                //マップの更新
+                map.Update(gameTime);
+
+                //カメラの注視位置を更新
+                camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
+                //Console.WriteLine(camera.OffSet);
+                //マップ上にある炭の数を取得
+                nowCoals = map.MapThings.FindAll(x => x is Coal);
+
+                //マップの更新
+                map.Update(gameTime);
+
+                if (map.GetGoal() != null)
+                    if (map.GetGoal().IsOnFire)
+                    {
+                        isClear = true;
+                        clearSelect.IsClear = true;
+                    }
+            }
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
         }

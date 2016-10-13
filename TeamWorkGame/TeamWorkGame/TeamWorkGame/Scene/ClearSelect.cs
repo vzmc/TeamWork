@@ -1,4 +1,9 @@
-﻿using System;
+﻿/////////////////////////////////////////////
+//　クリア画面
+//  作成者：柏杳
+/////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,7 +56,6 @@ namespace TeamWorkGame.Scene
                 //選択確定
                 else if (inputState.IsKeyDown(Keys.Enter)) { isEnd = true; }
             }
-
         }
 
 
@@ -74,7 +78,5 @@ namespace TeamWorkGame.Scene
                 renderer.DrawTexture("selecter", selected[select]);
             }
         }
-
-
     }
 }

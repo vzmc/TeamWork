@@ -63,6 +63,7 @@ namespace TeamWorkGame
             sceneManager = new SceneManager();
             //IScene playScene = new PlayScene(gameDevice);
             sceneManager.Add(SceneType.Title, new Title(gameDevice));
+            
             //ステージクラスの追加
             //葉梨竜太
             //２０１６年１０月１２日
@@ -73,7 +74,7 @@ namespace TeamWorkGame
 
             sceneManager.Change(new NextScene(SceneType.Title, -1));
 
-            base.Window.Title = "ヒーロー";
+            base.Window.Title = "プロメテウスの火";
 
             base.Initialize();  //絶対に消すな
         }
