@@ -54,16 +54,17 @@ namespace TeamWorkGame.Scene
             mapIndex = 0;
         }
                
+        //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(Renderer renderer)
         {
 
-            renderer.Begin();
+            //renderer.Begin();
 
             renderer.DrawTexture("worldmap", Vector2.Zero);
 
             renderer.DrawTexture("hero",herol[mapIndex]);
 
-            renderer.End();
+            //renderer.End();
         }
 
         public void Update(GameTime gametime)

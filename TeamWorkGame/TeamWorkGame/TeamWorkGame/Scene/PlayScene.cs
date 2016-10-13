@@ -122,9 +122,10 @@ namespace TeamWorkGame.Scene
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
         }
 
+        //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(Renderer renderer)
         {
-            renderer.Begin();
+            //renderer.Begin();
 
             for (int i = 0; i < map.Data.GetLength(0); i++)
             {
@@ -155,7 +156,7 @@ namespace TeamWorkGame.Scene
             clearSelect.Draw(renderer);
             
 
-            renderer.End();
+            //renderer.End();
         }
 
         public Rectangle GetRect(int num)
@@ -180,8 +181,6 @@ namespace TeamWorkGame.Scene
             
         }
 
-
-
         NextScene IScene.Next() {
 
             //clear画面の選択肢によって、処理する
@@ -193,7 +192,8 @@ namespace TeamWorkGame.Scene
             else if (clearSelect.GetSelect == 1) {     //RePlay
                 nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             }
-            else {      //World
+            else
+            {      //World
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
              

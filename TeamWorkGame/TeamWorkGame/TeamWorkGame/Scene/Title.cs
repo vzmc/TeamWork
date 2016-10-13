@@ -23,15 +23,16 @@ namespace TeamWorkGame.Scene
             Initialize();
         }
 
+        //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(Renderer renderer)
         {
             Vector2 pos = new Vector2((Parameter.ScreenWidth - 754) / 2, (Parameter.ScreenHeight - 127) / 2);
 
-            renderer.Begin();
+            //renderer.Begin();
 
             renderer.DrawTexture("title", pos);
 
-            renderer.End();
+            //renderer.End();
 
         }
 
@@ -78,8 +79,6 @@ namespace TeamWorkGame.Scene
             //２０１６年１０月１２日
             NextScene nextScene = new NextScene(SceneType.Stage, 2);
             return nextScene;
-
-
         }
     }
 }

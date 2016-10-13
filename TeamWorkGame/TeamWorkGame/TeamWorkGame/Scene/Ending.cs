@@ -23,15 +23,16 @@ namespace TeamWorkGame.Scene
             Initialize();
         }
 
+        //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(Renderer renderer)
         {
             Vector2 pos = new Vector2((Parameter.ScreenWidth - 473) / 2, (Parameter.ScreenHeight - 127) / 2);
 
-            renderer.Begin();
+            //renderer.Begin();
 
             renderer.DrawTexture("clear", pos);
 
-            renderer.End();
+            //renderer.End();
         }
 
         public void Initialize()

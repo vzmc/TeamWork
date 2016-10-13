@@ -1,3 +1,7 @@
+//////////////////////////////////////////////
+// ゲームの始まりクラス
+// 最終修正時間　2016/10/13　BY氷見悠人　
+////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,7 +140,7 @@ namespace TeamWorkGame
         }
 
         /// <summary>
-        /// This is called when the game should draw itself.
+        /// ゲーム全体で描画、描画開始と終了はここで実行する　BY張　10/13
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
@@ -144,9 +148,11 @@ namespace TeamWorkGame
             //描画クリア時の色を設定
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            renderer.Begin();
             //シーンの描画
             sceneManager.Draw(renderer);
 
+            renderer.End();
             base.Draw(gameTime);    //絶対に消すな
         }
     }
