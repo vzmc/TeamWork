@@ -2,8 +2,8 @@
 // 火のクラス
 // 作成時間：2016年9月25日
 // By 氷見悠人
-// 最終修正時間：2016年10月09日
-// By 氷見悠人
+// 最終修正時間：2016年10月13日
+// アニメーションの準備　By 氷見悠人　
 /////////////////////////////////////////////////
 
 using System;
@@ -21,6 +21,8 @@ namespace TeamWorkGame.Actor
     {
         private Map map;        //マップ情報
         private float gForce;   //重力
+        private Motion motion;  //アニメーションの動作
+        private Timer timer;                    //アニメーションの時間間隔
 
         public Fire(Vector2 position, Vector2 velocity) : base("fire", new Size(33, 44), position, velocity, true, "Fire")
         {

@@ -1,5 +1,5 @@
-﻿//最終修正時間：１０月１２日
-//By　佐瀬 拓海
+﻿//最終修正時間：１０月１3日
+//By　氷見悠人
 
 
 using System;
@@ -249,6 +249,7 @@ namespace TeamWorkGame.Actor
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
+        /// <param name="offset">カメラ偏移</param>
         public virtual void Draw(Renderer renderer, Vector2 offset)
         {
             renderer.DrawTexture(name, position + offset);
@@ -258,9 +259,23 @@ namespace TeamWorkGame.Actor
         /// 描画(透明値を設定する)    作成者：佐瀬　日付：１０/１２
         /// </summary>
         /// <param name="renderer"></param>
+        /// <param name="offset">カメラ偏移</param>
+        /// <param name="alpha">透明値</param>
         public virtual void Draw(Renderer renderer, Vector2 offset, float alpha = 1.0f)
         {
             renderer.DrawTexture(name, position + offset, alpha);
+        }
+
+        /// <summary>
+        /// 描画（範囲指定する）      BY 氷見悠人   2016/10/13
+        /// </summary>
+        /// <param name="renderer"></param>
+        /// <param name="offset">カメラ偏移</param>
+        /// <param name="rect">描画範囲</param>
+        /// <param name="alpha">透明値</param>
+        public virtual void Draw(Renderer renderer, Vector2 offset, Rectangle rect, float alpha = 1.0f)
+        {
+            renderer.DrawTexture(name, position + offset, rect, alpha);
         }
 
         /// <summary>
