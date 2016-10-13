@@ -64,6 +64,8 @@
     <Compile Include="Actor\Iron.cs" />
     <Compile Include="Actor\Light.cs" />
     <Compile Include="Actor\Player.cs" />
+    <Compile Include="Actor\Straw.cs" />
+    <Compile Include="Actor\Tree.cs" />
     <Compile Include="Def\MapManager.cs" />
     <Compile Include="Def\Parameter.cs" />
     <Compile Include="Device\Camera.cs" />

@@ -1,8 +1,8 @@
 ﻿/////////////////////////////////////////////////
-// 鉄ブロックのクラス
+// 藁のクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月12日
+// 最終修正時間：2016年10月13日
 // By 長谷川修一
 /////////////////////////////////////////////////
 
@@ -17,26 +17,23 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Iron : GameObject
+    public class Straw : GameObject
     {
         private Timer timer;
         private bool isToDeath;
-
-        public Iron(Vector2 pos, Vector2 velo)
-            : base("iron", new Size(64, 64), pos, velo, false, "Iron")
+        public Straw(Vector2 pos)
+            : base("straw", new Size(64 * 1, 64 * 1), pos, Vector2.Zero,false, "Straw")
         {
+
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(0.1f);
+            timer = new Timer(2.0f);
             isToDeath = false;
         }
 
-        /// <summary>
-        /// 死亡する時
-        /// </summary>
         public void ToDeath()
         {
             if (!isToDeath)
@@ -52,18 +49,22 @@ namespace TeamWorkGame.Actor
                 timer.Update();
                 if (timer.IsTime())
                 {
-                    isDead = true;
+                    IsDead = true;
                 }
+
             }
         }
 
         public override void EventHandle(GameObject other)
         {
-            //火の数が5以上の時に消える
-            if (other is Player && ((Player)other).FireNum > 4)
+            if (other is Fire)
             {
-                ToDeath();
+                other.IsDead = true;
+
             }
+            name = "fire";
+            IsTrigger = true;
+            ToDeath();
         }
     }
 }

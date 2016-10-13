@@ -96,6 +96,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("title");
             renderer.LoadTexture("clear");
             renderer.LoadTexture("goal");
+            renderer.LoadTexture("straw");
             //ƒ[ƒ‹ƒhƒ}ƒbƒv‚Ì’Ç‰Á
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú

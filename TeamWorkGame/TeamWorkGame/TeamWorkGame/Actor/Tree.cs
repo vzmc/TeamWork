@@ -1,8 +1,8 @@
 ﻿/////////////////////////////////////////////////
-// 鉄ブロックのクラス
+// 木のクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月12日
+// 最終修正時間：2016年10月13日
 // By 長谷川修一
 /////////////////////////////////////////////////
 
@@ -17,29 +17,26 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Actor
 {
-    public class Iron : GameObject
+    public class Tree : GameObject
     {
         private Timer timer;
         private bool isToDeath;
-
-        public Iron(Vector2 pos, Vector2 velo)
-            : base("iron", new Size(64, 64), pos, velo, false, "Iron")
+        public Tree(Vector2 pos)
+            : base("tree", new Size(64 * 3, 64 * 3), pos, Vector2.Zero,false, "Tree")
         {
+
         }
 
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(0.1f);
+            timer = new Timer(2.0f);
             isToDeath = false;
         }
 
-        /// <summary>
-        /// 死亡する時
-        /// </summary>
         public void ToDeath()
         {
-            if (!isToDeath)
+            if(!isToDeath)
             {
                 isToDeath = true;
             }
@@ -47,23 +44,26 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
-            if (isToDeath)
+            if(isToDeath)
             {
                 timer.Update();
-                if (timer.IsTime())
+                if(timer.IsTime())
                 {
-                    isDead = true;
+                    IsDead = true;
                 }
+                
             }
         }
 
         public override void EventHandle(GameObject other)
         {
-            //火の数が5以上の時に消える
-            if (other is Player && ((Player)other).FireNum > 4)
+            if(other is Fire)
             {
-                ToDeath();
+                other.IsDead = true;
             }
+            name = "fire";
+            IsTrigger = true;
+            ToDeath();
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿/////////////////////////////////////////////////
-// 最終修正時間：2016年10月12日
+// 最終修正時間：2016年10月13日
 // By 長谷川修一
 /////////////////////////////////////////////////
 
@@ -85,6 +85,8 @@ namespace TeamWorkGame.Def
             map = new Map(mapdata, blockSize, MapThings);
         }
 
+        //鉄、木、藁ブロックの追加
+        //By長谷川修一 2016/10/13
         public static void Stage3()
         {
             List<Actor.GameObject> MapThings = new List<Actor.GameObject>();
@@ -112,6 +114,8 @@ namespace TeamWorkGame.Def
             Light light = new Light(new Vector2(64 * 11, 64 * 10));
             Light light2 = new Light(new Vector2(64 * 16, 64 * 8));
             Light light3 = new Light(new Vector2(64 * 21, 64 * 6));
+            Tree tree = new Tree(new Vector2(64 * 20, 64 * 12));
+            Straw straw = new Straw(new Vector2(64 * 5, 64 * 14));
 
             //Goal goal = new Goal(new Vector2(64 * 27, 64 * 4 - 44));
             Goal goal = new Goal(new Vector2(64 * 3, 64 * 12 - 44));
@@ -129,8 +133,7 @@ namespace TeamWorkGame.Def
                 x++;
                 y--;
             }
-            //鉄ブロックの追加
-            //By長谷川修一 2016/10/12
+
             x = 10;
             y = 14;
             for (int i = 0; i < 10; i++)
@@ -143,6 +146,8 @@ namespace TeamWorkGame.Def
             MapThings.Add(light);
             MapThings.Add(light2);
             MapThings.Add(light3);
+            MapThings.Add(tree);
+            MapThings.Add(straw);
 
             map = new Map(mapdata, blockSize, MapThings);
         }

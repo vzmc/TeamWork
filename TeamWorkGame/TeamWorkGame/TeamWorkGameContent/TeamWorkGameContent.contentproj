@@ -91,6 +91,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="straw.png">
+      <Name>straw</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="ClearWindow.png">
       <Name>ClearWindow</Name>
       <Importer>TextureImporter</Importer>
