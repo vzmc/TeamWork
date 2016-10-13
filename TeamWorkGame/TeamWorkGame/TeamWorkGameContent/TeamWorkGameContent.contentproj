@@ -119,6 +119,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StaffText.png">
+      <Name>StaffText</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="WorldText.png">
+      <Name>WorldText</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GameStartText.png">
+      <Name>GameStartText</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="coal.png">
       <Name>coal</Name>
       <Importer>TextureImporter</Importer>

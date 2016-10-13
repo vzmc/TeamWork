@@ -103,9 +103,13 @@ namespace TeamWorkGame
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
             renderer.LoadTexture("worldmap");
-            
+
+            //”
             renderer.LoadTexture("ClearWindow");
             renderer.LoadTexture("selecter");
+            renderer.LoadTexture("GameStartText");
+            renderer.LoadTexture("WorldText");
+            renderer.LoadTexture("StaffText");
 
             // TODO: use this.Content to load your game content here
         }

@@ -16,6 +16,7 @@ namespace TeamWorkGame.Scene
     {
         private InputState inputState;
         private bool isEnd;
+        private TitleSelect titleSelect;    //タイトルの選択肢を管理するクラス（柏）
 
         public Title(GameDevice gameDevice)
         {
@@ -31,6 +32,7 @@ namespace TeamWorkGame.Scene
             //renderer.Begin();
 
             renderer.DrawTexture("title", pos);
+            titleSelect.Draw(renderer);
 
             //renderer.End();
 
@@ -38,11 +40,15 @@ namespace TeamWorkGame.Scene
 
         public void Initialize()
         {
+            titleSelect = new TitleSelect(inputState);
+            titleSelect.Initialize();
             isEnd = false;
         }
 
         public void Initialize(int index)
         {
+            titleSelect = new TitleSelect(inputState);
+            titleSelect.Initialize();
             isEnd = false;
         }
 
@@ -63,10 +69,20 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gametime)
         {
-            if (inputState.IsKeyDown(Keys.Enter))
-            {
-                isEnd = true;
+            if (!titleSelect.GetStarted) {
+                if (inputState.IsKeyDown(Keys.Enter)) {
+                    //Startを表示するから、他の選択肢の表示を移す
+                    titleSelect.GetStarted = true;
+                }
+                
             }
+            else {
+                if (inputState.IsKeyDown(Keys.Enter)) {
+                    isEnd = true;
+                }
+            }
+
+            titleSelect.Update();
         }
 
         NextScene IScene.Next()
@@ -77,7 +93,13 @@ namespace TeamWorkGame.Scene
             //ステージセレクト画面へ移行
             //Ｂｙ葉梨竜太
             //２０１６年１０月１２日
-            NextScene nextScene = new NextScene(SceneType.Stage, 2);
+            //NextScene nextScene = new NextScene(SceneType.Stage, 2);
+
+            NextScene nextScene;
+            //選択肢によって、次のシーンに移す
+            if (titleSelect.GetSelect == 1) { nextScene = new NextScene(SceneType.PlayScene, -1); }
+            else { nextScene = new NextScene(SceneType.Stage, -1); }
+
             return nextScene;
         }
     }
