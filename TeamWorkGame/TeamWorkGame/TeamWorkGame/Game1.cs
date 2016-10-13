@@ -1,7 +1,9 @@
-//////////////////////////////////////////////
-// ƒQ[ƒ€‚Ìn‚Ü‚èƒNƒ‰ƒX
-// ÅIC³ŠÔ@2016/10/13@BY²£‘ñŠC
-////////////////////////////////////////////
+/////////////////////////////////////////////////
+// Game1
+// ÅIC³ŠÔF2016”N10Œ13“ú
+// By@—t—œ—³‘¾
+/////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -68,6 +70,10 @@ namespace TeamWorkGame
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
             sceneManager.Add(SceneType.Stage, new Stage(gameDevice));
+            //ƒXƒe[ƒW‘I‘ğ‚Ì’Ç‰Á
+            //—t—œ—³‘¾
+            //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
+            sceneManager.Add(SceneType.SmallStage, new SmallStage(gameDevice));
             sceneManager.Add(SceneType.PlayScene, new PlayScene(gameDevice, 0));
             sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
 
@@ -104,6 +110,16 @@ namespace TeamWorkGame
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
             renderer.LoadTexture("worldmap");
+            //ƒXƒe[ƒW‘I‘ğˆ‚Ì’Ç‰Á
+            //”wŒi‚Ì’Ç‰Á
+            //—t—œ—³‘¾
+            //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
+            renderer.LoadTexture("smallmap");
+            renderer.LoadTexture("frame");
+            renderer.LoadTexture("forestBG");
+
+
+            
 
             //”
             renderer.LoadTexture("ClearWindow");

@@ -1,9 +1,9 @@
-﻿
-/////////////////////////////////////////////////
-// ステージのクラス
-// 最終修正時間：2016年10月13日
+﻿/////////////////////////////////////////////////
+// ステージ選択のクラス
+// 作成時間：2016年10月13日
 // By 葉梨竜太
 /////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,46 +23,50 @@ using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Scene
 {
-    class Stage : IScene
+    class SmallStage : IScene
     {
         private InputState inputState;
         private bool isEnd;
         private int mapIndex;
-        public List<Vector2> herol;
+        private List<Vector2> framel;
 
-        public Stage(GameDevice gameDevice)
+        public SmallStage(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
-            herol = new List<Vector2>()
+            mapIndex = 0;
+            framel = new List<Vector2>()
             {
-                new Vector2(85,153),
-                new Vector2(270,310),
-                new Vector2(610,340),
-                new Vector2(933,460),
-                new Vector2(1110,336),
+                new Vector2(33,51),
+                new Vector2(33,283),
+                new Vector2(33,498),
+                new Vector2(636,51),
+                new Vector2(636,283),
+                new Vector2(636,498),
             };
         }
+
         public void Initialize()
         {
             isEnd = false;
-            mapIndex = 0;
         }
 
         public void Initialize(int index)
         {
             isEnd = false;
-            mapIndex = 0;
         }
-               
-        //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(Renderer renderer)
         {
-
             //renderer.Begin();
 
-            renderer.DrawTexture("worldmap", Vector2.Zero);
+            renderer.DrawTexture("forestBG", Vector2.Zero);
 
-            renderer.DrawTexture("hero",herol[mapIndex]);
+            renderer.DrawTexture("frame", framel[mapIndex]);
+
+            renderer.DrawTexture("smallmap", new Vector2(43, 61));
+            renderer.DrawTexture("smallmap", new Vector2(43, 293));
+            renderer.DrawTexture("smallmap", new Vector2(43, 508));
+            renderer.DrawTexture("smallmap", new Vector2(646, 61));
+            renderer.DrawTexture("smallmap", new Vector2(646, 293));
 
             //renderer.End();
         }
@@ -72,15 +76,15 @@ namespace TeamWorkGame.Scene
             if (inputState.IsKeyDown(Keys.Right))
             {
                 mapIndex++;
-                if (mapIndex >= 4)
+                if (mapIndex >= 5)
                 {
-                    mapIndex = 4;
+                    mapIndex = 5;
                 }
             }
             else if (inputState.IsKeyDown(Keys.Left))
             {
                 mapIndex--;
-                if(mapIndex <= 0)
+                if (mapIndex <= 0)
                 {
                     mapIndex = 0;
                 }
@@ -98,14 +102,22 @@ namespace TeamWorkGame.Scene
 
         public NextScene Next()
         {
-            NextScene nextScene = new NextScene(SceneType.SmallStage, mapIndex );
+            NextScene nextScene;
+            if (mapIndex == 5)
+            {
+                nextScene = new NextScene(SceneType.Stage, mapIndex);
+            }
+            else
+            {
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+            }
             return nextScene;
         }
 
         public void ShutDown()
         {
-
         }
 
+        
     }
 }

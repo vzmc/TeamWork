@@ -67,6 +67,7 @@ namespace TeamWorkGame.Device
         /// </summary>
         public void Begin()
         {
+
             spriteBatch.Begin();
         }
 

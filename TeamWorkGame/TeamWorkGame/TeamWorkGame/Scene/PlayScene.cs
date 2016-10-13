@@ -1,9 +1,8 @@
-﻿//最終更新日：10月13日
-//By　佐瀬　拓海
-//最終更新日：10月13日
-//By　氷見悠人
-
-
+﻿/////////////////////////////////////////////////
+// PlayerScene
+// 最終修正時間：2016年10月13日
+// By　葉梨竜太
+/////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -210,15 +209,14 @@ namespace TeamWorkGame.Scene
             //clear画面の選択肢によって、処理する
             NextScene nextScene;
             if ( clearSelect.GetSelect == 0) {      //Next
-                //mapIndex++;
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+                mapIndex++;
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex );
             }
             else if (clearSelect.GetSelect == 1) {     //RePlay
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex );
             }
-            else
-            {      //World
-                nextScene = new NextScene(SceneType.Stage, -1);
+            else {      //World
+                nextScene = new NextScene(SceneType.Stage, mapIndex - 1);
             }
              
             return nextScene;
