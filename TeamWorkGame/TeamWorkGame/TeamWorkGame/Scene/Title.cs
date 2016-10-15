@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+//TitleScene
+//作成時間：2016/9/30
+//作成者：氷見悠人
+//最終修正時間：2016/10
+//修正者：柏杳
+/////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -96,9 +104,18 @@ namespace TeamWorkGame.Scene
             //NextScene nextScene = new NextScene(SceneType.Stage, 2);
 
             NextScene nextScene;
+            
             //選択肢によって、次のシーンに移す
-            if (titleSelect.GetSelect == 1) { nextScene = new NextScene(SceneType.PlayScene, -1); }
-            else { nextScene = new NextScene(SceneType.Stage, -1); }
+            if (titleSelect.GetSelect == 1)
+            {
+                //ステージ選択Sceneに入る
+                nextScene = new NextScene(SceneType.Stage, -1);
+            }
+            else
+            {
+                //StaffSceneに入る（未完成）、暫定ステージ選択Sceneに入る
+                nextScene = new NextScene(SceneType.Stage, -1);
+            }
 
             return nextScene;
         }

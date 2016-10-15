@@ -1,4 +1,10 @@
-﻿using System;
+﻿/////////////////////////////////////////////////////////////////////////////
+// カメラ処理
+// 作成時間：2016/9/25
+// 作成者：氷見悠人
+/////////////////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -110,7 +116,30 @@ namespace TeamWorkGame.Device
             SetData(aimPos);
         }
 
-        public void UpDateMap()
+        public void MoveAimPosition(Vector2 aimPos)
+        {
+            float distance = Vector2.Distance(aimPos, aimPosition);
+            float speed = GetMoveSpeed(distance);
+            Vector2 velocity = aimPos - aimPosition;
+            velocity.Normalize();
+            velocity *= speed;
+            Vector2 aim = aimPosition + velocity;
+            SetData(aim);
+        }
+
+        /// <summary>
+        /// カメラ注視位置と注視物の距離により、カメラの移動速度を計算し、速度を返す
+        /// </summary>
+        /// <param name="distance">カメラ注視位置と注視物位置の距離</param>
+        /// <returns>カメラの移動速度</returns>
+        private float GetMoveSpeed(float distance)
+        {
+            float speed;
+            speed = 0.1f * distance;
+            return speed;
+        }
+
+        public void UpdateMap()
         {
             map = MapManager.GetNowMapData();
         }

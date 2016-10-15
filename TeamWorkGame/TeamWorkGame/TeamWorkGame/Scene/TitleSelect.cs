@@ -1,4 +1,10 @@
-﻿using System;
+﻿//////////////////////////////////////////////////////
+//TitleSceneの選択機能
+//作成時間：2016/10/13
+//作成者：柏杳
+//////////////////////////////////////////////////
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

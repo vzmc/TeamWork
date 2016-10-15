@@ -241,6 +241,12 @@ namespace TeamWorkGame.Actor
                 ObstacleCheck(m);
             }
 
+            //移動速度の大きさをBlockSizeより大きくならないように制限する
+            if(velocity.Length() > map.BlockSize)
+            {
+                velocity.Normalize();
+                velocity *= map.BlockSize;
+            }
             position += velocity;
 
             //マップ上の物と衝突区域判定

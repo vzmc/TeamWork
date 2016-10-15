@@ -1,4 +1,11 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////
+// 重要のメソッド達
+// 作成時間：2016/10/1
+// 作成者：氷見悠人　
+// 最終修正時間：2016/10/14
+// 修正者：氷見悠人
+/////////////////////////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -124,9 +131,12 @@ namespace TeamWorkGame.Utility
         {
             bool flag = false;
 
-            if((position1.X <= position2.X + width2 - 1 && position1.X + width1 - 1 >= position2.X) || (position2.X <= position1.X + width1 - 1 && position2.X + width2 - 1 >= position1.X))
+            // || (position2.X <= position1.X + width1 - 1 && position2.X + width2 - 1 >= position1.X)
+            // || (position2.Y <= position1.Y + height1 - 1 && position2.Y + height2 - 1 >= position1.Y
+            //無駄の判定を消した　BY氷見悠人
+            if ((position1.X <= position2.X + width2 - 1 && position1.X + width1 - 1 >= position2.X))
             {
-                if((position1.Y <= position2.Y + height2 - 1 && position1.Y + height1 - 1 >= position2.Y) || (position2.Y <= position1.Y + height1 - 1 && position2.Y + height2 - 1 >= position1.Y))
+                if((position1.Y <= position2.Y + height2 - 1 && position1.Y + height1 - 1 >= position2.Y))
                 {
                     flag = true;
                 }

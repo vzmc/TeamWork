@@ -3,6 +3,14 @@
 // 最終修正時間：2016年10月13日
 // By　葉梨竜太
 /////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+//プレイシーン
+//作成時間：2016/9/26
+//作成者：氷見悠人
+//最終更新日：10月13日
+//By　氷見悠人
+////////////////////////////////////////////////////////////
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -123,7 +131,8 @@ namespace TeamWorkGame.Scene
                 map.Update(gameTime);
 
                 //カメラの注視位置を更新
-                camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
+                //camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
+                camera.MoveAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
                 //Console.WriteLine(camera.OffSet);
                 //マップ上にある炭の数を取得
                 nowCoals = map.MapThings.FindAll(x => x is Coal);

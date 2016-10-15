@@ -1,5 +1,4 @@
-﻿
-/////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////
 // ステージのクラス
 // 最終修正時間：2016年10月13日
 // By 葉梨竜太
@@ -73,14 +72,15 @@ namespace TeamWorkGame.Scene
             {
                 mapIndex++;
                 if (mapIndex >= 4)
+                if (mapIndex > 3)
                 {
-                    mapIndex = 4;
+                    mapIndex = 3;
                 }
             }
             else if (inputState.IsKeyDown(Keys.Left))
             {
                 mapIndex--;
-                if(mapIndex <= 0)
+                if(mapIndex < 0)
                 {
                     mapIndex = 0;
                 }
@@ -98,7 +98,8 @@ namespace TeamWorkGame.Scene
 
         public NextScene Next()
         {
-            NextScene nextScene = new NextScene(SceneType.SmallStage, mapIndex );
+            NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+            //NextScene nextScene = new NextScene(SceneType.SmallStage, mapIndex );
             return nextScene;
         }
 
