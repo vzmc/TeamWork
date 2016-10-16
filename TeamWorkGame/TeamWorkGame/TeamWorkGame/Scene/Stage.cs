@@ -71,10 +71,9 @@ namespace TeamWorkGame.Scene
             if (inputState.IsKeyDown(Keys.Right))
             {
                 mapIndex++;
-                if (mapIndex >= 4)
-                if (mapIndex > 3)
+                if (mapIndex > 4)
                 {
-                    mapIndex = 3;
+                    mapIndex = 4;
                 }
             }
             else if (inputState.IsKeyDown(Keys.Left))

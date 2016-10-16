@@ -3,8 +3,8 @@
 // マップ作成管理クラス
 // 作成時間：2016/9/30
 // 作成者：氷見悠人
-// 最終修正時間：2016年10月13日
-// By　葉梨竜太
+// 最終修正時間：2016年10月15日
+// By　氷見悠人
 /////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -25,8 +25,15 @@ namespace TeamWorkGame.Def
         private static int nowMapIndex = -1;
         private static Map map = null;
         private static int blockSize = 64;
-        private static List<Action> CreateStage; 
+        private static List<Action> CreateStage;
 
+        public static int StageCount
+        {
+            get
+            {
+                return CreateStage.Count;
+            }
+        }
         //ステージ１の編集
         //葉梨竜太
         //２０１６年１０月１３日
