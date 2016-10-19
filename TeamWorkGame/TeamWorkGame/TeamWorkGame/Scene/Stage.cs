@@ -54,7 +54,7 @@ namespace TeamWorkGame.Scene
         }
                
         //描画の開始と終了は全部Game1のDrawに移動した
-        public void Draw(Renderer renderer)
+        public void Draw(GameTime gameTime, Renderer renderer)
         {
 
             //renderer.Begin();

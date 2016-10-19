@@ -67,6 +67,7 @@
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\Straw.cs" />
     <Compile Include="Actor\Tree.cs" />
+    <Compile Include="Actor\Water.cs" />
     <Compile Include="Def\GimmickType.cs" />
     <Compile Include="Def\MapManager.cs" />
     <Compile Include="Def\Parameter.cs" />
@@ -92,6 +93,8 @@
     <Compile Include="Scene\Title.cs" />
     <Compile Include="Scene\TitleSelect.cs" />
     <Compile Include="Size.cs" />
+    <Compile Include="Device\Animation.cs" />
+    <Compile Include="Device\AnimationPlayer.cs" />
     <Compile Include="Utility\Map.cs" />
     <Compile Include="Utility\Method.cs" />
     <Compile Include="Utility\Range.cs" />

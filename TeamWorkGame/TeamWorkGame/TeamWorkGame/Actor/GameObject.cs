@@ -2,8 +2,8 @@
 //マップ上にある物の親クラス
 //作成時間：2016/9/23
 //作成者：氷見悠人
-//最終修正時間：2016/10/19
-//修正者：佐瀬拓海
+//最終修正時間：2016/10/20
+//修正者：氷見悠人 DrawにGameTime引数を追加
 ///////////////////////////////////////////////////////////////////
 
 using System;
@@ -267,7 +267,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         /// <param name="renderer"></param>
         /// <param name="offset">カメラ偏移</param>
-        public virtual void Draw(Renderer renderer, Vector2 offset)
+        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
         {
             renderer.DrawTexture(name, position + offset);
         }
@@ -278,7 +278,7 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         /// <param name="offset">カメラ偏移</param>
         /// <param name="alpha">透明値</param>
-        public virtual void Draw(Renderer renderer, Vector2 offset, float alpha = 1.0f)
+        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float alpha = 1.0f)
         {
             renderer.DrawTexture(name, position + offset, alpha);
         }
@@ -290,7 +290,7 @@ namespace TeamWorkGame.Actor
         /// <param name="offset">カメラ偏移</param>
         /// <param name="rect">描画範囲</param>
         /// <param name="alpha">透明値</param>
-        public virtual void Draw(Renderer renderer, Vector2 offset, Rectangle rect, float alpha = 1.0f)
+        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, Rectangle rect, float alpha = 1.0f)
         {
             renderer.DrawTexture(name, position + offset, rect, alpha);
         }
@@ -302,7 +302,7 @@ namespace TeamWorkGame.Actor
         /// <param name="offset">カメラ偏移</param>
         /// <param name="scale">描画範囲</param>
         /// <param name="alpha">透明値</param>
-        public virtual void Draw(Renderer renderer, Vector2 offset, float scale, float alpha = 1.0f)
+        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float scale, float alpha = 1.0f)
         {
             renderer.DrawTexture(name, position + offset, scale, alpha);
         }
@@ -385,6 +385,7 @@ namespace TeamWorkGame.Actor
             {
                 other.IsDead = true;
                 isShow = false;         //不可視化
+
             }
             spawnTimer.Initialize(); //Timerを初期化して可視化するのを防ぐ
         }

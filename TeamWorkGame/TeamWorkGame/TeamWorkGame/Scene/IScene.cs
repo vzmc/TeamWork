@@ -11,8 +11,8 @@ namespace TeamWorkGame.Scene
     {
         void Initialize();              //初期化
         void Initialize(int index);
-        void Update(GameTime gametime); //更新
-        void Draw(Renderer renderer);   //描画
+        void Update(GameTime gameTime); //更新
+        void Draw(GameTime gameTime, Renderer renderer);   //描画
         void ShutDown();                //終了
 
         //シーン管理

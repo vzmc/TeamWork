@@ -171,7 +171,7 @@ namespace TeamWorkGame.Scene
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
-        public void Draw(Renderer renderer)
+        public void Draw(GameTime gameTime, Renderer renderer)
         {
             //renderer.Begin();
 
@@ -193,27 +193,27 @@ namespace TeamWorkGame.Scene
             {
                 if(x is Ice || x is Iron) //溶けて再度固まるブロックは別に描画
                 {
-                    x.Draw(renderer, camera.OffSet, x.GetAlpha());
+                    x.Draw(gameTime, renderer, camera.OffSet, x.GetAlpha());
                 }
                 //-----by長谷川修一 10/18
                 else if (x is Straw)
                 {
-                    x.Draw(renderer, camera.OffSet, ((Straw)x).GetScale(), 1.0f);
+                    x.Draw(gameTime, renderer, camera.OffSet, ((Straw)x).GetScale(), 1.0f);
                 }
                 else if (x is Tree)
                 {
-                    x.Draw(renderer, camera.OffSet, ((Tree)x).GetScale(), 1.0f);
+                    x.Draw(gameTime, renderer, camera.OffSet, ((Tree)x).GetScale(), 1.0f);
                 }
                 //-----
                 else
                 {
-                    x.Draw(renderer, camera.OffSet);
+                    x.Draw(gameTime, renderer, camera.OffSet);
                 }
             }
 
-            player.Draw(renderer, camera.OffSet);
+            player.Draw(gameTime, renderer, camera.OffSet);
 
-            fires.ForEach(x => x.Draw(renderer, camera.OffSet));
+            fires.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet));
 
             clearSelect.Draw(renderer);
 
@@ -250,7 +250,6 @@ namespace TeamWorkGame.Scene
 
         NextScene IScene.Next()
         {
-
             //clear画面の選択肢によって、処理する
             NextScene nextScene;
             if (clearSelect.GetSelect == 0)
@@ -271,7 +270,8 @@ namespace TeamWorkGame.Scene
 
                 nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             }
-            else {      //World
+            else
+            {     //World
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
 

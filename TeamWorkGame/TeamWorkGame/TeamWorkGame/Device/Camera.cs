@@ -118,12 +118,32 @@ namespace TeamWorkGame.Device
 
         public void MoveAimPosition(Vector2 aimPos)
         {
-            float distance = Vector2.Distance(aimPos, aimPosition);
-            float speed = GetMoveSpeed(distance);
-            Vector2 velocity = aimPos - aimPosition;
-            velocity.Normalize();
-            velocity *= speed;
-            Vector2 aim = aimPosition + velocity;
+            Vector2 distance = aimPos - aimPosition;
+            //float speed = 0;
+            Vector2 aim;
+
+            Vector2 velocity = distance * 0.9f;
+
+            //カメラの位置を整数化
+            velocity.X = (float)Math.Floor((velocity.X));
+            velocity.Y = (float)Math.Floor((velocity.Y));
+
+            aim = aimPos - velocity;
+            //if (distance <= 1)
+            //{
+            //    aim = aimPos;
+            //}
+            //else
+            //{
+            //    Vector2 velocity = aimPos - aimPosition;
+            //    velocity *= 0.1f;
+            //    aim = aimPosition + velocity;
+            //}
+
+            //velocity.Normalize();
+            //velocity *= speed;
+
+
             SetData(aim);
         }
 

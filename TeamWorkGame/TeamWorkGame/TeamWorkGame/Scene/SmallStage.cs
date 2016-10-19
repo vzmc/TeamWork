@@ -54,7 +54,7 @@ namespace TeamWorkGame.Scene
         {
             isEnd = false;
         }
-        public void Draw(Renderer renderer)
+        public void Draw(GameTime gameTime, Renderer renderer)
         {
             //renderer.Begin();
 

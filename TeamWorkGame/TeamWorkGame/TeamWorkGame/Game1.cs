@@ -128,6 +128,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("WorldText");
             renderer.LoadTexture("StaffText");
 
+            renderer.LoadTexture("puddle");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -174,7 +176,7 @@ namespace TeamWorkGame
 
             renderer.Begin();
             //ƒV[ƒ“‚Ì•`‰æ
-            sceneManager.Draw(renderer);
+            sceneManager.Draw(gameTime, renderer);
 
             renderer.End();
             base.Draw(gameTime);    //â‘Î‚ÉÁ‚·‚È

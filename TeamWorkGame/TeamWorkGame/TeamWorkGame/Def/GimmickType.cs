@@ -1,6 +1,9 @@
-﻿//最終更新日：10月19日
-//by 長谷川修一
-
+﻿/////////////////////////////////////////////////////////////////////////////////////
+// ギミックの種類列挙型
+// 作成者：氷見悠人
+// 最終更新日：10月19日
+// by 長谷川修一
+///////////////////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +13,15 @@ namespace TeamWorkGame.Def
 {
     enum GimmickType
     {
-        GRASS = 0,
-        GROUND1,
-        GROUND2,
-        ROCK,
-        ICE,
-        IRON,
-        STRAW,
-        COAL,
-        LIGHT,
-        GOAL,
+        GRASS = 0,      //草
+        GROUND1,        //土1
+        GROUND2,        //土2
+        ROCK,           //岩
+        ICE,            //氷
+        IRON,           //鉄
+        STRAW,          //藁
+        COAL,           //炭
+        LIGHT,          //松明
+        GOAL,           //ゴール
     }
 }

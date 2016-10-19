@@ -204,7 +204,7 @@ namespace TeamWorkGame.Utility
                         self.PositionY = obstaclePosition.Y + obstacleHeight;
                     }
 
-                    self.VelocityY = 0;
+                    self.VelocityY = 0.0f;
                 }
             }
 

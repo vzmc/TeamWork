@@ -129,7 +129,7 @@ namespace TeamWorkGame.Actor
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
-        public override void Draw(Renderer renderer, Vector2 offset)
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
         {
             renderer.DrawTexture(name, position + offset);
         }

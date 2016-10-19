@@ -32,6 +32,8 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             timer = new Timer(0.1f);
             isToDeath = false;
+            isShow = true;
+            SetTimer(0.5f, 1.0f);
         }
 
         /// <summary>
@@ -61,11 +63,12 @@ namespace TeamWorkGame.Actor
         public override void EventHandle(GameObject other)
         {
             //火の数が5以上の時に消える
-            //if (other is Player && ((Player)other).FireNum > 4)
-            //{
-            //    ToDeath();
-            //}
-            AliveEvent(other);
+            if (other is Player && ((Player)other).FireNum > 4)
+            {
+                //ToDeath();
+                AliveEvent(other);
+            }
+            //AliveEvent(other);
         }
     }
 }

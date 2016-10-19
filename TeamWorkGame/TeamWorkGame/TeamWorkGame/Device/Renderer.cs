@@ -20,7 +20,7 @@ namespace TeamWorkGame.Device
         private SpriteBatch spriteBatch;        //スプライト一括
 
         //Dictionaryで複数の画像を管理
-        private Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+        private static Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
 
         /// <summary>
         /// コンストラクタ
@@ -80,6 +80,17 @@ namespace TeamWorkGame.Device
         public void End()
         {
             spriteBatch.End();
+        }
+
+        public static Texture2D GetTexture(string name)
+        {
+            Debug.Assert(
+                textures.ContainsKey(name),
+                "アセット名が間違えていませんか？\n" +
+                "大文字小文字間違ってませんか？\n" +
+                "LoadTextureで読み込んでますか？\n" +
+                "プログラムを確認してください");
+            return textures[name];
         }
 
         /// <summary>
@@ -152,6 +163,29 @@ namespace TeamWorkGame.Device
                 scale,
                 SpriteEffects.None,
                 0);
+        }
+
+        /// <summary>
+        /// アニメーションの描画用の
+        /// </summary>
+        /// <param name="texture">"画像"</param>
+        /// <param name="position">描画位置</param>
+        /// <param name="range">切り出し範囲</param>
+        /// <param name="spriteEffects">向き</param>
+        /// <param name="alpha">透明値</param>
+        /// <param name="rotation">回転角度</param>
+        /// <param name="scale">スケール</param>
+        public void DrawTexture(Texture2D texture, Vector2 position, Rectangle range, SpriteEffects spriteEffects, float alpha = 1.0f, float rotation = 0.0f, float scale = 1.0f)
+        {
+            //登録されているキーがなければエラー表示
+            //Debug.Assert(
+            //    textures.ContainsKey(name),
+            //    "アセット名が間違えていませんか？\n" +
+            //    "大文字小文字間違ってませんか？\n" +
+            //    "loadtextureで読み込んでますか？\n" +
+            //    "プログラムを確認してください");
+
+            spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
         }
 
         /// <summary>

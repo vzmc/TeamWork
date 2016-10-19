@@ -89,7 +89,7 @@ namespace TeamWorkGame.Scene
             }
         }
 
-        public void Draw(Renderer renderer)
+        public void Draw(GameTime gameTime, Renderer renderer)
         {
             if (currentScene == null)
             {
@@ -97,7 +97,7 @@ namespace TeamWorkGame.Scene
             }
             else
             {
-                currentScene.Draw(renderer);
+                currentScene.Draw(gameTime, renderer);
             }
         }
     }

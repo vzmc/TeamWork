@@ -27,12 +27,16 @@ namespace TeamWorkGame.Actor
         //private Camera camera;
         private Map map;
         private float gForce;
-        private Motion motion;                  //アニメーション管理
-        private Timer timer;                    //アニメーションの時間間隔
+        //private Motion motion;                  //アニメーション管理
+        //private Timer timer;                    //アニメーションの時間間隔
         private Direction diretion;             //向いている方向
         private List<Fire> firesList;               //投げ出した火
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持ているひの数
+        private Animation runAnime;             //走るアニメ
+        private AnimationPlayer animePlayer;    //アニメ再生器
+        private SpriteEffects flip = SpriteEffects.None;
+
 
         public int FireNum
         {
@@ -72,6 +76,7 @@ namespace TeamWorkGame.Actor
             diretion = Direction.RIGHT;
             fireMaxNum = Parameter.FireMaxNum;
             fireNum = fireMaxNum;
+            runAnime = new Animation(Renderer.GetTexture("puddle"), 0.1f, true);
         }
 
         /// <summary>
@@ -149,29 +154,6 @@ namespace TeamWorkGame.Actor
 
                 if (flag)
                 {
-                    //if (other is Fire)
-                    //{
-                    //    ((Fire)other).IsDead = true;
-                    //    fireNum++;
-                    //}
-                    //else if (other is Light)
-                    //{
-                    //    if (((Light)other).IsOn == false)
-                    //    {
-                    //        velocity = other.Velocity;
-                    //        position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
-                    //        isOnGround = true;
-                    //        ((Light)other).ChangeSate(true);
-                    //    }
-                    //}
-                    //else if (other is Goal)
-                    //{
-                    //    ((Goal)other).IsOnFire = true;
-                    //    velocity = other.Velocity;
-                    //    position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
-                    //    isOnGround = true;
-                    //}
-
                     other.EventHandle(this);
                 }
             }
@@ -249,6 +231,12 @@ namespace TeamWorkGame.Actor
             }
             position += velocity;
 
+            
+
+            //位置を整数にする　By氷見悠人
+            position.X = (float)Math.Round(position.X);
+            position.Y = (float)Math.Round(position.Y);
+
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
@@ -263,8 +251,12 @@ namespace TeamWorkGame.Actor
 
             ThrowFire();
             Teleport();
-        }
 
+            if (velocity.X != 0)
+            {
+                animePlayer.PlayAnimation(runAnime);
+            }
+        }
 
         public bool GetState()
         {
@@ -275,9 +267,20 @@ namespace TeamWorkGame.Actor
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
-        public override void Draw(Renderer renderer, Vector2 offset)
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
         {
-            renderer.DrawTexture(name, position + offset);
+            if (velocity.X == 0)
+            {
+                renderer.DrawTexture(name, position + offset);
+            }
+            else
+            {
+                if (Velocity.X > 0)
+                    flip = SpriteEffects.FlipHorizontally;
+                else if (Velocity.X < 0)
+                    flip = SpriteEffects.None;
+                animePlayer.Draw(gameTime, renderer, position + offset, flip);
+            }
         }
 
         public override void EventHandle(GameObject other)
