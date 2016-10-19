@@ -1,8 +1,8 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
 // 氷クラス
 // 作成者：氷見悠人
-// 最終修正時間：2016/10/12
-// By 氷見悠人
+// 最終修正時間：2016/10/19
+// By 佐瀬拓海
 ////////////////////////////////////////////////////////////////////////////
 
 using System;
@@ -19,9 +19,7 @@ namespace TeamWorkGame.Actor
 {
     public class Ice : GameObject
     {
-        private Timer timer;
         private bool isToDeath;
-        private float alpha;
 
         public Ice(Vector2 pos, Vector2 velo) : base("ice", new Size(64, 64), pos, velo, false, "Ice")
         { 
@@ -30,9 +28,9 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(0.5f);
             isToDeath = false;
-            alpha = 1.0f;
+            isShow = true;      //初期値はtrue by佐瀬拓海
+            SetTimer(0.5f, 1.0f);
         }
 
         /// <summary>
@@ -48,32 +46,12 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
-            if(isToDeath)
-            {
-                timer.Update();
-                alpha -= 0.1f;
-                if(timer.IsTime())
-                {
-                    isDead = true;
-                }
-            }
+            AliveUpdate();
         }
 
         public override void EventHandle(GameObject other)
         {
-            if(other is Fire)
-            {
-                other.IsDead = true;
-            }
-            ToDeath();
-        }
-        /// <summary>
-        /// 透明値をゲットする
-        /// </summary>
-        /// <returns></returns>
-        public float GetAlpha()
-        {
-            return alpha;
+            AliveEvent(other);
         }
     }
 }

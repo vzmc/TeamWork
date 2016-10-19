@@ -1,4 +1,16 @@
-﻿//最終更新日：10月19日
+﻿/////////////////////////////////////////////////
+// PlayerScene
+// 最終修正時間：2016年10月19日
+// By　佐瀬拓海
+/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////
+//プレイシーン
+//作成時間：2016/9/26
+//作成者：氷見悠人
+//最終更新日：10月13日
+//By　氷見悠人
+////////////////////////////////////////////////////////////
+//最終更新日：10月19日
 //By　長谷川修一
 
 using System;
@@ -162,9 +174,9 @@ namespace TeamWorkGame.Scene
             //map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
             foreach (var x in map.MapThings)//By　佐瀬 拓海
             {
-                if (x is Ice)
+                if(x is Ice || x is Iron) //溶けて再度固まるブロックは別に描画
                 {
-                    x.Draw(renderer, camera.OffSet, ((Ice)x).GetAlpha());
+                    x.Draw(renderer, camera.OffSet, x.GetAlpha());
                 }
                 //-----by長谷川修一 10/18
                 else if (x is Straw)

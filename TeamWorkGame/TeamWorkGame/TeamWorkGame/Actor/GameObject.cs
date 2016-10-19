@@ -1,5 +1,10 @@
-﻿//最終修正時間：１０月１3日
-//By 長谷川修一
+﻿////////////////////////////////////////////////////////////////////
+//マップ上にある物の親クラス
+//作成時間：2016/9/23
+//作成者：氷見悠人
+//最終修正時間：2016/10/19
+//修正者：佐瀬拓海
+///////////////////////////////////////////////////////////////////
 
 using System;
 using System.Collections.Generic;
@@ -27,7 +32,11 @@ namespace TeamWorkGame.Actor
         protected bool isOnGround;      //地上にいるか？
         protected string tag;           //タグ
         protected bool isTrigger;       //衝突判定の種類 true: 衝突区域  false: 障害物
-        
+        protected bool isShow;          //存在判定 true:見える false:見えない
+        private Timer deathTimer;       //消えるまでのTimer
+        private Timer spawnTimer;       //再度見えるようになるまでのTimer
+        protected float alpha;
+
         //プロパティ
         public Size ImageSize
         {
@@ -200,7 +209,9 @@ namespace TeamWorkGame.Actor
             colOffset = Vector2.Zero;
             this.tag = tag;
             this.isTrigger = isTrigger;
-            
+            deathTimer = new Timer(0.5f);
+            spawnTimer = new Timer(0.5f);
+
             Initialize();
         }
 
@@ -225,6 +236,8 @@ namespace TeamWorkGame.Actor
             this.colOffset = colOffset;
             this.tag = tag;
             this.isTrigger = isTrigger;
+            deathTimer = new Timer(0.5f);
+            spawnTimer = new Timer(0.5f);
 
             Initialize();
         }
@@ -236,6 +249,11 @@ namespace TeamWorkGame.Actor
         {
             isDead = false;
             isOnGround = false;
+            isShow = true;      //初期はTrue（見える
+            alpha = 1.0f;
+            //Timerの初期化
+            deathTimer.Initialize();
+            spawnTimer.Initialize();
         }
 
         /// <summary>
@@ -311,6 +329,73 @@ namespace TeamWorkGame.Actor
             bool flag = Method.ObstacleCheck(this, other);
 
             return flag;
+        }
+
+        /// <summary>
+        /// 消える時間と復活までの時間を設定
+        /// </summary>
+        /// <param name="deathTime">消える時間</param>
+        /// <param name="spawnTime">復活する時間</param>
+        public void SetTimer(float deathTime, float spawnTime)
+        {
+            deathTimer.Change(deathTime);
+            spawnTimer.Change(spawnTime);
+        }
+
+        /// <summary>
+        /// 存在判定（そのクラスのUpdateに追加する）
+        /// </summary>
+        public void AliveUpdate()   
+        {
+            if (isShow == false)//見えないとき
+            {
+                deathTimer.Update();
+                if (alpha >= 0.0f)       //Alphaが０になるまで減らす
+                {
+                    alpha -= 0.06f;
+                }
+                if (deathTimer.IsTime())     //時間になったら当たり判定を消す
+                {
+                    isTrigger = true;
+                }
+                spawnTimer.Update();
+                if (spawnTimer.IsTime())
+                {
+                    isShow = true;      //可視化
+                    deathTimer.Initialize(); //Timerの初期化
+                }
+            }
+            else//見えるとき
+            {
+                isTrigger = false; //当たり判定を作る
+                if (alpha <= 1.0f) // alphaを増やす
+                {
+                    alpha += 0.1f;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 存在判定（EventHandleに追加する）
+        /// </summary>
+        /// <param name="other">対象</param>
+        public void AliveEvent(GameObject other)
+        {
+            if (other is Fire || other is Player)
+            {
+                other.IsDead = true;
+                isShow = false;         //不可視化
+            }
+            spawnTimer.Initialize(); //Timerを初期化して可視化するのを防ぐ
+        }
+
+        /// <summary>
+        /// 透明値を返す
+        /// </summary>
+        /// <returns></returns>
+        public float GetAlpha()
+        {
+            return alpha;
         }
 
         /// <summary>
