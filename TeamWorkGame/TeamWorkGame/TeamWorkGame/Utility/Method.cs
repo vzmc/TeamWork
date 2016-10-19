@@ -2,8 +2,8 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/10/14
-// 修正者：氷見悠人
+// 最終修正時間：2016/10/19
+// 修正者:長谷川修一
 /////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Actor;
+using TeamWorkGame.Def;
 
 namespace TeamWorkGame.Utility
 {
@@ -213,6 +214,61 @@ namespace TeamWorkGame.Utility
             //}
 
             return flag;
+        }
+
+        //by 長谷川修一 10/19
+        /// <summary>
+        /// ギミック設置
+        /// </summary>
+        /// <param name="mapdata"></param>
+        /// <param name="MapThings"></param>
+        public static void CreateGimmicks(int[,] mapdata, List<GameObject> MapThings)
+        {
+            for (int i = 0; i < mapdata.GetLength(0); i++)
+            {
+                for (int j = 0; j < mapdata.GetLength(1); j++)
+                {
+                    switch (mapdata[i, j])
+                    {
+                        case (int)GimmickType.ICE:
+                            {
+                                Ice ice = new Ice(new Vector2(j * 64, i * 64), Vector2.Zero);
+                                MapThings.Add(ice);
+                                break;
+                            }
+                        case (int)GimmickType.IRON:
+                            {
+                                Iron iron = new Iron(new Vector2(j * 64, i * 64), Vector2.Zero);
+                                MapThings.Add(iron);
+                                break;
+                            }
+                        case (int)GimmickType.LIGHT:
+                            {
+                                Light light = new Light(new Vector2(j * 64, i * 64));
+                                MapThings.Add(light);
+                                break;
+                            }
+                        case (int)GimmickType.STRAW:
+                            {
+                                Straw straw = new Straw(new Vector2(j * 64, i * 64));
+                                MapThings.Add(straw);
+                                break;
+                            }
+                        case (int)GimmickType.COAL:
+                            {
+                                Coal coal = new Coal(new Vector2(j * 64, i * 64), Vector2.Zero);
+                                MapThings.Add(coal);
+                                break;
+                            }
+                        case (int)GimmickType.GOAL:
+                            {
+                                Goal goal = new Goal(new Vector2(j * 64, i * 64 + 20));
+                                MapThings.Add(goal);
+                                break;
+                            }
+                    }
+                }
+            }
         }
     }
 }

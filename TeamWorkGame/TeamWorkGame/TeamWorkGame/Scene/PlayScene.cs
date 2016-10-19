@@ -35,7 +35,7 @@ namespace TeamWorkGame.Scene
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private InputState inputState;
         private ClearSelect clearSelect;    //clear後の選択画面
-        
+
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
@@ -150,15 +150,19 @@ namespace TeamWorkGame.Scene
             {
                 for (int j = 0; j < map.Data.GetLength(1); j++)
                 {
-                    if (MapManager.GetNowMapArr()[i, j] != -1)
+                    //動かないマップチップはここで描画 by 長谷川修一
+                    if (MapManager.GetNowMapArr()[i, j] == 1 || MapManager.GetNowMapArr()[i, j] == 2)
+                    {
                         renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) + camera.OffSet, GetRect(map.Data[i, j]));
+                    }
+
                 }
             }
 
             //map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
-            foreach(var x in map.MapThings)//By　佐瀬 拓海
+            foreach (var x in map.MapThings)//By　佐瀬 拓海
             {
-                if(x is Ice)
+                if (x is Ice)
                 {
                     x.Draw(renderer, camera.OffSet, ((Ice)x).GetAlpha());
                 }
@@ -210,14 +214,16 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
-            
+
         }
 
-        NextScene IScene.Next() {
+        NextScene IScene.Next()
+        {
 
             //clear画面の選択肢によって、処理する
             NextScene nextScene;
-            if ( clearSelect.GetSelect == 0) {      //Next
+            if (clearSelect.GetSelect == 0)
+            {      //Next
                 if (mapIndex == MapManager.StageCount - 1)
                 {
                     mapIndex = 0;
@@ -227,16 +233,17 @@ namespace TeamWorkGame.Scene
                     mapIndex++;
                 }
 
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex );
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             }
-            else if (clearSelect.GetSelect == 1) {     //RePlay
-                
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex );
+            else if (clearSelect.GetSelect == 1)
+            {     //RePlay
+
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             }
             else {      //World
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
-             
+
             return nextScene;
         }
     }
