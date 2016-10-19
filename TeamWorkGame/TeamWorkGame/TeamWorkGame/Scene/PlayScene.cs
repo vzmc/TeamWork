@@ -45,7 +45,6 @@ namespace TeamWorkGame.Scene
         //private InputState inputState;    //特にいりません　By　氷見悠人
         private List<GameObject> coals;     //マップに存在した炭の数　By佐瀬拓海
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
-        private InputState inputState;
         private ClearSelect clearSelect;    //clear後の選択画面
 
 
@@ -139,6 +138,12 @@ namespace TeamWorkGame.Scene
                 //マップ上にある炭の数を取得
                 nowCoals = map.MapThings.FindAll(x => x is Coal);
 
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    isClear = true;
+                    clearSelect.IsClear = true;
+                }
+
                 //マップの更新
                 map.Update(gameTime);
 
@@ -150,6 +155,14 @@ namespace TeamWorkGame.Scene
                     }
             }
             clearSelect.Update();
+            if (isClear == true)
+            {
+                if (Keyboard.GetState().IsKeyDown(Keys.Q))
+                {
+                    isClear = false;
+                    clearSelect.IsClear = false;
+                }
+            }
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
         }
 
