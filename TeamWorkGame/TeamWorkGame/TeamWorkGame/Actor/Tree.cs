@@ -2,7 +2,7 @@
 // 木のクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月13日
+// 最終修正時間：2016年10月19日
 // By 長谷川修一
 /////////////////////////////////////////////////
 
@@ -21,6 +21,7 @@ namespace TeamWorkGame.Actor
     {
         private Timer timer;
         private bool isToDeath;
+        private float scale;
         public Tree(Vector2 pos)
             : base("tree", new Size(64 * 3, 64 * 3), pos, Vector2.Zero,false, "Tree")
         {
@@ -32,6 +33,7 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             timer = new Timer(2.0f);
             isToDeath = false;
+            scale = 1.0f;
         }
 
         public void ToDeath()
@@ -63,7 +65,13 @@ namespace TeamWorkGame.Actor
             }
             name = "fire";
             IsTrigger = true;
+            scale = 4.4f;
             ToDeath();
+        }
+
+        public float GetScale()
+        {
+            return scale;
         }
     }
 }

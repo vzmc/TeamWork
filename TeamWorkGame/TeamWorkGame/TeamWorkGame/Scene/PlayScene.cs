@@ -1,15 +1,5 @@
-﻿/////////////////////////////////////////////////
-// PlayerScene
-// 最終修正時間：2016年10月13日
-// By　葉梨竜太
-/////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
-//プレイシーン
-//作成時間：2016/9/26
-//作成者：氷見悠人
-//最終更新日：10月13日
-//By　氷見悠人
-////////////////////////////////////////////////////////////
+﻿//最終更新日：10月19日
+//By　長谷川修一
 
 using System;
 using System.Collections.Generic;
@@ -172,6 +162,16 @@ namespace TeamWorkGame.Scene
                 {
                     x.Draw(renderer, camera.OffSet, ((Ice)x).GetAlpha());
                 }
+                //-----by長谷川修一 10/18
+                else if (x is Straw)
+                {
+                    x.Draw(renderer, camera.OffSet, ((Straw)x).GetScale(), 1.0f);
+                }
+                else if (x is Tree)
+                {
+                    x.Draw(renderer, camera.OffSet, ((Tree)x).GetScale(), 1.0f);
+                }
+                //-----
                 else
                 {
                     x.Draw(renderer, camera.OffSet);

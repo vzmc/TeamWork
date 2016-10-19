@@ -1,8 +1,5 @@
-﻿////////////////////////////////////////////////////////////////
-// 描画機能統合
-// 作成時間：2016/9/22
-// 作成者：氷見悠人
-/////////////////////////////////////////////////////
+﻿// 最終修正時間：2016年10月13日
+// By 長谷川修一
 
 using System;
 using System.Collections.Generic;
@@ -125,6 +122,36 @@ namespace TeamWorkGame.Device
                 position,       //位置
                 rect,           //の指定範囲
                 Color.White * alpha);
+        }
+
+        //by 長谷川修一 10/13
+        /// <summary>
+        /// 描画処理(拡大縮小)
+        /// </summary>
+        /// <param name="name">アセット</param>
+        /// <param name="position">位置</param>
+        /// <param name="scale">拡大率</param>
+        /// <param name="alpha">透明度</param>
+        public void DrawTexture(string name, Vector2 position, float scale, float alpha = 1.0f)
+        {
+            //登録されているキーがなければエラー表示
+            Debug.Assert(
+                textures.ContainsKey(name),
+                "アセット名が間違えていませんか？\n" +
+                "大文字小文字間違ってませんか？\n" +
+                "LoadTextureで読み込んでますか？\n" +
+                "プログラムを確認してください");
+
+            spriteBatch.Draw(
+                textures[name],
+                position,
+                new Rectangle(0, 0, textures[name].Width, textures[name].Height),
+                Color.White * alpha,
+                0.0f,
+                Vector2.Zero,
+                scale,
+                SpriteEffects.None,
+                0);
         }
 
         /// <summary>

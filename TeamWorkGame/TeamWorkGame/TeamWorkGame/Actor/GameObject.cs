@@ -1,10 +1,5 @@
-﻿////////////////////////////////////////////////////////////////////
-//マップ上にある物の親クラス
-//作成時間：2016/9/23
-//作成者：氷見悠人
-//最終修正時間：2016/10/13
-//修正者：氷見悠人
-///////////////////////////////////////////////////////////////////
+﻿//最終修正時間：１０月１3日
+//By 長谷川修一
 
 using System;
 using System.Collections.Generic;
@@ -280,6 +275,18 @@ namespace TeamWorkGame.Actor
         public virtual void Draw(Renderer renderer, Vector2 offset, Rectangle rect, float alpha = 1.0f)
         {
             renderer.DrawTexture(name, position + offset, rect, alpha);
+        }
+
+        /// <summary>
+        /// 描画(拡大率) By 長谷川修一 2016/10/13
+        /// </summary>
+        /// <param name="renderer"></param>
+        /// <param name="offset">カメラ偏移</param>
+        /// <param name="scale">描画範囲</param>
+        /// <param name="alpha">透明値</param>
+        public virtual void Draw(Renderer renderer, Vector2 offset, float scale, float alpha = 1.0f)
+        {
+            renderer.DrawTexture(name, position + offset, scale, alpha);
         }
 
         /// <summary>
