@@ -46,6 +46,7 @@ namespace TeamWorkGame.Scene
         private List<GameObject> coals;     //マップに存在した炭の数　By佐瀬拓海
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private ClearSelect clearSelect;    //clear後の選択画面
+        private FireMeter fireMeter;
 
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
@@ -71,6 +72,8 @@ namespace TeamWorkGame.Scene
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
+            fireMeter = new FireMeter();
+            
         }
 
         public void Initialize(int stageIndex)
@@ -90,6 +93,7 @@ namespace TeamWorkGame.Scene
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
+            fireMeter = new FireMeter();
         }
 
         public void Update(GameTime gameTime)
@@ -212,6 +216,8 @@ namespace TeamWorkGame.Scene
             fires.ForEach(x => x.Draw(renderer, camera.OffSet));
 
             clearSelect.Draw(renderer);
+
+            fireMeter.Draw(renderer, player);
 
             //炭の取得数を描画 By佐瀬拓海
             renderer.DrawTexture("coal", new Vector2(1088, 64));

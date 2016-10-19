@@ -118,8 +118,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("frame");
             renderer.LoadTexture("forestBG");
 
-
-            
+            //by’·’JìCˆê  10/19
+            renderer.LoadTexture("FireMeter");
 
             //”
             renderer.LoadTexture("ClearWindow");
