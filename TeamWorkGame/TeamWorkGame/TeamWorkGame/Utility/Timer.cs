@@ -10,7 +10,7 @@ using System.Text;
 
 namespace TeamWorkGame.Utility
 {
-    class Timer
+    public class Timer
     {
         //フィールド
         private float currentTime;  //現在時間

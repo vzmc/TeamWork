@@ -33,8 +33,8 @@ namespace TeamWorkGame.Actor
         protected string tag;           //タグ
         protected bool isTrigger;       //衝突判定の種類 true: 衝突区域  false: 障害物
         protected bool isShow;          //存在判定 true:見える false:見えない
-        private Timer deathTimer;       //消えるまでのTimer
-        private Timer spawnTimer;       //再度見えるようになるまでのTimer
+        protected Timer deathTimer;       //消えるまでのTimer
+        protected Timer spawnTimer;       //再度見えるようになるまでのTimer
         protected float alpha;
 
         //プロパティ
@@ -345,7 +345,7 @@ namespace TeamWorkGame.Actor
         /// <summary>
         /// 存在判定（そのクラスのUpdateに追加する）
         /// </summary>
-        public void AliveUpdate()   
+        public virtual void AliveUpdate()   
         {
             if (isShow == false)//見えないとき
             {
@@ -379,7 +379,7 @@ namespace TeamWorkGame.Actor
         /// 存在判定（EventHandleに追加する）
         /// </summary>
         /// <param name="other">対象</param>
-        public void AliveEvent(GameObject other)
+        public virtual void AliveEvent(GameObject other)
         {
             if (other is Fire || other is Player)
             {

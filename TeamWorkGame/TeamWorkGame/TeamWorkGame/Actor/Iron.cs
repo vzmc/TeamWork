@@ -60,6 +60,20 @@ namespace TeamWorkGame.Actor
             AliveUpdate();
         }
 
+        public override void AliveEvent(GameObject other)
+        {
+            if (other is Fire)
+            {
+                other.IsDead = true;
+                isShow = false;         //不可視化
+            }
+            if(other is Player)
+            {
+                isShow = false;         //Playerの場合は不可視化だけ
+            }
+            spawnTimer.Initialize(); //Timerを初期化して可視化するのを防ぐ
+        }
+
         /// <summary>
         /// 描画の再定義（透明値を追加）　By　氷見悠人　2016/10/20
         /// </summary>
