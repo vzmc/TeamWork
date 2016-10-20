@@ -31,6 +31,7 @@ namespace TeamWorkGame.Actor
         //private Timer timer;                    //アニメーションの時間間隔
         private Direction diretion;             //向いている方向
         private List<Fire> firesList;               //投げ出した火
+        private List<WaterLine> watersList;         //滝のリスト
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持ているひの数
         private Animation runAnime;             //走るアニメ
@@ -56,11 +57,12 @@ namespace TeamWorkGame.Actor
         /// <param name="position">位置</param>
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
-        public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> firesList)
+        public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList)
             : base("hero", new Size(50, 52), position, velocity, true, "Player")
         {
             inputState = input;
             this.firesList = firesList;
+            this.watersList = watersList;
         }
 
         /// <summary>
@@ -246,6 +248,13 @@ namespace TeamWorkGame.Actor
             foreach (var f in firesList)
             {
                 CollisionCheck(f);
+            }
+
+            //滝との衝突判定
+            foreach(var wl in watersList)
+            {
+                foreach (var w in wl.Waters)
+                    CollisionCheck(w);
             }
 
             ThrowFire();

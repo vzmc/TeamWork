@@ -68,7 +68,7 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera();
-            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
+            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
@@ -97,7 +97,7 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera();
-            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
+            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);

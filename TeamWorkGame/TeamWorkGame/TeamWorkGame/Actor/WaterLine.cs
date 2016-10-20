@@ -31,6 +31,14 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        public List<Water> Waters
+        {
+            get
+            {
+                return waters;
+            }
+        }
+
         public WaterLine(Vector2 pos)
         {
             position = pos;
