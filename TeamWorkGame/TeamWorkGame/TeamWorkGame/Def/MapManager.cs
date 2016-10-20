@@ -4,7 +4,8 @@
 // 作成時間：2016/9/30
 // 作成者：氷見悠人
 // 最終修正時間：2016年10月19日
-// By 長谷川修一
+//ステージ３の変更
+// By　葉梨竜太
 /////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -86,8 +87,9 @@ namespace TeamWorkGame.Def
                 //{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 }
             };
 
-            Method.CreateGimmicks(mapdata, MapThings);
             map = new Map(mapdata, blockSize, MapThings);
+            Method.CreateGimmicks(mapdata, MapThings);
+            
         }
 
         //ステージ２の編集
@@ -161,6 +163,10 @@ namespace TeamWorkGame.Def
 
             };
 
+            //書く位置変えた
+            //葉梨竜太
+            map = new Map(mapdata, blockSize, MapThings);
+
             Light light = new Light(new Vector2(64 * 11, 64 * 10));
             Light light2 = new Light(new Vector2(64 * 16, 64 * 8));
             Light light3 = new Light(new Vector2(64 * 21, 64 * 6));
@@ -207,7 +213,7 @@ namespace TeamWorkGame.Def
             MapThings.Add(tree);
             MapThings.Add(straw);
 
-            map = new Map(mapdata, blockSize, MapThings);
+            
         }
 
         //ステージ４つ目

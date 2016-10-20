@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
 // Game1
-// 最終修正時間：2016年10月13日
+// 最終修正時間：2016年10月19日
 // By　葉梨竜太
 /////////////////////////////////////////////////
 
@@ -117,6 +117,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("smallmap");
             renderer.LoadTexture("frame");
             renderer.LoadTexture("forestBG");
+            
 
             //by長谷川修一  10/19
             renderer.LoadTexture("FireMeter");

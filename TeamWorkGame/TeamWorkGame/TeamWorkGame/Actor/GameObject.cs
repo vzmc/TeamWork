@@ -383,7 +383,9 @@ namespace TeamWorkGame.Actor
         {
             if (other is Fire || other is Player)
             {
-                other.IsDead = true;
+                //if(other is Fire)
+                    //other.IsDead = true;
+
                 isShow = false;         //不可視化
 
             }

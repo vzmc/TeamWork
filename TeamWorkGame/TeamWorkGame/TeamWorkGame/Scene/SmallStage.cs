@@ -2,6 +2,7 @@
 // ステージ選択のクラス
 // 作成時間：2016年10月13日
 // By 葉梨竜太
+//最終修正時間：2016年10月19日
 /////////////////////////////////////////////////
 
 using System;
@@ -73,22 +74,26 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gametime)
         {
+
+            //修正中
             if (inputState.IsKeyDown(Keys.Right))
             {
-                mapIndex++;
-                if (mapIndex >= 5)
-                {
-                    mapIndex = 5;
-                }
+                mapIndex = mapIndex + 3;
             }
             else if (inputState.IsKeyDown(Keys.Left))
             {
-                mapIndex--;
-                if (mapIndex <= 0)
-                {
-                    mapIndex = 0;
-                }
+                mapIndex = mapIndex - 3; 
             }
+            else if (inputState.IsKeyDown(Keys.Up))
+            {
+                mapIndex--;
+            }
+            else if (inputState.IsKeyDown(Keys.Down))
+            {
+                mapIndex++;
+            }
+
+
             if (inputState.IsKeyDown(Keys.Enter))
             {
                 isEnd = true;

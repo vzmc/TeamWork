@@ -1,17 +1,10 @@
 ﻿/////////////////////////////////////////////////
-// PlayerScene
-// 最終修正時間：2016年10月20日
-// By　佐瀬拓海
-/////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-//最終更新日：10月13日
-//By　氷見悠人
-////////////////////////////////////////////////////////////
-//最終更新日：10月19日
-//By　長谷川修一
+// 最終修正時間：2016年10月20日
+// By　佐瀬拓海
+/////////////////////////////////////////////////
 
 using System;
 using System.Collections.Generic;
@@ -37,6 +30,9 @@ namespace TeamWorkGame.Scene
         private GameDevice gameDevice;
         private bool isEnd;
         private bool isClear;
+
+        //葉梨竜太
+        private bool isOver;
         private int mapIndex;
         private Player player;
         private Camera camera;
@@ -61,6 +57,8 @@ namespace TeamWorkGame.Scene
         {
             isEnd = false;
             isClear = false;
+            //葉梨竜太
+            isOver = false;
             //inputState = new InputState();
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
@@ -85,6 +83,8 @@ namespace TeamWorkGame.Scene
             mapIndex = stageIndex;
             isEnd = false;
             isClear = false;
+            //葉梨竜太
+            isOver = false;
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
@@ -106,11 +106,15 @@ namespace TeamWorkGame.Scene
         public void Update(GameTime gameTime)
         {
             //inputState.Update();
-            if (!isClear)
+            if (!isClear && !isOver)
             {//マップ上の物達の更新
-                foreach (var m in map.MapThings)
+                //foreach (var m in map.MapThings)
+                //{
+                //    m.Update(gameTime);
+                //}
+                for(int i = 0; i < map.MapThings.Count; i++)
                 {
-                    m.Update(gameTime);
+                    map.MapThings[i].Update(gameTime);
                 }
 
                 //プレイヤーの更新
@@ -157,6 +161,14 @@ namespace TeamWorkGame.Scene
                         isClear = true;
                         clearSelect.IsClear = true;
                     }
+
+                //葉梨竜太
+                if (player.IsDead)
+                {
+                    isOver = true;
+                    isClear = true;
+                    clearSelect.IsClear = true;
+                }
             }
             clearSelect.Update();
 

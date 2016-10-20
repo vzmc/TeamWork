@@ -50,7 +50,7 @@ namespace TeamWorkGame.Actor
             {
                 if (!isOn)
                 {
-                    other.Velocity = velocity;
+                    other.Velocity =velocity;
                     other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height + 10);
                     other.IsOnGround = true;
                     isOn = true;
