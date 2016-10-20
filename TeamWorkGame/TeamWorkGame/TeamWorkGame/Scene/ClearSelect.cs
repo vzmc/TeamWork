@@ -36,7 +36,7 @@ namespace TeamWorkGame.Scene
                 selected = new List<Vector2>() {
                 Vector2.Zero,
                 new Vector2(400,350),
-                new Vector2(400,540),
+                new Vector2(400,480),
                 };
                 select = 1;
             }
