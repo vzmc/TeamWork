@@ -266,6 +266,12 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(goal);
                                 break;
                             }
+                        case (int)GimmickType.LAKE:
+                            {
+                                Lake lake = new Lake(new Vector2(j * 64, i * 64));
+                                MapThings.Add(lake);
+                                break;
+                            }
                     }
                 }
             }
