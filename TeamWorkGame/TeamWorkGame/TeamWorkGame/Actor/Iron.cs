@@ -2,8 +2,8 @@
 // 鉄ブロックのクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月19日
-// By 佐瀬拓海
+// 最終修正時間：2016年10月20日
+// By 氷見悠人
 /////////////////////////////////////////////////
 
 using System;
@@ -58,6 +58,17 @@ namespace TeamWorkGame.Actor
             //    }
             //}
             AliveUpdate();
+        }
+
+        /// <summary>
+        /// 描画の再定義（透明値を追加）　By　氷見悠人　2016/10/20
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="renderer"></param>
+        /// <param name="offset"></param>
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
+        {
+            renderer.DrawTexture(name, position + offset, alpha);
         }
 
         public override void EventHandle(GameObject other)

@@ -42,6 +42,7 @@ namespace TeamWorkGame.Scene
         private Camera camera;
         private Map map;
         private List<Fire> fires;
+        private List<WaterLine> waterLines;
         //private InputState inputState;    //特にいりません　By　氷見悠人
         private List<GameObject> coals;     //マップに存在した炭の数　By佐瀬拓海
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
@@ -64,6 +65,7 @@ namespace TeamWorkGame.Scene
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
+            waterLines = new List<WaterLine>();
             coals = new List<GameObject>();
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
@@ -86,6 +88,11 @@ namespace TeamWorkGame.Scene
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
+            waterLines = new List<WaterLine>();
+            foreach(var ice in map.MapThings.FindAll(x => x is Ice))
+            {
+                ((Ice)ice).SetWaters(waterLines);
+            }
             coals = new List<GameObject>();
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
@@ -113,24 +120,18 @@ namespace TeamWorkGame.Scene
                 for (int i = fires.Count - 1; i >= 0; i--)
                 {
                     fires[i].Update(gameTime);
-
-                    //foreach (var m in map.MapThings)
-                    //{
-                    //    x.CollisionCheck(m);
-                    //}
-
-                    //if (player.CollisionCheck(x))
-                    //{
-                    //    //x.IsReturn = true;
-                    //}
-                    //else
-                    //{
-                    //    //x.IsReturn = false;
-                    //}
                 }
 
                 //死んだ火を消す
                 fires.RemoveAll(x => x.IsDead); // && x.IsOnGround 
+
+                //水の更新
+                foreach(var w in waterLines)
+                {
+                    w.Update(gameTime);
+                }
+
+                waterLines.RemoveAll(x => x.WaterCount == 0);
 
                 //マップの更新
                 map.Update(gameTime);
@@ -191,29 +192,31 @@ namespace TeamWorkGame.Scene
             //map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
             foreach (var x in map.MapThings)//By　佐瀬 拓海
             {
-                if(x is Ice || x is Iron) //溶けて再度固まるブロックは別に描画
-                {
-                    x.Draw(gameTime, renderer, camera.OffSet, x.GetAlpha());
-                }
-                //-----by長谷川修一 10/18
-                else if (x is Straw)
-                {
-                    x.Draw(gameTime, renderer, camera.OffSet, ((Straw)x).GetScale(), 1.0f);
-                }
-                else if (x is Tree)
-                {
-                    x.Draw(gameTime, renderer, camera.OffSet, ((Tree)x).GetScale(), 1.0f);
-                }
-                //-----
-                else
-                {
+                //if(x is Ice || x is Iron) //溶けて再度固まるブロックは別に描画
+                //{
+                //    x.Draw(gameTime, renderer, camera.OffSet, x.GetAlpha());
+                //}
+                ////-----by長谷川修一 10/18
+                //else if (x is Straw)
+                //{
+                //    x.Draw(gameTime, renderer, camera.OffSet, ((Straw)x).GetScale(), 1.0f);
+                //}
+                //else if (x is Tree)
+                //{
+                //    x.Draw(gameTime, renderer, camera.OffSet, ((Tree)x).GetScale(), 1.0f);
+                //}
+                ////-----
+                //else
+                //{
                     x.Draw(gameTime, renderer, camera.OffSet);
-                }
+                //}
             }
 
             player.Draw(gameTime, renderer, camera.OffSet);
 
             fires.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet));
+
+            waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet));
 
             clearSelect.Draw(renderer);
 

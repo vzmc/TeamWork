@@ -11,7 +11,7 @@ using System.Text;
 
 namespace TeamWorkGame.Def
 {
-    enum GimmickType
+    public enum GimmickType
     {
         GRASS = 0,      //草
         GROUND1,        //土1

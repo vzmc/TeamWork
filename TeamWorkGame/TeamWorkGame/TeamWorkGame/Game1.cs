@@ -130,6 +130,8 @@ namespace TeamWorkGame
 
             renderer.LoadTexture("puddle");
 
+            renderer.LoadTexture("water");
+
             // TODO: use this.Content to load your game content here
         }
 
