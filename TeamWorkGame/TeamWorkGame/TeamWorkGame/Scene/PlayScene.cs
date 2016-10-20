@@ -164,12 +164,11 @@ namespace TeamWorkGame.Scene
                     }
 
                 //葉梨竜太
-                //if (player.IsDead)
-                //{
-                //    isOver = true;
-                //    isClear = true;
-                //    clearSelect.IsClear = true;
-                //}
+                if (player.IsDead)
+                {
+                    isOver = true;
+
+                }
             }
 
 
