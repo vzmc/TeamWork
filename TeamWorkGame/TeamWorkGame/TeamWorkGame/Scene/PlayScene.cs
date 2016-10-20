@@ -107,6 +107,7 @@ namespace TeamWorkGame.Scene
         public void Update(GameTime gameTime)
         {
             //inputState.Update();
+            //死んでいないと更新する
             if (!isClear && !isOver)
             {//マップ上の物達の更新
                 //foreach (var m in map.MapThings)
@@ -167,7 +168,8 @@ namespace TeamWorkGame.Scene
                 if (player.IsDead)
                 {
                     isOver = true;
-
+                    //isClear = true;
+                    //clearSelect.IsClear = true;
                 }
             }
 
@@ -177,7 +179,7 @@ namespace TeamWorkGame.Scene
 
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
-            if (player.IsDead)
+            if (isOver)                 //SceneのisOverで判断する
             {
                 if (clearSelect.IsClear == true) { return; }
                 clearSelect.Initialize();

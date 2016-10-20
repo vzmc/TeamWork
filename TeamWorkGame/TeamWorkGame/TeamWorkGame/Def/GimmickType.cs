@@ -23,6 +23,6 @@ namespace TeamWorkGame.Def
         COAL,           //炭
         LIGHT,          //松明
         GOAL,           //ゴール
-        LAKE,           //湖
+        WATER,          //水
     }
 }
