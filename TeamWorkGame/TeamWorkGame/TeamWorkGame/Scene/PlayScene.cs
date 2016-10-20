@@ -1,6 +1,6 @@
 ﻿/////////////////////////////////////////////////
 // PlayerScene
-// 最終修正時間：2016年10月19日
+// 最終修正時間：2016年10月20日
 // By　佐瀬拓海
 /////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////
@@ -145,8 +145,7 @@ namespace TeamWorkGame.Scene
 
                 if (Keyboard.GetState().IsKeyDown(Keys.Space))
                 {
-                    isClear = true;
-                    clearSelect.IsClear = true;
+                    
                 }
 
                 //マップの更新
@@ -160,14 +159,21 @@ namespace TeamWorkGame.Scene
                     }
             }
             clearSelect.Update();
-            if (isClear == true)
+
+            if (gameDevice.GetInputState().GetKeyTrigger(Keys.Q))//プレイシーン中にQキーを押すとメニューを開く　by佐瀬拓海
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.Q))
+                if(isClear == false)
+                {
+                    isClear = true;
+                    clearSelect.IsClear = true;
+                }
+                else if(isClear == true)
                 {
                     isClear = false;
                     clearSelect.IsClear = false;
                 }
             }
+
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
         }
 
