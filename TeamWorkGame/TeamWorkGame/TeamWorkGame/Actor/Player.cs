@@ -37,7 +37,6 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.None;
 
-
         public int FireNum
         {
             get

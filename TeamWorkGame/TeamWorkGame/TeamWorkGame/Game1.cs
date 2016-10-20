@@ -124,6 +124,7 @@ namespace TeamWorkGame
 
             //îê
             renderer.LoadTexture("ClearWindow");
+            renderer.LoadTexture("ClearWindow2");
             renderer.LoadTexture("selecter");
             renderer.LoadTexture("GameStartText");
             renderer.LoadTexture("WorldText");

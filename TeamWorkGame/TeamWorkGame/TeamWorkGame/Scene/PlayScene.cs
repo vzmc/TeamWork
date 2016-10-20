@@ -68,8 +68,8 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera();
-            clearSelect = new ClearSelect(gameDevice.GetInputState());　//InputStateはGameDeviceからもらいます　By　氷見悠人
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
+            clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
@@ -79,7 +79,7 @@ namespace TeamWorkGame.Scene
         public void Initialize(int stageIndex)
         {
             //inputState = new InputState();
-            clearSelect = new ClearSelect(gameDevice.GetInputState());　//InputStateはGameDeviceからもらいます　By　氷見悠人
+            
             mapIndex = stageIndex;
             isEnd = false;
             isClear = false;
@@ -98,6 +98,7 @@ namespace TeamWorkGame.Scene
             nowCoals = new List<GameObject>();
             camera = new Camera();
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires);
+            clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
@@ -163,30 +164,43 @@ namespace TeamWorkGame.Scene
                     }
 
                 //葉梨竜太
-                if (player.IsDead)
-                {
-                    isOver = true;
-                    isClear = true;
-                    clearSelect.IsClear = true;
-                }
+                //if (player.IsDead)
+                //{
+                //    isOver = true;
+                //    isClear = true;
+                //    clearSelect.IsClear = true;
+                //}
             }
+
+
+
+
+
             clearSelect.Update();
+            isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
+            if (player.IsDead)
+            {
+                if (clearSelect.IsClear == true) { return; }
+                clearSelect.Initialize();
+                clearSelect.IsClear = true;
+            }
 
             if (gameDevice.GetInputState().GetKeyTrigger(Keys.Q))//プレイシーン中にQキーを押すとメニューを開く　by佐瀬拓海
             {
-                if(isClear == false)
+                if (isClear == false)
                 {
                     isClear = true;
                     clearSelect.IsClear = true;
                 }
-                else if(isClear == true)
+                else if (isClear == true)
                 {
                     isClear = false;
                     clearSelect.IsClear = false;
                 }
             }
 
-            isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
+            
+            
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した

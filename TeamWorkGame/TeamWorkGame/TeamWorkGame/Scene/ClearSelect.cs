@@ -11,6 +11,7 @@ using System.Text;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
+using TeamWorkGame.Actor;
 
 namespace TeamWorkGame.Scene
 {
@@ -21,30 +22,51 @@ namespace TeamWorkGame.Scene
         private List<Vector2> selected; //選択肢登録
         private bool isClear;   //clear状態
         private bool isEnd;     //選択完了状態
+        private Player player;
 
-        public ClearSelect(InputState inputState) {
+        public ClearSelect(InputState inputState, Player player) {
             this.inputState = inputState;
+            this.player = player;
             Initialize();
         }
 
         public void Initialize() {
-            selected = new List<Vector2>() {
+            if (player.IsDead)
+            {
+                selected = new List<Vector2>() {
+                Vector2.Zero,
+                new Vector2(400,350),
+                new Vector2(400,540),
+                };
+                select = 1;
+            }
+            else {
+                selected = new List<Vector2>() {
                 new Vector2(400,300),
                 new Vector2(400,420),
                 new Vector2(400,540),
-            };
-            select = 0;
+                };
+                select = 0;
+            }
+
             isClear = false;
             isEnd = false;
         }
 
         public void Update() {
 
+
             if (isClear)    //clear状態だけ選択有効
             {
                 if (inputState.IsKeyDown(Keys.Up))
                 {
-                    if (select == 0) { return; }
+                    if (player.IsDead)
+                    {
+                        if (select == 1) { return; }
+                    }
+                    else {
+                        if (select == 0) { return; }
+                    }
                     select--;
                 }
                 else if (inputState.IsKeyDown(Keys.Down))
@@ -52,6 +74,7 @@ namespace TeamWorkGame.Scene
                     if (select == 2) { return; }
                     select++;
                 }
+
 
                 //選択確定
                 else if (inputState.IsKeyDown(Keys.Enter)) { isEnd = true; }
@@ -73,8 +96,16 @@ namespace TeamWorkGame.Scene
         }
 
         public void Draw(Renderer renderer) {
-            if (isClear) {
-                renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
+            if (isClear)
+            {
+                if (player.IsDead)
+                {
+                    renderer.DrawTexture("ClearWindow2", new Vector2(350, 250));
+                }
+                else {
+                    renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
+                }
+
                 renderer.DrawTexture("selecter", selected[select]);
             }
         }
