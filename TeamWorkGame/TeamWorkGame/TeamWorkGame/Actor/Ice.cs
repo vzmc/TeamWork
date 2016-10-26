@@ -94,10 +94,9 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-           
             AliveEvent(other);
             IsAnimation = true;
-            WaterLine waterLine = new WaterLine(position);
+            WaterLine waterLine = new WaterLine(position, animation);
             if (waters != null)
                 waters.Add(waterLine);
         }

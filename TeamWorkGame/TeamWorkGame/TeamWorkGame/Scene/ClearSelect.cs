@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Actor;
+using TeamWorkGame.Def;
 
 namespace TeamWorkGame.Scene
 {
@@ -58,7 +59,7 @@ namespace TeamWorkGame.Scene
 
             if (isClear)    //clear状態だけ選択有効
             {
-                if (inputState.IsKeyDown(Keys.Up))
+                if (inputState.CheckTriggerKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
                     if (player.IsDead)
                     {
@@ -69,7 +70,7 @@ namespace TeamWorkGame.Scene
                     }
                     select--;
                 }
-                else if (inputState.IsKeyDown(Keys.Down))
+                else if (inputState.CheckTriggerKey(Keys.Down, Buttons.LeftThumbstickDown))
                 {
                     if (select == 2) { return; }
                     select++;
@@ -77,7 +78,10 @@ namespace TeamWorkGame.Scene
 
 
                 //選択確定
-                else if (inputState.IsKeyDown(Keys.Enter)) { isEnd = true; }
+                else if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton))
+                {
+                    isEnd = true;
+                }
             }
         }
 

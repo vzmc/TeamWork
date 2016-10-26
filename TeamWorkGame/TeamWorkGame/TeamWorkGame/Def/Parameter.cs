@@ -27,10 +27,12 @@ namespace TeamWorkGame.Def
         public const Keys JumpKey = Keys.Z;
         public const Keys TeleportKey = Keys.C;
         public const Keys ThrowKey = Keys.X;
+        public const Keys MenuKey = Keys.Enter;
 
         public const Buttons JumpButton = Buttons.A;
         public const Buttons TeleportButton = Buttons.RightTrigger;
         public const Buttons ThrowButton = Buttons.LeftTrigger;
+        public const Buttons MenuButton = Buttons.Start;
 
         public static readonly List<GimmickType> BackGrounds = new List<GimmickType>()
         {

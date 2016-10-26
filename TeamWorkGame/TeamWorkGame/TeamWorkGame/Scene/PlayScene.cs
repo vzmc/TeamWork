@@ -109,11 +109,7 @@ namespace TeamWorkGame.Scene
             //inputState.Update();
             //死んでいないと更新する
             if (!isClear && !isOver)
-            {//マップ上の物達の更新
-                //foreach (var m in map.MapThings)
-                //{
-                //    m.Update(gameTime);
-                //}
+            {
                 for(int i = 0; i < map.MapThings.Count; i++)
                 {
                     map.MapThings[i].Update(gameTime);
@@ -182,7 +178,8 @@ namespace TeamWorkGame.Scene
                 clearSelect.IsClear = true;
             }
 
-            if (gameDevice.GetInputState().GetKeyTrigger(Keys.Q))//プレイシーン中にQキーを押すとメニューを開く　by佐瀬拓海
+            //　Key変更　By氷見悠人
+            if (gameDevice.GetInputState().CheckTriggerKey(Parameter.MenuKey, Parameter.MenuButton))
             {
                 if (isClear == false)
                 {

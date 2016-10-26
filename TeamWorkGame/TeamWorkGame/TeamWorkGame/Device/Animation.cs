@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Device
 {
-    class Animation
+    public class Animation
     {
         //フレイムを横に並べる画像
         public Texture2D Texture

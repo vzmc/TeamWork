@@ -23,7 +23,7 @@ namespace TeamWorkGame.Actor
         private Map mapdata;
         private bool isCollisioned;
         private bool isDead;
-       
+        private Timer startTimer;
         
 
         public bool IsDead
@@ -42,12 +42,13 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public WaterLine(Vector2 pos)
+        public WaterLine(Vector2 pos, Animation anime)
         {
             position = pos;
             waters = new List<Water>();
             mapdata = MapManager.GetNowMapData();
             timer = new Timer(0.3f);
+            startTimer = new Timer((anime.FrameCount-1) * anime.FrameTime);
             Initialize();
         }
 
@@ -57,24 +58,29 @@ namespace TeamWorkGame.Actor
             isDead = false;
             //waters.Add(new Water(position, Vector2.Zero));
             waterSize = new Size(64, 64);
-            timer.Initialize();
+            timer.CurrentTime = 0;
+            startTimer.Initialize();
         }
 
         public void Update(GameTime gameTime)
         {
-            timer.Update();
-            if (timer.IsTime())
+            startTimer.Update();
+            if (startTimer.IsTime())
             {
-                if (isCollisioned)
+                timer.Update();
+                if (timer.IsTime())
                 {
-                    RemoveWater();
+                    if (isCollisioned)
+                    {
+                        RemoveWater();
+                    }
+                    else
+                    {
+                        MakeWater();
+                        isCollisioned = CheckNextMapColision() || CheckNextThingsColision();
+                    }
+                    timer.Initialize();
                 }
-                else
-                {
-                    MakeWater();
-                    isCollisioned = CheckNextMapColision() || CheckNextThingsColision();
-                }
-                timer.Initialize(); 
             }
         }
 

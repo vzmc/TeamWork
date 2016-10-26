@@ -16,6 +16,26 @@ namespace TeamWorkGame.Utility
         private float currentTime;  //現在時間
         private float limitTime;    //制限時間
 
+        public float CurrentTime
+        {
+            get
+            {
+                return currentTime;
+            }
+            set
+            {
+                currentTime = value;
+            }
+        }
+
+        public float LimitTime
+        {
+            get
+            {
+                return limitTime;
+            }
+        }
+
         public Timer()
         {
             limitTime = 60;

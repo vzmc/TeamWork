@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Device
 {
-    struct AnimationPlayer
+    public struct AnimationPlayer
     {
         //再生するアニメーション
         public Animation Animation
