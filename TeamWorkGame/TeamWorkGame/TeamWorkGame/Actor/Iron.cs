@@ -33,7 +33,7 @@ namespace TeamWorkGame.Actor
             timer = new Timer(0.1f);
             isToDeath = false;
             isShow = true;
-            SetTimer(0.5f, 1.0f);
+            SetTimer(0.5f, 5f);
         }
 
         /// <summary>

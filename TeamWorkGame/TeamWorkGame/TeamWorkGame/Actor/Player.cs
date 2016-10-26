@@ -87,7 +87,8 @@ namespace TeamWorkGame.Actor
         {
             if (fireNum > 1)
             {
-                if (inputState.IsKeyDown(Keys.X))
+                //inputState.IsKeyDown(Keys.X)
+                if (inputState.CheckTriggerKey(Parameter.ThrowKey, Parameter.ThrowButton))
                 {
                     Vector2 firePos = Vector2.Zero;
                     Vector2 fireVelo = Vector2.Zero;
@@ -96,17 +97,17 @@ namespace TeamWorkGame.Actor
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     if (diretion == Direction.UP)
                     {
-                        fireVelo = new Vector2(0, -3);
+                        fireVelo = new Vector2(0, -1f);
                         firePos = new Vector2(position.X + imageSize.Width / 2 - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
                     }
                     else if (diretion == Direction.LEFT)
                     {
-                        fireVelo = new Vector2(-1, -2);
+                        fireVelo = new Vector2(-1f, -2f);
                         firePos = new Vector2(position.X - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
                     }
                     else if (diretion == Direction.RIGHT)
                     {
-                        fireVelo = new Vector2(1, -2);
+                        fireVelo = new Vector2(1f, -2f);
                         firePos = new Vector2(position.X + imageSize.Width - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
                     }
 
@@ -130,7 +131,7 @@ namespace TeamWorkGame.Actor
         {
             if (firesList.Count > 0)
             {
-                if (inputState.IsKeyDown(Keys.C))
+                if (inputState.CheckTriggerKey(Parameter.TeleportKey, Parameter.TeleportButton))
                 {
                     firesList.Add(new Fire(position, velocity));
                     position = firesList[0].Position;
@@ -207,14 +208,16 @@ namespace TeamWorkGame.Actor
 
             if (isOnGround)
             {
-                if (inputState.IsKeyDown(Keys.Z))
+                
+                if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                 {
-                    velocity.Y = -18;
+                    velocity.Y = -12;
                     isOnGround = false;
                 }
             }
 
             velocity.Y += gForce;
+            //velocity.Y = 5;
 
             Method.MapObstacleCheck(ref position, colSize.Width, colSize.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
@@ -225,14 +228,18 @@ namespace TeamWorkGame.Actor
             }
 
             //移動速度の大きさをBlockSizeより大きくならないように制限する
-            if(velocity.Length() > map.BlockSize)
-            {
-                velocity.Normalize();
-                velocity *= map.BlockSize;
-            }
-            position += velocity;
+            //if(velocity.Length() > map.BlockSize)
+            //{
+            //    velocity.Normalize();
+            //    velocity *= map.BlockSize;
+            //}
 
-            
+            if (velocity.Y > 10)
+            {
+                velocity.Y = 10;
+            }
+
+            position += velocity;
 
             //位置を整数にする　By氷見悠人
             position.X = (float)Math.Round(position.X);
@@ -264,6 +271,8 @@ namespace TeamWorkGame.Actor
             {
                 animePlayer.PlayAnimation(runAnime);
             }
+
+            Console.WriteLine("isOnGround: " + isOnGround);
         }
 
         public bool GetState()

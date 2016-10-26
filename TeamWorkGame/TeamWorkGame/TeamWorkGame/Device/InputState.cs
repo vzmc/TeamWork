@@ -24,6 +24,8 @@ namespace TeamWorkGame.Device
         //キー
         private KeyboardState currentKey;   //現在のキー
         private KeyboardState previousKey;  //１フレーム前のキー
+        private GamePadState currentPad;
+        private GamePadState previousPad;
 
         /// <summary>
         /// コンストラクタ
@@ -46,25 +48,25 @@ namespace TeamWorkGame.Device
         /// 移動量の更新
         /// </summary>
         /// <param name="keyState">キーボードの状態</param>
-        private void UpdateVelocity(KeyboardState keyState)
+        private void UpdateVelocity()
         {
             velocity = Vector2.Zero;    // 移動量をゼロで初期化
 
             // 十字キーの操作処理
-            if (keyState.IsKeyDown(Keys.Right))
+            if (CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
             {
                 velocity.X = 1.0f;
             }
-            if (keyState.IsKeyDown(Keys.Left))
+            if (CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
             {
                 velocity.X = -1.0f;
             }
 
-            if (keyState.IsKeyDown(Keys.Up))
+            if (CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
             {
                 velocity.Y = -1.0f;
             }
-            if (keyState.IsKeyDown(Keys.Down))
+            if (CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
             {
                 velocity.Y = 1.0f;
             }
@@ -88,6 +90,60 @@ namespace TeamWorkGame.Device
             currentKey = keyState;
         }
 
+        private void UpdatePad(GamePadState buttonState)
+        {
+            //現在登録されているキーを１フレーム前のキーに
+            previousPad = currentPad;
+            //現在のキーを最新のキーに
+            currentPad = buttonState;
+        }
+
+        public bool CheckTriggerKey(Keys key, Buttons button)
+        {
+            //キーボードでチェックしたいキーが押されているか？
+            if (IsKeyDown(key))
+            {
+                return true;
+            }
+
+            //キーパッドのキーがつながっていないか？
+            if (!GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                //接続されなければチェック終了
+                return false;
+            }
+
+            //キーパッドでチェックしたいボタンが押されているか？
+            if (IsKeyDown(button))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckDownKey(Keys key, Buttons button)
+        {
+            //キーボードでチェックしたいキーが押されているか？
+            if (currentKey.IsKeyDown(key))
+            {
+                return true;
+            }
+
+            //キーパッドのキーがつながっていないか？
+            if (!GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                //接続されなければチェック終了
+                return false;
+            }
+
+            //キーパッドでチェックしたいボタンが押されているか？
+            if (GamePad.GetState(PlayerIndex.One).IsButtonDown(button))
+            {
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// キーが押されているか？
         /// </summary>
@@ -104,6 +160,17 @@ namespace TeamWorkGame.Device
             return current && !previous;
         }
 
+        public bool IsKeyDown(Buttons button)
+        {
+            //現在チェックしたいキーが押されたか
+            bool current = currentPad.IsButtonDown(button);
+            //１フレーム前に押されていたか
+            bool previous = previousPad.IsButtonDown(button);
+
+            //現在押されていて、１フレーム前に押されていなければ true
+            return current && !previous;
+        }
+
         /// <summary>
         /// キー入力のトリガー判定
         /// </summary>
@@ -112,6 +179,11 @@ namespace TeamWorkGame.Device
         public bool GetKeyTrigger(Keys key)
         {
             return IsKeyDown(key);
+        }
+
+        public bool GetKeyTrigger(Buttons button)
+        {
+            return IsKeyDown(button);
         }
 
         /// <summary>
@@ -124,6 +196,11 @@ namespace TeamWorkGame.Device
             return currentKey.IsKeyDown(key);
         }
 
+        public bool GetKeyState(Buttons button)
+        {
+            return currentPad.IsButtonDown(button);
+        }
+
         /// <summary>
         /// 更新
         /// </summary>
@@ -133,8 +210,11 @@ namespace TeamWorkGame.Device
             var keyState = Keyboard.GetState();
             UpdateKey(keyState);
 
+            var padState = GamePad.GetState(PlayerIndex.One);
+            UpdatePad(padState);
+
             // 移動量の更新
-            UpdateVelocity(keyState);
+            UpdateVelocity();
         }
     }
 }

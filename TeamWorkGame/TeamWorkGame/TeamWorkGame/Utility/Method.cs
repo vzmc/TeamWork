@@ -82,8 +82,8 @@ namespace TeamWorkGame.Utility
                 nowUDPoints[1].X = position.X + width - 1 - 1;
                 nowUDPoints[1].Y = position.Y;
 
-                nextUDPoints[0] = nowUDPoints[0] + new Vector2(0, velocity.Y);
-                nextUDPoints[1] = nowUDPoints[1] + new Vector2(0, velocity.Y);
+                nextUDPoints[0] = nowUDPoints[0] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
+                nextUDPoints[1] = nowUDPoints[1] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
 
                 if (map.IsInBlock(nextUDPoints[0], ref blockPos, data) || map.IsInBlock(nextUDPoints[1], ref blockPos, data))
                 {
@@ -99,8 +99,8 @@ namespace TeamWorkGame.Utility
                 nowUDPoints[1].X = position.X + width - 1 - 1;
                 nowUDPoints[1].Y = position.Y + height - 1;
 
-                nextUDPoints[0] = nowUDPoints[0] + new Vector2(0, velocity.Y);
-                nextUDPoints[1] = nowUDPoints[1] + new Vector2(0, velocity.Y);
+                nextUDPoints[0] = nowUDPoints[0] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
+                nextUDPoints[1] = nowUDPoints[1] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
 
                 if (map.IsInBlock(nextUDPoints[0], ref blockPos, data) || map.IsInBlock(nextUDPoints[1], ref blockPos, data))
                 {
@@ -155,11 +155,11 @@ namespace TeamWorkGame.Utility
         public static bool ObstacleCheck(Actor.GameObject self, Actor.GameObject obstacle)
         {
             bool flag = false;
-
+            //(float)Math.Ceiling(velocity.Y)
             Vector2 selfNowPositon = self.Position;
             Vector2 selfNowVelocity = self.Velocity;
             Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
-            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, selfNowVelocity.Y);
+            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, (float)Math.Ceiling(selfNowVelocity.Y));
             int selfWidth = self.ColSize.Width;
             int selfHeight = self.ColSize.Height;
 

@@ -137,7 +137,7 @@ namespace TeamWorkGame.Scene
                     w.Update(gameTime);
                 }
 
-                waterLines.RemoveAll(x => x.WaterCount == 0);
+                waterLines.RemoveAll(x => x.IsDead);
 
                 //マップの更新
                 map.Update(gameTime);
@@ -149,10 +149,6 @@ namespace TeamWorkGame.Scene
                 //マップ上にある炭の数を取得
                 nowCoals = map.MapThings.FindAll(x => x is Coal);
 
-                if (Keyboard.GetState().IsKeyDown(Keys.Space))
-                {
-                    
-                }
 
                 //マップの更新
                 map.Update(gameTime);

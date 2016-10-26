@@ -31,7 +31,7 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             isToDeath = false;
             isShow = true;      //初期値はtrue by佐瀬拓海
-            SetTimer(0.5f, 1.0f);
+            SetTimer(0.5f, 2f);
         }
 
         public void SetWaters(List<WaterLine> waters)
@@ -83,10 +83,13 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
+            if (isShow)
+            {
+                WaterLine waterLine = new WaterLine(position);
+                if (waters != null)
+                    waters.Add(waterLine);
+            }
             AliveEvent(other);
-            WaterLine waterLine = new WaterLine(position);
-            if(waters != null)
-                waters.Add(waterLine);
         }
     }
 }

@@ -237,7 +237,7 @@ namespace TeamWorkGame.Actor
             this.tag = tag;
             this.isTrigger = isTrigger;
             deathTimer = new Timer(0.5f);
-            spawnTimer = new Timer(0.5f);
+            spawnTimer = new Timer(5f);
 
             Initialize();
         }

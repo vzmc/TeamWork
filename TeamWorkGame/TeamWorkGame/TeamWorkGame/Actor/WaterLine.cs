@@ -22,12 +22,15 @@ namespace TeamWorkGame.Actor
         private Timer timer;
         private Map mapdata;
         private bool isCollisioned;
+        private bool isDead;
+       
+        
 
-        public int WaterCount
+        public bool IsDead
         {
             get
             {
-                return waters.Count;
+                return isDead;
             }
         }
 
@@ -51,8 +54,9 @@ namespace TeamWorkGame.Actor
         public void Initialize()
         {
             waters.Clear();
-            waters.Add(new Water(position, Vector2.Zero));
-            waterSize = waters[0].ColSize;
+            isDead = false;
+            //waters.Add(new Water(position, Vector2.Zero));
+            waterSize = new Size(64, 64);
             timer.Initialize();
         }
 
@@ -87,6 +91,10 @@ namespace TeamWorkGame.Actor
             if(waters.Count > 0)
             {
                 waters.RemoveAt(0);
+            }
+            else
+            {
+                isDead = true;
             }
         }
 
