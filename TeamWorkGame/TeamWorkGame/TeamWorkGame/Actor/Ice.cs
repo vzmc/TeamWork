@@ -1,8 +1,8 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
 // 氷クラス
 // 作成者：氷見悠人
-// 最終修正時間：2016/10/20
-// By 氷見悠人
+// 最終修正時間：2016/10/26
+// By 長谷川修一
 ////////////////////////////////////////////////////////////////////////////
 
 using System;
@@ -13,7 +13,7 @@ using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Def;
 using TeamWorkGame.Utility;
-
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Actor
 {
@@ -21,9 +21,13 @@ namespace TeamWorkGame.Actor
     {
         private bool isToDeath;
         private List<WaterLine> waters;
+        private Animation animation;
+        private AnimationPlayer animationPlayer;
+        private bool IsAnimation = false;
 
         public Ice(Vector2 pos, Vector2 velo) : base("ice", new Size(64, 64), pos, velo, false, "Ice")
         {
+            animationPlayer = new AnimationPlayer();
         }
 
         public override void Initialize()
@@ -32,11 +36,12 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;      //初期値はtrue by佐瀬拓海
             SetTimer(0.5f, 2f);
+            animation = new Animation(Renderer.GetTexture("iceAnime"), 0.5f, false);
         }
 
         public void SetWaters(List<WaterLine> waters)
         {
-            this.waters = waters; 
+            this.waters = waters;
         }
 
         /// <summary>
@@ -44,7 +49,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         public void ToDeath()
         {
-            if(!isToDeath)
+            if (!isToDeath)
             {
                 isToDeath = true;
             }
@@ -53,7 +58,7 @@ namespace TeamWorkGame.Actor
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
-            
+            animationPlayer.PlayAnimation(animation);
         }
 
         public override void AliveEvent(GameObject other)
@@ -79,6 +84,12 @@ namespace TeamWorkGame.Actor
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
         {
             renderer.DrawTexture(name, position + offset, alpha);
+            //アニメーションの追加 by長谷川修一
+            if(IsAnimation)
+            {
+                animationPlayer.Draw(gameTime, renderer, position + offset, SpriteEffects.None);
+
+            }
         }
 
         public override void EventHandle(GameObject other)
@@ -90,6 +101,10 @@ namespace TeamWorkGame.Actor
                     waters.Add(waterLine);
             }
             AliveEvent(other);
+            IsAnimation = true;
+            WaterLine waterLine = new WaterLine(position);
+            if (waters != null)
+                waters.Add(waterLine);
         }
     }
 }

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////
 // Game1
-// ÅIC³ŠÔF2016”N10Œ19“ú
-// By@—t—œ—³‘¾
+// ÅIC³ŠÔF2016”N10Œ16“ú
+// By@’·’JìCˆê
 /////////////////////////////////////////////////
 
 using System;
@@ -119,8 +119,10 @@ namespace TeamWorkGame
             renderer.LoadTexture("forestBG");
             
 
-            //by’·’JìCˆê  10/19
+            //by’·’JìCˆê  10/26
             renderer.LoadTexture("FireMeter");
+            renderer.LoadTexture("iceAnime");
+            renderer.LoadTexture("ironAnime");
 
             //”
             renderer.LoadTexture("ClearWindow");

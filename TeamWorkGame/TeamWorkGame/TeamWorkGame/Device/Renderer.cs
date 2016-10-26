@@ -108,7 +108,6 @@ namespace TeamWorkGame.Device
                 "大文字小文字間違ってませんか？\n" +
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
-
             spriteBatch.Draw(textures[name], position, Color.White * alpha);
         }
 
@@ -263,7 +262,6 @@ namespace TeamWorkGame.Device
                         new Rectangle((n - '0') * 32, 0, 32, 64),
                         Color.White * alpha
                         );
-
                 }
                 position.X += 32;
             }

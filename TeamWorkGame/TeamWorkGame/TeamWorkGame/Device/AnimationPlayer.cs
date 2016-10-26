@@ -91,5 +91,15 @@ namespace TeamWorkGame.Device
             //今のフレイムを描画
             renderer.DrawTexture(Animation.Texture, position, range, spriteEffects);
         }
+
+        public bool Reset(bool isShow)
+        {
+            if (isShow)
+            {
+                frameIndex = 0;
+                return false;
+            }
+            return true;
+        }
     }
 }
