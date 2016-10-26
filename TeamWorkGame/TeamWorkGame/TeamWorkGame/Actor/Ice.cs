@@ -88,18 +88,13 @@ namespace TeamWorkGame.Actor
             if(IsAnimation)
             {
                 animationPlayer.Draw(gameTime, renderer, position + offset, SpriteEffects.None);
-
+                IsAnimation = animationPlayer.Reset(isShow);
             }
         }
 
         public override void EventHandle(GameObject other)
         {
-            if (isShow)
-            {
-                WaterLine waterLine = new WaterLine(position);
-                if (waters != null)
-                    waters.Add(waterLine);
-            }
+           
             AliveEvent(other);
             IsAnimation = true;
             WaterLine waterLine = new WaterLine(position);
