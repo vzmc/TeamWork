@@ -2,7 +2,7 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/10/19
+// 最終修正時間：2016/10/27
 // 修正者:長谷川修一
 /////////////////////////////////////////////////////////
 using System;
@@ -216,7 +216,7 @@ namespace TeamWorkGame.Utility
             return flag;
         }
 
-        //by 長谷川修一 10/19
+        //by木材追加 長谷川修一 10/27
         /// <summary>
         /// ギミック設置
         /// </summary>
@@ -270,6 +270,12 @@ namespace TeamWorkGame.Utility
                             {
                                 Water water = new Water(new Vector2(j * 64, i * 64), Vector2.Zero);
                                 MapThings.Add(water);
+                                break;
+                            }
+                        case (int)GimmickType.WOOD:
+                            {
+                                Wood wood = new Wood(new Vector2(j * 64, i * 64));
+                                MapThings.Add(wood);
                                 break;
                             }
                     }

@@ -70,6 +70,7 @@
     <Compile Include="Actor\Tree.cs" />
     <Compile Include="Actor\Water.cs" />
     <Compile Include="Actor\WaterLine.cs" />
+    <Compile Include="Actor\Wood.cs" />
     <Compile Include="Def\GimmickType.cs" />
     <Compile Include="Def\MapManager.cs" />
     <Compile Include="Def\Parameter.cs" />

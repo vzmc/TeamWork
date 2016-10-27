@@ -123,6 +123,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("FireMeter");
             renderer.LoadTexture("iceAnime");
             renderer.LoadTexture("ironAnime");
+            renderer.LoadTexture("wood");
 
             //”
             renderer.LoadTexture("ClearWindow");
