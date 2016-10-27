@@ -1,5 +1,5 @@
-﻿// 最終修正時間：2016年10月13日
-// By 長谷川修一
+﻿// 最終修正時間：2016年10月27日
+// By 佐瀬拓海
 
 using System;
 using System.Collections.Generic;
@@ -247,6 +247,15 @@ namespace TeamWorkGame.Device
                         textures[name],
                         position,
                         new Rectangle(10 * 32, 0, 32, 64),
+                        Color.White * alpha
+                        );
+                }
+                else if(number[i] == '/')// "/"を描画する
+                {
+                    spriteBatch.Draw(
+                        textures[name],
+                        position,
+                        new Rectangle(11 * 32, 0, 32, 64),
                         Color.White * alpha
                         );
                 }

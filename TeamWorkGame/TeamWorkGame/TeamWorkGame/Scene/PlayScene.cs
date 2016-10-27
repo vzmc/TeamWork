@@ -2,7 +2,7 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年10月20日
+// 最終修正時間：2016年10月27日
 // By　佐瀬拓海
 /////////////////////////////////////////////////
 
@@ -251,6 +251,8 @@ namespace TeamWorkGame.Scene
             //炭の取得数を描画 By佐瀬拓海
             renderer.DrawTexture("coal", new Vector2(1088, 64));
             renderer.DrawNumber("number", new Vector2(1152, 64), coals.Count - nowCoals.Count);
+            renderer.DrawNumber("number", new Vector2(1182, 64), "/", 1);
+            renderer.DrawNumber("number", new Vector2(1216, 64), coals.Count);
 
             //renderer.End();
         }
