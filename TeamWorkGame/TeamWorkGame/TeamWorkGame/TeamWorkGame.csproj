@@ -80,6 +80,7 @@
     <Compile Include="Device\Motion.cs" />
     <Compile Include="Device\Renderer.cs" />
     <Compile Include="Device\Sound.cs" />
+    <Compile Include="Device\StageLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

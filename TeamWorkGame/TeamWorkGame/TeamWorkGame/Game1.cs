@@ -61,7 +61,8 @@ namespace TeamWorkGame
             //描画オブジェクトの宣言
             renderer = gameDevice.GetRenderer();
 
-            MapManager.Init();
+            //csv管理のため削除
+            //MapManager.Init();
             sceneManager = new SceneManager();
             //IScene playScene = new PlayScene(gameDevice);
             sceneManager.Add(SceneType.Title, new Title(gameDevice));
