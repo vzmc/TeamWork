@@ -38,5 +38,6 @@ namespace TeamWorkGame.Def
         {
             GimmickType.GROUND1, GimmickType.GROUND2,
         };
+
     }
 }

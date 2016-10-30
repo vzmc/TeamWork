@@ -2,10 +2,11 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/10/27
-// 修正者:長谷川修一
+// 最終修正時間：2016/10/31
+// 修正者:氷見悠人  ファイルからStage情報を読み取る
 /////////////////////////////////////////////////////////
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -220,8 +221,8 @@ namespace TeamWorkGame.Utility
         /// <summary>
         /// ギミック設置
         /// </summary>
-        /// <param name="mapdata"></param>
-        /// <param name="MapThings"></param>
+        /// <param name="mapdata">マップデータの二元配列</param>
+        /// <param name="MapThings">マップ上の物のList</param>
         public static void CreateGimmicks(int[,] mapdata, List<GameObject> MapThings)
         {
             for (int i = 0; i < mapdata.GetLength(0); i++)
@@ -281,6 +282,71 @@ namespace TeamWorkGame.Utility
                     }
                 }
             }
+        }
+
+        /// <summary>
+        /// ファイルからStageの情報を読み取る BY 氷見悠人　2016/10/31
+        /// </summary>
+        /// <param name="bigIndex"></param>
+        /// <param name="smallIndex"></param>
+        /// <returns></returns>
+        public static int[,] GetMapdataFromFile(int bigIndex, int smallIndex)
+        {
+            int[,] mapdatas;
+
+            string stagePath = StageDef.StagePath + bigIndex + "-" + smallIndex + ".csv";
+            int width;
+            List<string[]> lines = new List<string[]>();
+
+            if (File.Exists(stagePath))
+            {
+                using (StreamReader reader = new StreamReader(stagePath))
+                {
+                    string line = reader.ReadLine();
+                    string[] lineSp;
+                    if (line != null)
+                    {
+                        lineSp = line.Split(',');
+                        width = lineSp.Length;
+                    }
+                    else
+                    {
+                        throw new Exception(string.Format("Stage{0}-{1}の内容がありません！", bigIndex, smallIndex));
+                    }
+
+                    while (true)
+                    {
+                        lines.Add(lineSp);
+                        if (lineSp.Length != width)
+                            throw new Exception(string.Format("Stage{0}-{1}の行の長さが一致していません！", bigIndex, smallIndex));
+                        line = reader.ReadLine();
+                        if (line != null && line != "")
+                        {
+                            lineSp = line.Split(',');
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    mapdatas = new int[lines.Count, width];
+                    for (int i = 0; i < lines.Count; i++)
+                    {
+                        for (int j = 0; j < width; j++)
+                        {
+                            mapdatas[i, j] = int.Parse(lines[i][j]);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                //throw new Exception(string.Format("Stage{0}-{1}がありません！", bigIndex, smallIndex));
+                return GetMapdataFromFile(0, 0);
+            }
+
+            return mapdatas;
         }
     }
 }

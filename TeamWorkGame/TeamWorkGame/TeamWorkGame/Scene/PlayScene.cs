@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年10月27日
-// By　佐瀬拓海
+// 最終修正時間：2016年10月31日
+// By　氷見悠人
 /////////////////////////////////////////////////
 
 using System;
@@ -39,12 +39,10 @@ namespace TeamWorkGame.Scene
         private Map map;
         private List<Fire> fires;
         private List<WaterLine> waterLines;
-        //private InputState inputState;    //特にいりません　By　氷見悠人
         private List<GameObject> coals;     //マップに存在した炭の数　By佐瀬拓海
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private ClearSelect clearSelect;    //clear後の選択画面
         private FireMeter fireMeter;
-
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
@@ -78,8 +76,6 @@ namespace TeamWorkGame.Scene
 
         public void Initialize(int stageIndex)
         {
-            //inputState = new InputState();
-            
             mapIndex = stageIndex;
             isEnd = false;
             isClear = false;
@@ -165,10 +161,6 @@ namespace TeamWorkGame.Scene
                 }
             }
 
-
-
-
-
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
             if (isOver)                 //SceneのisOverで判断する
@@ -192,16 +184,11 @@ namespace TeamWorkGame.Scene
                     clearSelect.IsClear = false;
                 }
             }
-
-            
-            
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            //renderer.Begin();
-
             for (int i = 0; i < map.Data.GetLength(0); i++)
             {
                 for (int j = 0; j < map.Data.GetLength(1); j++)
@@ -211,31 +198,12 @@ namespace TeamWorkGame.Scene
                     {
                         renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) + camera.OffSet, GetRect(map.Data[i, j]));
                     }
-
                 }
             }
 
-            //map.MapThings.ForEach(x => x.Draw(renderer, camera.OffSet));
             foreach (var x in map.MapThings)//By　佐瀬 拓海
             {
-                //if(x is Ice || x is Iron) //溶けて再度固まるブロックは別に描画
-                //{
-                //    x.Draw(gameTime, renderer, camera.OffSet, x.GetAlpha());
-                //}
-                ////-----by長谷川修一 10/18
-                //else if (x is Straw)
-                //{
-                //    x.Draw(gameTime, renderer, camera.OffSet, ((Straw)x).GetScale(), 1.0f);
-                //}
-                //else if (x is Tree)
-                //{
-                //    x.Draw(gameTime, renderer, camera.OffSet, ((Tree)x).GetScale(), 1.0f);
-                //}
-                ////-----
-                //else
-                //{
-                    x.Draw(gameTime, renderer, camera.OffSet);
-                //}
+                x.Draw(gameTime, renderer, camera.OffSet);
             }
 
             player.Draw(gameTime, renderer, camera.OffSet);
@@ -253,8 +221,6 @@ namespace TeamWorkGame.Scene
             renderer.DrawNumber("number", new Vector2(1152, 64), coals.Count - nowCoals.Count);
             renderer.DrawNumber("number", new Vector2(1182, 64), "/", 1);
             renderer.DrawNumber("number", new Vector2(1216, 64), coals.Count);
-
-            //renderer.End();
         }
 
         public Rectangle GetRect(int num)
@@ -285,7 +251,7 @@ namespace TeamWorkGame.Scene
             NextScene nextScene;
             if (clearSelect.GetSelect == 0)
             {      //Next
-                if (mapIndex == MapManager.StageCount - 1)
+                if (mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1)
                 {
                     mapIndex = 0;
                 }

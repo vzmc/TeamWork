@@ -1,6 +1,6 @@
 ﻿#region 概要
 //-----------------------------------------------------------------------------
-// 次のシーンの構造体
+// Stageに関する定義
 // 作成者：氷見悠人
 //-----------------------------------------------------------------------------
 #endregion
@@ -11,17 +11,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace TeamWorkGame.Scene
+namespace TeamWorkGame.Def
 {
-    struct NextScene
+    public static class StageDef
     {
-        public SceneType sceneType;
-        public int stageIndex;
-
-        public NextScene(SceneType scene, int index)
-        {
-            sceneType = scene;
-            stageIndex = index;
-        }
+        public const string StagePath = "Content/Stage/";
+        public const int BigIndexMax = 5;
+        public const int SmallIndexMax = 5;
     }
 }
