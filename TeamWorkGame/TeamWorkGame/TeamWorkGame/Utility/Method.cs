@@ -13,6 +13,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Actor;
 using TeamWorkGame.Def;
+using System.Diagnostics;   //Assert用
+
 
 namespace TeamWorkGame.Utility
 {
@@ -133,9 +135,6 @@ namespace TeamWorkGame.Utility
         {
             bool flag = false;
 
-            // || (position2.X <= position1.X + width1 - 1 && position2.X + width2 - 1 >= position1.X)
-            // || (position2.Y <= position1.Y + height1 - 1 && position2.Y + height2 - 1 >= position1.Y
-            //無駄の判定を消した　BY氷見悠人
             if ((position1.X <= position2.X + width2 - 1 && position1.X + width1 - 1 >= position2.X))
             {
                 if((position1.Y <= position2.Y + height2 - 1 && position1.Y + height1 - 1 >= position2.Y))
@@ -298,54 +297,61 @@ namespace TeamWorkGame.Utility
             int width;
             List<string[]> lines = new List<string[]>();
 
-            if (File.Exists(stagePath))
+            if (!File.Exists(stagePath))
             {
-                using (StreamReader reader = new StreamReader(stagePath))
+                if (File.Exists(StageDef.StagePath + "0-0.csv"))
                 {
-                    string line = reader.ReadLine();
-                    string[] lineSp;
-                    if (line != null)
+                    stagePath = StageDef.StagePath + "0-0.csv";
+                    Console.WriteLine(string.Format("{0}がありません！", stagePath));
+                }
+                else
+                {
+                    throw new FileNotFoundException(string.Format("1つのStageもありません！！！　{0}の中をチェックしなさい！", StageDef.StagePath), StageDef.StagePath + "0-0.csv");
+                }
+            }
+
+            using (StreamReader reader = new StreamReader(stagePath))
+            {
+                string line = reader.ReadLine();
+                string[] lineSp;
+                if (line != null)
+                {
+                    lineSp = line.Split(',');
+                    width = lineSp.Length;
+                }
+                else
+                {
+                    throw new Exception(string.Format("Stage{0}-{1}の内容がありません！", bigIndex, smallIndex));
+                }
+
+                while (true)
+                {
+                    lines.Add(lineSp);
+                    if (lineSp.Length != width)
+                    {
+                        throw new Exception(string.Format("Stage{0}-{1}の行の長さが一致していません！", bigIndex, smallIndex));
+                    }
+                    line = reader.ReadLine();
+                    if (line != null && line != "")
                     {
                         lineSp = line.Split(',');
-                        width = lineSp.Length;
                     }
                     else
                     {
-                        throw new Exception(string.Format("Stage{0}-{1}の内容がありません！", bigIndex, smallIndex));
+                        break;
                     }
+                }
 
-                    while (true)
+                mapdatas = new int[lines.Count, width];
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    for (int j = 0; j < width; j++)
                     {
-                        lines.Add(lineSp);
-                        if (lineSp.Length != width)
-                            throw new Exception(string.Format("Stage{0}-{1}の行の長さが一致していません！", bigIndex, smallIndex));
-                        line = reader.ReadLine();
-                        if (line != null && line != "")
-                        {
-                            lineSp = line.Split(',');
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
-
-                    mapdatas = new int[lines.Count, width];
-                    for (int i = 0; i < lines.Count; i++)
-                    {
-                        for (int j = 0; j < width; j++)
-                        {
-                            mapdatas[i, j] = int.Parse(lines[i][j]);
-                        }
+                        mapdatas[i, j] = int.Parse(lines[i][j]);
                     }
                 }
             }
-            else
-            {
-                //throw new Exception(string.Format("Stage{0}-{1}がありません！", bigIndex, smallIndex));
-                return GetMapdataFromFile(0, 0);
-            }
-
+           
             return mapdatas;
         }
     }
