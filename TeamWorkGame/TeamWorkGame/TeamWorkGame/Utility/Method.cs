@@ -278,6 +278,12 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(wood);
                                 break;
                             }
+                        case (int)GimmickType.TREE:
+                            {
+                                Tree tree = new Tree(new Vector2(j * 64, i * 64));
+                                MapThings.Add(tree);
+                                break;
+                            }
                         case (int)GimmickType.SAND:
                             {
                                 Sand sand = new Sand(new Vector2(j * 64, i * 64), Vector2.Zero);

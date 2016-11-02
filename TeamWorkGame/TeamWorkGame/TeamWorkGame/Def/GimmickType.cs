@@ -13,7 +13,7 @@ namespace TeamWorkGame.Def
 {
     public enum GimmickType
     {
-        GRASS = 0,      //草
+        PLAYER = 0,      //草
         GROUND1,        //土1
         GROUND2,        //土2
         ROCK,           //岩
@@ -25,6 +25,7 @@ namespace TeamWorkGame.Def
         GOAL,           //ゴール
         WATER,          //水
         WOOD,           //木材
+        TREE,           //木
         SAND,           //砂
     }
 }

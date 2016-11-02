@@ -343,6 +343,15 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
+        /// 消えるまでの時間を設定
+        /// </summary>
+        /// <param name="deathTime">消えるまでの時間</param>
+        public void SetTimer(float deathTime)
+        {
+            deathTimer.Change(deathTime);
+        }
+
+        /// <summary>
         /// 存在判定（そのクラスのUpdateに追加する）
         /// </summary>
         public virtual void AliveUpdate()   
@@ -375,6 +384,21 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        //by長谷川修一
+        /// <summary>
+        /// 消したいだけのとき
+        /// </summary>
+        public virtual void DeathUpdate()
+        {
+            if (isShow == false)
+            {
+                deathTimer.Update();
+                if (deathTimer.IsTime())
+                {
+                    isTrigger = true;
+                }
+            }
+        }
         /// <summary>
         /// 存在判定（EventHandleに追加する）
         /// </summary>

@@ -19,8 +19,8 @@ namespace TeamWorkGame.Actor
 {
     public class Straw : GameObject
     {
-        //private Timer timer;
-        //private bool isToDeath;
+        private Timer timer;
+        private bool isToDeath;
         private float scale;
         public Straw(Vector2 pos)
             : base("straw", new Size(64 * 1, 64 * 1), pos, Vector2.Zero,false, "Straw")
@@ -31,34 +31,34 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            //timer = new Timer(2.0f);
-            //isToDeath = false;
+            timer = new Timer(2.0f);
+            isToDeath = false;
             isShow = true;
-            SetTimer(0.1f, 2.0f);
+            SetTimer(0.01f);
             scale = 1.0f;
 
         }
 
-        //public void ToDeath()
-        //{
-        //    if (!isToDeath)
-        //    {
-        //        isToDeath = true;
-        //    }
-        //}
+        public void ToDeath()
+        {
+            if (!isToDeath)
+            {
+                isToDeath = true;
+            }
+        }
 
         public override void Update(GameTime gameTime)
         {
-            AliveUpdate();
-            //if (isToDeath)
-            //{
-            //    timer.Update();
-            //    if (timer.IsTime())
-            //    {
-            //        IsDead = true;
-            //    }
+            DeathUpdate();
+            if (isToDeath)
+            {
+                timer.Update();
+                if (timer.IsTime())
+                {
+                    IsDead = true;
+                }
 
-            //}
+            }
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace TeamWorkGame.Actor
 
         //見えていないときは火になって当たり判定が消える
         //spawnTimerで復活 by長谷川修一
-        public override void AliveUpdate()
+        public override void DeathUpdate()
         {
             if (isShow == false)
             {
@@ -98,19 +98,8 @@ namespace TeamWorkGame.Actor
                     isTrigger = true;
                     scale = 1.5f;
                     name = "fire";
+                    ToDeath();
                 }
-                spawnTimer.Update();
-                if (spawnTimer.IsTime())
-                {
-                    isShow = true;
-                    scale = 1.0f;
-                    name = "straw";
-                    deathTimer.Initialize();
-                }
-            }
-            else
-            {
-                isTrigger = false;
             }
         }
 
@@ -125,7 +114,6 @@ namespace TeamWorkGame.Actor
             {
                 isShow = false;
             }
-            spawnTimer.Initialize();
         }
 
         //public float GetScale()
