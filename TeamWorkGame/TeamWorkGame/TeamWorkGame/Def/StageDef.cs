@@ -17,6 +17,6 @@ namespace TeamWorkGame.Def
     {
         public const string StagePath = "Content/Stage/";
         public const int BigIndexMax = 5;
-        public const int SmallIndexMax = 5;
+        public const int SmallIndexMax = 6;
     }
 }

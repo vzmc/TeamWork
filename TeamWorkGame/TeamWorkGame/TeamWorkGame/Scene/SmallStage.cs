@@ -2,7 +2,7 @@
 // ステージ選択のクラス
 // 作成時間：2016年10月13日
 // By 葉梨竜太
-//最終修正時間：2016年10月19日
+//最終修正時間：2016年10月27日
 /////////////////////////////////////////////////
 
 using System;
@@ -28,13 +28,17 @@ namespace TeamWorkGame.Scene
     {
         private InputState inputState;
         private bool isEnd;
+        private int stageIndex;
         private int mapIndex;
         private List<Vector2> framel;
+        private int mapnum;
+        private bool isBack;
 
         public SmallStage(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
             mapIndex = 0;
+            mapnum = 0;
             framel = new List<Vector2>()
             {
                 new Vector2(33,51),
@@ -48,12 +52,19 @@ namespace TeamWorkGame.Scene
 
         public void Initialize()
         {
+            mapIndex = 0;
+            mapnum = 0;
+            isBack = false;
             isEnd = false;
         }
 
         public void Initialize(int index)
         {
+            mapIndex = 0;
+            mapnum = 0;
             isEnd = false;
+            isBack = false;
+            stageIndex = index;
         }
         public void Draw(GameTime gameTime, Renderer renderer)
         {
@@ -68,34 +79,64 @@ namespace TeamWorkGame.Scene
             renderer.DrawTexture("smallmap", new Vector2(43, 508));
             renderer.DrawTexture("smallmap", new Vector2(646, 61));
             renderer.DrawTexture("smallmap", new Vector2(646, 293));
+            renderer.DrawTexture("smallmap", new Vector2(646, 508));
 
             //renderer.End();
         }
 
         public void Update(GameTime gametime)
         {
-
-            //修正中
             if (inputState.IsKeyDown(Keys.Right))
             {
-                mapIndex = mapIndex + 3;
+                mapnum += 3;
+                if(mapnum >= 6)
+                {
+                    mapnum -= 6;
+                }
             }
             else if (inputState.IsKeyDown(Keys.Left))
             {
-                mapIndex = mapIndex - 3; 
+                mapnum -= 3;
+                if (mapnum <= -1)
+                {
+                    mapnum += 6;
+                }
             }
             else if (inputState.IsKeyDown(Keys.Up))
             {
-                mapIndex--;
+                mapnum--;
+                if (mapnum == 2)
+                {
+                    mapnum = 5;
+                }
+                else if(mapnum == -1)
+                {
+                    mapnum = 2;
+                }
+                
             }
             else if (inputState.IsKeyDown(Keys.Down))
             {
-                mapIndex++;
+                mapnum++;
+                if (mapnum ==6)
+                {
+                    mapnum = 3;
+                }
+                else if (mapnum == 3)
+                {
+                    mapnum = 0;
+                }
             }
-
+            
+            mapIndex = mapnum;
 
             if (inputState.IsKeyDown(Keys.Enter))
             {
+                isEnd = true;
+            }
+            else if (inputState.IsKeyDown(Keys.Z))
+            {
+                isBack = true;
                 isEnd = true;
             }
         }
@@ -108,13 +149,13 @@ namespace TeamWorkGame.Scene
         public NextScene Next()
         {
             NextScene nextScene;
-            if (mapIndex == 5)
+            if (isBack) 
             {
-                nextScene = new NextScene(SceneType.Stage, mapIndex);
+                nextScene = new NextScene(SceneType.Stage, stageIndex);
             }
             else
             {
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex + stageIndex);
             }
             return nextScene;
         }

@@ -97,7 +97,8 @@ namespace TeamWorkGame.Scene
 
         public NextScene Next()
         {
-            NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+            //NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+            NextScene nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
             return nextScene;
         }
 
