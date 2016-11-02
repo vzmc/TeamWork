@@ -82,6 +82,7 @@
     <Compile Include="Device\Renderer.cs" />
     <Compile Include="Device\Sound.cs" />
     <Compile Include="Device\StageLoader.cs" />
+    <Compile Include="Device\StageSaver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />

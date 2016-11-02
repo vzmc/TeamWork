@@ -44,6 +44,10 @@ namespace TeamWorkGame.Scene
         private ClearSelect clearSelect;    //clear後の選択画面
         private FireMeter fireMeter;
 
+        //柏
+        private StageSever stageSever;
+        private int playTime;
+
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
             this.gameDevice = gameDevice;
@@ -71,7 +75,10 @@ namespace TeamWorkGame.Scene
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
-            
+
+            //柏
+            stageSever = gameDevice.GetStageSever();
+            playTime = 0;
         }
 
         public void Initialize(int stageIndex)
@@ -98,10 +105,15 @@ namespace TeamWorkGame.Scene
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
+
+            //柏
+            stageSever = gameDevice.GetStageSever();
+            playTime = 0;
         }
 
         public void Update(GameTime gameTime)
         {
+            playTime++;
             //inputState.Update();
             //死んでいないと更新する
             if (!isClear && !isOver)
@@ -148,6 +160,13 @@ namespace TeamWorkGame.Scene
                 if (map.GetGoal() != null)
                     if (map.GetGoal().IsOnFire)
                     {
+                        //柏
+                        stageSever.ClearStage = mapIndex;
+                        stageSever.PlayTime = playTime / 60;
+                        stageSever.CurrentStage = mapIndex;
+                        stageSever.Charcoal = coals.Count - nowCoals.Count;
+                        stageSever.SaveStageData();
+
                         isClear = true;
                         clearSelect.IsClear = true;
                     }

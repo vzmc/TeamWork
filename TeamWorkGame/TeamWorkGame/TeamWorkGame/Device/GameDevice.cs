@@ -21,13 +21,14 @@ namespace TeamWorkGame.Device
         private InputState input;   //入力
         private Sound sound;        //サウンド
         private static Random rand = new Random(); //乱数
-
+        private StageSever stageSever;  //stageごとのclear状態を保存する用
 
         public GameDevice(ContentManager content, GraphicsDevice graphics)
         {
             renderer = new Renderer(content, graphics);
             input = new InputState();
             sound = new Sound(content);
+            stageSever = new StageSever();
             //MapManager.Init();
         }
 
@@ -77,6 +78,15 @@ namespace TeamWorkGame.Device
         {
             return rand;
         }
+
+        /// <summary>
+        /// stageSeverの取得
+        /// </summary>
+        /// <returns></returns>
+        public StageSever GetStageSever() {
+            return stageSever;
+        }
+
     }
 
 }
