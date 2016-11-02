@@ -50,6 +50,7 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        //new Size(50,52)の中身を(64,64)に修正
         /// <summary>
         /// コンストラクタ
         /// </summary>
@@ -58,7 +59,7 @@ namespace TeamWorkGame.Actor
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
         public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList)
-            : base("hero", new Size(50, 52), position, velocity, true, "Player")
+            : base("hero", new Size(64, 64), position, velocity, true, "Player")
         {
             inputState = input;
             this.firesList = firesList;
