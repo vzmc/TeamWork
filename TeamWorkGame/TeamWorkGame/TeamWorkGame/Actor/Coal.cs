@@ -26,7 +26,7 @@ namespace TeamWorkGame.Actor
         private Map map;
 
         public Coal(Vector2 pos, Vector2 velo):
-            base("coal", new Size(64, 64), pos, velo, true, "coal")
+            base("coal", pos, velo, true, "coal")
         {
             
         }
@@ -55,13 +55,13 @@ namespace TeamWorkGame.Actor
             //葉梨竜太
             velocity.Y += gForce;
 
-            Method.MapObstacleCheck(ref position, colSize.Width, colSize.Height, ref velocity, ref isOnGround, map, new int[] { 0, 1, 2 });
-
             //マップ上の物と障害物判定
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
             {
                 ObstacleCheck(m);
             }
+
+            Method.MapObstacleCheck(ref position, ColRect.Width, ColRect.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
             //地面にいると運動停止
             if (isOnGround)

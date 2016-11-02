@@ -28,7 +28,7 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public Goal(Vector2 pos) : base("goal", new Size(62, 44), pos, Vector2.Zero, true, "Goal")
+        public Goal(Vector2 pos) : base("goal", pos, Vector2.Zero, true, "Goal")
         {
         }
 
@@ -46,7 +46,7 @@ namespace TeamWorkGame.Actor
         public override void EventHandle(GameObject other)
         {
             other.Velocity = velocity;
-            other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height);
+            other.Position = new Vector2(ColRect.X + ColRect.Width/2 - other.Width/2, ColRect.Y - other.Height);
             other.IsOnGround = true;
             isOnFire = true;
         }

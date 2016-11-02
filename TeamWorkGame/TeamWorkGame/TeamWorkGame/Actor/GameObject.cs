@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using TeamWorkGame.Device;
 using TeamWorkGame.Utility;
 
@@ -23,10 +24,16 @@ namespace TeamWorkGame.Actor
     {
         //フィールド
         protected string name;          //アセット名
-        protected Size imageSize;       //画像のサイズ
-        protected Size colSize;         //衝突判定用のサイズ
+        protected Texture2D image;      //画像
+        protected Rectangle localColRect;    //当たり判定区域
+        //protected Size imageSize;       //画像のサイズ
+        //protected Size colSize;         //衝突判定用のサイズ
         protected Vector2 position;     //位置
-        protected Vector2 colOffset;    //衝突判定区域の偏移量。自身位置との相対位置
+        protected int previousBottom;
+        //protected float ColRect;
+        //protected Vector2 origin;       //描画の原点
+
+        //protected Vector2 colOffset;    //衝突判定区域の偏移量。自身位置との相対位置
         protected Vector2 velocity;     //移動量
         protected bool isDead;          //生きているか？
         protected bool isOnGround;      //地上にいるか？
@@ -37,36 +44,35 @@ namespace TeamWorkGame.Actor
         protected Timer spawnTimer;       //再度見えるようになるまでのTimer
         protected float alpha;
 
-        //プロパティ
-        public Size ImageSize
+        public int Width
         {
             get
             {
-                return imageSize;
+                return image.Width;
             }
         }
 
-        public Size ColSize
+        public int Height
         {
             get
             {
-                return colSize;
-            }
-            set
-            {
-                colSize = value;
+                return image.Height;
             }
         }
 
-        public Vector2 ColOffset
+        public Rectangle ColRect
         {
             get
             {
-                return colOffset;
+                return new Rectangle(localColRect.X + (int)position.X, localColRect.Y + (int)position.Y, localColRect.Width, localColRect.Height);
             }
-            set
+        }
+
+        public int PreviousBottom
+        {
+            get
             {
-                colOffset = value;
+                return previousBottom;
             }
         }
 
@@ -199,20 +205,27 @@ namespace TeamWorkGame.Actor
         /// <param name="velo">移動量</param>
         /// <param name="isTrigger">区域ですか？</param>
         /// <param name="tag">タグ</param>
-        public GameObject(string name, Size imageSize, Vector2 pos, Vector2 velo, bool isTrigger, string tag = "")
+        public GameObject(string name, Vector2 pos, Vector2 velo, bool isTrigger, string tag = "")
         {
             this.name = name;
-            this.imageSize = imageSize;
+            image = Renderer.GetTexture(name);
+            //this.imageSize = imageSize;
             position = pos;
             velocity = velo;
-            colSize = imageSize;
-            colOffset = Vector2.Zero;
+
+            localColRect = InitLocalColRect();
+
             this.tag = tag;
             this.isTrigger = isTrigger;
             deathTimer = new Timer(0.5f);
             spawnTimer = new Timer(0.5f);
 
             Initialize();
+        }
+
+        protected virtual Rectangle InitLocalColRect()
+        {
+            return new Rectangle(0, 0, image.Width, image.Height);
         }
 
         /// <summary>
@@ -226,21 +239,21 @@ namespace TeamWorkGame.Actor
         /// <param name="colOffset">衝突区域と自身位置の相対位置</param>
         /// <param name="isTrigger">区域ですか？</param>
         /// <param name="tag">タグ</param>
-        public GameObject(string name, Size imageSize, Vector2 pos, Vector2 velo, Size colSize, Vector2 colOffset, bool isTrigger, string tag = "")
-        {
-            this.name = name;
-            this.imageSize = imageSize;
-            position = pos;
-            velocity = velo;
-            this.colSize = colSize;
-            this.colOffset = colOffset;
-            this.tag = tag;
-            this.isTrigger = isTrigger;
-            deathTimer = new Timer(0.5f);
-            spawnTimer = new Timer(5f);
+        //public GameObject(string name, Size imageSize, Vector2 pos, Vector2 velo, Size colSize, Vector2 colOffset, bool isTrigger, string tag = "")
+        //{
+        //    this.name = name;
+        //    this.imageSize = imageSize;
+        //    position = pos;
+        //    velocity = velo;
+        //    this.colSize = colSize;
+        //    this.colOffset = colOffset;
+        //    this.tag = tag;
+        //    this.isTrigger = isTrigger;
+        //    deathTimer = new Timer(0.5f);
+        //    spawnTimer = new Timer(5f);
 
-            Initialize();
-        }
+        //    Initialize();
+        //}
 
         /// <summary>
         /// 初期化処理
@@ -248,6 +261,7 @@ namespace TeamWorkGame.Actor
         public virtual void Initialize()
         {
             isDead = false;
+            previousBottom = ColRect.Bottom;
             isOnGround = false;
             isShow = true;      //初期はTrue（見える
             alpha = 1.0f;
@@ -314,8 +328,8 @@ namespace TeamWorkGame.Actor
         /// <returns></returns>
         public virtual bool CollisionCheck(GameObject other)
         {
-            bool flag = Method.CollisionCheck(position + colOffset, colSize.Width, colSize.Height, other.position + other.colOffset, other.colSize.Width, other.colSize.Height);
-
+            bool flag = false;//Method.CollisionCheck(position + colOffset, colSize.Width, colSize.Height, other.position + other.colOffset, other.colSize.Width, other.colSize.Height);
+            flag = ColRect.Intersects(other.ColRect);
             return flag;
         }
 

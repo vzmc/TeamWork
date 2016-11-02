@@ -23,7 +23,7 @@ namespace TeamWorkGame.Actor
         private bool isToDeath;
         private float scale;
         public Straw(Vector2 pos)
-            : base("straw", new Size(64 * 1, 64 * 1), pos, Vector2.Zero,false, "Straw")
+            : base("straw", pos, Vector2.Zero, false, "Straw")
         {
 
         }

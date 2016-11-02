@@ -160,12 +160,12 @@ namespace TeamWorkGame.Utility
             Vector2 selfNowVelocity = self.Velocity;
             Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
             Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, (float)Math.Ceiling(selfNowVelocity.Y));
-            int selfWidth = self.ColSize.Width;
-            int selfHeight = self.ColSize.Height;
+            int selfWidth = self.ColRect.Width;
+            int selfHeight = self.ColRect.Height;
 
             Vector2 obstaclePosition = obstacle.Position;
-            int obstacleWidth = obstacle.ColSize.Width;
-            int obstacleHeight = obstacle.ColSize.Height;
+            int obstacleWidth = obstacle.ColRect.Width;
+            int obstacleHeight = obstacle.ColRect.Height;
 
             //横方向の判定
             if (selfNowVelocity.X != 0)

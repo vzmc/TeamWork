@@ -20,7 +20,7 @@ namespace TeamWorkGame.Actor
         private float scale;
 
         public Wood(Vector2 pos)
-            : base("wood", new Size(64 * 1, 64 * 1), pos, Vector2.Zero, false, "Wood")
+            : base("wood", pos, Vector2.Zero, false, "Wood")
         {
         }
 

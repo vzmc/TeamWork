@@ -23,7 +23,7 @@ namespace TeamWorkGame.Actor
         private bool isToDeath;
         private float scale;
         public Tree(Vector2 pos)
-            : base("tree", new Size(64 * 3, 64 * 3), pos, Vector2.Zero,false, "Tree")
+            : base("tree", pos, Vector2.Zero,false, "Tree")
         {
 
         }

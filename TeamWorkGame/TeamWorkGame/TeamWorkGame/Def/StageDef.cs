@@ -18,5 +18,20 @@ namespace TeamWorkGame.Def
         public const string StagePath = "Content/Stage/";
         public const int BigIndexMax = 5;
         public const int SmallIndexMax = 6;
+
+        public static readonly List<GimmickType> ImpassableTiles = new List<GimmickType>()
+        {
+            GimmickType.GROUND1, GimmickType.GROUND2,
+        };
+
+        public static readonly List<GimmickType> PlatformTiles = new List<GimmickType>()
+        {
+
+        };
+
+        public static readonly List<GimmickType> PassableTiles = new List<GimmickType>()
+        {
+
+        };
     }
 }

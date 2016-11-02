@@ -59,11 +59,17 @@ namespace TeamWorkGame.Actor
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
         public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList)
-            : base("hero", new Size(64, 64), position, velocity, true, "Player")
+            : base("hero", position, velocity, true, "Player")
         {
+            //InitLocalColRect();
             inputState = input;
             this.firesList = firesList;
             this.watersList = watersList;
+        }
+
+        protected override Rectangle InitLocalColRect()
+        {
+            return base.InitLocalColRect();
         }
 
         /// <summary>
@@ -99,17 +105,17 @@ namespace TeamWorkGame.Actor
                     if (diretion == Direction.UP)
                     {
                         fireVelo = new Vector2(0, -1f);
-                        firePos = new Vector2(position.X + imageSize.Width / 2 - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
+                        firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
                     else if (diretion == Direction.LEFT)
                     {
                         fireVelo = new Vector2(-1f, -2f);
-                        firePos = new Vector2(position.X - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
+                        firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
                     else if (diretion == Direction.RIGHT)
                     {
                         fireVelo = new Vector2(1f, -2f);
-                        firePos = new Vector2(position.X + imageSize.Width - fire.ImageSize.Width / 2, position.Y - fire.ImageSize.Height);
+                        firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
 
 
@@ -209,18 +215,24 @@ namespace TeamWorkGame.Actor
 
             if (isOnGround)
             {
-                
                 if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                 {
-                    velocity.Y = -12;
+                    velocity.Y = -13;
                     isOnGround = false;
                 }
             }
 
             velocity.Y += gForce;
-            //velocity.Y = 5;
 
-            Method.MapObstacleCheck(ref position, colSize.Width, colSize.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+            if (velocity.Y > 0 && velocity.Y < 1)
+            {
+                velocity.Y = 1;
+            }
+
+            if (velocity.Y > 10)
+            {
+                velocity.Y = 10;
+            }
 
             //マップ上の物と障害物判定
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
@@ -228,17 +240,18 @@ namespace TeamWorkGame.Actor
                 ObstacleCheck(m);
             }
 
+            Method.MapObstacleCheck(ref position, ColRect.Width, ColRect.Height, ref velocity, ref isOnGround, map, new int[] {1, 2});
+
             //移動速度の大きさをBlockSizeより大きくならないように制限する
             //if(velocity.Length() > map.BlockSize)
             //{
             //    velocity.Normalize();
             //    velocity *= map.BlockSize;
             //}
+            previousBottom = ColRect.Bottom;
 
-            if (velocity.Y > 10)
-            {
-                velocity.Y = 10;
-            }
+            Console.WriteLine(velocity);
+
 
             position += velocity;
 
@@ -273,7 +286,7 @@ namespace TeamWorkGame.Actor
                 animePlayer.PlayAnimation(runAnime);
             }
 
-            Console.WriteLine("isOnGround: " + isOnGround);
+            //Console.WriteLine("isOnGround: " + isOnGround);
         }
 
         public bool GetState()

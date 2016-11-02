@@ -25,7 +25,7 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animationPlayer;
         private bool IsAnimation = false;
 
-        public Ice(Vector2 pos, Vector2 velo) : base("ice", new Size(64, 64), pos, velo, false, "Ice")
+        public Ice(Vector2 pos, Vector2 velo) : base("ice", pos, velo, false, "Ice")
         {
             animationPlayer = new AnimationPlayer();
         }

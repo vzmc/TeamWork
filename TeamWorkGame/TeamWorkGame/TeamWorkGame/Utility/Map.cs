@@ -24,6 +24,13 @@ namespace TeamWorkGame.Utility
         RIGHT
     }
 
+    enum TileCollision
+    {
+        Passable = 0,
+        Impassable = 1,
+        Platform = 2,
+    }
+
     /// <summary>
     /// BlockのIndex構造体
     /// </summary>
@@ -120,6 +127,12 @@ namespace TeamWorkGame.Utility
         {
             Vector2 pos = new Vector2(blockIndex.X * BlockSize, blockIndex.Y * BlockSize);
             return pos;
+        }
+
+        public Rectangle GetBlockRect(int x, int y)
+        {
+            Vector2 pos = GetBlockPosition(new BlockIndex(x, y));
+            return new Rectangle((int)pos.X, (int)pos.Y, BlockSize, BlockSize);
         }
 
         /// <summary>

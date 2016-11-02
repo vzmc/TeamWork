@@ -34,10 +34,19 @@ namespace TeamWorkGame.Def
         public const Buttons ThrowButton = Buttons.LeftTrigger;
         public const Buttons MenuButton = Buttons.Start;
 
-        public static readonly List<GimmickType> BackGrounds = new List<GimmickType>()
+        public static readonly List<GimmickType> ImpassableTiles = new List<GimmickType>()
         {
             GimmickType.GROUND1, GimmickType.GROUND2,
         };
 
+        public static readonly List<GimmickType> PlatformTiles = new List<GimmickType>()
+        {
+            
+        };
+
+        public static readonly List<GimmickType> PassableTiles = new List<GimmickType>()
+        {
+            
+        };
     }
 }

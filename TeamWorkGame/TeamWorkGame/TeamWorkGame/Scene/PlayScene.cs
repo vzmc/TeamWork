@@ -148,7 +148,7 @@ namespace TeamWorkGame.Scene
 
                 //カメラの注視位置を更新
                 //camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
-                camera.MoveAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
+                camera.MoveAimPosition(player.Position + new Vector2(player.Width / 2, player.Height / 2));
                 //Console.WriteLine(camera.OffSet);
                 //マップ上にある炭の数を取得
                 nowCoals = map.MapThings.FindAll(x => x is Coal);

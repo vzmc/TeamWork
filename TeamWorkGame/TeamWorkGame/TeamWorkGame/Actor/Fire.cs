@@ -24,8 +24,9 @@ namespace TeamWorkGame.Actor
         private Motion motion;  //アニメーションの動作
         private Timer timer;                    //アニメーションの時間間隔
 
-        public Fire(Vector2 position, Vector2 velocity) : base("fire", new Size(33, 44), position, velocity, true, "Fire")
+        public Fire(Vector2 position, Vector2 velocity) : base("fire", position, velocity, true, "Fire")
         {
+
         }
 
         public override void Initialize()
@@ -33,6 +34,11 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
+        }
+
+        protected override Rectangle InitLocalColRect()
+        {
+            return base.InitLocalColRect();
         }
 
         /// <summary>
@@ -102,13 +108,13 @@ namespace TeamWorkGame.Actor
         {
             velocity.Y += gForce;
 
-            Method.MapObstacleCheck(ref position, colSize.Width, colSize.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
-
             //マップ上の物と障害物判定
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
             {
                 ObstacleCheck(m);
             }
+
+            Method.MapObstacleCheck(ref position, ColRect.Width, ColRect.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
             //地面にいると運動停止
             if (isOnGround)

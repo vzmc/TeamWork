@@ -27,7 +27,7 @@ namespace TeamWorkGame.Actor
         private bool IsAnimation = false;
 
         public Iron(Vector2 pos, Vector2 velo)
-            : base("iron", new Size(64, 64), pos, velo, false, "Iron")
+            : base("iron", pos, velo, false, "Iron")
         {
             animationPlayer = new AnimationPlayer();
         }

@@ -29,7 +29,7 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public Light(Vector2 pos, bool isOn = false) : base("light_off", new Size(21, 33), pos, Vector2.Zero, true, "Light")
+        public Light(Vector2 pos, bool isOn = false) : base("light_off", pos, Vector2.Zero, true, "Light")
         {
             this.isOn = isOn;
         }
@@ -51,7 +51,7 @@ namespace TeamWorkGame.Actor
                 if (!isOn)
                 {
                     other.Velocity =velocity;
-                    other.Position = position + new Vector2(imageSize.Width / 2 - other.ImageSize.Width / 2, -other.ImageSize.Height + 10);
+                    other.Position = new Vector2(ColRect.X + ColRect.Width / 2 - other.Width / 2, ColRect.Y - other.Height);
                     other.IsOnGround = true;
                     isOn = true;
                 }

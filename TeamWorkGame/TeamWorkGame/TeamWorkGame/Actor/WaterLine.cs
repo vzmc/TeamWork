@@ -117,7 +117,7 @@ namespace TeamWorkGame.Actor
 
             foreach (var x in mapdata.MapThings.FindAll(y => !y.IsTrigger))
             {
-                if (Method.CollisionCheck(pos, waterSize.Width, waterSize.Height, x.Position, x.ColSize.Width, x.ColSize.Height))
+                if (Method.CollisionCheck(pos, waterSize.Width, waterSize.Height, x.Position, x.ColRect.Width, x.ColRect.Height))
                 {
                     flag = true;
                 }
@@ -132,15 +132,10 @@ namespace TeamWorkGame.Actor
             Vector2 pos = position + (new Vector2(0, 64)) * waters.Count;
             int nextPosType = mapdata.GetBlockData(pos);
 
-            foreach (var x in Parameter.BackGrounds)
+            if(StageDef.ImpassableTiles.Contains((GimmickType)nextPosType) || StageDef.PlatformTiles.Contains((GimmickType)nextPosType))
             {
-                if (nextPosType == (int)x)
-                {
-                    flag = true;
-                    break;
-                }
+                flag = true;
             }
-
             return flag;
         }
     }

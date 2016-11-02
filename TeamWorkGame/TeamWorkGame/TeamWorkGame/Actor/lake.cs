@@ -13,7 +13,7 @@ namespace TeamWorkGame.Actor
     class Lake : GameObject
     {
         public Lake(Vector2 pos)
-            : base("water", new Size(64, 64), pos, Vector2.Zero, true, "Lake")
+            : base("water", pos, Vector2.Zero, true, "Lake")
         {
 
         }
