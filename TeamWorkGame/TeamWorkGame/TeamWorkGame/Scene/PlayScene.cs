@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年10月31日
-// By　氷見悠人
+// 最終修正時間：2016年11月02日
+// By　佐瀬拓海
 /////////////////////////////////////////////////
 
 using System;
@@ -160,6 +160,20 @@ namespace TeamWorkGame.Scene
                     //clearSelect.IsClear = true;
                 }
             }
+            //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
+            if (gameDevice.GetInputState().CheckTriggerKey(Keys.Q, Parameter.MenuButton))
+            {
+                if (isOver == false)
+                {
+                    isOver = true;
+                    player.IsDead = true;
+                }
+                else if (isOver == true)
+                {
+                    isOver = false;
+                    player.IsDead = false;
+                }
+            }
 
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
@@ -169,21 +183,13 @@ namespace TeamWorkGame.Scene
                 clearSelect.Initialize();
                 clearSelect.IsClear = true;
             }
-
-            //　Key変更　By氷見悠人
-            if (gameDevice.GetInputState().CheckTriggerKey(Parameter.MenuKey, Parameter.MenuButton))
+            else if (isOver == false && isClear == false)   //isOver = falseでゲーム画面に戻れる By佐瀬拓海
             {
-                if (isClear == false)
-                {
-                    isClear = true;
-                    clearSelect.IsClear = true;
-                }
-                else if (isClear == true)
-                {
-                    isClear = false;
-                    clearSelect.IsClear = false;
-                }
+                clearSelect.Initialize();
+                clearSelect.IsClear = false;
             }
+
+            
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
