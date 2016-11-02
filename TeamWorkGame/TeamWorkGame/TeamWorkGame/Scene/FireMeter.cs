@@ -1,5 +1,5 @@
 ﻿//最終修正日
-//by 長谷川修一 10/19
+//by 長谷川修一 11/2
 
 using System;
 using System.Collections.Generic;
@@ -29,9 +29,11 @@ namespace TeamWorkGame.Scene
 
         }
 
+        //数値変更
+        //by長谷川修一
         public void Draw(Renderer renderer, GameObject other)
         {
-            renderer.DrawTexture("FireMeter", new Vector2(1 * 64, 5 * 64), new Rectangle((((Player)other).FireNum - 1) * 64, 0,64,64));
+            renderer.DrawTexture("FireMeter", new Vector2(1 * 64, 3 * 64), new Rectangle((((Player)other).FireNum - 1) * 64, 0,64,192));
             renderer.DrawNumber("number", new Vector2(1 * 64 + 16, 6 * 64), ((Player)other).FireNum);
         }
     }
