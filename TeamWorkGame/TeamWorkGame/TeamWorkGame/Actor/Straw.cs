@@ -2,8 +2,8 @@
 // 藁のクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月20日
-// By 氷見悠人
+// 最終修正時間：2016年11月2日
+// By 長谷川修一
 /////////////////////////////////////////////////
 
 using System;
@@ -19,8 +19,8 @@ namespace TeamWorkGame.Actor
 {
     public class Straw : GameObject
     {
-        private Timer timer;
-        private bool isToDeath;
+        //private Timer timer;
+        //private bool isToDeath;
         private float scale;
         public Straw(Vector2 pos)
             : base("straw", new Size(64 * 1, 64 * 1), pos, Vector2.Zero,false, "Straw")
@@ -31,31 +31,34 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(2.0f);
-            isToDeath = false;
+            //timer = new Timer(2.0f);
+            //isToDeath = false;
+            isShow = true;
+            SetTimer(0.1f, 2.0f);
             scale = 1.0f;
 
         }
 
-        public void ToDeath()
-        {
-            if (!isToDeath)
-            {
-                isToDeath = true;
-            }
-        }
+        //public void ToDeath()
+        //{
+        //    if (!isToDeath)
+        //    {
+        //        isToDeath = true;
+        //    }
+        //}
 
         public override void Update(GameTime gameTime)
         {
-            if (isToDeath)
-            {
-                timer.Update();
-                if (timer.IsTime())
-                {
-                    IsDead = true;
-                }
+            AliveUpdate();
+            //if (isToDeath)
+            //{
+            //    timer.Update();
+            //    if (timer.IsTime())
+            //    {
+            //        IsDead = true;
+            //    }
 
-            }
+            //}
         }
 
         /// <summary>
@@ -71,20 +74,63 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
+            AliveEvent(other);
+            //if (other is Fire)
+            //{
+            //    other.IsDead = true;
+
+            //}
+            //name = "fire";
+            //IsTrigger = true;
+            //scale = 1.5f;
+            //ToDeath();
+        }
+
+        //見えていないときは火になって当たり判定が消える
+        //spawnTimerで復活 by長谷川修一
+        public override void AliveUpdate()
+        {
+            if (isShow == false)
+            {
+                deathTimer.Update();
+                if (deathTimer.IsTime())
+                {
+                    isTrigger = true;
+                    scale = 1.5f;
+                    name = "fire";
+                }
+                spawnTimer.Update();
+                if (spawnTimer.IsTime())
+                {
+                    isShow = true;
+                    scale = 1.0f;
+                    name = "straw";
+                    deathTimer.Initialize();
+                }
+            }
+            else
+            {
+                isTrigger = false;
+            }
+        }
+
+        public override void AliveEvent(GameObject other)
+        {
             if (other is Fire)
             {
                 other.IsDead = true;
-
+                isShow = false;
             }
-            name = "fire";
-            IsTrigger = true;
-            scale = 1.5f;
-            ToDeath();
+            if (other is Player)
+            {
+                isShow = false;
+            }
+            spawnTimer.Initialize();
         }
 
-        public float GetScale()
-        {
-            return scale;
-        }
+        //public float GetScale()
+        //{
+        //    return scale;
+        //}
     }
 }
