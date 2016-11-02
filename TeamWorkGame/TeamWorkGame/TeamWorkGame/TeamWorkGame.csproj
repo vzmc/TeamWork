@@ -66,6 +66,7 @@
     <Compile Include="Actor\Lake.cs" />
     <Compile Include="Actor\Light.cs" />
     <Compile Include="Actor\Player.cs" />
+    <Compile Include="Actor\Sand.cs" />
     <Compile Include="Actor\Straw.cs" />
     <Compile Include="Actor\Tree.cs" />
     <Compile Include="Actor\Water.cs" />

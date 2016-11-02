@@ -2,8 +2,8 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/10/31
-// 修正者:氷見悠人  ファイルからStage情報を読み取る
+// 最終修正時間：2016/11/02
+// 修正者:佐瀬拓海　CreateGimicksにSANDを追加
 /////////////////////////////////////////////////////////
 using System;
 using System.IO;
@@ -276,6 +276,12 @@ namespace TeamWorkGame.Utility
                             {
                                 Wood wood = new Wood(new Vector2(j * 64, i * 64));
                                 MapThings.Add(wood);
+                                break;
+                            }
+                        case (int)GimmickType.SAND:
+                            {
+                                Sand sand = new Sand(new Vector2(j * 64, i * 64), Vector2.Zero);
+                                MapThings.Add(sand);
                                 break;
                             }
                     }
