@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年10月13日
-// アニメーションの準備 By 氷見悠人
+// 最終修正時間：2016年11月3日
+// アニメーションの変更 By 長谷川修一
 /////////////////////////////////////////////////
 
 using System;
@@ -67,9 +67,10 @@ namespace TeamWorkGame.Actor
             this.watersList = watersList;
         }
 
+        //当たり判定変更by長谷川修一
         protected override Rectangle InitLocalColRect()
         {
-            return new Rectangle(11, 6, 42, 52);
+            return new Rectangle(8, 22, 49, 42);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace TeamWorkGame.Actor
             diretion = Direction.RIGHT;
             fireMaxNum = Parameter.FireMaxNum;
             fireNum = fireMaxNum;
-            runAnime = new Animation(Renderer.GetTexture("puddle"), 0.1f, true);
+            runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
         }
 
         /// <summary>
@@ -117,7 +118,6 @@ namespace TeamWorkGame.Actor
                         fireVelo = new Vector2(1f, -2f);
                         firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
-
 
                     fireVelo.Normalize();
                     fireVelo *= Parameter.FireSpeed;

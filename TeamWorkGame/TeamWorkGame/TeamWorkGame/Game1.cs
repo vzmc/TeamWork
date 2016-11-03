@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
 // Game1
-// ÅIC³ŠÔF2016”N10Œ16“ú
+// ÅIC³ŠÔF2016”N11Œ3“ú
 // By@’·’JìCˆê
 /////////////////////////////////////////////////
 
@@ -120,11 +120,13 @@ namespace TeamWorkGame
             renderer.LoadTexture("forestBG");
             
 
-            //by’·’JìCˆê  10/26
+            //by’·’JìCˆê  11/3
             renderer.LoadTexture("FireMeter");
             renderer.LoadTexture("iceAnime");
             renderer.LoadTexture("ironAnime");
             renderer.LoadTexture("wood");
+            renderer.LoadTexture("playerAnime");
+            renderer.LoadTexture("throwAnime");
 
             //”
             renderer.LoadTexture("ClearWindow");
@@ -134,7 +136,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("WorldText");
             renderer.LoadTexture("StaffText");
 
-            renderer.LoadTexture("puddle");
+            //renderer.LoadTexture("puddle");
 
             renderer.LoadTexture("water");
 
