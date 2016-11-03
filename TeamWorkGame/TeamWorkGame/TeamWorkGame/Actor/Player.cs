@@ -35,6 +35,7 @@ namespace TeamWorkGame.Actor
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持ているひの数
         private Animation runAnime;             //走るアニメ
+
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.None;
 
