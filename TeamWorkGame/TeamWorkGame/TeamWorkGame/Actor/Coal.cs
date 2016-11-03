@@ -76,22 +76,16 @@ namespace TeamWorkGame.Actor
             {
                 CollisionCheck(m);
             }
-
-
-            if (isToDeath)
-            {
-                isDead = true;
-            }
         }
         public override void EventHandle(GameObject other)
         {
             if(other is Player)
             {
-                ToDeath();
                 if(((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数を回復
                 {
                     ((Player)other).FireNum = ((Player)other).FireNum + 1;
                 }
+                isDead = true;
             }
         }
     }
