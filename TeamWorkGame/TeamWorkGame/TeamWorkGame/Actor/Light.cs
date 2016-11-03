@@ -39,6 +39,11 @@ namespace TeamWorkGame.Actor
             base.Initialize();
         }
 
+        protected override Rectangle InitLocalColRect()
+        {
+            return new Rectangle(25, 34, 14, 30);
+        }
+
         public override void Update(GameTime gameTime)
         {
             isOn = false;
@@ -50,8 +55,8 @@ namespace TeamWorkGame.Actor
             {
                 if (!isOn)
                 {
-                    other.Velocity =velocity;
-                    other.Position = new Vector2(ColRect.X + ColRect.Width / 2 - other.Width / 2, ColRect.Y - other.Height);
+                    other.Velocity = velocity;
+                    other.Position = new Vector2(ColRect.Left + ColRect.Width / 2 - other.Width / 2, ColRect.Top - other.ColRect.Height - other.LocalColRect.Top);
                     other.IsOnGround = true;
                     isOn = true;
                 }

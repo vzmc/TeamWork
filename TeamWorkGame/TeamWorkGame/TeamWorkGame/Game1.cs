@@ -95,7 +95,7 @@ namespace TeamWorkGame
             // Create a new SpriteBatch, which can be used to draw textures.
             renderer.LoadTexture("hero");
             renderer.LoadTexture("light_off");
-            renderer.LoadTexture("light_on");
+            //renderer.LoadTexture("light_on");
             renderer.LoadTexture("TileMapSource");
             renderer.LoadTexture("fire");
             renderer.LoadTexture("tree");

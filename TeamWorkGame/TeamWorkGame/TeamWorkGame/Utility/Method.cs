@@ -30,9 +30,12 @@ namespace TeamWorkGame.Utility
         /// <param name="map">所在地図</param>
         /// <param name="data">衝突地形のデータ</param>
         /// <returns>衝突したかどうか</returns>
-        public static bool MapObstacleCheck(ref Vector2 position, int width, int height, ref Vector2 velocity, ref bool isOnGround, Map map, int[] data)
+        public static bool MapObstacleCheck(ref Vector2 position, Rectangle localColRect, ref Vector2 velocity, ref bool isOnGround, Map map, int[] data)
         {
             bool flag = false;
+
+            Rectangle colRect = new Rectangle(localColRect.X + (int)position.X, localColRect.Y + (int)position.Y, localColRect.Width, localColRect.Height);
+
             Vector2[] nowLRPoints = new Vector2[2];
             Vector2[] nowUDPoints = new Vector2[2];
 
@@ -44,10 +47,10 @@ namespace TeamWorkGame.Utility
             //左右移動の判断
             if (velocity.X < 0)
             {
-                nowLRPoints[0].X = position.X;
-                nowLRPoints[0].Y = position.Y + 1;
-                nowLRPoints[1].X = position.X;
-                nowLRPoints[1].Y = position.Y + height - 1 - 1;
+                nowLRPoints[0].X = colRect.Left;
+                nowLRPoints[0].Y = colRect.Top + 1;
+                nowLRPoints[1].X = colRect.Left;
+                nowLRPoints[1].Y = colRect.Bottom - 1;
 
                 nextLRPoints[0] = nowLRPoints[0] + new Vector2(velocity.X, 0);
                 nextLRPoints[1] = nowLRPoints[1] + new Vector2(velocity.X, 0);
@@ -55,16 +58,16 @@ namespace TeamWorkGame.Utility
                 if(map.IsInBlock(nextLRPoints[0], ref blockPos, data) || map.IsInBlock(nextLRPoints[1], ref blockPos, data))
                 {
                     velocity.X = 0;
-                    position.X = blockPos.X + map.BlockSize;
+                    position.X = blockPos.X + map.BlockSize - localColRect.X;
                     flag = true;
                 }
             }
             else if(velocity.X > 0)
             {
-                nowLRPoints[0].X = position.X + width - 1;
-                nowLRPoints[0].Y = position.Y + 1;
-                nowLRPoints[1].X = position.X + width - 1;
-                nowLRPoints[1].Y = position.Y + height - 1 - 1;
+                nowLRPoints[0].X = colRect.Right;
+                nowLRPoints[0].Y = colRect.Top + 1;
+                nowLRPoints[1].X = colRect.Right;
+                nowLRPoints[1].Y = colRect.Bottom - 1;
 
                 nextLRPoints[0] = nowLRPoints[0] + new Vector2(velocity.X, 0);
                 nextLRPoints[1] = nowLRPoints[1] + new Vector2(velocity.X, 0);
@@ -72,7 +75,7 @@ namespace TeamWorkGame.Utility
                 if (map.IsInBlock(nextLRPoints[0], ref blockPos, data) || map.IsInBlock(nextLRPoints[1], ref blockPos, data))
                 {
                     velocity.X = 0;
-                    position.X = blockPos.X - width;
+                    position.X = blockPos.X - (localColRect.X + localColRect.Width);
                     flag = true;
                 }
             }
@@ -80,10 +83,10 @@ namespace TeamWorkGame.Utility
             //上下移動の判断
             if(velocity.Y < 0)
             {
-                nowUDPoints[0].X = position.X + 1;
-                nowUDPoints[0].Y = position.Y;
-                nowUDPoints[1].X = position.X + width - 1 - 1;
-                nowUDPoints[1].Y = position.Y;
+                nowUDPoints[0].X = colRect.Left + 1;
+                nowUDPoints[0].Y = colRect.Top;
+                nowUDPoints[1].X = colRect.Right - 1;
+                nowUDPoints[1].Y = colRect.Top;
 
                 nextUDPoints[0] = nowUDPoints[0] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
                 nextUDPoints[1] = nowUDPoints[1] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
@@ -91,16 +94,16 @@ namespace TeamWorkGame.Utility
                 if (map.IsInBlock(nextUDPoints[0], ref blockPos, data) || map.IsInBlock(nextUDPoints[1], ref blockPos, data))
                 {
                     velocity.Y = 0;
-                    position.Y = blockPos.Y + map.BlockSize;
+                    position.Y = blockPos.Y + map.BlockSize - localColRect.Y;
                     flag = true;
                 }
             }
             else if(velocity.Y > 0)
             {
-                nowUDPoints[0].X = position.X + 1;
-                nowUDPoints[0].Y = position.Y + height - 1;
-                nowUDPoints[1].X = position.X + width - 1 - 1;
-                nowUDPoints[1].Y = position.Y + height - 1;
+                nowUDPoints[0].X = colRect.Left + 1;
+                nowUDPoints[0].Y = colRect.Bottom;
+                nowUDPoints[1].X = colRect.Right - 1;
+                nowUDPoints[1].Y = colRect.Bottom;
 
                 nextUDPoints[0] = nowUDPoints[0] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
                 nextUDPoints[1] = nowUDPoints[1] + new Vector2(0, (float)Math.Ceiling(velocity.Y));
@@ -108,7 +111,7 @@ namespace TeamWorkGame.Utility
                 if (map.IsInBlock(nextUDPoints[0], ref blockPos, data) || map.IsInBlock(nextUDPoints[1], ref blockPos, data))
                 {
                     velocity.Y = 0;
-                    position.Y = blockPos.Y - height;
+                    position.Y = blockPos.Y - (localColRect.Y + localColRect.Height);
                     isOnGround = true;
                     flag = true;
                 }
@@ -152,35 +155,39 @@ namespace TeamWorkGame.Utility
         /// <param name="self">自身</param>
         /// <param name="obstacle">障害物</param>
         /// <returns></returns>
-        public static bool ObstacleCheck(Actor.GameObject self, Actor.GameObject obstacle)
+        public static bool ObstacleCheck(GameObject self, GameObject obstacle)
         {
             bool flag = false;
-            //(float)Math.Ceiling(velocity.Y)
             Vector2 selfNowPositon = self.Position;
             Vector2 selfNowVelocity = self.Velocity;
             Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
             Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, (float)Math.Ceiling(selfNowVelocity.Y));
-            int selfWidth = self.ColRect.Width;
-            int selfHeight = self.ColRect.Height;
+
+            Rectangle selfLocalColRect = self.LocalColRect;
+
+            Rectangle selfNextColRectH = new Rectangle(self.LocalColRect.X + (int)selfNextPositionH.X, self.LocalColRect.Y + (int)selfNextPositionH.Y, self.LocalColRect.Width, self.LocalColRect.Height);
+            Rectangle selfNextColRectV = new Rectangle(self.LocalColRect.X + (int)selfNextPositionV.X, self.LocalColRect.Y + (int)selfNextPositionV.Y, self.LocalColRect.Width, self.LocalColRect.Height);
+
 
             Vector2 obstaclePosition = obstacle.Position;
+            Rectangle obstacleColRect = obstacle.ColRect;
             int obstacleWidth = obstacle.ColRect.Width;
             int obstacleHeight = obstacle.ColRect.Height;
 
             //横方向の判定
             if (selfNowVelocity.X != 0)
             {
-                if (CollisionCheck(selfNextPositionH, selfWidth, selfHeight, obstaclePosition, obstacleWidth, obstacleHeight))
+                if (selfNextColRectH.Intersects(obstacleColRect))
                 {
                     flag = true;
 
                     if (selfNowVelocity.X > 0)
                     {
-                        self.PositionX = obstaclePosition.X - selfWidth;
+                        self.PositionX = obstacleColRect.X - (selfLocalColRect.X + selfLocalColRect.Width);
                     }
                     else
                     {
-                        self.PositionX = obstaclePosition.X + obstacleWidth;
+                        self.PositionX = obstacleColRect.X + obstacleColRect.Width - selfLocalColRect.X;
                     }
 
                     self.VelocityX = 0;
@@ -188,25 +195,25 @@ namespace TeamWorkGame.Utility
             }
 
             //縦方向の判定
-            if (selfNowVelocity.Y != 0)
-            {
-                if (CollisionCheck(selfNextPositionV, selfWidth, selfHeight, obstaclePosition, obstacleWidth, obstacleHeight))
+            //if (selfNowVelocity.Y != 0)
+            //{
+                if (selfNextColRectV.Intersects(obstacleColRect))
                 {
                     flag = true;
 
-                    if (selfNowVelocity.Y > 0)
+                    if (selfNowVelocity.Y >= 0)
                     {
-                        self.PositionY = obstaclePosition.Y - selfHeight;
+                        self.PositionY = obstacleColRect.Y - (selfLocalColRect.Y + selfLocalColRect.Height);
                         self.IsOnGround = true;
                     }
                     else
                     {
-                        self.PositionY = obstaclePosition.Y + obstacleHeight;
+                        self.PositionY = obstacleColRect.Y + obstacleColRect.Height - selfLocalColRect.Y;
                     }
 
-                    self.VelocityY = 0.0f;
+                    self.VelocityY = 0;
                 }
-            }
+            //}
 
             //if (flag)
             //{
@@ -262,7 +269,7 @@ namespace TeamWorkGame.Utility
                             }
                         case (int)GimmickType.GOAL:
                             {
-                                Goal goal = new Goal(new Vector2(j * 64, i * 64 + 20));
+                                Goal goal = new Goal(new Vector2(j * 64, i * 64));
                                 MapThings.Add(goal);
                                 break;
                             }

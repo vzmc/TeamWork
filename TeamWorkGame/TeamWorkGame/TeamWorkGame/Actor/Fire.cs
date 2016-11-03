@@ -38,7 +38,7 @@ namespace TeamWorkGame.Actor
 
         protected override Rectangle InitLocalColRect()
         {
-            return base.InitLocalColRect();
+            return new Rectangle(15, 10, 32, 44);
         }
 
         /// <summary>
@@ -56,24 +56,6 @@ namespace TeamWorkGame.Actor
 
                 if (flag)
                 {
-                    //if (other is Light)
-                    //{
-                    //    if (((Light)other).IsOn == false)
-                    //    {
-                    //        velocity = other.Velocity;
-                    //        position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
-                    //        isOnGround = true;
-                    //        ((Light)other).ChangeSate(true);
-                    //    }
-                    //}
-                    //else if (other is Goal)
-                    //{
-                    //    ((Goal)other).IsOnFire = true;
-                    //    velocity = other.Velocity;
-                    //    position = other.Position + new Vector2(other.ImageSize.Width / 2 - imageSize.Width / 2, -imageSize.Height);
-                    //    isOnGround = true;
-                    //}
-
                     //相手の処理を実行する
                     other.EventHandle(this);
                 }
@@ -90,11 +72,6 @@ namespace TeamWorkGame.Actor
                 flag = base.ObstacleCheck(other);
                 if (flag)
                 {
-                    //if (other is Ice)
-                    //{
-                    //    ((Ice)other).ToDeath();
-                    //}
-
                     //相手の処理を実行する
                     other.EventHandle(this);
                 }
@@ -114,7 +91,7 @@ namespace TeamWorkGame.Actor
                 ObstacleCheck(m);
             }
 
-            Method.MapObstacleCheck(ref position, ColRect.Width, ColRect.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
             //地面にいると運動停止
             if (isOnGround)

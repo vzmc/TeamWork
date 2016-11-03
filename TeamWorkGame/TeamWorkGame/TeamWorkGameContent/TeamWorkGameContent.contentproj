@@ -45,11 +45,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="light_on.png">
-      <Name>light_on</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="TileMapSource.png">
       <Name>TileMapSource</Name>
       <Importer>TextureImporter</Importer>

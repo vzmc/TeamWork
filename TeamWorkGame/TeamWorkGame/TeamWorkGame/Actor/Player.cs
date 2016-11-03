@@ -69,7 +69,7 @@ namespace TeamWorkGame.Actor
 
         protected override Rectangle InitLocalColRect()
         {
-            return base.InitLocalColRect();
+            return new Rectangle(11, 6, 42, 52);
         }
 
         /// <summary>
@@ -140,10 +140,19 @@ namespace TeamWorkGame.Actor
             {
                 if (inputState.CheckTriggerKey(Parameter.TeleportKey, Parameter.TeleportButton))
                 {
-                    firesList.Add(new Fire(position, velocity));
-                    position = firesList[0].Position;
-                    velocity = firesList[0].Velocity;
-                    firesList.RemoveAt(0);
+                    //firesList.Add(new Fire(position, velocity));
+                    Vector2 tempPos = firesList[0].Position;
+                    Vector2 tempVelo = firesList[0].Velocity;
+
+                    firesList[0].Position = position;
+                    firesList[0].Velocity = velocity;
+
+                    position = tempPos;
+                    velocity = tempVelo;
+
+                    Fire tempfire = firesList[0];
+                    firesList[0] = firesList[firesList.Count - 1];
+                    firesList[firesList.Count - 1] = tempfire;
                 }
             }
         }
@@ -240,24 +249,19 @@ namespace TeamWorkGame.Actor
                 ObstacleCheck(m);
             }
 
-            Method.MapObstacleCheck(ref position, ColRect.Width, ColRect.Height, ref velocity, ref isOnGround, map, new int[] {1, 2});
+            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
-            //移動速度の大きさをBlockSizeより大きくならないように制限する
-            //if(velocity.Length() > map.BlockSize)
-            //{
-            //    velocity.Normalize();
-            //    velocity *= map.BlockSize;
-            //}
-            previousBottom = ColRect.Bottom;
 
-            Console.WriteLine(velocity);
-
+            //Console.WriteLine(velocity);
 
             position += velocity;
 
             //位置を整数にする　By氷見悠人
             position.X = (float)Math.Round(position.X);
             position.Y = (float)Math.Round(position.Y);
+
+            previousBottom = ColRect.Bottom;
+
 
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))

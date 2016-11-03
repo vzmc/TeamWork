@@ -60,6 +60,14 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        public Rectangle LocalColRect
+        {
+            get
+            {
+                return localColRect;
+            }
+        }
+
         public Rectangle ColRect
         {
             get

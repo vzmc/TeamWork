@@ -38,6 +38,11 @@ namespace TeamWorkGame.Actor
             isOnFire = false;
         }
 
+        protected override Rectangle InitLocalColRect()
+        {
+            return new Rectangle(14, 32, 36, 32);
+        }
+
         public override void Update(GameTime gameTime)
         {
 
@@ -46,7 +51,7 @@ namespace TeamWorkGame.Actor
         public override void EventHandle(GameObject other)
         {
             other.Velocity = velocity;
-            other.Position = new Vector2(ColRect.X + ColRect.Width/2 - other.Width/2, ColRect.Y - other.Height);
+            other.Position = new Vector2(ColRect.Left + ColRect.Width / 2 - other.Width / 2, ColRect.Top - other.ColRect.Height - other.LocalColRect.Top);
             other.IsOnGround = true;
             isOnFire = true;
         }

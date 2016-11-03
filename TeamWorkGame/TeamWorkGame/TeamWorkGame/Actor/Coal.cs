@@ -61,7 +61,7 @@ namespace TeamWorkGame.Actor
                 ObstacleCheck(m);
             }
 
-            Method.MapObstacleCheck(ref position, ColRect.Width, ColRect.Height, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
             //地面にいると運動停止
             if (isOnGround)
