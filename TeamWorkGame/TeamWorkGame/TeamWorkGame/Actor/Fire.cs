@@ -125,6 +125,7 @@ namespace TeamWorkGame.Actor
         {
             if(other is Player)
             {
+                if(((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数がMax以上にならないよう変更
                 ((Player)other).FireNum++;
             }
             isDead = true;

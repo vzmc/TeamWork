@@ -88,6 +88,10 @@ namespace TeamWorkGame.Actor
             if(other is Player)
             {
                 ToDeath();
+                if(((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数を回復
+                {
+                    ((Player)other).FireNum = ((Player)other).FireNum + 1;
+                }
             }
         }
     }
