@@ -20,8 +20,11 @@ namespace TeamWorkGame.Actor
     public class Straw : GameObject
     {
         private Timer timer;
+        private Timer burnTimer;
         private bool isToDeath;
         private float scale;
+        private Map map;
+
         public Straw(Vector2 pos)
             : base("straw", pos, Vector2.Zero, false, "Straw")
         {
@@ -32,11 +35,20 @@ namespace TeamWorkGame.Actor
         {
             base.Initialize();
             timer = new Timer(2.0f);
+            burnTimer = new Timer(1.0f);
             isToDeath = false;
             isShow = true;
             SetTimer(0.01f);
             scale = 1.0f;
+            map = MapManager.GetNowMapData();
+        }
 
+        public bool IsToDeath
+        {
+            get
+            {
+                return isToDeath;
+            }
         }
 
         public void ToDeath()
@@ -52,12 +64,22 @@ namespace TeamWorkGame.Actor
             DeathUpdate();
             if (isToDeath)
             {
+                burnTimer.Update();
                 timer.Update();
+
+                if (burnTimer.IsTime())
+                {
+                    burnTimer.Stop();
+                    localColRect.Offset(-1, -1);
+                    localColRect.Width += 2;
+                    localColRect.Height += 2;
+                    CheckOhterStraw();
+                }
+
                 if (timer.IsTime())
                 {
                     IsDead = true;
                 }
-
             }
         }
 
@@ -93,12 +115,28 @@ namespace TeamWorkGame.Actor
             if (isShow == false)
             {
                 deathTimer.Update();
-                if (deathTimer.IsTime())
+                if (!isToDeath && deathTimer.IsTime())
                 {
                     isTrigger = true;
-                    scale = 1.5f;
+                    //scale = 1.5f;
                     name = "fire";
                     ToDeath();
+                    
+                }
+            }
+        }
+
+        public void CheckOhterStraw()
+        {
+            foreach(var m in map.MapThings)
+            {
+                if(m is Straw)
+                {
+                    if (!((Straw)m).IsToDeath)
+                    {
+                        if(ColRect.Intersects(m.ColRect))
+                            m.EventHandle(this);
+                    }
                 }
             }
         }
@@ -107,12 +145,19 @@ namespace TeamWorkGame.Actor
         {
             if (other is Fire)
             {
-                other.IsDead = true;
+                //other.IsDead = true;
                 isShow = false;
             }
             if (other is Player)
             {
                 isShow = false;
+            }
+            if(other is Straw)
+            {
+                if (((Straw)other).IsToDeath)
+                {
+                    isShow = false;
+                }
             }
         }
 

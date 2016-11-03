@@ -35,7 +35,7 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             isToDeath = false;
             isShow = true;      //初期値はtrue by佐瀬拓海
-            SetTimer(0.6f, 2f);
+            SetTimer(1f, 2f);
             animation = new Animation(Renderer.GetTexture("iceAnime"), 0.5f, false);
         }
 

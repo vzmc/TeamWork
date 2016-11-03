@@ -15,6 +15,7 @@ namespace TeamWorkGame.Utility
         //フィールド
         private float currentTime;  //現在時間
         private float limitTime;    //制限時間
+        private bool isStop;
 
         public float CurrentTime
         {
@@ -51,6 +52,7 @@ namespace TeamWorkGame.Utility
         public void Initialize()
         {
             currentTime = limitTime;
+            isStop = false;
         }
 
         /// <summary>
@@ -58,10 +60,13 @@ namespace TeamWorkGame.Utility
         /// </summary>
         public void Update()
         {
-            currentTime--;
-            if (currentTime < 0.0f)
+            if (!isStop)
             {
-                currentTime = 0.0f;
+                currentTime--;
+                if (currentTime < 0.0f)
+                {
+                    currentTime = 0.0f;
+                }
             }
         }
 
@@ -83,6 +88,15 @@ namespace TeamWorkGame.Utility
             return currentTime <= 0;
         }
 
+        public void Stop()
+        {
+            isStop = true;
+        }
+
+        public void Restart()
+        {
+            isStop = false;
+        }
         /// <summary>
         /// 規定時間の変更
         /// </summary>
