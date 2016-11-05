@@ -48,6 +48,7 @@ namespace TeamWorkGame.Scene
         private StageSever stageSever;
         private int playTime;
 
+
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
             this.gameDevice = gameDevice;
@@ -246,6 +247,12 @@ namespace TeamWorkGame.Scene
             renderer.DrawNumber("number", new Vector2(1152, 64), coals.Count - nowCoals.Count);
             renderer.DrawNumber("number", new Vector2(1182, 64), "/", 1);
             renderer.DrawNumber("number", new Vector2(1216, 64), coals.Count);
+
+            //playTimeの表示(柏)
+            int[] playtime = stageSever.TimeCalculat(playTime/60);
+            renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
+            renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
+            renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
         }
 
         public Rectangle GetRect(int num)

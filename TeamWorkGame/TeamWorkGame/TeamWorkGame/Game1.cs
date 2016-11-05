@@ -135,6 +135,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("GameStartText");
             renderer.LoadTexture("WorldText");
             renderer.LoadTexture("StaffText");
+            renderer.LoadTexture("balloon");
+            
 
             //renderer.LoadTexture("puddle");
 

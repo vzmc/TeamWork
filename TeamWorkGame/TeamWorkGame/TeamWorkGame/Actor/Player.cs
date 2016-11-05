@@ -39,6 +39,8 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.None;
 
+        private bool isOnBalloon;   //気球に乗ってるかどうか
+
         public int FireNum
         {
             get
@@ -87,6 +89,7 @@ namespace TeamWorkGame.Actor
             fireMaxNum = Parameter.FireMaxNum;
             fireNum = fireMaxNum;
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
+            isOnBalloon = false;
         }
 
         /// <summary>
@@ -195,6 +198,11 @@ namespace TeamWorkGame.Actor
                 {
                     other.EventHandle(this);
                 }
+                else {
+                    if (other is Balloon) {
+                        ((Balloon)other).IsPlayerOn = false;
+                    }
+                }
             }
 
             return flag;
@@ -207,6 +215,22 @@ namespace TeamWorkGame.Actor
         public override void Update(GameTime gameTime)
         {
             float speed = 5f;    //移動速度
+
+
+            //気球と衝突判定
+            foreach (var m in map.MapThings.FindAll(x => x is Balloon))
+            {
+                if (base.CollisionCheck(m))
+                {
+                    if (inputState.GetKeyState(Keys.Left)) { diretion = Direction.LEFT; }
+                    if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
+                    {
+                        isOnBalloon = false;
+                        isOnGround = false;
+                    }
+                }
+            }
+
 
             velocity.X = inputState.Velocity().X * speed;
 
@@ -229,6 +253,7 @@ namespace TeamWorkGame.Actor
                 {
                     velocity.Y = -13;
                     isOnGround = false;
+                    isOnBalloon = false;    //気球から離れる
                 }
             }
 
@@ -270,14 +295,18 @@ namespace TeamWorkGame.Actor
                 CollisionCheck(m);
             }
 
+
             //火と衝突判定
             foreach (var f in firesList)
             {
                 CollisionCheck(f);
             }
 
+            
+
+
             //滝との衝突判定
-            foreach(var wl in watersList)
+            foreach (var wl in watersList)
             {
                 foreach (var w in wl.Waters)
                     CollisionCheck(w);
@@ -297,6 +326,12 @@ namespace TeamWorkGame.Actor
         public bool GetState()
         {
             return isDead;
+        }
+
+        public bool IsOnBalloon
+        {
+            get { return isOnBalloon; }
+            set { isOnBalloon = value; }
         }
 
         /// <summary>

@@ -180,6 +180,7 @@ namespace TeamWorkGame.Actor
             }
         }
 
+
         public bool IsTrigger
         {
             get

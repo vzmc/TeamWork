@@ -297,6 +297,12 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(sand);
                                 break;
                             }
+                        case (int)GimmickType.BALLOON:
+                            {
+                                Balloon balloon = new Balloon(new Vector2(j * 64, i * 64), Vector2.Zero);
+                                MapThings.Add(balloon);
+                                break;
+                            }
                     }
                 }
             }

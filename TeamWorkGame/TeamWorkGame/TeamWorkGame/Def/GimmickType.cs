@@ -27,5 +27,6 @@ namespace TeamWorkGame.Def
         WOOD,           //木材
         TREE,           //木
         SAND,           //砂
+        BALLOON,        //気球
     }
 }

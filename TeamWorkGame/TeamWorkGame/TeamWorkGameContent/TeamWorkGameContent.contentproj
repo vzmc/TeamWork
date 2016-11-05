@@ -341,6 +341,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="balloon.png">
+      <Name>balloon</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="playerAnime.png">
       <Name>playerAnime</Name>
       <Importer>TextureImporter</Importer>
