@@ -2,8 +2,8 @@
 // 火のクラス
 // 作成時間：2016年9月25日
 // By 氷見悠人
-// 最終修正時間：2016年10月13日
-// アニメーションの準備　By 氷見悠人　
+// 最終修正時間：2016年11月9日
+// アニメーションの準備　By 長谷川修一　
 /////////////////////////////////////////////////
 
 using System;
@@ -38,7 +38,8 @@ namespace TeamWorkGame.Actor
 
         protected override Rectangle InitLocalColRect()
         {
-            return new Rectangle(15, 10, 32, 44);
+            return new Rectangle(8, 22, 49, 42);
+            //return new Rectangle(15, 10, 32, 44);
         }
 
         /// <summary>

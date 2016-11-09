@@ -24,7 +24,7 @@ namespace TeamWorkGame.Actor
         private Map map;
 
         public Sand(Vector2 pos, Vector2 velo) :
-            base("coal", pos, velo, false, "coal")
+            base("sand", pos, velo, false, "Sand")
         {
 
         }

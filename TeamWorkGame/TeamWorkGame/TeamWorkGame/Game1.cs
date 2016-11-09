@@ -127,6 +127,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("wood");
             renderer.LoadTexture("playerAnime");
             renderer.LoadTexture("throwAnime");
+            renderer.LoadTexture("sand");
+            renderer.LoadTexture("backGround");
 
             //”
             renderer.LoadTexture("ClearWindow");

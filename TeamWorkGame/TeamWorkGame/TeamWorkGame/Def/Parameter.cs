@@ -19,7 +19,7 @@ namespace TeamWorkGame.Def
     public static class Parameter
     {
         public const int ScreenWidth = 1280;      //windowsのSize
-        public const int ScreenHeight = 768;      //windowsのSize
+        public const int ScreenHeight = 720;      //windowsのSize
         public const float GForce = 0.5f;         //重力の大きさ
         public const float FireSpeed = 10f;     //投げ出す火の速度
         public const int FireMaxNum = 5;         //火の総量

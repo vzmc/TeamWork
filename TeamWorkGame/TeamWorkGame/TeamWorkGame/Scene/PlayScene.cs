@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年11月02日
-// By　佐瀬拓海
+// 最終修正時間：2016年11月09日
+// By　長谷川修一
 /////////////////////////////////////////////////
 
 using System;
@@ -215,6 +215,8 @@ namespace TeamWorkGame.Scene
         //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(GameTime gameTime, Renderer renderer)
         {
+            renderer.DrawTexture("backGround", Vector2.Zero);
+
             for (int i = 0; i < map.Data.GetLength(0); i++)
             {
                 for (int j = 0; j < map.Data.GetLength(1); j++)
