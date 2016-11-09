@@ -1051,6 +1051,11 @@ namespace TeamWorkGame.Def
             Method.CreateGimmicks(mapdata, MapThings);
         }
 
+        public static Vector2 PlayerStartPosition() {
+            return Method.PlayerStartPosition(mapdata);
+        }
+
+
         public static int[,] GetNowMapArr()
         {
             return map.Data;

@@ -3,7 +3,7 @@
 //作成時間：2016/9/26
 //作成者：氷見悠人
 // 最終修正時間：2016年11月09日
-// By　長谷川修一
+// By　柏
 /////////////////////////////////////////////////
 
 using System;
@@ -101,7 +101,12 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera();
-            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);
+            //player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);　player自動生成のために削除
+
+            //柏
+            player = new Player(gameDevice.GetInputState(), MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
+
+            //葉梨竜太
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);

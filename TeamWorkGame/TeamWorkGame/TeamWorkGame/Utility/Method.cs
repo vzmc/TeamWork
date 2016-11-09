@@ -223,6 +223,26 @@ namespace TeamWorkGame.Utility
             return flag;
         }
 
+
+        public static Vector2 PlayerStartPosition(int[,] mapdata) {
+            for (int i = 0; i < mapdata.GetLength(0); i++)
+            {
+                for (int j = 0; j < mapdata.GetLength(1); j++)
+                {
+                    switch (mapdata[i, j])
+                    {
+                        case (int)GimmickType.PLAYER:
+                            {
+                                return new Vector2(j * 64, i * 64);
+                            }
+                    }
+                }
+            }
+            return Vector2.Zero;
+        }
+
+
+
         //by木材追加 長谷川修一 10/27
         /// <summary>
         /// ギミック設置
