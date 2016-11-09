@@ -238,7 +238,7 @@ namespace TeamWorkGame.Utility
                     }
                 }
             }
-            return Vector2.Zero;
+            return new Vector2(1 * 64, 0);
         }
 
 
