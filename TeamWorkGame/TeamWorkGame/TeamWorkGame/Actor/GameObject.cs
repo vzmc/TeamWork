@@ -377,7 +377,7 @@ namespace TeamWorkGame.Actor
         /// <summary>
         /// 存在判定（そのクラスのUpdateに追加する）
         /// </summary>
-        public virtual void AliveUpdate()   
+        public virtual void AliveUpdate()
         {
             if (isShow == false)//見えないとき
             {
@@ -431,12 +431,24 @@ namespace TeamWorkGame.Actor
             if (other is Fire || other is Player)
             {
                 //if(other is Fire)
-                    //other.IsDead = true;
+                //other.IsDead = true;
 
                 isShow = false;         //不可視化
 
             }
             spawnTimer.Initialize(); //Timerを初期化して可視化するのを防ぐ
+        }
+
+        /// <summary>
+        /// 存在判定（EventHandleに追加する）
+        /// </summary>
+        /// <param name="other">対象</param>
+        public virtual void DeathEvent(GameObject other)
+        {
+            if (other is Fire || other is Player)
+            {
+                isShow = false;
+            }
         }
 
         /// <summary>
@@ -453,6 +465,6 @@ namespace TeamWorkGame.Actor
         /// </summary>
         /// <param name="other">衝突対象/param>
         public abstract void EventHandle(GameObject other);
-        
+
     }
 }

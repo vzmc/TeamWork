@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Def;
 using TeamWorkGame.Utility;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Actor
 {
@@ -17,11 +18,15 @@ namespace TeamWorkGame.Actor
     {
         //private Timer timer;
         //private bool isToDeath;
-        private float scale;
+        //private float scale;
+        private Animation animation;
+        private AnimationPlayer animationPlayer;
+        private bool IsAnimation = false;
 
         public Wood(Vector2 pos)
             : base("wood", pos, Vector2.Zero, false, "Wood")
         {
+            animationPlayer = new AnimationPlayer();
         }
 
         public override void Initialize()
@@ -30,8 +35,9 @@ namespace TeamWorkGame.Actor
             //timer = new Timer(2.0f);
             //isToDeath = false;
             isShow = true;
-            SetTimer(0.3f, 3f);
-            scale = 1.0f;
+            SetTimer(0.6f, 3f);
+            animation = new Animation(Renderer.GetTexture("woodAnime"), Parameter.OneframeWoodAnime, false);
+            //scale = 1.0f;
         }
 
         //public void ToDeath()
@@ -45,6 +51,7 @@ namespace TeamWorkGame.Actor
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
+            animationPlayer.PlayAnimation(animation);
             //if (isToDeath)
             //{
             //    timer.Update();
@@ -57,12 +64,18 @@ namespace TeamWorkGame.Actor
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
         {
-            renderer.DrawTexture(name, position + offset, scale, alpha);
+            renderer.DrawTexture(name, position + offset, alpha);
+            if (IsAnimation)
+            {
+                animationPlayer.Draw(gameTime, renderer, position + offset, SpriteEffects.None);
+                IsAnimation = animationPlayer.Reset(isShow);
+            }
         }
 
         public override void EventHandle(GameObject other)
         {
             AliveEvent(other);
+            IsAnimation = true;
             //if (other is Fire)
             //{
             //    other.IsDead = true;
@@ -72,31 +85,31 @@ namespace TeamWorkGame.Actor
 
         //見えていないときは火になって当たり判定が消える
         //spawnTimerで復活 by長谷川修一
-        public override void AliveUpdate()
-        {
-            if (isShow == false)
-            {
-                deathTimer.Update();
-                if (deathTimer.IsTime())
-                {
-                    isTrigger = true;
-                    scale = 1.5f;
-                    name = "fire";
-                }
-                spawnTimer.Update();
-                if (spawnTimer.IsTime())
-                {
-                    isShow = true;
-                    scale = 1.0f;
-                    name = "wood";
-                    deathTimer.Initialize();      
-                }
-            }
-            else
-            {
-                isTrigger = false;
-            }
-        }
+        //public override void AliveUpdate()
+        //{
+        //    if (isShow == false)
+        //    {
+        //        deathTimer.Update();
+        //        if (deathTimer.IsTime())
+        //        {
+        //            isTrigger = true;
+        //            scale = 1.5f;
+        //            name = "fire";
+        //        }
+        //        spawnTimer.Update();
+        //        if (spawnTimer.IsTime())
+        //        {
+        //            isShow = true;
+        //            scale = 1.0f;
+        //            name = "wood";
+        //            deathTimer.Initialize();      
+        //        }
+        //    }
+        //    else
+        //    {
+        //        isTrigger = false;
+        //    }
+       // }
 
         public override void AliveEvent(GameObject other)
         {

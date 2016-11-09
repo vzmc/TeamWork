@@ -23,6 +23,9 @@ namespace TeamWorkGame.Def
         public const float GForce = 0.5f;         //重力の大きさ
         public const float FireSpeed = 10f;     //投げ出す火の速度
         public const int FireMaxNum = 5;         //火の総量
+        public const float BurnStraw = 0.1f;     //藁の火が燃え移る時間
+        public const float OneframeStrawAnime = 0.2f;  //藁アニメ―ションの1フレームの時間
+        public const float OneframeWoodAnime = 0.2f;  //木アニメーションの1フレームの時間
 
         public const Keys JumpKey = Keys.Z;
         public const Keys TeleportKey = Keys.C;
