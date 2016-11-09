@@ -108,6 +108,8 @@ namespace TeamWorkGame.Device
                 "大文字小文字間違ってませんか？\n" +
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
+
             spriteBatch.Draw(textures[name], position, Color.White * alpha);
         }
 
@@ -126,12 +128,32 @@ namespace TeamWorkGame.Device
                 "大文字小文字間違ってませんか？\n" +
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
             spriteBatch.Draw(
                 textures[name], //画像
                 position,       //位置
                 rect,           //の指定範囲
                 Color.White * alpha);
+        }
+
+        public void DrawTexture(string name, Vector2 position, Rectangle rect, float cameraScale, float alpha)
+        {
+            Debug.Assert(
+                textures.ContainsKey(name),
+                "アセット名が間違えていませんか？\n" +
+                "大文字小文字間違ってませんか？\n" +
+                "LoadTextureで読み込んでますか？\n" +
+                "プログラムを確認してください");
+
+            //spriteBatch.Draw(
+            //    textures[name], //画像
+            //    position,       //位置
+            //    rect,           //の指定範囲
+            //    Color.White * alpha);
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
+                
+            spriteBatch.Draw(textures[name], position, rect, Color.White * alpha, 0.0f, Vector2.Zero, cameraScale, SpriteEffects.None, 0.0f);
         }
 
         //by 長谷川修一 10/13
@@ -151,6 +173,7 @@ namespace TeamWorkGame.Device
                 "大文字小文字間違ってませんか？\n" +
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
             spriteBatch.Draw(
                 textures[name],
@@ -183,6 +206,8 @@ namespace TeamWorkGame.Device
             //    "大文字小文字間違ってませんか？\n" +
             //    "loadtextureで読み込んでますか？\n" +
             //    "プログラムを確認してください");
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
+
 
             spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
         }

@@ -84,11 +84,11 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public void Draw(GameTime gameTime, Renderer renderer, Vector2 offset) 
+        public void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale) 
         {
             foreach(var w in waters)
             {
-                w.Draw(gameTime, renderer, offset);
+                w.Draw(gameTime, renderer, offset, cameraScale);
             }
         }
 

@@ -113,10 +113,10 @@ namespace TeamWorkGame.Actor
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
-        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
-        {
-            renderer.DrawTexture(name, position + offset);
-        }
+        //public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
+        //{
+        //    renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, 1.0f);
+        //}
 
         /// <summary>
         /// 事件処理
@@ -126,8 +126,10 @@ namespace TeamWorkGame.Actor
         {
             if(other is Player)
             {
-                if(((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数がMax以上にならないよう変更
-                ((Player)other).FireNum++;
+                if (((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数がMax以上にならないよう変更
+                {
+                    ((Player)other).FireNum++;
+                }
             }
             isDead = true;
         }

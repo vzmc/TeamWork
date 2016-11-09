@@ -25,7 +25,19 @@ namespace TeamWorkGame.Device
         private Vector2 aimPosition;
         private Map map;
         private bool IsLimitView;
+        private float scale;
 
+        public float Scale
+        {
+            get
+            {
+                return scale;
+            }
+            set
+            {
+                scale = value;
+            }
+        }
         public Vector2 OffSet
         {
             get
@@ -54,10 +66,11 @@ namespace TeamWorkGame.Device
         /// <param name="aimPos">カメラ注視位置（中心位置）</param>
         public Camera()
         {
-            ViewWidth = Parameter.ScreenWidth;
-            ViewHeight = Parameter.ScreenHeight;
+            ViewWidth = (int)Math.Round(Parameter.ScreenWidth * scale);
+            ViewHeight = (int)Math.Round(Parameter.ScreenHeight * scale);
             map = MapManager.GetNowMapData();
             IsLimitView = true;
+            scale = 1.0f;
             SetData(new Vector2(ViewWidth / 2, ViewHeight / 2));
         }
 
@@ -65,13 +78,24 @@ namespace TeamWorkGame.Device
         /// コンストラクタ
         /// </summary>
         /// <param name="aimPos">カメラ注視位置（中心位置）</param>
-        public Camera(Vector2 aimPos, bool isLimitView = true)
+        public Camera(Vector2 aimPos, bool isLimitView = false)
         {
-            ViewWidth = Parameter.ScreenWidth;
-            ViewHeight = Parameter.ScreenHeight;
+            ViewWidth = (int)Math.Round(Parameter.ScreenWidth * scale);
+            ViewHeight = (int)Math.Round(Parameter.ScreenHeight * scale);
             map = MapManager.GetNowMapData();
             IsLimitView = isLimitView;
+            scale = 1.0f;
             SetData(aimPos);
+        }
+
+        public Camera(Vector2 aimPos, float scale, bool isLimitView = false)
+        {
+            ViewWidth = (int)Math.Round(Parameter.ScreenWidth * scale);
+            ViewHeight = (int)Math.Round(Parameter.ScreenHeight * scale);
+            map = MapManager.GetNowMapData();
+            IsLimitView = isLimitView;
+            this.scale = scale;
+            SetData(aimPos * scale);
         }
 
         /// <summary>
@@ -113,22 +137,22 @@ namespace TeamWorkGame.Device
         /// <param name="aimPos"></param>
         public void SetAimPosition(Vector2 aimPos)
         {
-            SetData(aimPos);
+            SetData(aimPos * scale);
         }
 
         public void MoveAimPosition(Vector2 aimPos)
         {
-            Vector2 distance = aimPos - aimPosition;
+            Vector2 distance = aimPos * scale - aimPosition;
             //float speed = 0;
             Vector2 aim;
 
-            Vector2 velocity = distance * 0.9f;
+            Vector2 velocity = distance * 0.8f;
 
             //カメラの位置を整数化
             velocity.X = (float)Math.Floor((velocity.X));
             velocity.Y = (float)Math.Floor((velocity.Y));
 
-            aim = aimPos - velocity;
+            aim = aimPos * scale - velocity;
             //if (distance <= 1)
             //{
             //    aim = aimPos;

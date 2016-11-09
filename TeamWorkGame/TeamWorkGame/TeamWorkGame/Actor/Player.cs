@@ -107,28 +107,31 @@ namespace TeamWorkGame.Actor
                     Fire fire = new Fire(firePos, fireVelo);
 
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
+                    //Speedを固定にした
                     if (diretion == Direction.UP)
                     {
-                        fireVelo = new Vector2(0, -1f);
+                        fireVelo = new Vector2(0, -Parameter.FireUpSpeed);
                         firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
                     else if (diretion == Direction.LEFT)
                     {
-                        fireVelo = new Vector2(-1f, -2f);
+                        fireVelo = new Vector2(-Parameter.FireHerizonSpeed, -Parameter.FireHerizoUpSpeed);
                         firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
                     else if (diretion == Direction.RIGHT)
                     {
-                        fireVelo = new Vector2(1f, -2f);
+                        fireVelo = new Vector2(Parameter.FireHerizonSpeed, -Parameter.FireHerizoUpSpeed);
                         firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
 
-                    fireVelo.Normalize();
-                    fireVelo *= Parameter.FireSpeed;
+                    //if()
+                    //    //fireVelo.Normalize();
+
+                    //    fireVelo *= Parameter.FireSpeed/2;
 
                     fire.Position = firePos;
-                    fire.Velocity = fireVelo + velocity;
-
+                    //fire.Velocity = fireVelo + velocity;
+                    fire.Velocity = fireVelo;
                     firesList.Insert(0, fire);
                     fireNum--;
                 }
@@ -277,7 +280,6 @@ namespace TeamWorkGame.Actor
 
             Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
-
             //Console.WriteLine(velocity);
 
             position += velocity;
@@ -288,22 +290,17 @@ namespace TeamWorkGame.Actor
 
             previousBottom = ColRect.Bottom;
 
-
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
                 CollisionCheck(m);
             }
 
-
             //火と衝突判定
             foreach (var f in firesList)
             {
                 CollisionCheck(f);
             }
-
-            
-
 
             //滝との衝突判定
             foreach (var wl in watersList)
@@ -338,11 +335,11 @@ namespace TeamWorkGame.Actor
         /// 描画
         /// </summary>
         /// <param name="renderer"></param>
-        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
             if (velocity.X == 0)
             {
-                renderer.DrawTexture(name, position + offset);
+                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
             else
             {
@@ -350,7 +347,7 @@ namespace TeamWorkGame.Actor
                     flip = SpriteEffects.FlipHorizontally;
                 else if (Velocity.X < 0)
                     flip = SpriteEffects.None;
-                animePlayer.Draw(gameTime, renderer, position + offset, flip);
+                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
             }
         }
 

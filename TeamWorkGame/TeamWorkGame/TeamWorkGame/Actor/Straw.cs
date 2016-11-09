@@ -78,14 +78,9 @@ namespace TeamWorkGame.Actor
         /// <param name="gameTime"></param>
         /// <param name="renderer"></param>
         /// <param name="offset"></param>
-        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position + offset, alpha);
-            if (IsAnimation)
-            {
-                animationPlayer.Draw(gameTime, renderer, position + offset, SpriteEffects.None);
-                IsAnimation = animationPlayer.Reset(isShow);
-            }
+            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
         }
 
         public override void EventHandle(GameObject other)

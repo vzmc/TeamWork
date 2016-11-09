@@ -290,10 +290,15 @@ namespace TeamWorkGame.Actor
         /// </summary>
         /// <param name="renderer"></param>
         /// <param name="offset">カメラ偏移</param>
-        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
+        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position + offset);
+            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
         }
+
+        //public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
+        //{
+        //    renderer.DrawTexture(name, position + offset, 1.0f);
+        //}
 
         /// <summary>
         /// 描画(透明値を設定する)    作成者：佐瀬　日付：１０/１２
@@ -301,10 +306,10 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         /// <param name="offset">カメラ偏移</param>
         /// <param name="alpha">透明値</param>
-        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float alpha = 1.0f)
-        {
-            renderer.DrawTexture(name, position + offset, alpha);
-        }
+        //public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float alpha = 1.0f)
+        //{
+        //    renderer.DrawTexture(name, position + offset, alpha);
+        //}
 
         /// <summary>
         /// 描画（範囲指定する）      BY 氷見悠人   2016/10/13
@@ -313,10 +318,10 @@ namespace TeamWorkGame.Actor
         /// <param name="offset">カメラ偏移</param>
         /// <param name="rect">描画範囲</param>
         /// <param name="alpha">透明値</param>
-        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, Rectangle rect, float alpha = 1.0f)
-        {
-            renderer.DrawTexture(name, position + offset, rect, alpha);
-        }
+        //public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, Rectangle rect, float alpha = 1.0f)
+        //{
+        //    renderer.DrawTexture(name, position + offset, rect, alpha);
+        //}
 
         /// <summary>
         /// 描画(拡大率) By 長谷川修一 2016/10/13
@@ -325,10 +330,10 @@ namespace TeamWorkGame.Actor
         /// <param name="offset">カメラ偏移</param>
         /// <param name="scale">描画範囲</param>
         /// <param name="alpha">透明値</param>
-        public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float scale, float alpha = 1.0f)
-        {
-            renderer.DrawTexture(name, position + offset, scale, alpha);
-        }
+        //public virtual void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float scale, float alpha = 1.0f)
+        //{
+        //    renderer.DrawTexture(name, position + offset, scale, alpha);
+        //}
 
         /// <summary>
         /// 四角同士の衝突区域判定

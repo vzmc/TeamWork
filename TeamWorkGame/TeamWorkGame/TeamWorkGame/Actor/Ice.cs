@@ -81,13 +81,13 @@ namespace TeamWorkGame.Actor
         /// <param name="gameTime"></param>
         /// <param name="renderer"></param>
         /// <param name="offset"></param>
-        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position + offset, alpha);
+            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             //アニメーションの追加 by長谷川修一
             if(IsAnimation)
             {
-                animationPlayer.Draw(gameTime, renderer, position + offset, SpriteEffects.None);
+                animationPlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
                 IsAnimation = animationPlayer.Reset(isShow);
             }
         }

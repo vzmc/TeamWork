@@ -39,9 +39,9 @@ namespace TeamWorkGame.Actor
             
         }
 
-        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset)
-        {
-            base.Draw(gameTime, renderer, offset);
-        }
+        //public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
+        //{
+        //    base.Draw(gameTime, renderer, offset, cameraScale);
+        //}
     }
 }

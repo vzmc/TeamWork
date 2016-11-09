@@ -43,6 +43,8 @@ namespace TeamWorkGame.Scene
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private ClearSelect clearSelect;    //clear後の選択画面
         private FireMeter fireMeter;
+        float zoomRate = 0.01f;
+        bool isDrawed = false;
 
         //柏
         private StageSever stageSever;
@@ -70,7 +72,7 @@ namespace TeamWorkGame.Scene
             coals = new List<GameObject>();
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
-            camera = new Camera();
+            camera = new Camera(Vector2.Zero, Parameter.CameraScale);
             player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
@@ -100,7 +102,7 @@ namespace TeamWorkGame.Scene
             coals = new List<GameObject>();
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
-            camera = new Camera();
+            camera = new Camera(Vector2.Zero, Parameter.CameraScale);
             //player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);　player自動生成のために削除
 
             //柏
@@ -120,6 +122,13 @@ namespace TeamWorkGame.Scene
         public void Update(GameTime gameTime)
         {
             playTime++;
+
+            //camera.Scale += zoomRate;
+            //if(camera.Scale >= 2.0f || camera.Scale <= 0.1f)
+            //{
+            //    zoomRate *= -1;
+            //}
+
             //inputState.Update();
             //死んでいないと更新する
             if (!isClear && !isOver)
@@ -229,21 +238,21 @@ namespace TeamWorkGame.Scene
                     //動かないマップチップはここで描画 by 長谷川修一
                     if (MapManager.GetNowMapArr()[i, j] == 1 || MapManager.GetNowMapArr()[i, j] == 2)
                     {
-                        renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) + camera.OffSet, GetRect(map.Data[i, j]));
+                        renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, GetRect(map.Data[i, j]), camera.Scale, 1.0f);
                     }
                 }
             }
 
             foreach (var x in map.MapThings)//By　佐瀬 拓海
             {
-                x.Draw(gameTime, renderer, camera.OffSet);
+                x.Draw(gameTime, renderer, camera.OffSet, camera.Scale);
             }
 
-            player.Draw(gameTime, renderer, camera.OffSet);
+            player.Draw(gameTime, renderer, camera.OffSet, camera.Scale);
 
-            fires.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet));
+            fires.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
-            waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet));
+            waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
             clearSelect.Draw(renderer);
 
