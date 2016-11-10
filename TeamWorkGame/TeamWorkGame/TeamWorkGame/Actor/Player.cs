@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年11月3日
-// アニメーションの変更 By 長谷川修一
+// 最終修正時間：2016年11月10日
+// 気球に関する処理修正 By 柏
 /////////////////////////////////////////////////
 
 using System;
@@ -217,17 +217,17 @@ namespace TeamWorkGame.Actor
             {
                 if (base.CollisionCheck(m))
                 {
-                    if (inputState.GetKeyState(Keys.Left)) { diretion = Direction.LEFT; }
                     if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                     {
-                        isOnBalloon = false;
+                        if (!(inputState.CheckDownKey(Keys.Right, Buttons.DPadRight) || inputState.CheckDownKey(Keys.Left, Buttons.DPadLeft))) {
+                            isOnBalloon = false;     //気球から降りる
+                        }
                         isOnGround = false;
                     }
                 }
             }
 
             velocity.X = inputState.Velocity().X * speed;
-
             if (velocity.X > 0)
             {
                 diretion = Direction.RIGHT;
@@ -247,7 +247,6 @@ namespace TeamWorkGame.Actor
                 {
                     velocity.Y = -13;
                     isOnGround = false;
-                    isOnBalloon = false;    //気球から離れる
                 }
             }
 
