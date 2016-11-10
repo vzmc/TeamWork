@@ -33,10 +33,12 @@ namespace TeamWorkGame.Scene
         private List<Vector2> framel;
         private int mapnum;
         private bool isBack;
+        private StageSever sever;
 
         public SmallStage(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
+            sever = gameDevice.GetStageSever();
             mapIndex = 0;
             mapnum = 0;
             framel = new List<Vector2>()
@@ -56,6 +58,7 @@ namespace TeamWorkGame.Scene
             mapnum = 0;
             isBack = false;
             isEnd = false;
+            sever.LoadStageData();
         }
 
         public void Initialize(int index)
@@ -65,36 +68,38 @@ namespace TeamWorkGame.Scene
             isEnd = false;
             isBack = false;
             stageIndex = index;
+            sever.LoadStageData();
         }
         public void Draw(GameTime gameTime, Renderer renderer)
         {
             //renderer.Begin();
-
+            
             renderer.DrawTexture("forestBG", Vector2.Zero);
 
             renderer.DrawTexture("frame", framel[mapIndex]);
 
-            renderer.DrawTexture("smallmap", new Vector2(43, 61));
-            renderer.DrawTexture("smallmap", new Vector2(43, 293));
-            renderer.DrawTexture("smallmap", new Vector2(43, 508));
-            renderer.DrawTexture("smallmap", new Vector2(646, 61));
-            renderer.DrawTexture("smallmap", new Vector2(646, 293));
-            renderer.DrawTexture("smallmap", new Vector2(646, 508));
+            renderer.DrawTexture("smallmap1", new Vector2(43, 61));
+            renderer.DrawTexture("smallmap2", new Vector2(43, 293));
+            renderer.DrawTexture("smallmap3", new Vector2(43, 508));
+            renderer.DrawTexture("smallmap4", new Vector2(646, 61));
+            renderer.DrawTexture("smallmap5", new Vector2(646, 293));
+            renderer.DrawTexture("smallmap6", new Vector2(646, 508));
 
             //renderer.End();
         }
 
         public void Update(GameTime gametime)
         {
-            if (inputState.IsKeyDown(Keys.Right))
+            if (inputState.IsKeyDown(Keys.Right)||inputState.IsKeyDown(Buttons.DPadRight))
             {
                 mapnum += 3;
-                if(mapnum >= 6)
+                if (mapnum >= 6) 
                 {
                     mapnum -= 6;
                 }
+               
             }
-            else if (inputState.IsKeyDown(Keys.Left))
+            else if (inputState.IsKeyDown(Keys.Left)||inputState.IsKeyDown(Buttons.DPadLeft))
             {
                 mapnum -= 3;
                 if (mapnum <= -1)
@@ -102,39 +107,35 @@ namespace TeamWorkGame.Scene
                     mapnum += 6;
                 }
             }
-            else if (inputState.IsKeyDown(Keys.Up))
+            else if (inputState.IsKeyDown(Keys.Up)||inputState.IsKeyDown(Buttons.DPadUp))
             {
                 mapnum--;
-                if (mapnum == 2)
+                if (mapnum == 2 || mapnum == -1) 
                 {
-                    mapnum = 5;
-                }
-                else if(mapnum == -1)
-                {
-                    mapnum = 2;
+                    mapnum += 3;
                 }
                 
             }
-            else if (inputState.IsKeyDown(Keys.Down))
+            else if (inputState.IsKeyDown(Keys.Down)||inputState.IsKeyDown(Buttons.DPadDown))
             {
                 mapnum++;
-                if (mapnum ==6)
+                if (mapnum ==6|| mapnum == 3)
                 {
-                    mapnum = 3;
+                    mapnum -= 3;
                 }
-                else if (mapnum == 3)
-                {
-                    mapnum = 0;
-                }
+               
             }
             
             mapIndex = mapnum;
 
-            if (inputState.IsKeyDown(Keys.Enter))
+            if (inputState.IsKeyDown(Keys.Enter)||inputState.IsKeyDown(Buttons.A))
             {
-                isEnd = true;
+                if (stageIndex + mapIndex <= sever.ClearStage+1)
+                {
+                    isEnd = true;
+                }
             }
-            else if (inputState.IsKeyDown(Keys.Z))
+            else if (inputState.IsKeyDown(Keys.Z)||inputState.IsKeyDown(Buttons.B))
             {
                 isBack = true;
                 isEnd = true;
@@ -162,6 +163,7 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
+
         }
 
         

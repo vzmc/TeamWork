@@ -33,7 +33,7 @@ namespace TeamWorkGame.Actor
         private List<Fire> firesList;               //投げ出した火
         private List<WaterLine> watersList;         //滝のリスト
         private int fireMaxNum;                    //火の総数
-        private int fireNum;                        //持ているひの数
+        private int fireNum;                        //持っている火の数
         private Animation runAnime;             //走るアニメ
 
         private AnimationPlayer animePlayer;    //アニメ再生器

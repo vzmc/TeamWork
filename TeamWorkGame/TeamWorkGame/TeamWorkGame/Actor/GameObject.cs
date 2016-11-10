@@ -469,7 +469,7 @@ namespace TeamWorkGame.Actor
         /// 衝突事件の処理
         /// </summary>
         /// <param name="other">衝突対象/param>
-        public abstract void EventHandle(GameObject other);
+        public abstract void EventHandle(GameObject other);   
 
     }
 }

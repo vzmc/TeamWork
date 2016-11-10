@@ -147,6 +147,15 @@ namespace TeamWorkGame
 
             renderer.LoadTexture("water");
 
+            renderer.LoadTexture("smallmap1");
+            renderer.LoadTexture("smallmap2");
+            renderer.LoadTexture("smallmap3");
+            renderer.LoadTexture("smallmap4");
+            renderer.LoadTexture("smallmap5");
+            renderer.LoadTexture("smallmap6");
+            renderer.LoadTexture("lock");
+            
+
             // TODO: use this.Content to load your game content here
         }
 

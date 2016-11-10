@@ -68,7 +68,7 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gametime)
         {
-            if (inputState.IsKeyDown(Keys.Right))
+            if (inputState.IsKeyDown(Keys.Right)||inputState.IsKeyDown(Buttons.DPadRight))
             {
                 mapIndex++;
                 if (mapIndex > 4)
@@ -76,7 +76,7 @@ namespace TeamWorkGame.Scene
                     mapIndex = 4;
                 }
             }
-            else if (inputState.IsKeyDown(Keys.Left))
+            else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.DPadLeft))
             {
                 mapIndex--;
                 if(mapIndex < 0)
@@ -84,7 +84,7 @@ namespace TeamWorkGame.Scene
                     mapIndex = 0;
                 }
             }
-            if (inputState.IsKeyDown(Keys.Enter))
+            if (inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
                 isEnd = true;
             }

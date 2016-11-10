@@ -65,6 +65,7 @@
     <Compile Include="Actor\Ice.cs" />
     <Compile Include="Actor\Iron.cs" />
     <Compile Include="Actor\Light.cs" />
+    <Compile Include="Actor\MoveLight.cs" />
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\Sand.cs" />
     <Compile Include="Actor\Straw.cs" />

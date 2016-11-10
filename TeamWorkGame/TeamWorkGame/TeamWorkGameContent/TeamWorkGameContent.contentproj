@@ -215,16 +215,16 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Stage\1-2.csv">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Name>1-2</Name>
-    </None>
     <None Include="Stage\0-0.csv">
       <Name>0-0</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Stage\1-1.csv">
       <Name>1-1</Name>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stage\1-2.csv">
+      <Name>1-2</Name>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Stage\1-3.csv">
@@ -389,6 +389,45 @@
   <ItemGroup>
     <Compile Include="woodAnime.png">
       <Name>woodAnime</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="smallmap1.png">
+      <Name>smallmap1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="smallmap2.png">
+      <Name>smallmap2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="smallmap3.png">
+      <Name>smallmap3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="smallmap4.png">
+      <Name>smallmap4</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="smallmap5.png">
+      <Name>smallmap5</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="smallmap6.png">
+      <Name>smallmap6</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lock.png">
+      <Name>lock</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

@@ -2,8 +2,8 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/11/02
-// 修正者:佐瀬拓海　CreateGimicksにSANDを追加
+// 最終修正時間：2016/11/10
+// 修正者:葉梨竜太
 /////////////////////////////////////////////////////////
 using System;
 using System.IO;
@@ -321,6 +321,32 @@ namespace TeamWorkGame.Utility
                             {
                                 Balloon balloon = new Balloon(new Vector2(j * 64, i * 64), Vector2.Zero);
                                 MapThings.Add(balloon);
+                                break;
+                            }
+
+                            //葉梨竜太
+                        case (int)GimmickType.HIGHLIGHT3:
+                            {
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 3) * 64), 3);
+                                MapThings.Add(moveLight);
+                                break; 
+                            }
+                        case (int)GimmickType.SIDELIGHT3:
+                            {
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j + 3) * 64, i * 64), 3);
+                                MapThings.Add(moveLight);
+                                break;
+                            }
+                        case (int)GimmickType.HIGHLIGHT5:
+                            {
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 5) * 64), 3);
+                                MapThings.Add(moveLight);
+                                break;
+                            }
+                        case (int)GimmickType.SIDELIGHT5:
+                            {
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j+5) * 64, i * 64), 3);
+                                MapThings.Add(moveLight);
                                 break;
                             }
                     }

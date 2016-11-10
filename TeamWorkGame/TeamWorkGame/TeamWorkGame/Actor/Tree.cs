@@ -71,14 +71,17 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-            if(other is Fire)
+            if (other is Player && ((Player)other).FireNum > 2)
             {
-                other.IsDead = true;
+                //if(other is Fire)
+                //{
+                //    other.IsDead = true;
+                //}
+                name = "fire";
+                IsTrigger = true;
+                scale = 4.4f;
+                ToDeath();
             }
-            name = "fire";
-            IsTrigger = true;
-            scale = 4.4f;
-            ToDeath();
         }
 
         public float GetScale()
