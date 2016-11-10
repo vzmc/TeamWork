@@ -73,9 +73,22 @@ namespace TeamWorkGame.Device
             for (int i = 1; i < StageDef.BigIndexMax * StageDef.SmallIndexMax + 1; i++)
             {
                 splitLine = lines[i].Split(',');
-                for (int j = 0; j < 3; j++) {
+
+                for (int j = 0; j < splitLine.Count(); j++) {
+                    int check;
+                    if (!int.TryParse(splitLine[j],out check))
+                    {
+                        for (int x = 0; x < 3; x++)
+                        {
+                            stageData[i][x] = 0;
+                        }
+                        continue;
+                    }
                     stageData[i][j] = int.Parse(splitLine[j]);
+                    
+
                 }
+                
             }
 
 

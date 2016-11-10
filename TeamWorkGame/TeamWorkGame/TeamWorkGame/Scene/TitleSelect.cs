@@ -3,7 +3,7 @@
 //作成時間：2016/10/13
 //作成者：柏杳
 //最終修正時間：2016/11/10
-//最終修正者：長谷川修一
+//最終修正者：柏杳
 //////////////////////////////////////////////////
 
 using System;
@@ -82,10 +82,12 @@ namespace TeamWorkGame.Scene
                     switch (x)
                     {
                         case 1:
+                            staffTextalpha = 1.0f;
                             if (worldTextalpha == 1.0f) { worldTextalpha = 0.5f; flashTimer.Initialize(); }
                             else { worldTextalpha = 1.0f; flashTimer.Initialize(); }
                             break;
                         case 2:
+                            worldTextalpha = 1.0f;
                             if (staffTextalpha == 1.0f) { staffTextalpha = 0.5f; flashTimer.Initialize(); }
                             else { staffTextalpha = 1.0f; flashTimer.Initialize(); }
                             break;
@@ -129,7 +131,8 @@ namespace TeamWorkGame.Scene
         {
             if (!isStarted)
             {
-                renderer.DrawTexture("GameStartText", startTextPosition, startTextalpha);
+                renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), startTextalpha);
+                //renderer.DrawTexture("GameStartText", startTextPosition, startTextalpha);
             }
             else {
                 //renderer.DrawTexture("WorldText", worldTextPosition, worldTextalpha);
