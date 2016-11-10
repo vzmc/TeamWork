@@ -62,10 +62,15 @@ namespace TeamWorkGame.Actor
             //}
         }
 
-        //public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
-        //{
-        //    renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
-        //}
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
+        {
+            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+            if (IsAnimation)
+            {
+                animationPlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
+                IsAnimation = animationPlayer.Reset(isShow);
+            }
+        }
 
         public override void EventHandle(GameObject other)
         {
