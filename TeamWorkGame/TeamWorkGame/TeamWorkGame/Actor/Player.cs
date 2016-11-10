@@ -124,13 +124,7 @@ namespace TeamWorkGame.Actor
                         firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
 
-                    //if()
-                    //    //fireVelo.Normalize();
-
-                    //    fireVelo *= Parameter.FireSpeed/2;
-
                     fire.Position = firePos;
-                    //fire.Velocity = fireVelo + velocity;
                     fire.Velocity = fireVelo;
                     firesList.Insert(0, fire);
                     fireNum--;
@@ -147,7 +141,6 @@ namespace TeamWorkGame.Actor
             {
                 if (inputState.CheckTriggerKey(Parameter.TeleportKey, Parameter.TeleportButton))
                 {
-                    //firesList.Add(new Fire(position, velocity));
                     Vector2 tempPos = firesList[0].Position;
                     Vector2 tempVelo = firesList[0].Velocity;
 
@@ -158,8 +151,8 @@ namespace TeamWorkGame.Actor
                     velocity = tempVelo;
 
                     Fire tempfire = firesList[0];
-                    firesList[0] = firesList[firesList.Count - 1];
-                    firesList[firesList.Count - 1] = tempfire;
+                    firesList.RemoveAt(0);
+                    firesList.Add(tempfire);
                 }
             }
         }
@@ -219,7 +212,6 @@ namespace TeamWorkGame.Actor
         {
             float speed = 5f;    //移動速度
 
-
             //気球と衝突判定
             foreach (var m in map.MapThings.FindAll(x => x is Balloon))
             {
@@ -233,7 +225,6 @@ namespace TeamWorkGame.Actor
                     }
                 }
             }
-
 
             velocity.X = inputState.Velocity().X * speed;
 
@@ -353,7 +344,7 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-            
+            //
         }
     }
 }

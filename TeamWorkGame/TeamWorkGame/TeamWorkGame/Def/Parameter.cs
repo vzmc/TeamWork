@@ -30,7 +30,7 @@ namespace TeamWorkGame.Def
         public const int FireHerizoUpSpeed = 10;    //横い投げる時のY方向Speed分量
         public const int FireHerizonSpeed = 6;      //横い投げる時のX方向Speed分量
         public const int FireMaxNum = 5;         //火の総量
-        public const float BurnStraw = 0.1f;     //藁の火が燃え移る時間
+        public const float BurnStraw = 0.2f;     //藁の火が燃え移る時間
         public const float OneframeStrawAnime = 0.2f;  //藁アニメ―ションの1フレームあたりの時間
         public const float OneframeWoodAnime = 0.2f;  //木アニメーションの1フレームあたりの時間
 
