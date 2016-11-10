@@ -53,7 +53,10 @@ namespace TeamWorkGame.Actor
             other.Velocity = velocity;
             other.Position = new Vector2(ColRect.Left + ColRect.Width / 2 - other.Width / 2, ColRect.Top - other.ColRect.Height - other.LocalColRect.Top);
             other.IsOnGround = true;
-            isOnFire = true;
+            if (other is Player)
+            {
+                isOnFire = true;
+            }
         }
     }
 }
