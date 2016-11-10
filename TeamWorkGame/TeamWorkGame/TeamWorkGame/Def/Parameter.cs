@@ -20,6 +20,8 @@ namespace TeamWorkGame.Def
     {
         public const int ScreenWidth = 1280;      //windowsのSize
         public const int ScreenHeight = 720;      //windowsのSize
+        public const int TextWidth = 231;         //text画像の横幅
+        public const int TextHeight = 50;         //text画像1つ分の縦幅、切り取り用
         public const float GForce = 0.5f;         //重力の大きさ
         //public const float FireSpeed = 10f;     //投げ出す火の速度
 
@@ -29,8 +31,8 @@ namespace TeamWorkGame.Def
         public const int FireHerizonSpeed = 6;      //横い投げる時のX方向Speed分量
         public const int FireMaxNum = 5;         //火の総量
         public const float BurnStraw = 0.1f;     //藁の火が燃え移る時間
-        public const float OneframeStrawAnime = 0.2f;  //藁アニメ―ションの1フレームの時間
-        public const float OneframeWoodAnime = 0.2f;  //木アニメーションの1フレームの時間
+        public const float OneframeStrawAnime = 0.2f;  //藁アニメ―ションの1フレームあたりの時間
+        public const float OneframeWoodAnime = 0.2f;  //木アニメーションの1フレームあたりの時間
 
         public const float CameraScale = 1.0f;
 

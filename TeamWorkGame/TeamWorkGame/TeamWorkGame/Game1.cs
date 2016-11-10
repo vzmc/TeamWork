@@ -120,7 +120,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("forestBG");
             
 
-            //by’·’JìCˆê  11/3
+            //by’·’JìCˆê  11/10
             renderer.LoadTexture("FireMeter");
             renderer.LoadTexture("iceAnime");
             renderer.LoadTexture("ironAnime");
@@ -131,6 +131,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("backGround");
             renderer.LoadTexture("woodAnime");
             renderer.LoadTexture("strawAnime");
+            renderer.LoadTexture("text");
 
             //”
             renderer.LoadTexture("ClearWindow");

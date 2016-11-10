@@ -2,6 +2,8 @@
 //TitleSceneの選択機能
 //作成時間：2016/10/13
 //作成者：柏杳
+//最終修正時間：2016/11/10
+//最終修正者：長谷川修一
 //////////////////////////////////////////////////
 
 using System;
@@ -13,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TeamWorkGame.Device;
 using TeamWorkGame.Utility;
+using TeamWorkGame.Def;
 
 namespace TeamWorkGame.Scene
 {
@@ -36,41 +39,48 @@ namespace TeamWorkGame.Scene
 
         private bool isStarted;
         private int x;
-        
-        public TitleSelect(InputState inputState) {
+
+        public TitleSelect(InputState inputState)
+        {
             this.inputState = inputState;
             Initialize();
         }
 
-        public void Initialize() {
+        public void Initialize()
+        {
             isStarted = false;
             x = 1;
             startTextalpha = 1;
             worldTextalpha = 1;
             staffTextalpha = 1;
             flashTimer = new Timer(0.2f);
-            startTextPosition = new Vector2(380, 480);
-            worldTextPosition = new Vector2(380, 450);
-            staffTextPosition = new Vector2(380, 530);
-            selectPosition1 = new Vector2(320, 440);
-            selectPosition2 = new Vector2(320, 515);
+            startTextPosition = new Vector2(500, 480);
+            worldTextPosition = new Vector2(500, 450);
+            staffTextPosition = new Vector2(500, 530);
+            selectPosition1 = new Vector2(420, 450);
+            selectPosition2 = new Vector2(420, 530);
         }
 
-        public void Update() {
+        public void Update()
+        {
             Select();
             Flash();
         }
 
         //点滅する処理
-        private void Flash() {
+        private void Flash()
+        {
             flashTimer.Update();
-            if (flashTimer.IsTime()) {
-                if (!isStarted) {
+            if (flashTimer.IsTime())
+            {
+                if (!isStarted)
+                {
                     if (startTextalpha == 1.0f) { startTextalpha = 0.5f; flashTimer.Initialize(); }
                     else { startTextalpha = 1.0f; flashTimer.Initialize(); }
                 }
                 else {
-                    switch (x) {
+                    switch (x)
+                    {
                         case 1:
                             if (worldTextalpha == 1.0f) { worldTextalpha = 0.5f; flashTimer.Initialize(); }
                             else { worldTextalpha = 1.0f; flashTimer.Initialize(); }
@@ -85,7 +95,8 @@ namespace TeamWorkGame.Scene
         }
 
         //選択肢チェンジ機能
-        private void Select() {
+        private void Select()
+        {
             if (!isStarted) { return; }
             if (inputState.IsKeyDown(Keys.Down))
             {
@@ -100,12 +111,14 @@ namespace TeamWorkGame.Scene
         }
 
         //選択された選択肢は外に出す
-        public int GetSelect {
+        public int GetSelect
+        {
             get { return x; }
         }
 
         //今映すのはStartかWorldとStaffか、外に表明する
-        public bool GetStarted {
+        public bool GetStarted
+        {
             get { return isStarted; }
             set { isStarted = value; }
         }
@@ -114,13 +127,17 @@ namespace TeamWorkGame.Scene
         //状況に合わせて描画する
         public void Draw(Renderer renderer)
         {
-            if (!isStarted) {
+            if (!isStarted)
+            {
                 renderer.DrawTexture("GameStartText", startTextPosition, startTextalpha);
             }
-            else { 
-                renderer.DrawTexture("WorldText", worldTextPosition, worldTextalpha);
-                renderer.DrawTexture("StaffText", staffTextPosition, staffTextalpha);
-                switch (x) {
+            else {
+                //renderer.DrawTexture("WorldText", worldTextPosition, worldTextalpha);
+                renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
+                //renderer.DrawTexture("StaffText", staffTextPosition, staffTextalpha);
+                renderer.DrawTexture("text", staffTextPosition, new Rectangle(0, (int)Text.CREDIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), staffTextalpha);
+                switch (x)
+                {
                     case 1:
                         renderer.DrawTexture("selecter", selectPosition1);
                         break;
