@@ -395,8 +395,9 @@ namespace TeamWorkGame.Utility
                         mapdatas[i, j] = int.Parse(lines[i][j]);
                     }
                 }
+                reader.Close();
             }
-           
+            
             return mapdatas;
         }
     }

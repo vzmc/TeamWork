@@ -110,7 +110,6 @@ namespace TeamWorkGame.Actor
                     //scale = 1.5f;
                     //name = "fire";
                     ToDeath();
-
                 }
             }
             if (isToDeath)
@@ -120,6 +119,7 @@ namespace TeamWorkGame.Actor
 
                 if (burnTimer.IsTime())
                 {
+                    burnTimer.Initialize();
                     burnTimer.Stop();
                     localColRect.Offset(-1, -1);
                     localColRect.Width += 2;
