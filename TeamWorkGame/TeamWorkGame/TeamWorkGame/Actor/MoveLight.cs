@@ -61,7 +61,7 @@ namespace TeamWorkGame.Actor
             {
                 if (!isOn)
                 {
-                    other.Velocity = Vector2.Zero;
+                    other.VelocityY = 10;
                     other.Position = new Vector2(ColRect.Left + ColRect.Width / 2 - other.Width / 2, ColRect.Top - other.ColRect.Height - other.LocalColRect.Top);
                     other.IsOnGround = true;
                     isOn = true;

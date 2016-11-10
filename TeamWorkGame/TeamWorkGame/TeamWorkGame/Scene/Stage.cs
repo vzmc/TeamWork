@@ -28,10 +28,12 @@ namespace TeamWorkGame.Scene
         private bool isEnd;
         private int mapIndex;
         public List<Vector2> herol;
+        private StageSever sever;
 
         public Stage(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
+            sever = gameDevice.GetStageSever();
             herol = new List<Vector2>()
             {
                 new Vector2(85,153),
@@ -45,12 +47,14 @@ namespace TeamWorkGame.Scene
         {
             isEnd = false;
             mapIndex = 0;
+            sever.LoadStageData();
         }
 
         public void Initialize(int index)
         {
             isEnd = false;
             mapIndex = 0;
+            sever.LoadStageData();
         }
                
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -74,6 +78,10 @@ namespace TeamWorkGame.Scene
                 if (mapIndex > 4)
                 {
                     mapIndex = 4;
+                }
+                if(mapIndex > sever.ClearStage / 6)
+                {
+                    mapIndex--;
                 }
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.DPadLeft))
