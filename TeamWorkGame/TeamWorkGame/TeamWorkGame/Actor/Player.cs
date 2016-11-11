@@ -35,6 +35,7 @@ namespace TeamWorkGame.Actor
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持っている火の数
         private Animation runAnime;             //走るアニメ
+        private Animation standAnime;
 
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.None;
@@ -89,6 +90,7 @@ namespace TeamWorkGame.Actor
             fireMaxNum = Parameter.FireMaxNum;
             fireNum = fireMaxNum;
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             isOnBalloon = false;
         }
 
@@ -329,7 +331,9 @@ namespace TeamWorkGame.Actor
         {
             if (velocity.X == 0)
             {
-                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+                animePlayer.PlayAnimation(standAnime);
+                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+                //renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
             else
             {
