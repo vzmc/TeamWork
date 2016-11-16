@@ -162,6 +162,8 @@ namespace TeamWorkGame.Scene
             //死んでいないと更新する
             if (!isClear && !isOver)
             {
+                FuncSwitch.AllAnimetionPause = false;
+
                 //Goal出現の時に、全画面の更新を一時停止、Goalの演出だけをする By 氷見悠人
                 if (goal.State == GoalState.APPEARING)
                 {
@@ -234,7 +236,10 @@ namespace TeamWorkGame.Scene
                     }
                 }
             }
-
+            else
+            {
+                FuncSwitch.AllAnimetionPause = true;
+            }
 
             //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
             if (gameDevice.GetInputState().CheckTriggerKey(Keys.Q, Parameter.MenuButton))
@@ -242,14 +247,12 @@ namespace TeamWorkGame.Scene
                 if (isOver == false)
                 {
                     //全体Animationを一時停止
-                    FuncSwitch.AllAnimetionPause = true;
                     isOver = true;
                     player.IsDead = true;
                 }
                 else if (isOver == true)
                 {
                     //全体Animationを一時停止解除
-                    FuncSwitch.AllAnimetionPause = false;
                     isOver = false;
                     player.IsDead = false;
                 }
