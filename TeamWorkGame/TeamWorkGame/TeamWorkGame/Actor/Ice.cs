@@ -1,8 +1,8 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
 // 氷クラス
 // 作成者：氷見悠人
-// 最終修正時間：2016/10/26
-// By 長谷川修一
+// 最終修正時間：2016/11/16
+// By 葉梨竜太
 ////////////////////////////////////////////////////////////////////////////
 
 using System;
@@ -94,11 +94,14 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-            AliveEvent(other);
-            IsAnimation = true;
-            WaterLine waterLine = new WaterLine(position, animation);
-            if (waters != null)
-                waters.Add(waterLine);
+            if (other is Player && ((Player)other).FireNum >= Parameter.icefire)
+            {
+                AliveEvent(other);
+                IsAnimation = true;
+                WaterLine waterLine = new WaterLine(position, animation);
+                if (waters != null)
+                    waters.Add(waterLine);
+            }
         }
     }
 }

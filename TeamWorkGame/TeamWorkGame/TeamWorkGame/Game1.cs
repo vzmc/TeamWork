@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
 // Game1
-// 最終修正時間：2016年11月3日
+// 最終修正時間：2016年11月16日
 // By　長谷川修一
 /////////////////////////////////////////////////
 
@@ -155,6 +155,9 @@ namespace TeamWorkGame
             renderer.LoadTexture("smallmap5");
             renderer.LoadTexture("smallmap6");
             renderer.LoadTexture("lock");
+            renderer.LoadTexture("Zback");
+            renderer.LoadTexture("uparrow");
+            renderer.LoadTexture("downarrow");
             
 
             // TODO: use this.Content to load your game content here

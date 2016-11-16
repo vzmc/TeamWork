@@ -2,8 +2,8 @@
 // 鉄ブロックのクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月26日
-// By 長谷川修一
+// 最終修正時間：2016年11月16日
+// By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -102,7 +102,7 @@ namespace TeamWorkGame.Actor
         public override void EventHandle(GameObject other)
         {
             //火の数が5以上の時に消える
-            if (other is Player && ((Player)other).FireNum > 4)
+            if (other is Player && ((Player)other).FireNum >= Parameter.ironfire)
             {
                 //ToDeath();
                 AliveEvent(other);

@@ -2,8 +2,8 @@
 // 木のクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年10月20日
-// By 氷見悠人
+// 最終修正時間：2016年11月16日
+// By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -71,7 +71,7 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-            if (other is Player && ((Player)other).FireNum > 2)
+            if (other is Player && ((Player)other).FireNum >= Parameter.treefire)
             {
                 //if(other is Fire)
                 //{

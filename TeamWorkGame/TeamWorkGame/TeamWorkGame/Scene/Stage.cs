@@ -1,6 +1,6 @@
 ﻿/////////////////////////////////////////////////
 // ステージのクラス
-// 最終修正時間：2016年10月13日
+// 最終修正時間：2016年11月16日
 // By 葉梨竜太
 /////////////////////////////////////////////////
 using System;
@@ -29,6 +29,8 @@ namespace TeamWorkGame.Scene
         private int mapIndex;
         public List<Vector2> herol;
         private StageSever sever;
+        private Animation standAnime;
+        private AnimationPlayer animePlayer;
 
         public Stage(GameDevice gameDevice)
         {
@@ -48,6 +50,7 @@ namespace TeamWorkGame.Scene
             isEnd = false;
             mapIndex = 0;
             sever.LoadStageData();
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
         }
 
         public void Initialize(int index)
@@ -55,6 +58,7 @@ namespace TeamWorkGame.Scene
             isEnd = false;
             mapIndex = 0;
             sever.LoadStageData();
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
         }
                
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -65,33 +69,51 @@ namespace TeamWorkGame.Scene
 
             renderer.DrawTexture("worldmap", Vector2.Zero);
 
-            renderer.DrawTexture("hero",herol[mapIndex]);
+            //renderer.DrawTexture("hero",herol[mapIndex]);
+
+
+            animePlayer.PlayAnimation(standAnime);
+            animePlayer.Draw(gameTime, renderer, herol[mapIndex], SpriteEffects.None, 1);
+           
+            for(int i = 0;i < herol.Count(); i++)
+            {
+                if (i> sever.ClearStage / 5)
+                {
+                    renderer.DrawTexture("lock", herol[i]);
+                }
+            }
 
             //renderer.End();
         }
 
         public void Update(GameTime gametime)
         {
-            if (inputState.IsKeyDown(Keys.Right)||inputState.IsKeyDown(Buttons.DPadRight))
+
+            if (inputState.IsKeyDown(Keys.Right)||inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
                 mapIndex++;
                 if (mapIndex > 4)
                 {
                     mapIndex = 4;
                 }
-                if(mapIndex > sever.ClearStage / 6)
+                if(mapIndex > sever.ClearStage / 5)
                 {
                     mapIndex--;
                 }
+                
             }
-            else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.DPadLeft))
+            else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
+
                 mapIndex--;
                 if(mapIndex < 0)
                 {
                     mapIndex = 0;
                 }
             }
+
+           
+            
             if (inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
                 isEnd = true;
@@ -114,6 +136,6 @@ namespace TeamWorkGame.Scene
         {
 
         }
-
+   
     }
 }

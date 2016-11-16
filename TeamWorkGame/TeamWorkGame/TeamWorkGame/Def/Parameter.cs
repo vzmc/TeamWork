@@ -2,8 +2,8 @@
 // 設定用パラメータのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年9月25日
-// By 氷見悠人
+// 最終修正時間：2016年11月16日
+// By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -33,6 +33,13 @@ namespace TeamWorkGame.Def
         public const float BurnStraw = 0.2f;     //藁の火が燃え移る時間
         public const float OneframeStrawAnime = 0.2f;  //藁アニメ―ションの1フレームあたりの時間
         public const float OneframeWoodAnime = 0.2f;  //木アニメーションの1フレームあたりの時間
+
+        //必要な火の量(数字以上で燃える)
+        public const int icefire = 2;
+        public const int treefire = 3;
+        public const int ironfire = 5;
+        public const int woodfire = 1;
+        public const int strawfire = 1;
 
         public const float CameraScale = 1.0f;
 
