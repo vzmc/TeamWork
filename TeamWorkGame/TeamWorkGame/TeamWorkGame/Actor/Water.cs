@@ -1,6 +1,8 @@
 ﻿////////////////////////////////////////////////////////////////
 // 水クラス
 // 作成者：氷見悠人
+// 最終更新日 １１月１６日
+// By 佐瀬拓海
 ///////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -36,12 +38,14 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
-            
         }
 
-        //public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
-        //{
-        //    base.Draw(gameTime, renderer, offset, cameraScale);
-        //}
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
+        {
+            if (isDead == false)//IsDeadがFalseの間だけ描画
+            {
+                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+            }
+        }
     }
 }

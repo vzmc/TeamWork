@@ -2,7 +2,7 @@
 //砂のクラス
 //作成時間：１１月０２日
 //By　佐瀬　拓海
-//最終更新日：１１月０２日
+//最終更新日：１１月１６日
 //By　佐瀬拓海
 ///////////////////////////////
 using Microsoft.Xna.Framework;
@@ -58,7 +58,16 @@ namespace TeamWorkGame.Actor
             velocity.Y += gForce;
 
             //マップ上の物と障害物判定
-
+            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            {
+                if (m is Water)//水の場合、水を消して埋めるようにする
+                {
+                    if (ObstacleCheck(m))
+                    {
+                        ((Water)m).IsDead = true;
+                    }
+                }
+            }
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
             {
                 if (m is Sand == false)//砂以外
@@ -76,6 +85,10 @@ namespace TeamWorkGame.Actor
                 velocity = Vector2.Zero;
                 //gForce = 0.0f;
             }
+            else
+            {
+                velocity.Y += gForce;
+            }
 
             position += velocity;
 
@@ -84,7 +97,6 @@ namespace TeamWorkGame.Actor
             {
                 CollisionCheck(m);
             }
-
             if (isToDeath)
             {
                 isDead = true;
