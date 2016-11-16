@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Diagnostics;   //Assert用
+using TeamWorkGame.Def;
+
 
 namespace TeamWorkGame.Device
 {
@@ -109,7 +111,7 @@ namespace TeamWorkGame.Device
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
-
+            
             spriteBatch.Draw(textures[name], position, Color.White * alpha);
         }
 

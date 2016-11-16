@@ -104,6 +104,7 @@
     <Compile Include="Size.cs" />
     <Compile Include="Device\Animation.cs" />
     <Compile Include="Device\AnimationPlayer.cs" />
+    <Compile Include="Utility\FuncSwitch.cs" />
     <Compile Include="Utility\Map.cs" />
     <Compile Include="Utility\Method.cs" />
     <Compile Include="Utility\Range.cs" />

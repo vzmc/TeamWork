@@ -146,7 +146,7 @@ namespace TeamWorkGame.Device
             //float speed = 0;
             Vector2 aim;
 
-            Vector2 velocity = distance * 0.8f;
+            Vector2 velocity = distance * 0.9f;
 
             //カメラの位置を整数化
             velocity.X = (float)Math.Floor((velocity.X));

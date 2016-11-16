@@ -3,7 +3,7 @@
 //作成時間：2016/9/26
 //作成者：氷見悠人
 // 最終修正時間：2016年11月16日
-// By　佐瀬拓海
+// By　氷見悠人
 /////////////////////////////////////////////////
 
 using System;
@@ -30,6 +30,7 @@ namespace TeamWorkGame.Scene
         private GameDevice gameDevice;
         private bool isEnd;
         private bool isClear;
+        //private bool isPause;   //一時停止状態　By　氷見悠人
 
         //葉梨竜太
         private bool isOver;
@@ -43,6 +44,7 @@ namespace TeamWorkGame.Scene
         private List<GameObject> nowCoals;  //現在の炭の数 By佐瀬拓海
         private ClearSelect clearSelect;    //clear後の選択画面
         private FireMeter fireMeter;
+        private Goal goal;
         float zoomRate = 0.01f;
         bool isDrawed = false;
 
@@ -64,6 +66,9 @@ namespace TeamWorkGame.Scene
             isClear = false;
             //葉梨竜太
             isOver = false;
+            //isPause = false;    //一時停止状態　By　氷見悠人
+            //全局Animation一時停止のスイッチ　By　氷見悠人
+            FuncSwitch.AllAnimetionPause = false;
             //inputState = new InputState();
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
@@ -79,6 +84,10 @@ namespace TeamWorkGame.Scene
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
 
+            //Goalを取得とCamera設置  By　氷見悠人
+            goal = map.GetGoal();
+            goal.SetCamera(camera);
+
             //柏
             stageSever = gameDevice.GetStageSever();
             playTime = 0;
@@ -91,6 +100,11 @@ namespace TeamWorkGame.Scene
             isClear = false;
             //葉梨竜太
             isOver = false;
+            //isPause = false;    //一時停止状態　By　氷見悠人
+            
+            //全局Animation一時停止のスイッチ　By　氷見悠人
+            FuncSwitch.AllAnimetionPause = false;
+
             MapManager.SetNowMap(mapIndex);
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
@@ -114,9 +128,24 @@ namespace TeamWorkGame.Scene
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
 
+            //Goalを取得とCamera設置  By　氷見悠人
+            goal = map.GetGoal();
+            goal.SetCamera(camera);
+
             //柏
             stageSever = gameDevice.GetStageSever();
             playTime = 0;
+        }
+
+        //Goal出現用の状態変換　By　氷見悠人
+        public void ChangeGoalStage(GameTime gameTime)
+        {
+            if (goal.State == GoalState.NONE && nowCoals.Count == 0)
+            {
+                camera.SetLimitView(false);
+                goal.IsComplete = true;
+                FuncSwitch.AllAnimetionPause = true;
+            }
         }
 
         public void Update(GameTime gameTime)
@@ -133,82 +162,98 @@ namespace TeamWorkGame.Scene
             //死んでいないと更新する
             if (!isClear && !isOver)
             {
-                for(int i = 0; i < map.MapThings.Count; i++)
+                //Goal出現の時に、全画面の更新を一時停止、Goalの演出だけをする By 氷見悠人
+                if (goal.State == GoalState.APPEARING)
                 {
-                    map.MapThings[i].Update(gameTime);
+                    goal.Update(gameTime);
+                    camera.MoveAimPosition(goal.Position + new Vector2(goal.Width / 2, goal.Height / 2));
                 }
-
-                //プレイヤーの更新
-                player.Update(gameTime);
-
-                //火の更新
-                for (int i = fires.Count - 1; i >= 0; i--)
+                else
                 {
-                    fires[i].Update(gameTime);
-                }
-
-                //死んだ火を消す
-                fires.RemoveAll(x => x.IsDead); // && x.IsOnGround 
-
-                //水の更新
-                foreach(var w in waterLines)
-                {
-                    w.Update(gameTime);
-                }
-
-                waterLines.RemoveAll(x => x.IsDead);
-
-                //マップの更新
-                map.Update(gameTime);
-
-                //カメラの注視位置を更新
-                //camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
-                camera.MoveAimPosition(player.Position + new Vector2(player.Width / 2, player.Height / 2));
-                //Console.WriteLine(camera.OffSet);
-                //マップ上にある炭の数を取得
-                nowCoals = map.MapThings.FindAll(x => x is Coal);
-
-
-                //マップの更新
-                map.Update(gameTime);
-
-                if (map.GetGoal() != null)
-                    if (map.GetGoal().IsOnFire)
+                    for (int i = 0; i < map.MapThings.Count; i++)
                     {
-                        //柏
-                        stageSever.ClearStage = mapIndex;
-                        stageSever.PlayTime = playTime / 60;
-                        stageSever.CurrentStage = mapIndex;
-                        stageSever.Charcoal = coals.Count - nowCoals.Count;
-                        stageSever.SaveStageData();
-
-                        isClear = true;
-                        clearSelect.IsClear = true;
+                        map.MapThings[i].Update(gameTime);
                     }
 
-                //葉梨竜太
-                if (player.IsDead)
-                {
-                    isOver = true;
-                    //isClear = true;
-                    //clearSelect.IsClear = true;
+                    //プレイヤーの更新
+                    player.Update(gameTime);
+
+                    //火の更新
+                    for (int i = fires.Count - 1; i >= 0; i--)
+                    {
+                        fires[i].Update(gameTime);
+                    }
+
+                    //死んだ火を消す
+                    fires.RemoveAll(x => x.IsDead); // && x.IsOnGround 
+
+                    //水の更新
+                    foreach (var w in waterLines)
+                    {
+                        w.Update(gameTime);
+                    }
+
+                    waterLines.RemoveAll(x => x.IsDead);
+
+                    //マップの更新
+                    map.Update(gameTime);
+
+                    //カメラの注視位置を更新
+                    //camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
+
+                    camera.MoveAimPosition(player.Position + new Vector2(player.Width / 2, player.Height / 2));
+                    //Console.WriteLine(camera.OffSet);
+                    //マップ上にある炭の数を取得
+                    nowCoals = map.MapThings.FindAll(x => x is Coal);
+
+                    ChangeGoalStage(gameTime);
+                    //マップの更新
+                    map.Update(gameTime);
+
+                    if (map.GetGoal() != null)
+                        if (map.GetGoal().IsOnFire)
+                        {
+                            //柏
+                            stageSever.ClearStage = mapIndex;
+                            stageSever.PlayTime = playTime / 60;
+                            stageSever.CurrentStage = mapIndex;
+                            stageSever.Charcoal = coals.Count - nowCoals.Count;
+                            stageSever.SaveStageData();
+
+                            isClear = true;
+                            clearSelect.IsClear = true;
+                            FuncSwitch.AllAnimetionPause = true;
+                        }
+
+                    //葉梨竜太
+                    if (player.IsDead)
+                    {
+                        isOver = true;
+                        //isClear = true;
+                        //clearSelect.IsClear = true;
+                    }
                 }
             }
+
+
             //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
             if (gameDevice.GetInputState().CheckTriggerKey(Keys.Q, Parameter.MenuButton))
             {
                 if (isOver == false)
                 {
+                    //全体Animationを一時停止
+                    FuncSwitch.AllAnimetionPause = true;
                     isOver = true;
                     player.IsDead = true;
                 }
                 else if (isOver == true)
                 {
+                    //全体Animationを一時停止解除
+                    FuncSwitch.AllAnimetionPause = false;
                     isOver = false;
                     player.IsDead = false;
                 }
             }
-
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
             if (isOver)                 //SceneのisOverで判断する
@@ -222,8 +267,6 @@ namespace TeamWorkGame.Scene
                 clearSelect.Initialize();
                 clearSelect.IsClear = false;
             }
-
-            
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した

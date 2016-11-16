@@ -8,6 +8,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Device
 {
@@ -31,7 +32,19 @@ namespace TeamWorkGame.Device
         /// The amount of time in seconds that the current frame has been shown for.
         /// </summary>
         private float time;
-        
+
+        private bool isPaused;  //一時停止　By　氷見悠人
+        public bool IsPaused
+        {
+            get
+            {
+                return isPaused;
+            }
+            set
+            {
+                isPaused = value;
+            }
+        }
         //描画位置の原点
         public Vector2 Origin
         {
@@ -47,7 +60,7 @@ namespace TeamWorkGame.Device
             //同じも指定したら、何もしない
             if (Animation == animation)
                 return;
-
+            isPaused = false;
             //そのアニメションの最初から再生
             this.animation = animation;
             this.frameIndex = 0;
@@ -66,20 +79,23 @@ namespace TeamWorkGame.Device
             if (Animation == null)
                 throw new NotSupportedException("アニメション指定していません！");
 
-            // 経過時間計算
-            time += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            while (time > Animation.FrameTime)
+            if (!isPaused && !FuncSwitch.AllAnimetionPause)
             {
-                time -= Animation.FrameTime;
+                // 経過時間計算
+                time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                while (time > Animation.FrameTime)
+                {
+                    time -= Animation.FrameTime;
 
-                //Loopの処理
-                if (Animation.IsLooping)
-                {
-                    frameIndex = (frameIndex + 1) % Animation.FrameCount;
-                }
-                else
-                {
-                    frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+                    //Loopの処理
+                    if (Animation.IsLooping)
+                    {
+                        frameIndex = (frameIndex + 1) % Animation.FrameCount;
+                    }
+                    else
+                    {
+                        frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+                    }
                 }
             }
 
