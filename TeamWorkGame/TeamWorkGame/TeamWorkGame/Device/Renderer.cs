@@ -95,6 +95,11 @@ namespace TeamWorkGame.Device
             return textures[name];
         }
 
+        private bool isInScreen(Vector2 pos)
+        {
+            return (pos.X >= -64 && pos.X <= Parameter.ScreenWidth) && (pos.Y >= -64 && pos.Y <= Parameter.ScreenHeight);
+        }
+
         /// <summary>
         /// 描画処理
         /// </summary>
@@ -110,9 +115,8 @@ namespace TeamWorkGame.Device
                 "大文字小文字間違ってませんか？\n" +
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
-            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
-            
-            spriteBatch.Draw(textures[name], position, Color.White * alpha);
+            if(isInScreen(position))
+                spriteBatch.Draw(textures[name], position, Color.White * alpha);
         }
 
         /// <summary>
@@ -132,11 +136,12 @@ namespace TeamWorkGame.Device
                 "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-            spriteBatch.Draw(
-                textures[name], //画像
-                position,       //位置
-                rect,           //の指定範囲
-                Color.White * alpha);
+            if (isInScreen(position))
+                spriteBatch.Draw(
+                    textures[name], //画像
+                    position,       //位置
+                    rect,           //の指定範囲
+                    Color.White * alpha);
         }
 
         public void DrawTexture(string name, Vector2 position, Rectangle rect, float cameraScale, float alpha)
@@ -154,8 +159,9 @@ namespace TeamWorkGame.Device
             //    rect,           //の指定範囲
             //    Color.White * alpha);
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
-                
-            spriteBatch.Draw(textures[name], position, rect, Color.White * alpha, 0.0f, Vector2.Zero, cameraScale, SpriteEffects.None, 0.0f);
+
+            if (isInScreen(position))
+                spriteBatch.Draw(textures[name], position, rect, Color.White * alpha, 0.0f, Vector2.Zero, cameraScale, SpriteEffects.None, 0.0f);
         }
 
         //by 長谷川修一 10/13
@@ -177,16 +183,17 @@ namespace TeamWorkGame.Device
                 "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-            spriteBatch.Draw(
-                textures[name],
-                position,
-                new Rectangle(0, 0, textures[name].Width, textures[name].Height),
-                Color.White * alpha,
-                0.0f,
-                Vector2.Zero,
-                scale,
-                SpriteEffects.None,
-                0);
+            if (isInScreen(position))
+                spriteBatch.Draw(
+                    textures[name],
+                    position,
+                    new Rectangle(0, 0, textures[name].Width, textures[name].Height),
+                    Color.White * alpha,
+                    0.0f,
+                    Vector2.Zero,
+                    scale,
+                    SpriteEffects.None,
+                    0);
         }
 
         /// <summary>
@@ -210,8 +217,8 @@ namespace TeamWorkGame.Device
             //    "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-
-            spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
+            if (isInScreen(position))
+                spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
         }
 
         /// <summary>

@@ -21,7 +21,6 @@ namespace TeamWorkGame.Actor
         SHOW,
     }
 
-
     public class Goal : GameObject
     {
         private Camera camera;

@@ -136,6 +136,10 @@ namespace TeamWorkGame.Actor
             {
                 flag = true;
             }
+            else if(pos.Y > mapdata.MapHeight)
+            {
+                flag = true;
+            }
             return flag;
         }
     }

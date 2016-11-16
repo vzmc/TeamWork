@@ -65,7 +65,7 @@ namespace TeamWorkGame.Actor
         /// <param name="offset"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale * scale, alpha);
         }
 
 
@@ -79,7 +79,7 @@ namespace TeamWorkGame.Actor
                 //}
                 name = "fire";
                 IsTrigger = true;
-                scale = 4.4f;
+                scale = 3f;
                 ToDeath();
             }
         }
