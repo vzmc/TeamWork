@@ -1,6 +1,9 @@
 ﻿/////////////////////////////////////////////
 //　クリア画面
 //  作成者：柏杳
+//
+//  最終更新日 11月16日
+//  By佐瀬拓海
 /////////////////////////////////////////
 
 using System;
@@ -9,10 +12,12 @@ using System.Linq;
 using System.Text;
 
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Actor;
 using TeamWorkGame.Def;
+using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Scene
 {
@@ -24,6 +29,10 @@ namespace TeamWorkGame.Scene
         private bool isClear;   //clear状態
         private bool isEnd;     //選択完了状態
         private Player player;
+        //Animation関連
+        private Animation standAnime;
+        private AnimationPlayer animePlayer;
+        private SpriteEffects flip = SpriteEffects.None;
 
         public ClearSelect(InputState inputState, Player player) {
             this.inputState = inputState;
@@ -49,6 +58,7 @@ namespace TeamWorkGame.Scene
                 };
                 select = 0;
             }
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);//StandAnimeの実体生成
 
             isClear = false;
             isEnd = false;
@@ -99,7 +109,7 @@ namespace TeamWorkGame.Scene
             get { return isEnd; }
         }
 
-        public void Draw(Renderer renderer) {
+        public void Draw(GameTime gameTime, Renderer renderer, float cameraScale) { //Animationをさせるため引数を変更
             if (isClear)
             {
                 if (player.IsDead)
@@ -109,8 +119,9 @@ namespace TeamWorkGame.Scene
                 else {
                     renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
                 }
-
-                renderer.DrawTexture("selecter", selected[select]);
+                //Selecterをキャラ画像に変更
+                animePlayer.PlayAnimation(standAnime);
+                animePlayer.Draw(gameTime, renderer, selected[select], flip, cameraScale);
             }
         }
     }

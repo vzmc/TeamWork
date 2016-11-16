@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年11月09日
-// By　柏
+// 最終修正時間：2016年11月16日
+// By　佐瀬拓海
 /////////////////////////////////////////////////
 
 using System;
@@ -254,7 +254,7 @@ namespace TeamWorkGame.Scene
 
             waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
-            clearSelect.Draw(renderer);
+            clearSelect.Draw(gameTime, renderer, camera.Scale); //ClearSelectの引数を変更したためこちらも変更
 
             fireMeter.Draw(renderer, player);
 
