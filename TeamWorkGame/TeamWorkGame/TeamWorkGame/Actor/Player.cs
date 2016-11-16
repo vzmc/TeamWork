@@ -301,7 +301,10 @@ namespace TeamWorkGame.Actor
                     CollisionCheck(w);
             }
 
-            ThrowFire();
+            if (!isOnBalloon) {
+                ThrowFire();
+            }
+            
             Teleport();
 
             if (velocity.X != 0)
