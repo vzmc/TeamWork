@@ -23,10 +23,12 @@ namespace TeamWorkGame.Actor
         private float gForce;   //重力
         private Motion motion;  //アニメーションの動作
         private Timer timer;                    //アニメーションの時間間隔
+        private List<WaterLine> watersList;         //滝のリスト
 
-        public Fire(Vector2 position, Vector2 velocity) : base("fire", position, velocity, true, "Fire")
+
+        public Fire(Vector2 position, Vector2 velocity, List<WaterLine> waterline) : base("fire", position, velocity, true, "Fire")
         {
-
+            watersList = waterline;
         }
 
         public override void Initialize()
@@ -106,6 +108,12 @@ namespace TeamWorkGame.Actor
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
                 CollisionCheck(m);
+            }
+
+            foreach (var wl in watersList)
+            {
+                foreach (var w in wl.Waters)
+                    CollisionCheck(w);
             }
         }
 

@@ -106,7 +106,7 @@ namespace TeamWorkGame.Actor
                 {
                     Vector2 firePos = Vector2.Zero;
                     Vector2 fireVelo = Vector2.Zero;
-                    Fire fire = new Fire(firePos, fireVelo);
+                    Fire fire = new Fire(firePos, fireVelo, watersList);
 
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     //Speedを固定にした

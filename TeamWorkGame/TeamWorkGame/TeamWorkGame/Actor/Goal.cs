@@ -97,7 +97,7 @@ namespace TeamWorkGame.Actor
             else if(state == GoalState.APPEARING)
             {
                 alpha += 0.01f;
-                if (alpha >= 1.5f)
+                if (alpha >= 1.2f)
                 {
                     state = GoalState.SHOW;
                     FuncSwitch.AllAnimetionPause = false;
