@@ -249,6 +249,7 @@ namespace TeamWorkGame.Scene
                         //全体Animationを一時停止
                         isPause = true;
                         clearSelect.IsPause = isPause;
+                        clearSelect.GetSelect = 1;
                         isOver = true;
                     }
                     else if (isOver == true)
@@ -266,7 +267,6 @@ namespace TeamWorkGame.Scene
             if (isOver)                 //SceneのisOverで判断する
             {
                 if (isPause) {
-                    //clearSelect.Initialize();
                     clearSelect.IsClear = true;
                     return;
                 }

@@ -83,7 +83,7 @@ namespace TeamWorkGame.Scene
             {
                 if (inputState.CheckTriggerKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
-                    if (player.IsDead)
+                    if (player.IsDead || (!player.IsDead && isPause))
                     {
                         if (select == 1) { return; }
                     }
@@ -122,6 +122,7 @@ namespace TeamWorkGame.Scene
         public int GetSelect
         {
             get { return select; }
+            set { select = value; }
         }
 
         public bool IsEnd
