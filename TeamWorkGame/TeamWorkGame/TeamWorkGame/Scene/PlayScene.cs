@@ -329,10 +329,10 @@ namespace TeamWorkGame.Scene
             fireMeter.Draw(renderer, player);
 
             //炭の取得数を描画 By佐瀬拓海
-            renderer.DrawTexture("coal", new Vector2(1088, 64));
-            renderer.DrawNumber("number", new Vector2(1152, 64), coals.Count - nowCoals.Count);
-            renderer.DrawNumber("number", new Vector2(1182, 64), "/", 1);
-            renderer.DrawNumber("number", new Vector2(1216, 64), coals.Count);
+            renderer.DrawTexture("coal", new Vector2(1024, 16));
+            renderer.DrawNumber2("number", new Vector2(1122, 16), coals.Count - nowCoals.Count, 2);
+            renderer.DrawNumber("number", new Vector2(1154, 16), "/", 1);
+            renderer.DrawNumber2("number", new Vector2(1218, 16), coals.Count, 2);
 
             //playTimeの表示(柏)
             int[] playtime = stageSever.TimeCalculat(playTime/60);

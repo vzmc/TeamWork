@@ -320,5 +320,41 @@ namespace TeamWorkGame.Device
                 position.X += 32;
             }
         }
+        /// <summary>
+        /// 数字の描画（整数のみ版、右端揃え）
+        /// </summary>
+        /// <param name="name">アセット名</param>
+        /// <param name="position">位置</param>
+        /// <param name="number">表示したい数字（整数）</param>
+        /// <param name="digit">表示したい桁数</param>
+        /// <param name="alpha">透明値</param>
+        public void DrawNumber2(string name, Vector2 position, int number, int digit, float alpha = 1.0f)
+        {
+            Debug.Assert(
+                textures.ContainsKey(name),
+                "アセット名が間違えていませんか？\n" +
+                "大文字小文字間違ってませんか？\n" +
+                "LoadTextureで読み込んでますか？\n" +
+                "プログラムを確認してください");
+
+            //マイナスの数は０
+            if (number < 0)
+            {
+                number = 0;
+            }
+            string nums = number.ToString();
+            nums = nums.PadLeft(digit, '0');
+
+            foreach (var n in nums.Reverse())
+            {
+                spriteBatch.Draw(
+                    textures[name],
+                    position,
+                    new Rectangle((n - '0') * 32, 0, 32, 64),
+                    Color.White * alpha
+                    );
+                position.X -= 32;
+            }
+        }
     }
 }
