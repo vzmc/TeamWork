@@ -23,12 +23,15 @@ namespace TeamWorkGame.Scene
     class Title : IScene
     {
         private InputState inputState;
+        private Sound sound;
         private bool isEnd;
         private TitleSelect titleSelect;    //タイトルの選択肢を管理するクラス（柏）
+
 
         public Title(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
+            sound = gameDevice.GetSound();
             Initialize();
         }
 
@@ -52,6 +55,7 @@ namespace TeamWorkGame.Scene
             titleSelect = new TitleSelect(inputState);
             titleSelect.Initialize();
             isEnd = false;
+            sound.PlayBGM("village1");
         }
 
         public void Initialize(int index)
@@ -59,6 +63,7 @@ namespace TeamWorkGame.Scene
             titleSelect = new TitleSelect(inputState);
             titleSelect.Initialize();
             isEnd = false;
+            sound.PlayBGM("village1");
         }
 
         public bool IsEnd()
@@ -73,7 +78,7 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
-
+            sound.StopBGM();
         }
 
         public void Update(GameTime gametime)
@@ -86,7 +91,6 @@ namespace TeamWorkGame.Scene
                     //Startを表示するから、他の選択肢の表示を移す
                     titleSelect.GetStarted = true;
                 }
-
             }
             else
             {
@@ -102,9 +106,6 @@ namespace TeamWorkGame.Scene
 
         NextScene IScene.Next()
         {
-            //NextScene nextScene = new NextScene(SceneType.PlayScene, 2);
-            //return nextScene;
-
             //ステージセレクト画面へ移行
             //Ｂｙ葉梨竜太
             //２０１６年１０月１２日
@@ -129,6 +130,8 @@ namespace TeamWorkGame.Scene
 
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
+
+            sound.PlaySE("decision1");
 
             return nextScene;
         }

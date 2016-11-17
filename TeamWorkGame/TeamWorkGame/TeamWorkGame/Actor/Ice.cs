@@ -102,6 +102,10 @@ namespace TeamWorkGame.Actor
                 if (waters != null)
                     waters.Add(waterLine);
             }
+            else if(other.Tag == "Fire")    //火が氷と接触すると消える
+            {
+                other.IsDead = true;
+            }
         }
     }
 }

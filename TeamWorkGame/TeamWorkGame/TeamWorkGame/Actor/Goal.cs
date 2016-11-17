@@ -99,7 +99,7 @@ namespace TeamWorkGame.Actor
                 if (alpha >= 1.2f)
                 {
                     state = GoalState.SHOW;
-                    FuncSwitch.AllAnimetionPause = false;
+                    //FuncSwitch.AllAnimetionPause = false;
                     camera.SetLimitView(true);
                     alpha = 1.0f;
                 }

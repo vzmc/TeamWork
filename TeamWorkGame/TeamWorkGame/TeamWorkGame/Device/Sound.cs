@@ -1,11 +1,4 @@
-﻿/////////////////////////////////////////////////////////
-// サンド管理クラス（未完成）
-// 作成者 氷見悠人
-// 最終修正時間　2016/10/13　
-// By　氷見悠人
-///////////////////////////////////////////////////////
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,7 +20,7 @@ namespace TeamWorkGame.Device
 
         //現在再生中のアセット名
         private string currentBGM;  
-        private string currentSE;
+        //private string currentSE;
 
         /// <summary>
         /// コンストラクタ
@@ -50,7 +43,7 @@ namespace TeamWorkGame.Device
 
             //何も再生していないのでnull初期化
             currentBGM = null;
-            currentSE = null;
+            //currentSE = null;
         }
 
         /// <summary>
@@ -89,6 +82,15 @@ namespace TeamWorkGame.Device
         public bool IsPlayingBGM()
         {
             return (MediaPlayer.State == MediaState.Playing);
+        }
+
+        /// <summary>
+        /// BGMが停止しているか？
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStoppedBGM()
+        {
+            return (MediaPlayer.State == MediaState.Stopped);
         }
 
         /// <summary>
@@ -140,9 +142,9 @@ namespace TeamWorkGame.Device
                 StopBGM();
             }
 
-            //ボリューム設定（BGMはSEに比べて音量半分が普通）
-            MediaPlayer.Volume = 0.5f;
-
+            //ボリューム設定
+            MediaPlayer.Volume = 0.7f;
+            MediaPlayer.IsRepeating = true;
             //現在のBGM名を設定
             currentBGM = name;
 
@@ -217,34 +219,47 @@ namespace TeamWorkGame.Device
             Debug.Assert(seInstances.ContainsKey(name), ErrorMessage(name));
 
             //同じ音を再生しようとしているか？
-            if(currentSE == name)
+            var data = seInstances[name];
+
+            foreach(var x in sePlayList.FindAll(x => x == data))
             {
-                return;
+                if(x.State == SoundState.Playing)
+                {
+                    x.Stop();
+                }
             }
 
-            //再生中ですか？
-            if (IsPlayingSEInstance(name))
+            if(data.IsLooped != loopFlag)
             {
-                StopSEInstance(currentSE);
+                data.IsLooped = loopFlag;
             }
 
-            currentSE = name;
+            data.Play();
 
-            seInstances[currentSE].Play();
+            sePlayList.Add(data);
+            ////再生中ですか？
+            //if (IsPlayingSEInstance(name))
+            //{
+            //    StopSEInstance(currentSE);
+            //}
+
+            //currentSE = name;
+
+            //seInstances[currentSE].Play();
         }
 
         /// <summary>
         /// インスタンス化されたSE音の停止
         /// </summary>
         /// <param name="name"></param>
-        public void StopSEInstance(string name)
-        {
-            //WAVインスタンス用ディクションナリをチェック
-            Debug.Assert(seInstances.ContainsKey(name), ErrorMessage(name));
+        //public void StopSEInstance(string name)
+        //{
+        //    //WAVインスタンス用ディクションナリをチェック
+        //    Debug.Assert(seInstances.ContainsKey(name), ErrorMessage(name));
 
-            seInstances[name].Stop();
-            currentSE = null;
-        }
+        //    seInstances[name].Stop();
+        //    currentSE = null;
+        //}
 
         /// <summary>
         /// sePlayListにある再生中の音を停止
@@ -297,20 +312,21 @@ namespace TeamWorkGame.Device
 
         public void Update()
         {
-            if (currentSE != null)
-            {
-                if (seInstances[currentSE].State == SoundState.Stopped)
-                {
-                    currentSE = null;
-                }
-            }
-            if (currentBGM != null)
-            {
-                if (MediaPlayer.State == MediaState.Stopped)
-                {
-                    currentBGM = null;
-                }
-            }
+            RemoveSE();
+            //if (currentSE != null)
+            //{
+            //    if (seInstances[currentSE].State == SoundState.Stopped)
+            //    {
+            //        currentSE = null;
+            //    }
+            //}
+            //if (currentBGM != null)
+            //{
+            //    if (MediaPlayer.State == MediaState.Stopped)
+            //    {
+            //        currentBGM = null;
+            //    }
+            //}
         }
     }
 }

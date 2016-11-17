@@ -1,5 +1,5 @@
-﻿// 最終修正時間：2016年10月27日
-// By 佐瀬拓海
+﻿// 最終修正時間：2016年11月17日
+// By 氷見悠人　画面外は描画しない
 
 using System;
 using System.Collections.Generic;
@@ -95,9 +95,18 @@ namespace TeamWorkGame.Device
             return textures[name];
         }
 
-        private bool isInScreen(Vector2 pos)
+        private bool IsInScreen(Vector2 pos, string name)
         {
-            return (pos.X >= -64 && pos.X <= Parameter.ScreenWidth) && (pos.Y >= -64 && pos.Y <= Parameter.ScreenHeight);
+            int width = textures[name].Width;
+            int height = textures[name].Height;
+            return (pos.X >= -width && pos.X <= Parameter.ScreenWidth) && (pos.Y >= -height && pos.Y <= Parameter.ScreenHeight);
+        }
+
+        private bool IsInScreen(Vector2 pos, Texture2D textrue)
+        {
+            int width = textrue.Width;
+            int height = textrue.Height;
+            return (pos.X >= -width && pos.X <= Parameter.ScreenWidth) && (pos.Y >= -height && pos.Y <= Parameter.ScreenHeight);
         }
 
         /// <summary>
@@ -115,7 +124,7 @@ namespace TeamWorkGame.Device
                 "大文字小文字間違ってませんか？\n" +
                 "LoadTextureで読み込んでますか？\n" +
                 "プログラムを確認してください");
-            if(isInScreen(position))
+            if(IsInScreen(position, name))
                 spriteBatch.Draw(textures[name], position, Color.White * alpha);
         }
 
@@ -136,7 +145,7 @@ namespace TeamWorkGame.Device
                 "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-            if (isInScreen(position))
+            if (IsInScreen(position, name))
                 spriteBatch.Draw(
                     textures[name], //画像
                     position,       //位置
@@ -160,7 +169,7 @@ namespace TeamWorkGame.Device
             //    Color.White * alpha);
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-            if (isInScreen(position))
+            if (IsInScreen(position, name))
                 spriteBatch.Draw(textures[name], position, rect, Color.White * alpha, 0.0f, Vector2.Zero, cameraScale, SpriteEffects.None, 0.0f);
         }
 
@@ -183,7 +192,9 @@ namespace TeamWorkGame.Device
                 "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-            if (isInScreen(position))
+
+
+            if (IsInScreen(position, name))
                 spriteBatch.Draw(
                     textures[name],
                     position,
@@ -217,7 +228,7 @@ namespace TeamWorkGame.Device
             //    "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-            if (isInScreen(position))
+            if (IsInScreen(position, texture))
                 spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
         }
 

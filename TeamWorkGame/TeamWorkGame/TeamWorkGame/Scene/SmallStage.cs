@@ -28,6 +28,7 @@ namespace TeamWorkGame.Scene
     class SmallStage : IScene
     {
         private InputState inputState;
+        private Sound sound;
         private bool isEnd;
         private int stageIndex;
         private int mapIndex;
@@ -45,6 +46,7 @@ namespace TeamWorkGame.Scene
             sever = gameDevice.GetStageSever();
             mapIndex = 0;
             mapnum = 0;
+            sound = gameDevice.GetSound();
             //mapl = new List<Vector2>()
             //{
             //    //new Vector2(33,51),
@@ -255,10 +257,13 @@ namespace TeamWorkGame.Scene
             if (isBack) 
             {
                 nextScene = new NextScene(SceneType.Stage, stageIndex);
+                sound.PlaySE("cancel1");
             }
             else
             {
                 nextScene = new NextScene(SceneType.PlayScene, mapIndex + stageIndex);
+                sound.PlaySE("decision1");
+                sound.StopBGM();
             }
             return nextScene;
         }

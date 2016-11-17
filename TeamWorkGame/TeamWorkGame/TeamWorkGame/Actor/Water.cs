@@ -34,6 +34,10 @@ namespace TeamWorkGame.Actor
             {
                 other.IsDead = true;
             }
+            else if(other.Tag == "Sand")
+            {
+                isDead = true;
+            }
         }
 
         public override void Update(GameTime gameTime)

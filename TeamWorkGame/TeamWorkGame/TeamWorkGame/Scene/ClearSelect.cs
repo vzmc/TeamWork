@@ -160,8 +160,6 @@ namespace TeamWorkGame.Scene
                 //Selecterをキャラ画像に変更
                 animePlayer.PlayAnimation(standAnime);
                 animePlayer.Draw(gameTime, renderer, selected[select], flip, cameraScale);
-
-
             }
         }
     }

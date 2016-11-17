@@ -28,6 +28,7 @@ namespace TeamWorkGame.Scene
     class PlayScene : IScene
     {
         private GameDevice gameDevice;
+        private Sound sound;
         private bool isEnd;
         private bool isClear;
         private bool isPause;   //一時停止状態　By　氷見悠人
@@ -45,8 +46,8 @@ namespace TeamWorkGame.Scene
         private ClearSelect clearSelect;    //clear後の選択画面
         private FireMeter fireMeter;
         private Goal goal;
-        float zoomRate = 0.01f;
-        bool isDrawed = false;
+        //float zoomRate = 0.01f;
+        //bool isDrawed = false;
 
         //柏
         private StageSever stageSever;
@@ -56,6 +57,7 @@ namespace TeamWorkGame.Scene
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
             this.gameDevice = gameDevice;
+            sound = this.gameDevice.GetSound();
             this.mapIndex = mapIndex;
             isEnd = false;
         }
@@ -78,7 +80,7 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera(Vector2.Zero, Parameter.CameraScale);
-            player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);
+            player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
@@ -91,6 +93,9 @@ namespace TeamWorkGame.Scene
             //柏
             stageSever = gameDevice.GetStageSever();
             playTime = 0;
+
+            //PlayBGM
+            sound.PlayBGM("forest1");
         }
 
         public void Initialize(int stageIndex)
@@ -117,10 +122,8 @@ namespace TeamWorkGame.Scene
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
             camera = new Camera(Vector2.Zero, Parameter.CameraScale);
-            //player = new Player(gameDevice.GetInputState(), new Vector2(100, 100), Vector2.Zero, ref fires, ref waterLines);　player自動生成のために削除
-
             //柏
-            player = new Player(gameDevice.GetInputState(), MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
+            player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
 
             //葉梨竜太
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
@@ -135,6 +138,9 @@ namespace TeamWorkGame.Scene
             //柏
             stageSever = gameDevice.GetStageSever();
             playTime = 0;
+
+            //PlayBGM
+            sound.PlayBGM("forest1");
         }
 
         //Goal出現用の状態変換　By　氷見悠人
@@ -144,34 +150,27 @@ namespace TeamWorkGame.Scene
             {
                 camera.SetLimitView(false);
                 goal.IsComplete = true;
-                FuncSwitch.AllAnimetionPause = true;
             }
         }
 
         public void Update(GameTime gameTime)
         {
-            playTime++;
-
-            //camera.Scale += zoomRate;
-            //if(camera.Scale >= 2.0f || camera.Scale <= 0.1f)
-            //{
-            //    zoomRate *= -1;
-            //}
-
-            //inputState.Update();
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
             {
-                FuncSwitch.AllAnimetionPause = false;
-
                 //Goal出現の時に、全画面の更新を一時停止、Goalの演出だけをする By 氷見悠人
                 if (goal.State == GoalState.APPEARING)
                 {
+                    FuncSwitch.AllAnimetionPause = true;
+
                     goal.Update(gameTime);
                     camera.MoveAimPosition(goal.Position + new Vector2(goal.Width / 2, goal.Height / 2));
                 }
                 else
                 {
+                    FuncSwitch.AllAnimetionPause = false;
+                    playTime++;
+
                     for (int i = 0; i < map.MapThings.Count; i++)
                     {
                         map.MapThings[i].Update(gameTime);
@@ -224,7 +223,7 @@ namespace TeamWorkGame.Scene
 
                             isClear = true;
                             clearSelect.IsClear = true;
-                            FuncSwitch.AllAnimetionPause = true;
+                            //FuncSwitch.AllAnimetionPause = true;
                         }
 
                     //葉梨竜太
@@ -361,7 +360,7 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
-
+            sound.StopBGM();
         }
 
         NextScene IScene.Next()
@@ -390,6 +389,8 @@ namespace TeamWorkGame.Scene
             {     //World
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
+
+            sound.PlaySE("decision1");
 
             return nextScene;
         }

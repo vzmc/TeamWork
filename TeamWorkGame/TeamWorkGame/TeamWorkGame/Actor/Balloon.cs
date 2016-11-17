@@ -44,7 +44,7 @@ namespace TeamWorkGame.Actor
 
             if (!playerIsOn) {
                 if (PositionY >= startPosition.Y) { return; }
-                PositionY++;
+                PositionY+=3;           //落下速度を３にした　By　氷見悠人
             }
         }
 
@@ -65,10 +65,10 @@ namespace TeamWorkGame.Actor
                     int velo = (int)(startPosition.Y - PositionY - Height * flyLevel);
                     if (velo > 0)
                     {
-                        PositionY++;
+                        PositionY += 3; //速度を3にした
                     }
                     else {
-                        PositionY--;
+                        PositionY -= 3;
                     }
                 }
             }

@@ -44,36 +44,22 @@ namespace TeamWorkGame.Actor
             return base.InitLocalColRect();
         }
 
-        public void ToDeath()
-        {
-            if (!isToDeath)
-            {
-                isToDeath = true;
-            }
-        }
+        //public void ToDeath()
+        //{
+        //    if (!isToDeath)
+        //    {
+        //        isToDeath = true;
+        //    }
+        //}
 
 
         public override void Update(GameTime gameTime)
         {
             velocity.Y += gForce;
 
-            //マップ上の物と障害物判定
-            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x.Tag != "Sand"))
             {
-                if (m is Water)//水の場合、水を消して埋めるようにする
-                {
-                    if (ObstacleCheck(m))
-                    {
-                        ((Water)m).IsDead = true;
-                    }
-                }
-            }
-            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
-            {
-                if (m is Sand == false)//砂以外
-                {
-                    ObstacleCheck(m);
-                }
+                ObstacleCheck(m);
             }
 
             Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
@@ -93,21 +79,21 @@ namespace TeamWorkGame.Actor
             position += velocity;
 
             //マップ上の物と衝突区域判定
-            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            foreach (var m in map.MapThings.FindAll(x => x.Tag == "Water"))
             {
-                CollisionCheck(m);
+                if (CollisionCheck(m))
+                {
+                    m.EventHandle(this);
+                }
             }
-            if (isToDeath)
-            {
-                isDead = true;
-            }
+
         }
         public override void EventHandle(GameObject other)
         {
-            if (other is Player)
-            {
-                //ToDeath();
-            }
+            //if (other is Player)
+            //{
+            //    //ToDeath();
+            //}
         }
     }
 }

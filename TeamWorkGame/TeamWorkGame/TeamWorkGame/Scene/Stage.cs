@@ -25,6 +25,7 @@ namespace TeamWorkGame.Scene
     class Stage : IScene
     {
         private InputState inputState;
+        private Sound sound;
         private bool isEnd;
         private int mapIndex;
         public List<Vector2> herol;
@@ -35,6 +36,7 @@ namespace TeamWorkGame.Scene
         public Stage(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
+            sound = gameDevice.GetSound();
             sever = gameDevice.GetStageSever();
             herol = new List<Vector2>()
             {
@@ -51,6 +53,7 @@ namespace TeamWorkGame.Scene
             mapIndex = 0;
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            sound.PlayBGM("worldmap1");
         }
 
         public void Initialize(int index)
@@ -59,8 +62,9 @@ namespace TeamWorkGame.Scene
             mapIndex = 0;
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            sound.PlayBGM("worldmap1");
         }
-               
+
         //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(GameTime gameTime, Renderer renderer)
         {
@@ -129,13 +133,13 @@ namespace TeamWorkGame.Scene
         {
             //NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
             NextScene nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
+            sound.PlaySE("decision1");
             return nextScene;
         }
 
         public void ShutDown()
         {
-
+            //sound.StopBGM();
         }
-   
     }
 }

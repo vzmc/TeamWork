@@ -24,11 +24,9 @@ namespace TeamWorkGame.Actor
     {
         // フィールド
         private InputState inputState;          //入力管理
-        //private Camera camera;
+        private Sound sound;
         private Map map;
         private float gForce;
-        //private Motion motion;                  //アニメーション管理
-        //private Timer timer;                    //アニメーションの時間間隔
         private Direction diretion;             //向いている方向
         private List<Fire> firesList;               //投げ出した火
         private List<WaterLine> watersList;         //滝のリスト
@@ -65,11 +63,12 @@ namespace TeamWorkGame.Actor
         /// <param name="position">位置</param>
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
-        public Player(InputState input, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList)
+        public Player(GameDevice gameDevice, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList)
             : base("hero", position, velocity, true, "Player")
         {
             //InitLocalColRect();
-            inputState = input;
+            inputState = gameDevice.GetInputState();
+            sound = gameDevice.GetSound();
             this.firesList = firesList;
             this.watersList = watersList;
             playerMotion = PlayerMotion.STAND;
@@ -130,7 +129,6 @@ namespace TeamWorkGame.Actor
         {
             if (fireNum > 1)
             {
-                //inputState.IsKeyDown(Keys.X)
                 if (inputState.CheckTriggerKey(Parameter.ThrowKey, Parameter.ThrowButton))
                 {
                     Vector2 firePos = Vector2.Zero;
@@ -162,6 +160,7 @@ namespace TeamWorkGame.Actor
 
                     animePlayer.PlayAnimation(throwAnime);
                     playerMotion = PlayerMotion.THROW;
+                    sound.PlaySE("fire1");
                 }
             }
         }
@@ -237,6 +236,14 @@ namespace TeamWorkGame.Actor
             }
 
             return flag;
+        }
+
+        private void CheckIsOut()
+        {
+            if(position.Y > map.MapHeight + 64)
+            {
+                isDead = true;
+            }
         }
 
         /// <summary>
@@ -350,6 +357,7 @@ namespace TeamWorkGame.Actor
                 ResetAnimation(throwAnime);
             }
 
+            CheckIsOut();
             //Console.WriteLine("isOnGround: " + isOnGround);
         }
 

@@ -61,8 +61,10 @@ namespace TeamWorkGame
             //描画オブジェクトの宣言
             renderer = gameDevice.GetRenderer();
 
-            //csv管理のため削除
-            //MapManager.Init();
+            base.Window.Title = "プロメテウスの火";
+
+            base.Initialize();  //絶対に消すな
+
             sceneManager = new SceneManager();
             //IScene playScene = new PlayScene(gameDevice);
             sceneManager.Add(SceneType.Title, new Title(gameDevice));
@@ -81,9 +83,6 @@ namespace TeamWorkGame
 
             sceneManager.Change(new NextScene(SceneType.Title, -1));
 
-            base.Window.Title = "プロメテウスの火";
-
-            base.Initialize();  //絶対に消すな
         }
 
         /// <summary>
@@ -95,7 +94,6 @@ namespace TeamWorkGame
             // Create a new SpriteBatch, which can be used to draw textures.
             renderer.LoadTexture("hero");
             renderer.LoadTexture("light_off");
-            //renderer.LoadTexture("light_on");
             renderer.LoadTexture("TileMapSource");
             renderer.LoadTexture("fire");
             renderer.LoadTexture("tree");
@@ -119,7 +117,6 @@ namespace TeamWorkGame
             renderer.LoadTexture("frame");
             renderer.LoadTexture("forestBG");
             
-
             //by長谷川修一  11/10
             renderer.LoadTexture("FireMeter");
             renderer.LoadTexture("iceAnime");
@@ -145,12 +142,7 @@ namespace TeamWorkGame
             renderer.LoadTexture("StaffText");
             renderer.LoadTexture("balloon");
             renderer.LoadTexture("Pause");
-
-
-            //renderer.LoadTexture("puddle");
-
             renderer.LoadTexture("water");
-
             renderer.LoadTexture("smallmap1");
             renderer.LoadTexture("smallmap2");
             renderer.LoadTexture("smallmap3");
@@ -161,15 +153,34 @@ namespace TeamWorkGame
             renderer.LoadTexture("Zback");
             renderer.LoadTexture("uparrow");
             renderer.LoadTexture("downarrow");
-            
 
+            //SoundのLoad
+            LoadBGM();
+            LoadSE();
             // TODO: use this.Content to load your game content here
+        }
+
+        private void LoadBGM()
+        {
+            string path = "./Sound/BGM/";
+            sound.LoadBGM("forest1", path);
+            sound.LoadBGM("worldmap1", path);
+            sound.LoadBGM("village1", path);
+        }
+
+        private void LoadSE()
+        {
+            string path = "./Sound/SE/";
+            sound.LoadSE("cancel1", path);
+            sound.LoadSE("decision1", path);
+            sound.LoadSE("fire1", path);
         }
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
         /// all content.
         /// </summary>
+        /// 
         protected override void UnloadContent()
         {
             renderer.Unload();
@@ -188,7 +199,7 @@ namespace TeamWorkGame
             {
                 this.Exit();
             }
-
+            
             //ゲームデバイス更新
             gameDevice.Update(gameTime);
 
