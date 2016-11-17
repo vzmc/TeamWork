@@ -105,7 +105,7 @@ namespace TeamWorkGame.Scene
             isClear = false;
             //葉梨竜太
             isOver = false;
-            //isPause = false;    //一時停止状態　By　氷見悠人
+            isPause = false;    //一時停止状態　By　氷見悠人
             
             //全局Animation一時停止のスイッチ　By　氷見悠人
             FuncSwitch.AllAnimetionPause = false;
