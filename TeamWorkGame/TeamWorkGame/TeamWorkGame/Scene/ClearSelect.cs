@@ -2,8 +2,8 @@
 //　クリア画面
 //  作成者：柏杳
 //
-//  最終更新日 11月16日
-//  By佐瀬拓海
+//  最終更新日 11月17日
+//  By柏杳
 /////////////////////////////////////////
 
 using System;
@@ -27,6 +27,7 @@ namespace TeamWorkGame.Scene
         private int select;     //選択肢
         private List<Vector2> selected; //選択肢登録
         private bool isClear;   //clear状態
+        private bool isPause;
         private bool isEnd;     //選択完了状態
         private Player player;
         //Animation関連
@@ -71,14 +72,13 @@ namespace TeamWorkGame.Scene
 
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);//StandAnimeの実体生成
 
+            isPause = false;
             isClear = false;
             isEnd = false;
         }
 
         public void Update()
         {
-
-
             if (isClear)    //clear状態だけ選択有効
             {
                 if (inputState.CheckTriggerKey(Keys.Up, Buttons.LeftThumbstickUp))
@@ -114,6 +114,11 @@ namespace TeamWorkGame.Scene
             set { isClear = value; }
         }
 
+        public bool IsPause {
+            get { return isPause; }
+            set { isPause = value; }
+        }
+
         public int GetSelect
         {
             get { return select; }
@@ -130,18 +135,27 @@ namespace TeamWorkGame.Scene
             {
                 if (player.IsDead)
                 {
+                    renderer.DrawTexture("text", new Vector2(1280 / 2 - 152 / 2, 250), new Rectangle(0, (int)Text.MISS * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
                     renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
                     renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
                     //renderer.DrawTexture("ClearWindow2", new Vector2(350, 250));
                 }
                 else
                 {
-                    //renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
-                    renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
-                    renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                    renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                    renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-
+                    if (isPause)
+                    {
+                        renderer.DrawTexture("Pause", new Vector2(1280 / 2 - 472 / 2, 100));
+                        renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                        renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    }
+                    else {
+                        //renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
+                        renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
+                        renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                        renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                        renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    }
+                    
                 }
                 //Selecterをキャラ画像に変更
                 animePlayer.PlayAnimation(standAnime);

@@ -1,7 +1,7 @@
 /////////////////////////////////////////////////
 // Game1
-// 最終修正時間：2016年11月16日
-// By　長谷川修一
+// 最終修正時間：2016年11月17日
+// By　柏
 /////////////////////////////////////////////////
 
 using System;
@@ -144,7 +144,8 @@ namespace TeamWorkGame
             renderer.LoadTexture("WorldText");
             renderer.LoadTexture("StaffText");
             renderer.LoadTexture("balloon");
-            
+            renderer.LoadTexture("Pause");
+
 
             //renderer.LoadTexture("puddle");
 

@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年11月16日
-// By　氷見悠人
+// 最終修正時間：2016年11月17日
+// By　柏
 /////////////////////////////////////////////////
 
 using System;
@@ -30,7 +30,7 @@ namespace TeamWorkGame.Scene
         private GameDevice gameDevice;
         private bool isEnd;
         private bool isClear;
-        //private bool isPause;   //一時停止状態　By　氷見悠人
+        private bool isPause;   //一時停止状態　By　氷見悠人
 
         //葉梨竜太
         private bool isOver;
@@ -66,7 +66,7 @@ namespace TeamWorkGame.Scene
             isClear = false;
             //葉梨竜太
             isOver = false;
-            //isPause = false;    //一時停止状態　By　氷見悠人
+            isPause = false;    //一時停止状態　By　氷見悠人
             //全局Animation一時停止のスイッチ　By　氷見悠人
             FuncSwitch.AllAnimetionPause = false;
             //inputState = new InputState();
@@ -160,7 +160,7 @@ namespace TeamWorkGame.Scene
 
             //inputState.Update();
             //死んでいないと更新する
-            if (!isClear && !isOver)
+            if (!isClear && !isOver && !isPause)
             {
                 FuncSwitch.AllAnimetionPause = false;
 
@@ -242,34 +242,51 @@ namespace TeamWorkGame.Scene
             }
 
             //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
-            if (gameDevice.GetInputState().CheckTriggerKey(Keys.Q, Parameter.MenuButton))
-            {
-                if (isOver == false)
+            if (!player.IsDead && !isClear) {
+                if (gameDevice.GetInputState().CheckTriggerKey(Keys.Q, Parameter.MenuButton))
                 {
-                    //全体Animationを一時停止
-                    isOver = true;
-                    player.IsDead = true;
-                }
-                else if (isOver == true)
-                {
-                    //全体Animationを一時停止解除
-                    isOver = false;
-                    player.IsDead = false;
+                    if (isOver == false)
+                    {
+                        //全体Animationを一時停止
+                        isPause = true;
+                        clearSelect.IsPause = isPause;
+                        isOver = true;
+                    }
+                    else if (isOver == true)
+                    {
+                        //全体Animationを一時停止解除
+                        isPause = false;
+                        clearSelect.IsPause = isPause;
+                        isOver = false;
+                    }
                 }
             }
+            
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
             if (isOver)                 //SceneのisOverで判断する
             {
-                if (clearSelect.IsClear == true) { return; }
+                if (isPause) {
+                    //clearSelect.Initialize();
+                    clearSelect.IsClear = true;
+                    return;
+                }
+                else {
+                    if (clearSelect.IsClear) { return; }
+                }
+                if (clearSelect.IsClear) { return; }
                 clearSelect.Initialize();
                 clearSelect.IsClear = true;
             }
-            else if (isOver == false && isClear == false)   //isOver = falseでゲーム画面に戻れる By佐瀬拓海
+            else if (!isOver && !isClear && !isPause)   //isOver = falseでゲーム画面に戻れる By佐瀬拓海
             {
                 clearSelect.Initialize();
                 clearSelect.IsClear = false;
             }
+
+
+
+
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
