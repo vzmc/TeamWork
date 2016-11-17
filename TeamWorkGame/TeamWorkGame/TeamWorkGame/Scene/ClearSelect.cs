@@ -34,37 +34,49 @@ namespace TeamWorkGame.Scene
         private AnimationPlayer animePlayer;
         private SpriteEffects flip = SpriteEffects.None;
 
-        public ClearSelect(InputState inputState, Player player) {
+        private Vector2 worldTextPosition;
+        private Vector2 retryTextPosition;
+        private Vector2 nextTextPosition;
+
+        public ClearSelect(InputState inputState, Player player)
+        {
             this.inputState = inputState;
             this.player = player;
             Initialize();
         }
 
-        public void Initialize() {
+        public void Initialize()
+        {
             if (player.IsDead)
             {
                 selected = new List<Vector2>() {
                 Vector2.Zero,
-                new Vector2(400,350),
-                new Vector2(400,480),
+                new Vector2(470,440),
+                new Vector2(470,540),
                 };
                 select = 1;
             }
             else {
                 selected = new List<Vector2>() {
-                new Vector2(400,300),
-                new Vector2(400,420),
-                new Vector2(400,540),
+                new Vector2(470,340),
+                new Vector2(470,440),
+                new Vector2(470,540),
                 };
                 select = 0;
             }
+
+            worldTextPosition = new Vector2(550, 550);
+            retryTextPosition = new Vector2(550, 450);
+            nextTextPosition = new Vector2(550, 350);
+
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);//StandAnimeの実体生成
 
             isClear = false;
             isEnd = false;
         }
 
-        public void Update() {
+        public void Update()
+        {
 
 
             if (isClear)    //clear状態だけ選択有効
@@ -96,32 +108,46 @@ namespace TeamWorkGame.Scene
         }
 
 
-        public bool IsClear {
-            get{ return isClear; }
+        public bool IsClear
+        {
+            get { return isClear; }
             set { isClear = value; }
         }
 
-        public int GetSelect {
+        public int GetSelect
+        {
             get { return select; }
         }
 
-        public bool IsEnd {
+        public bool IsEnd
+        {
             get { return isEnd; }
         }
 
-        public void Draw(GameTime gameTime, Renderer renderer, float cameraScale) { //Animationをさせるため引数を変更
+        public void Draw(GameTime gameTime, Renderer renderer, float cameraScale)
+        { //Animationをさせるため引数を変更
             if (isClear)
             {
                 if (player.IsDead)
                 {
-                    renderer.DrawTexture("ClearWindow2", new Vector2(350, 250));
+                    renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    //renderer.DrawTexture("ClearWindow2", new Vector2(350, 250));
                 }
-                else {
-                    renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
+                else
+                {
+                    //renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
+                    renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
+                    renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+
                 }
                 //Selecterをキャラ画像に変更
                 animePlayer.PlayAnimation(standAnime);
                 animePlayer.Draw(gameTime, renderer, selected[select], flip, cameraScale);
+
+
             }
         }
     }

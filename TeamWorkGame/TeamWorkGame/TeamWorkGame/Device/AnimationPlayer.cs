@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------
 // アニメーション再生構造体
 // 作成者：氷見悠人
+// 最終修正時間 11/16 by長谷川修一
 //-----------------------------------------------------------------------------
 #endregion
 
@@ -116,6 +117,27 @@ namespace TeamWorkGame.Device
                 return false;
             }
             return true;
+        }
+
+        /// <summary>
+        /// ループしないアニメーションのリセット
+        /// </summary>
+        /// <param name="animation">リセットしたいアニメーション</param>
+        public void ResetAnimation(Animation animation)
+        {
+            if(frameIndex == Animation.FrameCount - 1)
+            {
+                frameIndex = 0;
+            }
+        }
+
+        /// <summary>
+        /// 現在のフレームを返す
+        /// </summary>
+        /// <returns>現在のフレーム</returns>
+        public int FrameNow()
+        {
+            return frameIndex;
         }
     }
 }

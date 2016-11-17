@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年11月10日
-// 気球に関する処理修正 By 柏
+// 最終修正時間：2016年11月16日
+// アニメーションに関する処理 By 長谷川修一
 /////////////////////////////////////////////////
 
 using System;
@@ -34,11 +34,14 @@ namespace TeamWorkGame.Actor
         private List<WaterLine> watersList;         //滝のリスト
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持っている火の数
+        private Animation standAnime;           //待機アニメ
         private Animation runAnime;             //走るアニメ
-        private Animation standAnime;
+        private Animation throwAnime;           //投げるアニメ
+
 
         private AnimationPlayer animePlayer;    //アニメ再生器
-        private SpriteEffects flip = SpriteEffects.None;
+        private SpriteEffects flip = SpriteEffects.FlipHorizontally;
+        private PlayerMotion playerMotion;
 
         private bool isOnBalloon;   //気球に乗ってるかどうか
 
@@ -69,6 +72,7 @@ namespace TeamWorkGame.Actor
             inputState = input;
             this.firesList = firesList;
             this.watersList = watersList;
+            playerMotion = PlayerMotion.STAND;
         }
 
         //当たり判定変更by長谷川修一
@@ -91,7 +95,32 @@ namespace TeamWorkGame.Actor
             fireNum = fireMaxNum;
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            throwAnime = new Animation(Renderer.GetTexture("throwAnime"), 0.1f, false);
             isOnBalloon = false;
+            playerMotion = PlayerMotion.STAND;
+        }
+
+        /// <summary>
+        /// 立つ
+        /// </summary>
+        public void Stand()
+        {
+            if(velocity.X == 0 && !IsThrowing())
+            {
+                playerMotion = PlayerMotion.STAND;
+            }
+        }
+
+        /// <summary>
+        /// 走る
+        /// </summary>
+        public void Run()
+        {
+            if(velocity.X != 0 && !IsThrowing())
+            {
+                animePlayer.PlayAnimation(runAnime);
+                playerMotion = PlayerMotion.RUN;
+            }
         }
 
         /// <summary>
@@ -130,6 +159,9 @@ namespace TeamWorkGame.Actor
                     fire.Velocity = fireVelo;
                     firesList.Insert(0, fire);
                     fireNum--;
+
+                    animePlayer.PlayAnimation(throwAnime);
+                    playerMotion = PlayerMotion.THROW;
                 }
             }
         }
@@ -197,7 +229,8 @@ namespace TeamWorkGame.Actor
                     other.EventHandle(this);
                 }
                 else {
-                    if (other is Balloon) {
+                    if (other is Balloon)
+                    {
                         ((Balloon)other).IsPlayerOn = false;
                     }
                 }
@@ -221,7 +254,8 @@ namespace TeamWorkGame.Actor
                 {
                     if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                     {
-                        if (!(inputState.CheckDownKey(Keys.Right, Buttons.DPadRight) || inputState.CheckDownKey(Keys.Left, Buttons.DPadLeft))) {
+                        if (!(inputState.CheckDownKey(Keys.Right, Buttons.DPadRight) || inputState.CheckDownKey(Keys.Left, Buttons.DPadLeft)))
+                        {
                             isOnBalloon = false;     //気球から降りる
                         }
                         isOnGround = false;
@@ -238,7 +272,7 @@ namespace TeamWorkGame.Actor
             {
                 diretion = Direction.LEFT;
             }
-            else if(inputState.Velocity().Y < 0)
+            else if (inputState.Velocity().Y < 0)
             {
                 diretion = Direction.UP;
             }
@@ -301,15 +335,19 @@ namespace TeamWorkGame.Actor
                     CollisionCheck(w);
             }
 
-            if (!isOnBalloon) {
-                ThrowFire();
-            }
-            
+            Stand();
+
+            Run();
+
             Teleport();
 
-            if (velocity.X != 0)
+            if(!isOnBalloon)
             {
-                animePlayer.PlayAnimation(runAnime);
+                ThrowFire();
+            }
+            if(playerMotion == PlayerMotion.THROW)
+            {
+                ResetAnimation(throwAnime);
             }
 
             //Console.WriteLine("isOnGround: " + isOnGround);
@@ -332,13 +370,14 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            if (velocity.X == 0)
+            //状態で描画方法が変わる
+            if(IsStanding())
             {
                 animePlayer.PlayAnimation(standAnime);
-                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
                 //renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
-            else
+            if(IsRunning() || IsThrowing())
             {
                 if (Velocity.X > 0)
                     flip = SpriteEffects.FlipHorizontally;
@@ -346,11 +385,73 @@ namespace TeamWorkGame.Actor
                     flip = SpriteEffects.None;
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
             }
+
+            //if (velocity.X == 0)
+            //{
+            //    animePlayer.PlayAnimation(standAnime);
+            //    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+            //    //renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+            //}
+            //else
+            //{
+            //    if (Velocity.X > 0)
+            //        flip = SpriteEffects.FlipHorizontally;
+            //    else if (Velocity.X < 0)
+            //        flip = SpriteEffects.None;
+            //    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+            //}
         }
 
         public override void EventHandle(GameObject other)
         {
             //
+        }
+
+        /// <summary>
+        /// 立っている状態ならtrue
+        /// </summary>
+        /// <returns></returns>
+        public bool IsStanding()
+        {
+            return playerMotion == PlayerMotion.STAND;
+        }
+
+        /// <summary>
+        /// 移動している状態ならtrue
+        /// </summary>
+        /// <returns></returns>
+        public bool IsRunning()
+        {
+            return playerMotion == PlayerMotion.RUN;
+        }
+
+        /// <summary>
+        /// 投げている状態ならtrue
+        /// </summary>
+        /// <returns></returns>
+        public bool IsThrowing()
+        {
+            return playerMotion == PlayerMotion.THROW;
+        }
+
+        /// <summary>
+        /// ループしないアニメーションのリセット
+        /// </summary>
+        /// <param name="animation">リセットしたいアニメーション</param>
+        public void ResetAnimation(Animation animation)
+        {
+            if (animePlayer.FrameNow() == animePlayer.Animation.FrameCount - 1)
+            {
+                if (velocity.X != 0)
+                {
+                    playerMotion = PlayerMotion.RUN;
+                }
+                if (velocity.X == 0)
+                {
+                    playerMotion = PlayerMotion.STAND;
+                }
+                animePlayer.ResetAnimation(animation);
+            }
         }
     }
 }

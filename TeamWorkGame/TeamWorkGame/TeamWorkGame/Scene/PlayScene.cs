@@ -282,10 +282,18 @@ namespace TeamWorkGame.Scene
                 for (int j = 0; j < map.Data.GetLength(1); j++)
                 {
                     //動かないマップチップはここで描画 by 長谷川修一
-                    if (MapManager.GetNowMapArr()[i, j] == 1 || MapManager.GetNowMapArr()[i, j] == 2)
+                    if (MapManager.GetNowMapArr()[i, j] == 1)
                     {
-                        renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, GetRect(map.Data[i, j]), camera.Scale, 1.0f);
+                        renderer.DrawTexture("ground2", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
                     }
+                    if (MapManager.GetNowMapArr()[i, j] == 2)
+                    {
+                        renderer.DrawTexture("ground1", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                    }
+                    //if (MapManager.GetNowMapArr()[i, j] == 1 || MapManager.GetNowMapArr()[i, j] == 2)
+                    //{
+                    //    renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, GetRect(map.Data[i, j]), camera.Scale, 1.0f);
+                    //}
                 }
             }
 

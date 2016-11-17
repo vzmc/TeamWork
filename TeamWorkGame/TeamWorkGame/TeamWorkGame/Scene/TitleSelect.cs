@@ -30,12 +30,15 @@ namespace TeamWorkGame.Scene
         private float worldTextalpha;
         private Vector2 worldTextPosition;
 
-        private float staffTextalpha;
-        private Vector2 staffTextPosition;
+        private float creditTextalpha;
+        private Vector2 creditTextPosition;
 
+        private float exitTextalpha;
+        private Vector2 exitTextPosition;
 
         private Vector2 selectPosition1;
         private Vector2 selectPosition2;
+        private Vector2 selectPosition3;
 
         private bool isStarted;
         private int x;
@@ -52,13 +55,16 @@ namespace TeamWorkGame.Scene
             x = 1;
             startTextalpha = 1;
             worldTextalpha = 1;
-            staffTextalpha = 1;
+            creditTextalpha = 1;
+            exitTextalpha = 1;
             flashTimer = new Timer(0.2f);
-            startTextPosition = new Vector2(500, 480);
-            worldTextPosition = new Vector2(500, 450);
-            staffTextPosition = new Vector2(500, 530);
-            selectPosition1 = new Vector2(420, 450);
-            selectPosition2 = new Vector2(420, 530);
+            startTextPosition = new Vector2(550, 600);
+            worldTextPosition = new Vector2(550, 400);
+            creditTextPosition = new Vector2(550, 480);
+            exitTextPosition = new Vector2(550, 560);
+            selectPosition1 = new Vector2(470, 390);
+            selectPosition2 = new Vector2(470, 470);
+            selectPosition3 = new Vector2(470, 550);
         }
 
         public void Update()
@@ -82,14 +88,20 @@ namespace TeamWorkGame.Scene
                     switch (x)
                     {
                         case 1:
-                            staffTextalpha = 1.0f;
+                            creditTextalpha = 1.0f;
                             if (worldTextalpha == 1.0f) { worldTextalpha = 0.5f; flashTimer.Initialize(); }
                             else { worldTextalpha = 1.0f; flashTimer.Initialize(); }
                             break;
                         case 2:
                             worldTextalpha = 1.0f;
-                            if (staffTextalpha == 1.0f) { staffTextalpha = 0.5f; flashTimer.Initialize(); }
-                            else { staffTextalpha = 1.0f; flashTimer.Initialize(); }
+                            exitTextalpha = 1.0f;
+                            if (creditTextalpha == 1.0f) { creditTextalpha = 0.5f; flashTimer.Initialize(); }
+                            else { creditTextalpha = 1.0f; flashTimer.Initialize(); }
+                            break;
+                        case 3:
+                            creditTextalpha = 1.0f;
+                            if (exitTextalpha == 1.0f) { exitTextalpha = 0.5f; flashTimer.Initialize(); }
+                            else { exitTextalpha = 1.0f; flashTimer.Initialize(); }
                             break;
                     }
                 }
@@ -102,7 +114,7 @@ namespace TeamWorkGame.Scene
             if (!isStarted) { return; }
             if (inputState.IsKeyDown(Keys.Down))
             {
-                if (x == 2) { return; }
+                if (x == 3) { return; }
                 x++;
             }
             else if (inputState.IsKeyDown(Keys.Up))
@@ -131,21 +143,25 @@ namespace TeamWorkGame.Scene
         {
             if (!isStarted)
             {
-                renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), startTextalpha);
+                renderer.DrawTexture("text", startTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), startTextalpha);
                 //renderer.DrawTexture("GameStartText", startTextPosition, startTextalpha);
             }
             else {
                 //renderer.DrawTexture("WorldText", worldTextPosition, worldTextalpha);
                 renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
                 //renderer.DrawTexture("StaffText", staffTextPosition, staffTextalpha);
-                renderer.DrawTexture("text", staffTextPosition, new Rectangle(0, (int)Text.CREDIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), staffTextalpha);
+                renderer.DrawTexture("text", creditTextPosition, new Rectangle(0, (int)Text.CREDIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), creditTextalpha);
+                renderer.DrawTexture("text", exitTextPosition, new Rectangle(0, (int)Text.EXIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), exitTextalpha);
                 switch (x)
                 {
                     case 1:
-                        renderer.DrawTexture("selecter", selectPosition1);
+                        renderer.DrawTexture("hero", selectPosition1);
                         break;
                     case 2:
-                        renderer.DrawTexture("selecter", selectPosition2);
+                        renderer.DrawTexture("hero", selectPosition2);
+                        break;
+                    case 3:
+                        renderer.DrawTexture("hero", selectPosition3);
                         break;
                 }
 

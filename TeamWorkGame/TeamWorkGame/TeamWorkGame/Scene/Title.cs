@@ -65,7 +65,7 @@ namespace TeamWorkGame.Scene
         {
             return isEnd;
         }
-        
+
         //public SceneType Next()
         //{
         //    return SceneType.PlayScene;
@@ -73,7 +73,7 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
-            
+
         }
 
         public void Update(GameTime gametime)
@@ -86,7 +86,7 @@ namespace TeamWorkGame.Scene
                     //Startを表示するから、他の選択肢の表示を移す
                     titleSelect.GetStarted = true;
                 }
-                
+
             }
             else
             {
@@ -111,16 +111,22 @@ namespace TeamWorkGame.Scene
             //NextScene nextScene = new NextScene(SceneType.Stage, 2);
 
             NextScene nextScene;
-            
+
             //選択肢によって、次のシーンに移す
             if (titleSelect.GetSelect == 1)
             {
                 //ステージ選択Sceneに入る
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
-            else
+            else if (titleSelect.GetSelect == 2)
             {
                 //StaffSceneに入る（未完成）、暫定ステージ選択Sceneに入る
+                nextScene = new NextScene(SceneType.Stage, -1);
+            }
+            else
+            {
+                //終了処理、暫定ステージ選択Sceneに入る   
+
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
 

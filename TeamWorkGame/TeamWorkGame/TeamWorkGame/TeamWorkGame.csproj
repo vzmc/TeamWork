@@ -76,6 +76,7 @@
     <Compile Include="Def\GimmickType.cs" />
     <Compile Include="Def\MapManager.cs" />
     <Compile Include="Def\Parameter.cs" />
+    <Compile Include="Def\PlayerMotion.cs" />
     <Compile Include="Def\StageDef.cs" />
     <Compile Include="Def\Text.cs" />
     <Compile Include="Device\Camera.cs" />

@@ -10,5 +10,11 @@ namespace TeamWorkGame.Def
         START = 0,
         OPTION,
         CREDIT,
+        EXIT,
+        WORLD,
+        RETRY,
+        NEXT,
+        CLEAR,
+        MISS,
     }
 }
