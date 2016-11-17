@@ -112,12 +112,12 @@ namespace TeamWorkGame.Scene
         private void Select()
         {
             if (!isStarted) { return; }
-            if (inputState.IsKeyDown(Keys.Down))
+            if (inputState.IsKeyDown(Keys.Down) || inputState.IsKeyDown(Buttons.LeftThumbstickDown))
             {
                 if (x == 3) { return; }
                 x++;
             }
-            else if (inputState.IsKeyDown(Keys.Up))
+            else if (inputState.IsKeyDown(Keys.Up) || inputState.IsKeyDown(Buttons.LeftThumbstickUp))
             {
                 if (x == 1) { return; }
                 x--;

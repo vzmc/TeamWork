@@ -132,7 +132,7 @@ namespace TeamWorkGame.Scene
 
             for (int i = 0; i < mapl.Count(); i++)
             {
-                if (i > sever.ClearStage+1 - stageIndex)
+                if (i > sever.ClearStage - stageIndex)
                 {
                     renderer.DrawTexture("lock", mapl[i]);
                 }

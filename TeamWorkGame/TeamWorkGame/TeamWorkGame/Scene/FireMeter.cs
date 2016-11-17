@@ -33,8 +33,8 @@ namespace TeamWorkGame.Scene
         //by長谷川修一
         public void Draw(Renderer renderer, GameObject other)
         {
-            renderer.DrawTexture("FireMeter", new Vector2(1 * 64, 3 * 64), new Rectangle((((Player)other).FireNum - 1) * 64, 0,64,192));
-            renderer.DrawNumber("number", new Vector2(1 * 64 + 16, 6 * 64), ((Player)other).FireNum);
+            renderer.DrawTexture("FireMeter", new Vector2(0, 7 * 64), new Rectangle((((Player)other).FireNum - 1) * 64, 0, 64, 192));
+            renderer.DrawNumber("number", new Vector2(0 + 16, 10 * 64), ((Player)other).FireNum);
         }
     }
 }
