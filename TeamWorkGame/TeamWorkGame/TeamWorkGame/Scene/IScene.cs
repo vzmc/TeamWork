@@ -9,8 +9,8 @@ namespace TeamWorkGame.Scene
 {
     interface IScene
     {
-        void Initialize();              //初期化
-        void Initialize(int index);
+        //void Initialize();              //初期化
+        void Initialize(int index = -1);
         void Update(GameTime gameTime); //更新
         void Draw(GameTime gameTime, Renderer renderer);   //描画
         void ShutDown();                //終了

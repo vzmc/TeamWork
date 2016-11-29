@@ -20,7 +20,8 @@ namespace TeamWorkGame.Scene
         public Ending(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
-            Initialize();
+            isEnd = false;
+            //Initialize();
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -33,11 +34,6 @@ namespace TeamWorkGame.Scene
             renderer.DrawTexture("clear", pos);
 
             //renderer.End();
-        }
-
-        public void Initialize()
-        {
-            isEnd = false;
         }
 
         public void Initialize(int index)

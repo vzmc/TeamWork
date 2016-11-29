@@ -67,6 +67,8 @@ namespace TeamWorkGame
 
             sceneManager = new SceneManager();
             //IScene playScene = new PlayScene(gameDevice);
+            sceneManager.Add(SceneType.Load, new Load(gameDevice));
+
             sceneManager.Add(SceneType.Title, new Title(gameDevice));
             
             //ƒXƒe[ƒWƒNƒ‰ƒX‚Ì’Ç‰Á
@@ -78,10 +80,10 @@ namespace TeamWorkGame
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
             sceneManager.Add(SceneType.SmallStage, new SmallStage(gameDevice));
             sceneManager.Add(SceneType.PlayScene, new PlayScene(gameDevice, 0));
-            sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
+            //sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
 
 
-            sceneManager.Change(new NextScene(SceneType.Title, -1));
+            sceneManager.Change(new NextScene(SceneType.Load, -1));
 
         }
 
@@ -91,90 +93,94 @@ namespace TeamWorkGame
         /// </summary>
         protected override void LoadContent()
         {
+
             // Create a new SpriteBatch, which can be used to draw textures.
-            renderer.LoadTexture("hero");
-            renderer.LoadTexture("light_off");
-            renderer.LoadTexture("TileMapSource");
-            renderer.LoadTexture("fire");
-            renderer.LoadTexture("tree");
-            renderer.LoadTexture("ice");
-            renderer.LoadTexture("iron");
-            renderer.LoadTexture("title");
-            renderer.LoadTexture("clear");
-            renderer.LoadTexture("goal");
-            renderer.LoadTexture("coal");//²£‘ñŠC
-            renderer.LoadTexture("number");//²£‘ñŠC
-            renderer.LoadTexture("straw");
-            //ƒ[ƒ‹ƒhƒ}ƒbƒv‚Ì’Ç‰Á
-            //—t—œ—³‘¾
-            //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
-            renderer.LoadTexture("worldmap");
-            //ƒXƒe[ƒW‘I‘ğˆ‚Ì’Ç‰Á
-            //”wŒi‚Ì’Ç‰Á
-            //—t—œ—³‘¾
-            //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
-            renderer.LoadTexture("smallmap");
-            renderer.LoadTexture("frame");
-            renderer.LoadTexture("forestBG");
+            //LoadƒV[ƒ“‚ª•K—v‚È•¨‚ğæ‚É“Ç‚İæ‚é
+            gameDevice.LoadContent();
             
-            //by’·’JìCˆê  11/10
-            renderer.LoadTexture("FireMeter");
-            renderer.LoadTexture("iceAnime");
-            renderer.LoadTexture("ironAnime");
-            renderer.LoadTexture("wood");
-            renderer.LoadTexture("playerAnime");
-            renderer.LoadTexture("throwAnime");
-            renderer.LoadTexture("sand");
-            renderer.LoadTexture("backGround");
-            renderer.LoadTexture("woodAnime");
-            renderer.LoadTexture("strawAnime");
-            renderer.LoadTexture("text");
-            renderer.LoadTexture("standAnime");
-            renderer.LoadTexture("ground1");
-            renderer.LoadTexture("ground2");
+            //renderer.LoadTexture("hero");
+            //renderer.LoadTexture("light_off");
+            //renderer.LoadTexture("TileMapSource");
+            //renderer.LoadTexture("fire");
+            //renderer.LoadTexture("tree");
+            //renderer.LoadTexture("ice");
+            //renderer.LoadTexture("iron");
+            //renderer.LoadTexture("title");
+            //renderer.LoadTexture("clear");
+            //renderer.LoadTexture("goal");
+            //renderer.LoadTexture("coal");//²£‘ñŠC
+            //renderer.LoadTexture("number");//²£‘ñŠC
+            //renderer.LoadTexture("straw");
+            ////ƒ[ƒ‹ƒhƒ}ƒbƒv‚Ì’Ç‰Á
+            ////—t—œ—³‘¾
+            ////‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
+            //renderer.LoadTexture("worldmap");
+            ////ƒXƒe[ƒW‘I‘ğˆ‚Ì’Ç‰Á
+            ////”wŒi‚Ì’Ç‰Á
+            ////—t—œ—³‘¾
+            ////‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
+            //renderer.LoadTexture("smallmap");
+            //renderer.LoadTexture("frame");
+            //renderer.LoadTexture("forestBG");
 
-            //”
-            renderer.LoadTexture("ClearWindow");
-            renderer.LoadTexture("ClearWindow2");
-            renderer.LoadTexture("selecter");
-            renderer.LoadTexture("GameStartText");
-            renderer.LoadTexture("WorldText");
-            renderer.LoadTexture("StaffText");
-            renderer.LoadTexture("balloon");
-            renderer.LoadTexture("Pause");
-            renderer.LoadTexture("water");
-            renderer.LoadTexture("smallmap1");
-            renderer.LoadTexture("smallmap2");
-            renderer.LoadTexture("smallmap3");
-            renderer.LoadTexture("smallmap4");
-            renderer.LoadTexture("smallmap5");
-            renderer.LoadTexture("smallmap6");
-            renderer.LoadTexture("lock");
-            renderer.LoadTexture("Zback");
-            renderer.LoadTexture("uparrow");
-            renderer.LoadTexture("downarrow");
+            ////by’·’JìCˆê  11/10
+            //renderer.LoadTexture("FireMeter");
+            //renderer.LoadTexture("iceAnime");
+            //renderer.LoadTexture("ironAnime");
+            //renderer.LoadTexture("wood");
+            //renderer.LoadTexture("playerAnime");
+            //renderer.LoadTexture("throwAnime");
+            //renderer.LoadTexture("sand");
+            //renderer.LoadTexture("backGround");
+            //renderer.LoadTexture("woodAnime");
+            //renderer.LoadTexture("strawAnime");
+            //renderer.LoadTexture("text");
+            //renderer.LoadTexture("standAnime");
+            //renderer.LoadTexture("ground1");
+            //renderer.LoadTexture("ground2");
 
-            //Sound‚ÌLoad
-            LoadBGM();
-            LoadSE();
+            ////”
+            //renderer.LoadTexture("ClearWindow");
+            //renderer.LoadTexture("ClearWindow2");
+            //renderer.LoadTexture("selecter");
+            //renderer.LoadTexture("GameStartText");
+            //renderer.LoadTexture("WorldText");
+            //renderer.LoadTexture("StaffText");
+            //renderer.LoadTexture("balloon");
+            //renderer.LoadTexture("Pause");
+            //renderer.LoadTexture("water");
+            //renderer.LoadTexture("smallmap1");
+            //renderer.LoadTexture("smallmap2");
+            //renderer.LoadTexture("smallmap3");
+            //renderer.LoadTexture("smallmap4");
+            //renderer.LoadTexture("smallmap5");
+            //renderer.LoadTexture("smallmap6");
+            //renderer.LoadTexture("lock");
+            //renderer.LoadTexture("Zback");
+            //renderer.LoadTexture("uparrow");
+            //renderer.LoadTexture("downarrow");
+
+            ////Sound‚ÌLoad
+            //LoadBGM();
+            //LoadSE();
             // TODO: use this.Content to load your game content here
         }
 
-        private void LoadBGM()
-        {
-            string path = "./Sound/BGM/";
-            sound.LoadBGM("forest1", path);
-            sound.LoadBGM("worldmap1", path);
-            sound.LoadBGM("village1", path);
-        }
+        //private void LoadBGM()
+        //{
+        //    string path = "./Sound/BGM/";
+        //    sound.LoadBGM("forest1", path);
+        //    sound.LoadBGM("worldmap1", path);
+        //    sound.LoadBGM("village1", path);
+        //}
 
-        private void LoadSE()
-        {
-            string path = "./Sound/SE/";
-            sound.LoadSE("cancel1", path);
-            sound.LoadSE("decision1", path);
-            sound.LoadSE("fire1", path);
-        }
+        //private void LoadSE()
+        //{
+        //    string path = "./Sound/SE/";
+        //    sound.LoadSE("cancel1", path);
+        //    sound.LoadSE("decision1", path);
+        //    sound.LoadSE("fire1", path);
+        //}
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload

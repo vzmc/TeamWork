@@ -43,6 +43,14 @@ namespace TeamWorkGame.Device
             input.Update();
         }
 
+        public void LoadContent()
+        {
+            //ゲーム開始時に必要な最小限のリソースを読み込む
+            renderer.LoadTexture("number", "./Texture/");
+            renderer.LoadTexture("load", "./Texture/");
+        }
+
+
         /// <summary>
         /// 描画オブジェクトの取得
         /// </summary>

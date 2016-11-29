@@ -79,14 +79,18 @@
     <Compile Include="Def\PlayerMotion.cs" />
     <Compile Include="Def\StageDef.cs" />
     <Compile Include="Def\Text.cs" />
+    <Compile Include="Device\BGMLoader.cs" />
     <Compile Include="Device\Camera.cs" />
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\InputState.cs" />
+    <Compile Include="Device\Loader.cs" />
     <Compile Include="Device\Motion.cs" />
     <Compile Include="Device\Renderer.cs" />
+    <Compile Include="Device\SELoader.cs" />
     <Compile Include="Device\Sound.cs" />
     <Compile Include="Device\StageLoader.cs" />
     <Compile Include="Device\StageSaver.cs" />
+    <Compile Include="Device\TextureLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
@@ -94,6 +98,7 @@
     <Compile Include="Scene\Ending.cs" />
     <Compile Include="Scene\FireMeter.cs" />
     <Compile Include="Scene\IScene.cs" />
+    <Compile Include="Scene\Load.cs" />
     <Compile Include="Scene\NextScene.cs" />
     <Compile Include="Scene\PlayScene.cs" />
     <Compile Include="Scene\SceneType.cs" />

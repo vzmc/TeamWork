@@ -12,6 +12,7 @@ namespace TeamWorkGame.Scene
 {
     enum SceneType
     {
+        Load,
         Title,
         Stage,
         //シーンの追加

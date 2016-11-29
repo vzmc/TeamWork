@@ -61,27 +61,27 @@ namespace TeamWorkGame.Scene
             //};
         }
 
-        public void Initialize()
-        {
-            mapIndex = 0;
-            mapnum = 0;
-            isBack = false;
-            isEnd = false;
-            sever.LoadStageData();
-            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
-            mapl = new List<Vector2>()
-            {
-                //new Vector2(33,51),
-                //new Vector2(33,283),
-                //new Vector2(33,498),
-                new Vector2(636,61),
-                new Vector2(636,293),
-                new Vector2(636,525),
-                new Vector2(636,757),
-                new Vector2(636,989),
-                new Vector2(636,1221),
-            };
-        }
+        //public void Initialize()
+        //{
+        //    mapIndex = 0;
+        //    mapnum = 0;
+        //    isBack = false;
+        //    isEnd = false;
+        //    sever.LoadStageData();
+        //    standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+        //    mapl = new List<Vector2>()
+        //    {
+        //        //new Vector2(33,51),
+        //        //new Vector2(33,283),
+        //        //new Vector2(33,498),
+        //        new Vector2(636,61),
+        //        new Vector2(636,293),
+        //        new Vector2(636,525),
+        //        new Vector2(636,757),
+        //        new Vector2(636,989),
+        //        new Vector2(636,1221),
+        //    };
+        //}
 
         public void Initialize(int index)
         {

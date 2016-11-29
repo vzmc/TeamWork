@@ -32,7 +32,7 @@ namespace TeamWorkGame.Scene
         {
             inputState = gameDevice.GetInputState();
             sound = gameDevice.GetSound();
-            Initialize();
+            //Initialize();
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -50,13 +50,13 @@ namespace TeamWorkGame.Scene
 
         }
 
-        public void Initialize()
-        {
-            titleSelect = new TitleSelect(inputState);
-            titleSelect.Initialize();
-            isEnd = false;
-            sound.PlayBGM("village1");
-        }
+        //public void Initialize()
+        //{
+        //    titleSelect = new TitleSelect(inputState);
+        //    titleSelect.Initialize();
+        //    isEnd = false;
+        //    sound.PlayBGM("village1");
+        //}
 
         public void Initialize(int index)
         {

@@ -48,26 +48,26 @@ namespace TeamWorkGame.Scene
             }
 
             currentScene = scenes[nxetScene.sceneType];
-            if (nxetScene.stageIndex >= 0)
-            {
-                currentScene.Initialize(nxetScene.stageIndex);
-            }
-            else
-            {
-                currentScene.Initialize();
-            }
+            //if (nxetScene.stageIndex >= 0)
+            //{
+            currentScene.Initialize(nxetScene.stageIndex);
+            //}
+            //else
+            //{
+                //currentScene.Initialize();
+            //}
         }
 
-        public void Change(SceneType name)
-        {
-            if (currentScene != null)
-            {
-                currentScene.ShutDown();
-            }
+        //public void Change(SceneType name)
+        //{
+        //    if (currentScene != null)
+        //    {
+        //        currentScene.ShutDown();
+        //    }
 
-            currentScene = scenes[name];
-            currentScene.Initialize();
-        }
+        //    currentScene = scenes[name];
+        //    currentScene.Initialize();
+        //}
 
         public void Update(GameTime gameTime)
         {

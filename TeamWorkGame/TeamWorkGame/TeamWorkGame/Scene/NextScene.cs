@@ -17,8 +17,13 @@ namespace TeamWorkGame.Scene
     {
         public SceneType sceneType;
         public int stageIndex;
-
-        public NextScene(SceneType scene, int index)
+        
+        /// <summary>
+        /// NextSceneを構築
+        /// </summary>
+        /// <param name="scene">Sceneの名</param>
+        /// <param name="index">Stage番号、必要ない場合-1にする</param>
+        public NextScene(SceneType scene, int index = -1)
         {
             sceneType = scene;
             stageIndex = index;
