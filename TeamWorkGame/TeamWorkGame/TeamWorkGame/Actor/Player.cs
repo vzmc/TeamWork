@@ -85,11 +85,6 @@ namespace TeamWorkGame.Actor
             return new Rectangle(8, 22, 49, 42);
         }
 
-        public InputState GetInputState()
-        {
-            return inputState;
-        }
-
         /// <summary>
         /// 初期化メソッド
         /// </summary>
