@@ -2,8 +2,8 @@
 //TitleScene
 //作成時間：2016/9/30
 //作成者：氷見悠人
-//最終修正時間：2016/10/26
-//修正者：氷見悠人
+//最終修正時間：2016/11/30
+//修正者：葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -86,7 +86,8 @@ namespace TeamWorkGame.Scene
             if (!titleSelect.GetStarted)
             {
                 //keyの変更とpadの対応　By氷見悠人　10/26
-                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.MenuButton))
+                //keyの変更　By葉梨竜太 11/30
+                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton)|| inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
                 {
                     //Startを表示するから、他の選択肢の表示を移す
                     titleSelect.GetStarted = true;
@@ -95,7 +96,8 @@ namespace TeamWorkGame.Scene
             else
             {
                 //keyの変更とpadの対応　By氷見悠人　10/26
-                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.MenuButton))
+                //keyの変更　By葉梨竜太 11/30
+                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton)||inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
                 {
                     isEnd = true;
                 }

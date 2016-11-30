@@ -2,7 +2,7 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/11/10
+// 最終修正時間：2016/11/30
 // 修正者:葉梨竜太
 /////////////////////////////////////////////////////////
 using System;
@@ -295,7 +295,7 @@ namespace TeamWorkGame.Utility
                             }
                         case (int)GimmickType.WATER:
                             {
-                                Water water = new Water(new Vector2(j * 64, i * 64), Vector2.Zero);
+                                Water water = new Water(new Vector2(j * 64, i * 64),Vector2.Zero);
                                 MapThings.Add(water);
                                 break;
                             }
@@ -355,6 +355,14 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(sign);
                                 break;
                             }
+                            //葉梨竜太　11/30
+                        case (int)GimmickType.BOMB:
+                            {
+                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64));
+                                MapThings.Add(bomb);
+                                break;
+                            }
+
                     }
                 }
             }

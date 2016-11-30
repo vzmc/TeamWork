@@ -2,8 +2,8 @@
 //砂のクラス
 //作成時間：１１月０２日
 //By　佐瀬　拓海
-//最終更新日：１１月１６日
-//By　佐瀬拓海
+//最終更新日：11月30日
+//By　葉梨竜太
 ///////////////////////////////
 using Microsoft.Xna.Framework;
 using System;
@@ -90,6 +90,11 @@ namespace TeamWorkGame.Actor
         }
         public override void EventHandle(GameObject other)
         {
+            //葉梨竜太　11/30
+            if(other is Bomb)
+            {
+                BombEvent(other);
+            }
             //if (other is Player)
             //{
             //    //ToDeath();

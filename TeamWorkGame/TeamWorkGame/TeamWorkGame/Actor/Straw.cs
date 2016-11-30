@@ -2,8 +2,8 @@
 // 藁のクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年11月2日
-// By 長谷川修一
+// 最終修正時間：2016年11月30日
+// By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -90,8 +90,16 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-            DeathEvent(other);
-            IsAnimation = true;
+            //葉梨竜太 11/30
+            if (other is Bomb)
+            {
+                BombEvent(other);
+            }
+            else
+            { 
+                DeathEvent(other);
+                IsAnimation = true;
+            }
             //if (other is Fire)
             //{
             //    other.IsDead = true;

@@ -2,8 +2,8 @@
 //マップ上にある物の親クラス
 //作成時間：2016/9/23
 //作成者：氷見悠人
-//最終修正時間：2016/10/20
-//修正者：氷見悠人 DrawにGameTime引数を追加
+//最終修正時間：2016/10/30
+//修正者 葉梨竜太　BombEventの実装
 ///////////////////////////////////////////////////////////////////
 
 using System;
@@ -416,6 +416,20 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        //葉梨竜太　11/30
+        /// <summary>
+        /// 爆弾限定の判定(EventHandleに追加する)
+        /// </summary>
+        /// <param name="other">対象</param>
+        public virtual void BombEvent(GameObject other)
+        {
+            if(other is Bomb)
+            {
+                isDead = true;
+                isShow = false;
+            }
+        }
+
         /// <summary>
         /// 透明値を返す
         /// </summary>
@@ -424,7 +438,7 @@ namespace TeamWorkGame.Actor
         {
             return alpha;
         }
-
+        
         /// <summary>
         /// 衝突事件の処理
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿/////////////////////////////////////////////////
 // ステージのクラス
-// 最終修正時間：2016年11月16日
+// 最終修正時間：2016年11月30日
 // By 葉梨竜太
 /////////////////////////////////////////////////
 using System;
@@ -32,6 +32,7 @@ namespace TeamWorkGame.Scene
         private StageSever sever;
         private Animation standAnime;
         private AnimationPlayer animePlayer;
+        private bool isBack;
 
         public Stage(GameDevice gameDevice)
         {
@@ -54,6 +55,7 @@ namespace TeamWorkGame.Scene
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             sound.PlayBGM("worldmap1");
+            isBack = false;
         }
 
         public void Initialize(int index)
@@ -63,6 +65,7 @@ namespace TeamWorkGame.Scene
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             sound.PlayBGM("worldmap1");
+            isBack = false;
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -72,6 +75,8 @@ namespace TeamWorkGame.Scene
             //renderer.Begin();
 
             renderer.DrawTexture("worldmap", Vector2.Zero);
+            
+            renderer.DrawTexture("Zback", new Vector2(10, 10));
 
             //renderer.DrawTexture("hero",herol[mapIndex]);
 
@@ -118,8 +123,13 @@ namespace TeamWorkGame.Scene
 
            
             
-            if (inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
+            if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
+                isEnd = true;
+            }
+            else if(inputState.IsKeyDown(Keys.X)|| inputState.IsKeyDown(Buttons.B))
+            {
+                isBack = true;
                 isEnd = true;
             }
         }
@@ -131,9 +141,18 @@ namespace TeamWorkGame.Scene
 
         public NextScene Next()
         {
-            //NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
-            NextScene nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
-            sound.PlaySE("decision1");
+            NextScene nextScene;
+            if (isBack == true)
+            {
+                nextScene = new NextScene(SceneType.Title);
+                sound.PlaySE("cancel1");
+            }
+            else
+            {
+                //NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+                 nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
+                sound.PlaySE("decision1");
+            }
             return nextScene;
         }
 

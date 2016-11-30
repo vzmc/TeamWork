@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Actor\Balloon.cs" />
+    <Compile Include="Actor\Bomb.cs" />
     <Compile Include="Actor\Coal.cs" />
     <Compile Include="Actor\Fire.cs" />
     <Compile Include="Actor\GameObject.cs" />

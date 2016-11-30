@@ -1,4 +1,8 @@
-﻿using System;
+﻿/////////////////////////
+//最終更新日　11/30
+//更新者　葉梨竜太
+/////////////////////////
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -75,6 +79,7 @@ namespace TeamWorkGame.Scene
                 {"Zback", path},
                 {"uparrow", path},
                 {"downarrow", path},
+                {"bomb",path },
                 {"JumpEffect", path},
                 {"sign", path},
             };

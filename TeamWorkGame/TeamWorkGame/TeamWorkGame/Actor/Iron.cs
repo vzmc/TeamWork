@@ -2,7 +2,7 @@
 // 鉄ブロックのクラス
 // 作成時間：2016年10月12日
 // By 長谷川修一
-// 最終修正時間：2016年11月16日
+// 最終修正時間：2016年11月30日
 // By 葉梨竜太
 /////////////////////////////////////////////////
 
@@ -38,8 +38,8 @@ namespace TeamWorkGame.Actor
             timer = new Timer(0.1f);
             isToDeath = false;
             isShow = true;
-            SetTimer(0.5f, 5f);
-            animation = new Animation(Renderer.GetTexture("ironAnime"), 0.1f, false);
+            SetTimer(0.7f, 5f);
+            animation = new Animation(Renderer.GetTexture("ironAnime"), 0.2f, false);
         }
 
         /// <summary>
@@ -107,6 +107,11 @@ namespace TeamWorkGame.Actor
                 //ToDeath();
                 AliveEvent(other);
                 IsAnimation = true;
+            }
+            //葉梨竜太 11/30
+            else if(other is Bomb)
+            {
+                BombEvent(other);
             }
             //AliveEvent(other);
         }

@@ -2,8 +2,8 @@
 //　クリア画面
 //  作成者：柏杳
 //
-//  最終更新日 11月17日
-//  By柏杳
+//  最終更新日 11月30日
+//  By 葉梨竜太
 /////////////////////////////////////////
 
 using System;
@@ -97,10 +97,10 @@ namespace TeamWorkGame.Scene
                     if (select == 2) { return; }
                     select++;
                 }
-
-
+                
                 //選択確定
-                else if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton))
+                //keyの変更　By葉梨竜太 11/30
+                else if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton) || inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
                 {
                     isEnd = true;
                 }

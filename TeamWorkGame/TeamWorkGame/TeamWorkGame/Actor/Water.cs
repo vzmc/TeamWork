@@ -1,8 +1,8 @@
 ﻿////////////////////////////////////////////////////////////////
 // 水クラス
 // 作成者：氷見悠人
-// 最終更新日 １１月１６日
-// By 佐瀬拓海
+// 最終更新日 11月30日
+// By 葉梨竜太
 ///////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -37,6 +37,11 @@ namespace TeamWorkGame.Actor
             else if(other.Tag == "Sand")
             {
                 isDead = true;
+            }
+            //葉梨竜太　11/30
+            else if(other is Bomb)
+            {
+                BombEvent(other);
             }
         }
 

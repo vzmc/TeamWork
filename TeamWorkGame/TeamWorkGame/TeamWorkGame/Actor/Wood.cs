@@ -1,7 +1,8 @@
-﻿//木材クラス
-//最終修正時間:2016年11月2日
-//by 長谷川修一
-
+﻿/////////////////////////////
+//木材クラス
+//最終修正時間:2016年11月30日
+//by 葉梨竜太
+/////////////////////////////
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,8 +75,16 @@ namespace TeamWorkGame.Actor
 
         public override void EventHandle(GameObject other)
         {
-            AliveEvent(other);
-            IsAnimation = true;
+            //葉梨竜太 11/30
+            if (other is Bomb)
+            {
+                BombEvent(other);
+            }
+            else
+            {
+                AliveEvent(other);
+                IsAnimation = true;
+            }
             //if (other is Fire)
             //{
             //    other.IsDead = true;

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/////////////////////////////
+//最終更新日　11/30
+//更新者　葉梨竜太
+////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +62,8 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gametime)
         {
-            if (inputState.IsKeyDown(Keys.Enter))
+            //葉梨竜太　11/30
+            if (inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Buttons.A))
             {
                 isEnd = true;
             }

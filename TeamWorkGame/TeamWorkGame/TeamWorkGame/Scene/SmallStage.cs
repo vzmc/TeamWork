@@ -2,7 +2,7 @@
 // ステージ選択のクラス
 // 作成時間：2016年10月13日
 // By 葉梨竜太
-//最終修正時間：2016年11月16日
+//最終修正時間：2016年11月30日
 //By 葉梨竜太
 /////////////////////////////////////////////////
 
@@ -232,14 +232,14 @@ namespace TeamWorkGame.Scene
             
             mapIndex = mapnum;
 
-            if (inputState.IsKeyDown(Keys.Enter)||inputState.IsKeyDown(Buttons.A))
+            if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter)||inputState.IsKeyDown(Buttons.A))
             {
-                if (stageIndex + mapIndex <= sever.ClearStage+1)
+                if (stageIndex + mapIndex <= sever.ClearStage)
                 {
                     isEnd = true;
                 }
             }
-            else if (inputState.IsKeyDown(Keys.Z)||inputState.IsKeyDown(Buttons.B))
+            else if (inputState.IsKeyDown(Keys.X)||inputState.IsKeyDown(Buttons.B))
             {
                 isBack = true;
                 isEnd = true;
