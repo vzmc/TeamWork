@@ -1,4 +1,9 @@
-﻿using System;
+﻿///作成by　柏
+///最後修正by   柏
+///最後修正日   2016.11.30
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,8 +48,11 @@ namespace TeamWorkGame.Actor
             //animationPlayer.PlayAnimation(animation);
 
             if (!playerIsOn) {
-                if (PositionY >= startPosition.Y) { return; }
-                PositionY+=3;           //落下速度を３にした　By　氷見悠人
+                //落下速度を３にした
+                for (int i = 0; i < 3; i++) {
+                    if (PositionY == startPosition.Y) { return; }
+                    PositionY++;
+                }
             }
         }
 
@@ -62,13 +70,11 @@ namespace TeamWorkGame.Actor
                 {
                     other.Position = position;
                     if (startPosition.Y - PositionY == Height * flyLevel) { return; }
-                    int velo = (int)(startPosition.Y - PositionY - Height * flyLevel);
-                    if (velo > 0)
-                    {
-                        PositionY += 3; //速度を3にした
-                    }
-                    else {
-                        PositionY -= 3;
+                    //移動速度を3にする
+                    for (int i = 1; i < 3; i++) {
+                        int velo = (int)(startPosition.Y - PositionY - Height * flyLevel);
+                        if (velo > 0) { PositionY++; }
+                        else { PositionY--; }
                     }
                 }
             }
