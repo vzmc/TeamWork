@@ -32,5 +32,6 @@ namespace TeamWorkGame.Def
         SIDELIGHT3,　　 //３マス横移動松明
         HIGHLIGHT5,     //５マス縦移動松明
         SIDELIGHT5,　　 //５マス横移動松明
+        SIGN,           //看板
     }
 }

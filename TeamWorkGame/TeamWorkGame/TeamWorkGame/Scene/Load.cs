@@ -75,6 +75,7 @@ namespace TeamWorkGame.Scene
                 {"Zback", path},
                 {"uparrow", path},
                 {"downarrow", path},
+                {"sign", path},
             };
 
             return list;

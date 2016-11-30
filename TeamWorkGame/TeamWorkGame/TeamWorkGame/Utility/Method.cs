@@ -349,6 +349,12 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(moveLight);
                                 break;
                             }
+                        case (int)GimmickType.SIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64));
+                                MapThings.Add(sign);
+                                break;
+                            }
                     }
                 }
             }

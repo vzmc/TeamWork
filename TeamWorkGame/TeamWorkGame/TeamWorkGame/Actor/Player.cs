@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年11月16日
-// アニメーションに関する処理 By 長谷川修一
+// 最終修正時間：2016年11月30日
+// 当たり判定に関する処理 By 佐瀬拓海
 /////////////////////////////////////////////////
 
 using System;
@@ -78,6 +78,11 @@ namespace TeamWorkGame.Actor
         protected override Rectangle InitLocalColRect()
         {
             return new Rectangle(8, 22, 49, 42);
+        }
+
+        public InputState GetInputState()
+        {
+            return inputState;
         }
 
         /// <summary>
@@ -326,7 +331,17 @@ namespace TeamWorkGame.Actor
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
-                CollisionCheck(m);
+                if (m is Sign)      //Signの場合のみ上キーを押したときのみ判定
+                {
+                    if (inputState.GetKeyTrigger(Keys.Up))
+                    {
+                        CollisionCheck(m);
+                    }
+                }
+                else
+                {
+                    CollisionCheck(m);
+                }
             }
 
             //火と衝突判定

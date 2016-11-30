@@ -124,7 +124,6 @@ namespace TeamWorkGame.Scene
             camera = new Camera(Vector2.Zero, Parameter.CameraScale);
             //柏
             player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
-
             //葉梨竜太
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
             camera.SetAimPosition(player.Position + new Vector2(32, 32));
