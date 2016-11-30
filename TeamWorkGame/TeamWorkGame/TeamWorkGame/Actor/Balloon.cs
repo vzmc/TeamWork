@@ -49,7 +49,7 @@ namespace TeamWorkGame.Actor
 
             if (!playerIsOn) {
                 //落下速度を３にした
-                for (int i = 0; i < 3; i++) {
+                for (int i = 0; i <Parameter.BalloonDown; i++) {
                     if (PositionY == startPosition.Y) { return; }
                     PositionY++;
                 }
@@ -71,7 +71,7 @@ namespace TeamWorkGame.Actor
                     other.Position = position;
                     if (startPosition.Y - PositionY == Height * flyLevel) { return; }
                     //移動速度を3にする
-                    for (int i = 1; i < 3; i++) {
+                    for (int i = 1; i < Parameter.BalloonUp; i++) {
                         int velo = (int)(startPosition.Y - PositionY - Height * flyLevel);
                         if (velo > 0) { PositionY++; }
                         else { PositionY--; }

@@ -39,14 +39,14 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(Parameter.OneframeStrawAnime * 3);
-            burnTimer = new Timer(Parameter.BurnStraw);
+            timer = new Timer(Parameter.StrawAnimeTime - Parameter.StrawColTime);
+            burnTimer = new Timer(Parameter.StrawBurn);
             isToDeath = false;
             isShow = true;
-            SetTimer(0.01f);
+            //SetTimer(0.01f);
             map = MapManager.GetNowMapData();
-            animation = new Animation(Renderer.GetTexture("strawAnime"), Parameter.OneframeStrawAnime, false);
-
+            animation = new Animation(Renderer.GetTexture("strawAnime"), Parameter.StrawAnimeTime / 3, false);
+            SetTimer(Parameter.StrawColTime);//当たり判定が消え始めるまでの時間
         }
 
         public bool IsToDeath

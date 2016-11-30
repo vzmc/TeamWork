@@ -29,10 +29,20 @@ namespace TeamWorkGame.Def
 
         public const int FireHerizoUpSpeed = 10;    //横い投げる時のY方向Speed分量
         public const int FireHerizonSpeed = 6;      //横い投げる時のX方向Speed分量
-        public const int FireMaxNum = 5;         //火の総量
-        public const float BurnStraw = 0.2f;     //藁の火が燃え移る時間
-        public const float OneframeStrawAnime = 0.2f;  //藁アニメ―ションの1フレームあたりの時間
-        public const float OneframeWoodAnime = 0.2f;  //木アニメーションの1フレームあたりの時間
+        public const int FireMaxNum = 5;         //火の総量   
+        public const int MoveLightSpeed = 3;       //動く松明の速度
+        public const int BalloonDown = 3;          //気球が下降する速度
+        public const int BalloonUp = 3;            //気球が上昇する速度
+        public const float StrawColTime = 0.01f;   //藁ブロックの当たり判定が消えるまでの時間
+        public const float StrawBurn = 0.3f;       //藁ブロックの火が燃え移り始めるまでの時間        ※11/30現在、当たり判定がなくなってから火が燃え移り始める。
+        public const float StrawAnimeTime = 0.6f;  //藁ブロックアニメ―ションの時間
+        public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
+        public const float WoodSpawnTime = 2.0f;   //木材ブロックの復活時間
+        public const float IronAnimeTime = 3.0f;   //鉄ブロックアニメーションの時間
+        public const float IronSpawnTime = 4.0f;   //鉄ブロックの復活時間
+        public const float IceAnimeTime = 1.0f;    //アイスブロックアニメーションの時間
+        public const float IceSpawnTime = 2.0f;    //アイスブロックの復活時間
+        public const float WaterFlowSpeed = 0.3f;  //水が下のマスに流れるまでの時間
 
         //必要な火の量(数字以上で燃える)
         public const int icefire = 2;
@@ -49,8 +59,8 @@ namespace TeamWorkGame.Def
         public const Keys MenuKey = Keys.Enter;
 
         public const Buttons JumpButton = Buttons.A;
-        public const Buttons TeleportButton = Buttons.RightTrigger;
-        public const Buttons ThrowButton = Buttons.LeftTrigger;
+        public const Buttons TeleportButton = Buttons.LeftTrigger;
+        public const Buttons ThrowButton = Buttons.RightTrigger;
         public const Buttons MenuButton = Buttons.Start;
 
         public static readonly List<GimmickType> ImpassableTiles = new List<GimmickType>()

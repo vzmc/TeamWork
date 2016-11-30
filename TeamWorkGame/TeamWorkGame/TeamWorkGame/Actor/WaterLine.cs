@@ -47,7 +47,7 @@ namespace TeamWorkGame.Actor
             position = pos;
             waters = new List<Water>();
             mapdata = MapManager.GetNowMapData();
-            timer = new Timer(0.3f);
+            timer = new Timer(Parameter.WaterFlowSpeed);
             startTimer = new Timer((anime.FrameCount-1) * anime.FrameTime);
             Initialize();
         }

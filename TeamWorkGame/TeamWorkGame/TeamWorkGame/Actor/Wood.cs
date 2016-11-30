@@ -36,8 +36,8 @@ namespace TeamWorkGame.Actor
             //timer = new Timer(2.0f);
             //isToDeath = false;
             isShow = true;
-            SetTimer(0.6f, 3f);
-            animation = new Animation(Renderer.GetTexture("woodAnime"), Parameter.OneframeWoodAnime, false);
+            animation = new Animation(Renderer.GetTexture("woodAnime"), Parameter.WoodAnimeTime / 3, false);
+            SetTimer(Parameter.WoodAnimeTime, Parameter.WoodSpawnTime);
             //scale = 1.0f;
         }
 

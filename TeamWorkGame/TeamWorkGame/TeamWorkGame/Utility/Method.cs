@@ -327,25 +327,25 @@ namespace TeamWorkGame.Utility
                             //葉梨竜太
                         case (int)GimmickType.HIGHLIGHT3:
                             {
-                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 3) * 64), 3);
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 3) * 64), Parameter.MoveLightSpeed);
                                 MapThings.Add(moveLight);
                                 break; 
                             }
                         case (int)GimmickType.SIDELIGHT3:
                             {
-                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j + 3) * 64, i * 64), 3);
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j + 3) * 64, i * 64), Parameter.MoveLightSpeed);
                                 MapThings.Add(moveLight);
                                 break;
                             }
                         case (int)GimmickType.HIGHLIGHT5:
                             {
-                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 5) * 64), 3);
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 5) * 64), Parameter.MoveLightSpeed);
                                 MapThings.Add(moveLight);
                                 break;
                             }
                         case (int)GimmickType.SIDELIGHT5:
                             {
-                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j+5) * 64, i * 64), 3);
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j+5) * 64, i * 64), Parameter.MoveLightSpeed);
                                 MapThings.Add(moveLight);
                                 break;
                             }

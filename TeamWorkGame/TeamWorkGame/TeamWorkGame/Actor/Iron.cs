@@ -20,7 +20,7 @@ namespace TeamWorkGame.Actor
 {
     public class Iron : GameObject
     {
-        private Timer timer;
+        //private Timer timer;
         private bool isToDeath;
         private Animation animation;
         private AnimationPlayer animationPlayer;
@@ -35,13 +35,12 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            timer = new Timer(0.1f);
+            //timer = new Timer(0.1f);
             isToDeath = false;
             isShow = true;
-            SetTimer(0.7f, 5f);
-            animation = new Animation(Renderer.GetTexture("ironAnime"), 0.2f, false);
+            animation = new Animation(Renderer.GetTexture("ironAnime"), Parameter.IronAnimeTime / 4, false);//4はフレーム数
+            SetTimer(Parameter.IronAnimeTime, 5f);
         }
-
         /// <summary>
         /// 死亡する時
         /// </summary>
