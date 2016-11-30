@@ -36,6 +36,11 @@ namespace TeamWorkGame.Actor
         private Animation runAnime;             //走るアニメ
         private Animation throwAnime;           //投げるアニメ
 
+        private Timer jumpEffectTimer;
+        private Timer fallEffectTimer;
+        private Vector2 jumpEffectPos;
+        private Vector2 fallEffectPos;
+        private bool previousIsOnGround;
 
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.FlipHorizontally;
@@ -102,6 +107,11 @@ namespace TeamWorkGame.Actor
             throwAnime = new Animation(Renderer.GetTexture("throwAnime"), 0.1f, false);
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
+
+            jumpEffectTimer = new Timer(0.15f);
+            jumpEffectTimer.CurrentTime = 0;
+            fallEffectTimer = new Timer(0.15f);
+            fallEffectTimer.CurrentTime = 0;
         }
 
         /// <summary>
@@ -257,6 +267,8 @@ namespace TeamWorkGame.Actor
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            fallEffectTimer.Update();
+            jumpEffectTimer.Update();
             float speed = 5f;    //移動速度
 
             //気球と衝突判定
@@ -295,6 +307,8 @@ namespace TeamWorkGame.Actor
                 {
                     velocity.Y = -13;
                     isOnGround = false;
+                    jumpEffectTimer.Initialize();
+                    jumpEffectPos = position;
                 }
             }
 
@@ -373,6 +387,13 @@ namespace TeamWorkGame.Actor
             }
 
             CheckIsOut();
+
+            if(!previousIsOnGround && isOnGround)
+            {
+                fallEffectTimer.Initialize();
+                fallEffectPos = position;
+            }
+            previousIsOnGround = isOnGround;
             //Console.WriteLine("isOnGround: " + isOnGround);
         }
 
@@ -407,6 +428,23 @@ namespace TeamWorkGame.Actor
                 else if (Velocity.X < 0)
                     flip = SpriteEffects.None;
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+            }
+            if (!fallEffectTimer.IsTime())
+            {
+                renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64));
+            }
+            if (!jumpEffectTimer.IsTime())
+            {
+                Rectangle rect;
+                if(velocity.X >= 0)
+                {
+                    rect = new Rectangle(64 * 2, 0, 64, 64);
+                }
+                else
+                {
+                    rect = new Rectangle(64, 0, 64, 64);
+                }
+                renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect);
             }
 
             //if (velocity.X == 0)

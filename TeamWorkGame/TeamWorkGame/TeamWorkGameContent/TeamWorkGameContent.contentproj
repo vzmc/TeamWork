@@ -506,6 +506,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Texture\JumpEffect.png">
+      <Name>JumpEffect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Texture\sign.png">
       <Name>sign</Name>
       <Importer>TextureImporter</Importer>

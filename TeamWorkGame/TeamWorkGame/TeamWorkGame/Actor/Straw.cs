@@ -111,7 +111,7 @@ namespace TeamWorkGame.Actor
                 deathTimer.Update();
                 if (deathTimer.IsTime())
                 {
-                    isTrigger = true;
+                    //isTrigger = true;
                     //scale = 1.5f;
                     //name = "fire";
                     ToDeath();
