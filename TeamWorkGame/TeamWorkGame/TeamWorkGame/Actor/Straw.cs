@@ -96,14 +96,13 @@ namespace TeamWorkGame.Actor
                 BombEvent(other);
             }
             else
-            { 
+            {
                 DeathEvent(other);
                 IsAnimation = true;
             }
             //if (other is Fire)
             //{
             //    other.IsDead = true;
-
             //}
             //name = "fire";
             //IsTrigger = true;

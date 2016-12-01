@@ -1,0 +1,21 @@
+現在クリアしているステージを変更したい場合は
+
+trunk/
+TeamWorkGame/
+TeamWorkGame/
+TeamWorkGame/
+bin/
+x86/
+Debug/
+Content/
+Stage
+→ StageData.csv 
+→ A1 
+
+の数字を直す
+
+※ステージをすべて未クリアにしたいときはA1を -1 にする
+※0ではない
+
+※ステージをすべてクリアにしたいときはA1を 29 にする
+※30ではない

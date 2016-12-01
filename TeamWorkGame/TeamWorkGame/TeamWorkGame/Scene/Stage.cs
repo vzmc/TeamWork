@@ -86,7 +86,7 @@ namespace TeamWorkGame.Scene
            
             for(int i = 0;i < herol.Count(); i++)
             {
-                if (i> sever.ClearStage / 5)
+                if (i-1 > sever.ClearStage / 6)
                 {
                     renderer.DrawTexture("lock", herol[i]);
                 }
@@ -100,15 +100,16 @@ namespace TeamWorkGame.Scene
 
             if (inputState.IsKeyDown(Keys.Right)||inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
+                if(mapIndex > sever.ClearStage / 6)
+                {
+                    return;
+                }
                 mapIndex++;
                 if (mapIndex > 4)
                 {
                     mapIndex = 4;
                 }
-                if(mapIndex > sever.ClearStage / 5)
-                {
-                    mapIndex--;
-                }
+                
                 
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))

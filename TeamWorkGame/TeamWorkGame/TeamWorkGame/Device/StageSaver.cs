@@ -36,7 +36,7 @@ namespace TeamWorkGame.Device
             playTime = 0;
             currentStage = 0;
             clearState = 0;
-            clearStage = 0;
+            clearStage = -1;
             charcoal = 0;
             stageData = new int[StageDef.BigIndexMax * StageDef.SmallIndexMax + 1][];
 

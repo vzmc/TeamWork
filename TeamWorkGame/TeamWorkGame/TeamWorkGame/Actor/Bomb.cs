@@ -19,6 +19,7 @@ namespace TeamWorkGame.Actor
     {
         private bool isToDeath;
         private Map map;
+        private float gForce;
 
         public Bomb(Vector2 pos)
             :base("bomb",pos,Vector2.Zero,false,"Bomb")
@@ -32,10 +33,36 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;
             map = MapManager.GetNowMapData();
+            gForce = Parameter.GForce;
         }
 
         public override void Update(GameTime gameTime)
         {
+            velocity.Y += gForce;
+
+            //マップ上の物と障害物判定
+
+            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x.Tag != "Bomb"))
+            {
+                ObstacleCheck(m);
+            }
+
+            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+
+            //地面にいると運動停止
+            if (isOnGround)
+            {
+                velocity = Vector2.Zero;
+            }
+
+            position += velocity;
+
+            //マップ上の物と衝突区域判定
+            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            {
+                CollisionCheck(m);
+            }
+
             Explosion();
             AliveUpdate();
         }
@@ -81,6 +108,5 @@ namespace TeamWorkGame.Actor
                 }
             }
         }
-
     }
 }

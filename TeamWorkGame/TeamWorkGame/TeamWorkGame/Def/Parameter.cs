@@ -2,7 +2,7 @@
 // 設定用パラメータのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年11月16日
+// 最終修正時間：2016年12月01日
 // By 葉梨竜太
 /////////////////////////////////////////////////
 
@@ -38,7 +38,7 @@ namespace TeamWorkGame.Def
         public const float StrawAnimeTime = 0.6f;  //藁ブロックアニメ―ションの時間
         public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
         public const float WoodSpawnTime = 2.0f;   //木材ブロックの復活時間
-        public const float IronAnimeTime = 3.0f;   //鉄ブロックアニメーションの時間
+        public const float IronAnimeTime = 1.0f;   //鉄ブロックアニメーションの時間
         public const float IronSpawnTime = 4.0f;   //鉄ブロックの復活時間
         public const float IceAnimeTime = 1.0f;    //アイスブロックアニメーションの時間
         public const float IceSpawnTime = 2.0f;    //アイスブロックの復活時間

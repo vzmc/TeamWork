@@ -132,7 +132,7 @@ namespace TeamWorkGame.Scene
 
             for (int i = 0; i < mapl.Count(); i++)
             {
-                if (i > sever.ClearStage - stageIndex)
+                if (i > sever.ClearStage - stageIndex+1)
                 {
                     renderer.DrawTexture("lock", mapl[i]);
                 }
@@ -169,7 +169,7 @@ namespace TeamWorkGame.Scene
                 if(mapnum == -1)
                 {
                     mapnum = 5;
-                    if (mapnum > sever.ClearStage - stageIndex)
+                    if (mapnum >= sever.ClearStage - stageIndex+1)
                     {
                         mapnum = 0;
                     }
@@ -198,7 +198,7 @@ namespace TeamWorkGame.Scene
             }
             else if (inputState.IsKeyDown(Keys.Down)||inputState.IsKeyDown(Buttons.LeftThumbstickDown))
             {
-                if(mapnum  > sever.ClearStage-stageIndex)
+                if(mapnum  >= sever.ClearStage-stageIndex+1)
                 {
                     return;
                 }
@@ -234,7 +234,7 @@ namespace TeamWorkGame.Scene
 
             if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter)||inputState.IsKeyDown(Buttons.A))
             {
-                if (stageIndex + mapIndex <= sever.ClearStage)
+                if (stageIndex + mapIndex <= sever.ClearStage+1)
                 {
                     isEnd = true;
                 }
