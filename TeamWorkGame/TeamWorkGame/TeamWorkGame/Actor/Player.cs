@@ -154,12 +154,12 @@ namespace TeamWorkGame.Actor
                     }
                     else if (diretion == Direction.LEFT)
                     {
-                        fireVelo = new Vector2(-Parameter.FireHerizonSpeed, -Parameter.FireHerizoUpSpeed);
+                        fireVelo = new Vector2(-Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
                         firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
                     else if (diretion == Direction.RIGHT)
                     {
-                        fireVelo = new Vector2(Parameter.FireHerizonSpeed, -Parameter.FireHerizoUpSpeed);
+                        fireVelo = new Vector2(Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
                         firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
 
@@ -178,7 +178,7 @@ namespace TeamWorkGame.Actor
         /// <summary>
         /// マップ上いある火と位置交換（最後に投げ出した火は最初に交換）
         /// </summary>
-        public void Teleport()
+        private void Teleport()
         {
             if (firesList.Count > 0)
             {
@@ -191,8 +191,7 @@ namespace TeamWorkGame.Actor
                     firesList[0].Velocity = velocity;
 
                     position = tempPos;
-                    velocity = tempVelo;
-
+                    
                     Fire tempfire = firesList[0];
                     firesList.RemoveAt(0);
                     firesList.Add(tempfire);
@@ -264,7 +263,6 @@ namespace TeamWorkGame.Actor
         {
             fallEffectTimer.Update();
             jumpEffectTimer.Update();
-            float speed = 5f;    //移動速度
 
             //気球と衝突判定
             foreach (var m in map.MapThings.FindAll(x => x is Balloon))
@@ -282,7 +280,40 @@ namespace TeamWorkGame.Actor
                 }
             }
 
-            velocity.X = inputState.Velocity().X * speed;
+            //摩擦
+            float friction = Parameter.AirFriction;
+
+            if (isOnGround)
+            {
+                if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
+                {
+                    velocity.Y = -Parameter.PlayerJumpPower;
+                    isOnGround = false;
+                    jumpEffectTimer.Initialize();
+                    jumpEffectPos = position;
+                }
+                friction = Parameter.GroundFriction;
+            }
+
+
+            //横方向のスピード計算
+            //velocity.X = inputState.Velocity().X * Parameter.MaxPlayerHorizontalSpeed;
+            velocity.X += inputState.Velocity().X * Parameter.PlayerAccelerationX;
+
+            //摩擦計算
+            friction = Math.Abs(velocity.X) > friction ? friction : velocity.X;
+            friction = friction * velocity.X > 0 ? -friction : friction;
+
+            velocity.X += friction;
+            if (velocity.X > Parameter.MaxPlayerHorizontalSpeed)
+            {
+                velocity.X = Parameter.MaxPlayerHorizontalSpeed;
+            }
+            else if(velocity.X < -Parameter.MaxPlayerHorizontalSpeed)
+            {
+                velocity.X = -Parameter.MaxPlayerHorizontalSpeed;
+            }
+
             if (velocity.X > 0)
             {
                 diretion = Direction.RIGHT;
@@ -296,17 +327,7 @@ namespace TeamWorkGame.Actor
                 diretion = Direction.UP;
             }
 
-            if (isOnGround)
-            {
-                if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
-                {
-                    velocity.Y = -13;
-                    isOnGround = false;
-                    jumpEffectTimer.Initialize();
-                    jumpEffectPos = position;
-                }
-            }
-
+            //縦スピード計算
             velocity.Y += gForce;
 
             if (velocity.Y > 0 && velocity.Y < 1)
@@ -314,21 +335,23 @@ namespace TeamWorkGame.Actor
                 velocity.Y = 1;
             }
 
-            if (velocity.Y > 10)
+            if (velocity.Y > Parameter.MaxPlayerVerticalSpeed)
             {
                 velocity.Y = 10;
             }
+
 
             //マップ上の物と障害物判定
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
             {
                 ObstacleCheck(m);
             }
-
             Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+
 
             //Console.WriteLine(velocity);
 
+            //位置計算
             position += velocity;
 
             //位置を整数にする　By氷見悠人
@@ -370,16 +393,19 @@ namespace TeamWorkGame.Actor
 
             Run();
 
+            //火と位置交換処理
             Teleport();
 
-            if(!isOnBalloon)
+            if (!isOnBalloon)
             {
+                //火を投げる処理
                 ThrowFire();
             }
-            if(playerMotion == PlayerMotion.THROW)
+            if (playerMotion == PlayerMotion.THROW)
             {
                 ResetAnimation(throwAnime);
             }
+
 
             CheckIsOut();
 
@@ -441,21 +467,6 @@ namespace TeamWorkGame.Actor
                 }
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect);
             }
-
-            //if (velocity.X == 0)
-            //{
-            //    animePlayer.PlayAnimation(standAnime);
-            //    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-            //    //renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
-            //}
-            //else
-            //{
-            //    if (Velocity.X > 0)
-            //        flip = SpriteEffects.FlipHorizontally;
-            //    else if (Velocity.X < 0)
-            //        flip = SpriteEffects.None;
-            //    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-            //}
         }
 
         public override void EventHandle(GameObject other)

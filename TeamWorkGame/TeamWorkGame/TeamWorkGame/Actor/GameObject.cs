@@ -34,7 +34,7 @@ namespace TeamWorkGame.Actor
         //protected Vector2 origin;       //描画の原点
 
         //protected Vector2 colOffset;    //衝突判定区域の偏移量。自身位置との相対位置
-        protected Vector2 velocity;     //移動量
+        protected Vector2 velocity;     //移動量（tempを整数化）
         protected bool isDead;          //生きているか？
         protected bool isOnGround;      //地上にいるか？
         protected string tag;           //タグ
@@ -221,7 +221,6 @@ namespace TeamWorkGame.Actor
             //this.imageSize = imageSize;
             position = pos;
             velocity = velo;
-
             localColRect = InitLocalColRect();
 
             this.tag = tag;
@@ -236,33 +235,6 @@ namespace TeamWorkGame.Actor
         {
             return new Rectangle(0, 0, image.Width, image.Height);
         }
-
-        /// <summary>
-        /// コンストラクタ（衝突区域指定）
-        /// </summary>
-        /// <param name="name">アセット名</param>
-        /// <param name="imageSize">画像サイズ</param>
-        /// <param name="pos">位置</param>
-        /// <param name="velo">移動量</param>
-        /// <param name="colSize">衝突区域サイズ</param>
-        /// <param name="colOffset">衝突区域と自身位置の相対位置</param>
-        /// <param name="isTrigger">区域ですか？</param>
-        /// <param name="tag">タグ</param>
-        //public GameObject(string name, Size imageSize, Vector2 pos, Vector2 velo, Size colSize, Vector2 colOffset, bool isTrigger, string tag = "")
-        //{
-        //    this.name = name;
-        //    this.imageSize = imageSize;
-        //    position = pos;
-        //    velocity = velo;
-        //    this.colSize = colSize;
-        //    this.colOffset = colOffset;
-        //    this.tag = tag;
-        //    this.isTrigger = isTrigger;
-        //    deathTimer = new Timer(0.5f);
-        //    spawnTimer = new Timer(5f);
-
-        //    Initialize();
-        //}
 
         /// <summary>
         /// 初期化処理
