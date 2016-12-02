@@ -27,14 +27,14 @@ namespace TeamWorkGame.Def
 
         //ゲーム内容関連
         public const float GForce = 0.5f;               //重力の大きさ（1フレームにつきスピードの縦分量の増量）
-        public const float GroundFriction = 0.3f;         //地面摩擦
+        public const float GroundFriction = 0.4f;         //地面摩擦
         public const float AirFriction = 0.1f;            //空中摩擦
-        public const float PlayerAccelerationX = 1f;    //左右操作の時プレーヤーの横方向の加速度
+        public const float PlayerAccelerationX = 1.5f;    //左右操作の時プレーヤーの横方向の加速度
         public const float PlayerJumpPower = 13f;
         public const float MaxPlayerHorizontalSpeed = 5f;   //Player横方向の最大速度
         public const float MaxPlayerVerticalSpeed = 10f;    //Player横方向の最大速度
-        public const int FireUpSpeed = 16;              //真上に投げる時のSpeed；
-        public const int FireHorizontalSpeedY = 10;     //横い投げる時のY方向Speed分量
+        public const int FireUpSpeed = 15;              //真上に投げる時のSpeed；
+        public const int FireHorizontalSpeedY = 11;     //横い投げる時のY方向Speed分量
         public const int FireHorizontalSpeedX = 6;      //横い投げる時のX方向Speed分量
         public const int FireMaxNum = 5;                //火の総量   
         public const int MoveLightSpeed = 3;        //動く松明の速度

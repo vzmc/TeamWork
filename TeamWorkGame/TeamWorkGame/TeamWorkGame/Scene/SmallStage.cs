@@ -47,41 +47,7 @@ namespace TeamWorkGame.Scene
             mapIndex = 0;
             mapnum = 0;
             sound = gameDevice.GetSound();
-            //mapl = new List<Vector2>()
-            //{
-            //    //new Vector2(33,51),
-            //    //new Vector2(33,283),
-            //    //new Vector2(33,498),
-            //    new Vector2(636,61),
-            //    new Vector2(636,293),
-            //    new Vector2(636,525),
-            //    new Vector2(636,757),
-            //    new Vector2(636,989),
-            //    new Vector2(636,1221),
-            //};
         }
-
-        //public void Initialize()
-        //{
-        //    mapIndex = 0;
-        //    mapnum = 0;
-        //    isBack = false;
-        //    isEnd = false;
-        //    sever.LoadStageData();
-        //    standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
-        //    mapl = new List<Vector2>()
-        //    {
-        //        //new Vector2(33,51),
-        //        //new Vector2(33,283),
-        //        //new Vector2(33,498),
-        //        new Vector2(636,61),
-        //        new Vector2(636,293),
-        //        new Vector2(636,525),
-        //        new Vector2(636,757),
-        //        new Vector2(636,989),
-        //        new Vector2(636,1221),
-        //    };
-        //}
 
         public void Initialize(int index)
         {
@@ -94,9 +60,6 @@ namespace TeamWorkGame.Scene
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             mapl = new List<Vector2>()
             {
-                //new Vector2(33,51),
-                //new Vector2(33,283),
-                //new Vector2(33,498),
                 new Vector2(636,61),
                 new Vector2(636,293),
                 new Vector2(636,525),
@@ -107,17 +70,12 @@ namespace TeamWorkGame.Scene
         }
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            //renderer.Begin();
-            
             renderer.DrawTexture("backGround", Vector2.Zero);
 
             renderer.DrawTexture("Zback", new Vector2(10, 10));
 
             renderer.DrawTexture("frame", flame = new Vector2(mapl[mapIndex].X - 10, mapl[mapIndex].Y - 10));
 
-            //renderer.DrawTexture("smallmap1", new Vector2(43, 61));
-            //renderer.DrawTexture("smallmap2", new Vector2(43, 293));
-            //renderer.DrawTexture("smallmap3", new Vector2(43, 508));
             renderer.DrawTexture("smallmap1", mapl[0]);
             renderer.DrawTexture("smallmap2", mapl[1]);
             renderer.DrawTexture("smallmap3", mapl[2]);
@@ -140,28 +98,17 @@ namespace TeamWorkGame.Scene
 
             animePlayer.PlayAnimation(standAnime);
             animePlayer.Draw(gameTime, renderer, new Vector2(200,300), SpriteEffects.None,3);
-
-            //renderer.End();
         }
 
         public void Update(GameTime gametime)
         {
             if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
-                //mapnum += 3;
-                //if (mapnum >= 6)
-                //{
-                //    mapnum -= 6;
-                //}
 
             }
             else if (inputState.IsKeyDown(Keys.Left)||inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
-                //mapnum -= 3;
-                //if (mapnum <= -1)
-                //{
-                //    mapnum += 6;
-                //}
+
             }
             if (inputState.IsKeyDown(Keys.Up)||inputState.IsKeyDown(Buttons.LeftThumbstickUp))
             {
@@ -190,11 +137,6 @@ namespace TeamWorkGame.Scene
                         mapl[i] = new Vector2(mapl[i].X, mapl[i].Y - 696);
                     }
                 }
-                //mapnum--;
-                //if (mapnum == 2 || mapnum == -1) 
-                //{
-                //    mapnum += 3;
-                //}
             }
             else if (inputState.IsKeyDown(Keys.Down)||inputState.IsKeyDown(Buttons.LeftThumbstickDown))
             {
@@ -223,11 +165,6 @@ namespace TeamWorkGame.Scene
                         mapl[i] = new Vector2(mapl[i].X, mapl[i].Y + 696);
                     }
                 }
-                //mapnum++;
-                //if (mapnum ==6|| mapnum == 3)
-                //{
-                //    mapnum -= 3;
-                //}
             }
             
             mapIndex = mapnum;

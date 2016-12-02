@@ -143,7 +143,7 @@ namespace TeamWorkGame.Device
             }
 
             //ボリューム設定
-            MediaPlayer.Volume = 0.7f;
+            MediaPlayer.Volume = 0.5f;
             MediaPlayer.IsRepeating = true;
             //現在のBGM名を設定
             currentBGM = name;

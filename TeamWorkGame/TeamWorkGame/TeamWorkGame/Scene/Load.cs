@@ -9,6 +9,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using TeamWorkGame.Device;
+using TeamWorkGame.Utility;
 
 namespace TeamWorkGame.Scene
 {
@@ -24,6 +25,8 @@ namespace TeamWorkGame.Scene
 
         private int totalResouceNum;
 
+        private Timer timer;
+
         private string[,] TextureList()
         {
             string path = "./Texture/";
@@ -32,7 +35,6 @@ namespace TeamWorkGame.Scene
             {
                 {"hero", path},
                 {"light_off", path},
-                //{"TileMapSource", path},
                 {"fire", path},
                 {"tree", path},
                 {"ice", path},
@@ -121,35 +123,9 @@ namespace TeamWorkGame.Scene
             textureLoader = new TextureLoader(renderer, TextureList());
             bgmLoader = new BGMLoader(sound, BGMList());
             seLoader = new SELoader(sound, SEList());
+            timer = new Timer(2);
         }
 
-        public void Draw(GameTime gameTime, Renderer renderer)
-        {
-            renderer.DrawTexture("load", new Vector2(20, 20));
-
-            int currentCount = textureLoader.CurrentCount() + bgmLoader.CurrentCount() + seLoader.CurrentCount();
-            if(totalResouceNum != 0)
-            {
-                renderer.DrawNumber(
-                    "number",
-                    new Vector2(20, 100),
-                    (int)(currentCount / (float)totalResouceNum * 100.0f));
-            }
-
-            if (textureLoader.IsEnd() && bgmLoader.IsEnd() && seLoader.IsEnd())
-            {
-                endFlag = true;
-            }
-        }
-
-        //public void Initialize()
-        //{
-        //    endFlag = false;
-        //    textureLoader.Initialize();
-        //    bgmLoader.Initialize();
-        //    seLoader.Initialize();
-        //    totalResouceNum = textureLoader.Count() + bgmLoader.Count() + seLoader.Count();
-        //}
 
         public void Initialize(int index)
         {
@@ -158,6 +134,7 @@ namespace TeamWorkGame.Scene
             bgmLoader.Initialize();
             seLoader.Initialize();
             totalResouceNum = textureLoader.Count() + bgmLoader.Count() + seLoader.Count();
+            timer.Initialize();
         }
 
         public bool IsEnd()
@@ -168,11 +145,6 @@ namespace TeamWorkGame.Scene
         public void LoadContent()
         {
         }
-
-        //public SceneType Next()
-        //{
-        //    return SceneType.Title;
-        //}
 
         public void ShutDown()
         {
@@ -196,6 +168,34 @@ namespace TeamWorkGame.Scene
             {
                 seLoader.Update();
             }
+
+            if(timer.IsTime() && textureLoader.IsEnd() && bgmLoader.IsEnd() && seLoader.IsEnd())
+            {
+                endFlag = true;
+            }
+
+            timer.Update();
+        }
+
+        public void Draw(GameTime gameTime, Renderer renderer)
+        {
+            //renderer.DrawTexture("load", new Vector2(20, 20));
+
+            //int currentCount = textureLoader.CurrentCount() + bgmLoader.CurrentCount() + seLoader.CurrentCount();
+            //if (totalResouceNum != 0)
+            //{
+            //    renderer.DrawNumber(
+            //        "number",
+            //        new Vector2(20, 100),
+            //        (int)(currentCount / (float)totalResouceNum * 100.0f));
+            //}
+
+            //if (textureLoader.IsEnd() && bgmLoader.IsEnd() && seLoader.IsEnd())
+            //{
+            //    endFlag = true;
+            //}
+
+            renderer.DrawTexture("logo", Vector2.Zero);
         }
 
         public NextScene Next()

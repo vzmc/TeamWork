@@ -71,36 +71,28 @@ namespace TeamWorkGame.Scene
         //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-
-            //renderer.Begin();
-
             renderer.DrawTexture("worldmap", Vector2.Zero);
-            
+
             renderer.DrawTexture("Zback", new Vector2(10, 10));
-
-            //renderer.DrawTexture("hero",herol[mapIndex]);
-
 
             animePlayer.PlayAnimation(standAnime);
             animePlayer.Draw(gameTime, renderer, herol[mapIndex], SpriteEffects.None, 1);
-           
-            for(int i = 0;i < herol.Count(); i++)
+
+            for (int i = 0; i < herol.Count(); i++)
             {
-                if (i-1 > sever.ClearStage / 6)
+                if (i - 1 > sever.ClearStage / 6)
                 {
                     renderer.DrawTexture("lock", herol[i]);
                 }
             }
-
-            //renderer.End();
         }
 
         public void Update(GameTime gametime)
         {
 
-            if (inputState.IsKeyDown(Keys.Right)||inputState.IsKeyDown(Buttons.LeftThumbstickRight))
+            if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
-                if(mapIndex > sever.ClearStage / 6)
+                if (mapIndex > sever.ClearStage / 6)
                 {
                     return;
                 }
@@ -109,26 +101,26 @@ namespace TeamWorkGame.Scene
                 {
                     mapIndex = 4;
                 }
-                
-                
+
+
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
 
                 mapIndex--;
-                if(mapIndex < 0)
+                if (mapIndex < 0)
                 {
                     mapIndex = 0;
                 }
             }
 
-           
-            
+
+
             if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
                 isEnd = true;
             }
-            else if(inputState.IsKeyDown(Keys.X)|| inputState.IsKeyDown(Buttons.B))
+            else if (inputState.IsKeyDown(Keys.X) || inputState.IsKeyDown(Buttons.B))
             {
                 isBack = true;
                 isEnd = true;
@@ -150,8 +142,7 @@ namespace TeamWorkGame.Scene
             }
             else
             {
-                //NextScene nextScene = new NextScene(SceneType.PlayScene, mapIndex);
-                 nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
+                nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
                 sound.PlaySE("decision1");
             }
             return nextScene;
@@ -159,7 +150,6 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
-            //sound.StopBGM();
         }
     }
 }

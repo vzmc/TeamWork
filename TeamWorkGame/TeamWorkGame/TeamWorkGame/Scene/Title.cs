@@ -50,14 +50,6 @@ namespace TeamWorkGame.Scene
 
         }
 
-        //public void Initialize()
-        //{
-        //    titleSelect = new TitleSelect(inputState);
-        //    titleSelect.Initialize();
-        //    isEnd = false;
-        //    sound.PlayBGM("village1");
-        //}
-
         public void Initialize(int index)
         {
             titleSelect = new TitleSelect(inputState);
@@ -71,11 +63,6 @@ namespace TeamWorkGame.Scene
             return isEnd;
         }
 
-        //public SceneType Next()
-        //{
-        //    return SceneType.PlayScene;
-        //}
-
         public void ShutDown()
         {
             sound.StopBGM();
@@ -87,7 +74,7 @@ namespace TeamWorkGame.Scene
             {
                 //keyの変更とpadの対応　By氷見悠人　10/26
                 //keyの変更　By葉梨竜太 11/30
-                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton)|| inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
+                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton) || inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
                 {
                     //Startを表示するから、他の選択肢の表示を移す
                     titleSelect.GetStarted = true;
@@ -97,7 +84,7 @@ namespace TeamWorkGame.Scene
             {
                 //keyの変更とpadの対応　By氷見悠人　10/26
                 //keyの変更　By葉梨竜太 11/30
-                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton)||inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
+                if (inputState.CheckTriggerKey(Parameter.MenuKey, Parameter.JumpButton) || inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space))
                 {
                     isEnd = true;
                 }

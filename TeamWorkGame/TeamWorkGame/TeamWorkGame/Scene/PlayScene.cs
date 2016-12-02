@@ -62,42 +62,6 @@ namespace TeamWorkGame.Scene
             //isEnd = false;
         }
 
-        //public void Initialize()
-        //{
-        //    isEnd = false;
-        //    isClear = false;
-        //    //葉梨竜太
-        //    isOver = false;
-        //    isPause = false;    //一時停止状態　By　氷見悠人
-        //    //全局Animation一時停止のスイッチ　By　氷見悠人
-        //    FuncSwitch.AllAnimetionPause = false;
-        //    //inputState = new InputState();
-        //    MapManager.SetNowMap(mapIndex);
-        //    map = MapManager.GetNowMapData();
-        //    fires = new List<Fire>();
-        //    waterLines = new List<WaterLine>();
-        //    coals = new List<GameObject>();
-        //    coals = map.MapThings.FindAll(x => x is Coal);
-        //    nowCoals = new List<GameObject>();
-        //    camera = new Camera(Vector2.Zero, Parameter.CameraScale);
-        //    player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
-        //    clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
-        //    camera.SetAimPosition(player.Position + new Vector2(32, 32));
-        //    camera.SetLimitView(true);
-        //    fireMeter = new FireMeter();
-
-        //    //Goalを取得とCamera設置  By　氷見悠人
-        //    goal = map.GetGoal();
-        //    goal.SetCamera(camera);
-
-        //    //柏
-        //    stageSever = gameDevice.GetStageSever();
-        //    playTime = 0;
-
-        //    //PlayBGM
-        //    sound.PlayBGM("forest1");
-        //}
-
         public void Initialize(int stageIndex)
         {
             mapIndex = stageIndex;
@@ -121,12 +85,14 @@ namespace TeamWorkGame.Scene
             coals = new List<GameObject>();
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
-            camera = new Camera(Vector2.Zero, Parameter.CameraScale);
+            
             //柏
             player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
             //葉梨竜太
-            clearSelect = new ClearSelect(gameDevice.GetInputState(), player);　//InputStateはGameDeviceからもらいます　By　氷見悠人
-            camera.SetAimPosition(player.Position + new Vector2(32, 32));
+            clearSelect = new ClearSelect(gameDevice.GetInputState(), player); //InputStateはGameDeviceからもらいます　By　氷見悠人
+
+            camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale);
+            //camera.SetAimPosition(player.Position + new Vector2(32, 32));
             camera.SetLimitView(true);
             fireMeter = new FireMeter();
 
@@ -351,11 +317,6 @@ namespace TeamWorkGame.Scene
         {
             return isEnd;
         }
-
-        //public SceneType Next()
-        //{
-        //    return SceneType.Ending;
-        //}
 
         public void ShutDown()
         {

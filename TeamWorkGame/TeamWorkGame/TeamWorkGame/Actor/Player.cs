@@ -110,7 +110,7 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// 立つ
+        /// 立つ状態の判断
         /// </summary>
         public void Stand()
         {
@@ -121,7 +121,7 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// 走る
+        /// 走る状態の判断
         /// </summary>
         public void Run()
         {
@@ -147,7 +147,7 @@ namespace TeamWorkGame.Actor
 
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     //Speedを固定にした
-                    if (diretion == Direction.UP)
+                    if (diretion == Direction.UP　|| inputState.CheckDownKey(Keys.Up, Buttons.RightThumbstickUp))
                     {
                         fireVelo = new Vector2(0, -Parameter.FireUpSpeed);
                         firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
@@ -168,6 +168,7 @@ namespace TeamWorkGame.Actor
                     firesList.Insert(0, fire);
                     fireNum--;
 
+                    //投げる状態に入る
                     animePlayer.PlayAnimation(throwAnime);
                     playerMotion = PlayerMotion.THROW;
                     sound.PlaySE("fire1");
@@ -191,7 +192,8 @@ namespace TeamWorkGame.Actor
                     firesList[0].Velocity = velocity;
 
                     position = tempPos;
-                    
+                    velocity = tempVelo;
+
                     Fire tempfire = firesList[0];
                     firesList.RemoveAt(0);
                     firesList.Add(tempfire);
@@ -247,6 +249,9 @@ namespace TeamWorkGame.Actor
             return flag;
         }
 
+        /// <summary>
+        /// 地図の下に落ちたか？
+        /// </summary>
         private void CheckIsOut()
         {
             if(position.Y > map.MapHeight + 64)
@@ -280,7 +285,7 @@ namespace TeamWorkGame.Actor
                 }
             }
 
-            //摩擦
+            //普通は空中摩擦
             float friction = Parameter.AirFriction;
 
             if (isOnGround)
@@ -292,6 +297,7 @@ namespace TeamWorkGame.Actor
                     jumpEffectTimer.Initialize();
                     jumpEffectPos = position;
                 }
+                //地上にいると、摩擦は地面摩擦
                 friction = Parameter.GroundFriction;
             }
 
@@ -305,6 +311,8 @@ namespace TeamWorkGame.Actor
             friction = friction * velocity.X > 0 ? -friction : friction;
 
             velocity.X += friction;
+
+            //速度制限
             if (velocity.X > Parameter.MaxPlayerHorizontalSpeed)
             {
                 velocity.X = Parameter.MaxPlayerHorizontalSpeed;
@@ -314,6 +322,7 @@ namespace TeamWorkGame.Actor
                 velocity.X = -Parameter.MaxPlayerHorizontalSpeed;
             }
 
+            //方向判断
             if (velocity.X > 0)
             {
                 diretion = Direction.RIGHT;
@@ -389,8 +398,9 @@ namespace TeamWorkGame.Actor
                     CollisionCheck(w);
             }
 
+            //立つ状態の切り替え判断
             Stand();
-
+            //走る状態の切り替え判断
             Run();
 
             //火と位置交換処理
@@ -401,6 +411,7 @@ namespace TeamWorkGame.Actor
                 //火を投げる処理
                 ThrowFire();
             }
+
             if (playerMotion == PlayerMotion.THROW)
             {
                 ResetAnimation(throwAnime);
@@ -435,12 +446,11 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            //状態で描画方法が変わる
+            //状態によって描画方法が変わる
             if(IsStanding())
             {
                 animePlayer.PlayAnimation(standAnime);
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
-                //renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
             if(IsRunning() || IsThrowing())
             {
@@ -450,9 +460,11 @@ namespace TeamWorkGame.Actor
                     flip = SpriteEffects.None;
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
             }
+
+            //JumpのEffect描画
             if (!fallEffectTimer.IsTime())
             {
-                renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64));
+                renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64), cameraScale, 1.0f);
             }
             if (!jumpEffectTimer.IsTime())
             {
@@ -465,7 +477,7 @@ namespace TeamWorkGame.Actor
                 {
                     rect = new Rectangle(64, 0, 64, 64);
                 }
-                renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect);
+                renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
         }
 

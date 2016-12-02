@@ -26,14 +26,10 @@ namespace TeamWorkGame.Actor
         protected string name;          //アセット名
         protected Texture2D image;      //画像
         protected Rectangle localColRect;    //当たり判定区域
-        //protected Size imageSize;       //画像のサイズ
-        //protected Size colSize;         //衝突判定用のサイズ
         protected Vector2 position;     //位置
         protected int previousBottom;
-        //protected float ColRect;
         //protected Vector2 origin;       //描画の原点
 
-        //protected Vector2 colOffset;    //衝突判定区域の偏移量。自身位置との相対位置
         protected Vector2 velocity;     //移動量（tempを整数化）
         protected bool isDead;          //生きているか？
         protected bool isOnGround;      //地上にいるか？
