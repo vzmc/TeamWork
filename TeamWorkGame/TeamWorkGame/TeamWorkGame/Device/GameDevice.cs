@@ -45,7 +45,7 @@ namespace TeamWorkGame.Device
         public void LoadContent()
         {
             //ゲーム開始時に必要な最小限のリソースを読み込む
-            //renderer.LoadTexture("number", "./Texture/");
+            renderer.LoadTexture("number", "./Texture/");
             renderer.LoadTexture("logo", "./Texture/");
         }
 
