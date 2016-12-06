@@ -276,7 +276,7 @@ namespace TeamWorkGame.Actor
                 {
                     if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                     {
-                        if (!(inputState.CheckDownKey(Keys.Right, Buttons.DPadRight) || inputState.CheckDownKey(Keys.Left, Buttons.DPadLeft)))
+                        if (!(inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight) || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft)))
                         {
                             isOnBalloon = false;     //気球から降りる
                         }

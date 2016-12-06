@@ -300,10 +300,10 @@ namespace TeamWorkGame.Scene
             renderer.DrawNumber2("number", new Vector2(1218, 16), coals.Count, 2);
 
             //playTimeの表示(柏)
-            int[] playtime = stageSever.TimeCalculat(playTime/60);
-            renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
-            renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
-            renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
+            //int[] playtime = stageSever.TimeCalculat(playTime/60);
+            //renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
+            //renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
+            //renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
         }
 
         public Rectangle GetRect(int num)

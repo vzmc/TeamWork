@@ -133,10 +133,11 @@ namespace TeamWorkGame.Actor
                 {
                     burnTimer.Initialize();
                     burnTimer.Stop();
-                    localColRect.Offset(-1, -1);
-                    localColRect.Width += 2;
-                    localColRect.Height += 2;
-                    CheckOhterStraw();
+                    Rectangle col = new Rectangle(ColRect.X - 1, ColRect.Y - 1, ColRect.Width + 2, ColRect.Height + 2);
+                    //localColRect.Offset(-1, -1);
+                    //localColRect.Width += 2;
+                    //localColRect.Height += 2;
+                    CheckOhterStraw(col);
                 }
 
                 if (timer.IsTime())
@@ -146,7 +147,7 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public void CheckOhterStraw()
+        public void CheckOhterStraw(Rectangle col)
         {
             foreach (var m in map.MapThings)
             {
@@ -154,7 +155,7 @@ namespace TeamWorkGame.Actor
                 {
                     if (!((Straw)m).IsToDeath)
                     {
-                        if (ColRect.Intersects(m.ColRect))
+                        if (col.Intersects(m.ColRect))
                             m.EventHandle(this);
                     }
                 }

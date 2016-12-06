@@ -40,7 +40,7 @@ namespace TeamWorkGame.Def
         public const int MoveLightSpeed = 3;        //動く松明の速度
         public const int BalloonDown = 3;           //気球が下降する速度
         public const int BalloonUp = 3;            //気球が上昇する速度
-        public const float StrawColTime = 0.01f;   //藁ブロックの当たり判定が消えるまでの時間
+        public const float StrawColTime = 0.2f;   //藁ブロックの当たり判定が消えるまでの時間
         public const float StrawBurn = 0.3f;       //藁ブロックの火が燃え移り始めるまでの時間        ※11/30現在、当たり判定がなくなってから火が燃え移り始める。
         public const float StrawAnimeTime = 0.6f;  //藁ブロックアニメ―ションの時間
         public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
