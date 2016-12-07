@@ -362,6 +362,12 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(bomb);
                                 break;
                             }
+                        case (int)GimmickType.IGNITER:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64));
+                                MapThings.Add(igniter);
+                                break;
+                            }
 
                     }
                 }

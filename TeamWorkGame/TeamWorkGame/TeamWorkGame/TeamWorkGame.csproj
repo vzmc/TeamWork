@@ -64,6 +64,7 @@
     <Compile Include="Actor\GameObject.cs" />
     <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Ice.cs" />
+    <Compile Include="Actor\Igniter.cs" />
     <Compile Include="Actor\Iron.cs" />
     <Compile Include="Actor\Light.cs" />
     <Compile Include="Actor\MoveLight.cs" />

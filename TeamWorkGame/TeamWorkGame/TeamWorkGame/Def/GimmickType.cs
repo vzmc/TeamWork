@@ -34,5 +34,6 @@ namespace TeamWorkGame.Def
         SIDELIGHT5,　　 //５マス横移動松明
         SIGN,           //看板
         BOMB,           //爆弾
+        IGNITER,        //導火線
     }
 }
