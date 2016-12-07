@@ -18,8 +18,13 @@ namespace TeamWorkGame.Actor
         private Map map;
 
         public Igniter(Vector2 pos)
-            : base("wood", pos, Vector2.Zero, false, "Igniter")
+            : base("igniter", pos, Vector2.Zero, false, "Igniter")
         {
+        }
+
+        protected override Rectangle InitLocalColRect()
+        {
+            return new Rectangle(0, 0, 64, 64);
         }
 
 
@@ -64,7 +69,8 @@ namespace TeamWorkGame.Actor
         {
             if (isShow == true)
             {
-                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+                Rectangle rect = new Rectangle(0, 0, 64, 64);
+                renderer.DrawTexture(name, position * cameraScale + offset, rect, cameraScale, alpha);
             }
         }
 

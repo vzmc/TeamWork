@@ -84,6 +84,9 @@ namespace TeamWorkGame.Scene
                 {"bomb",path },
                 {"JumpEffect", path},
                 {"sign", path},
+                {"igniter", path},
+                {"spark1", path},
+                {"spark2", path},
             };
 
             return list;
