@@ -2,8 +2,8 @@
 // 火のクラス
 // 作成時間：2016年9月25日
 // By 氷見悠人
-// 最終修正時間：2016年11月9日
-// アニメーションの準備　By 長谷川修一　
+// 最終修正時間：2016年12月8日
+// やまなりから真っすぐに対応　By葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -24,6 +24,7 @@ namespace TeamWorkGame.Actor
         private Motion motion;  //アニメーションの動作
         private Timer timer;                    //アニメーションの時間間隔
         private List<WaterLine> watersList;         //滝のリスト
+        Vector2 vlo = Vector2.Zero;
 
 
         public Fire(Vector2 position, Vector2 velocity, List<WaterLine> waterline) : base("fire", position, velocity, true, "Fire")
@@ -36,6 +37,9 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
+            //葉梨竜太
+            //飛ぶ時間
+            timer = new Timer(Parameter.FireFlyTime);
         }
 
         protected override Rectangle InitLocalColRect()
@@ -56,7 +60,6 @@ namespace TeamWorkGame.Actor
             if (other.IsTrigger)
             {
                 flag = base.CollisionCheck(other);
-
                 if (flag)
                 {
                     //相手の処理を実行する
@@ -79,22 +82,35 @@ namespace TeamWorkGame.Actor
                     other.EventHandle(this);
                 }
             }
-
             return flag;
         }
 
 
         public override void Update(GameTime gameTime)
         {
-            velocity.Y += gForce;
+            //velocity.Y += gForce;
+            //葉梨竜太
+            //一定時間飛んだら落ちる
+            timer.Update();
+            if (timer.IsTime())
+            {
+                velocity = new Vector2(0, 10);
+                timer.Initialize();
+            }
 
             //マップ上の物と障害物判定
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
             {
                 ObstacleCheck(m);
+               
             }
 
-            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+            //葉梨竜太
+            //壁に当たるとvelocity = 0
+            if(Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 }))
+            {
+                velocity = new Vector2(0, 10);
+            }
 
             //地面にいると運動停止
             if (isOnGround)
@@ -108,6 +124,7 @@ namespace TeamWorkGame.Actor
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
                 CollisionCheck(m);
+                
             }
 
             foreach (var wl in watersList)
@@ -115,6 +132,8 @@ namespace TeamWorkGame.Actor
                 foreach (var w in wl.Waters)
                     CollisionCheck(w);
             }
+
+           
         }
 
         /// <summary>

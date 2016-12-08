@@ -2,8 +2,8 @@
 // 設定用パラメータのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月01日
-// By 氷見悠人
+// 最終修正時間：2016年12月08日
+// By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -33,17 +33,22 @@ namespace TeamWorkGame.Def
         public const float PlayerJumpPower = 13f;
         public const float MaxPlayerHorizontalSpeed = 5f;   //Player横方向の最大速度
         public const float MaxPlayerVerticalSpeed = 10f;    //Player横方向の最大速度
-        public const int FireUpSpeed = 15;              //真上に投げる時のSpeed；
-        public const int FireHorizontalSpeedY = 11;     //横い投げる時のY方向Speed分量
-        public const int FireHorizontalSpeedX = 6;      //横い投げる時のX方向Speed分量
+
+        //葉梨竜太
+        //public const int FireUpSpeed = 15;            　　　↓　  //真上に投げる時のSpeed；
+        //public const int FireHorizontalSpeedY = 12;  　　　 ↓    //横に投げる時のY方向Speed分量
+        //public const int FireHorizontalSpeedX = 12;　　　　 ↓　  //横に投げる時のX方向Speed分量
+        public const int FireSpeed = 12;　　　　　　　　//火の速度（全方向一緒）
+        public const float FireFlyTime = 0.5f;          //火が落ちるまでの時間
+
         public const int FireMaxNum = 5;                //火の総量   
         public const int MoveLightSpeed = 3;        //動く松明の速度
         public const int BalloonDown = 3;           //気球が下降する速度
         public const int BalloonUp = 3;            //気球が上昇する速度  
         public const int BalloonMove = 3;           //気球の移動速度 ２０１６．１２．７   Ｂｙ柏
-        public const float StrawColTime = 0.2f;   //藁ブロックの当たり判定が消えるまでの時間
-        public const float StrawBurn = 0.3f;       //藁ブロックの火が燃え移り始めるまでの時間        ※11/30現在、当たり判定がなくなってから火が燃え移り始める。
-        public const float StrawAnimeTime = 0.6f;  //藁ブロックアニメ―ションの時間
+        public const float StrawColTime = 0.03f;   //藁ブロックの当たり判定が消えるまでの時間
+        public const float StrawBurn = 0.2f;       //藁ブロックの火が燃え移り始めるまでの時間        ※11/30現在、当たり判定がなくなってから火が燃え移り始める。
+        public const float StrawAnimeTime = 0.5f;  //藁ブロックアニメ―ションの時間
         public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
         public const float WoodSpawnTime = 2.0f;   //木材ブロックの復活時間
         public const float IronAnimeTime = 1.0f;   //鉄ブロックアニメーションの時間

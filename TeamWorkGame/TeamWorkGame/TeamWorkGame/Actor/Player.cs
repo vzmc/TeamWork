@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月08日
-// 死んだときのアニメーション設定 By 佐瀬拓海
+// 最終修正時間：2016年12月8日
+// ８方向への火の投げ分け対応 By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -167,27 +167,95 @@ namespace TeamWorkGame.Actor
                     Vector2 firePos = Vector2.Zero;
                     Vector2 fireVelo = Vector2.Zero;
                     Fire fire = new Fire(firePos, fireVelo, watersList);
-
+                                        
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     //Speedを固定にした
-                    if (diretion == Direction.UP　|| inputState.CheckDownKey(Keys.Up, Buttons.RightThumbstickUp))
+                    //葉梨竜太
+                    //８方向に投げ分け対応
+                                        
+                    if (diretion == Direction.UP　|| inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                     {
-                        fireVelo = new Vector2(0, -Parameter.FireUpSpeed);
+                        //右上
+                        if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+                            fireVelo = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
+                        //左上
+                        else if (inputState.CheckDownKey(Keys.Left,Buttons.LeftThumbstickLeft))
+                            fireVelo = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
+                        //真上
+                        else
+                            fireVelo = new Vector2(0, -Parameter.FireSpeed);
+
                         firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                     }
-                    else if (diretion == Direction.LEFT)
+
+                    else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
                     {
-                        fireVelo = new Vector2(-Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
-                        firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                    }
-                    else if (diretion == Direction.RIGHT)
-                    {
-                        fireVelo = new Vector2(Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
-                        firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
+                        //左上
+                        if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                        {
+                            fireVelo = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
+                            firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
+                        }
+                        //左下
+                        else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                        {
+                            fireVelo = new Vector2(-Parameter.FireSpeed, Parameter.FireSpeed);
+                            firePos = new Vector2(position.X - ColRect.Width, position.Y);
+                        }
+                        //左
+                        else
+                        {
+                            fireVelo = new Vector2(-Parameter.FireSpeed, 0);
+                            firePos = isOnGround ? new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height): new Vector2(position.X - ColRect.Width, position.Y);
+                        }
                     }
 
+                    else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+                    {
+                        //右上
+                        if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                        {
+                            fireVelo = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
+                            firePos = new Vector2(position.X + ColRect.Width , position.Y - fire.ColRect.Height);
+                        }
+                        //右下
+                        else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                        {
+                            fireVelo = new Vector2(Parameter.FireSpeed, Parameter.FireSpeed);
+                            firePos = new Vector2(position.X + ColRect.Width, position.Y);
+                        }
+                        //右
+                        else
+                        {
+                            fireVelo = new Vector2(Parameter.FireSpeed, 0);
+                            firePos = isOnGround ? new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X + ColRect.Width, position.Y);
+                        }
+                        
+                    }
+
+                    //if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.RightThumbstickUp))
+                    //{
+                    //    fireVelo = new Vector2(0, -Parameter.FireUpSpeed);
+                    //    firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
+                    //}
+                    //else if (diretion == Direction.LEFT)
+                    //{
+                    //    fireVelo = new Vector2(-Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
+                    //    firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
+                    //}
+                    //else if (diretion == Direction.RIGHT)
+                    //{
+                    //    fireVelo = new Vector2(Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
+                    //    firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
+                    //}
+
                     fire.Position = firePos;
-                    fire.Velocity = fireVelo;
+
+                    //葉梨竜太
+                    //単位ベクトル化
+                    fireVelo.Normalize();
+                    fire.Velocity = fireVelo * Parameter.FireSpeed;
+
                     firesList.Insert(0, fire);
                     fireNum--;
 

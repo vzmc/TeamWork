@@ -21,7 +21,8 @@ namespace TeamWorkGame.Utility
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        
     }
 
     enum TileCollision
