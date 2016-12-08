@@ -264,7 +264,10 @@ namespace TeamWorkGame.Scene
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
             if (isOver)                 //SceneのisOverで判断する
             {
-                player.Death();
+                if (player.IsDead)
+                {
+                    player.Death();
+                }
                 if (isPause) {
                     clearSelect.IsClear = true;
                     return;

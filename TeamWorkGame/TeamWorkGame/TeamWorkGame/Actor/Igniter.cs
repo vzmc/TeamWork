@@ -18,7 +18,7 @@ namespace TeamWorkGame.Actor
         private Map map;
 
         public Igniter(Vector2 pos)
-            : base("igniter", pos, Vector2.Zero, false, "Igniter")
+            : base("igniter", pos, Vector2.Zero, true, "Igniter")
         {
         }
 
