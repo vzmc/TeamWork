@@ -97,42 +97,49 @@ namespace TeamWorkGame.Device
         /// カメラの各位置を設定
         /// </summary>
         /// <param name="aimPos">注視する位置</param>
-        private void SetData(Vector2 aimPos)
+        private bool SetData(Vector2 aimPos)
         {
+            bool isOut = false;
             if (IsLimitView)
             {
                 // Cameraの位置を制限する
                 if (aimPos.X < Parameter.ScreenWidth / 2)
                 {
                     aimPos.X = Parameter.ScreenWidth / 2;
+                    isOut = true;
                 }
                 if (aimPos.Y < Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = Parameter.ScreenHeight / 2;
+                    isOut = true;
                 }
 
                 if (aimPos.X > map.MapWidth * scale - Parameter.ScreenWidth / 2)
                 {
                     aimPos.X = map.MapWidth * scale - Parameter.ScreenWidth / 2;
+                    isOut = true;
                 }
                 if (aimPos.Y > map.MapHeight * scale - Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = map.MapHeight * scale - Parameter.ScreenHeight / 2;
+                    isOut = true;
                 }
             }
 
             aimPosition = aimPos;
             //centerPosition = aimPosition;
             position = aimPosition - new Vector2(Parameter.ScreenWidth / 2, Parameter.ScreenHeight / 2);
+
+            return isOut;
         }
 
         /// <summary>
         /// カメラの注視位置を設定
         /// </summary>
         /// <param name="aimPos"></param>
-        public void SetAimPosition(Vector2 aimPos)
+        public bool SetAimPosition(Vector2 aimPos)
         {
-            SetData(aimPos * scale);
+            return SetData(aimPos * scale);
         }
 
         /// <summary>

@@ -3,7 +3,7 @@
 //作成時間：2016/9/26
 //作成者：氷見悠人
 // 最終修正時間：2016年12月08日
-// By　佐瀬拓海
+// By　氷見悠人　カメラ操作
 /////////////////////////////////////////////////
 
 using System;
@@ -28,10 +28,12 @@ namespace TeamWorkGame.Scene
     class PlayScene : IScene
     {
         private GameDevice gameDevice;
+        private InputState input;
         private Sound sound;
         private bool isEnd;
         private bool isClear;
         private bool isPause;   //一時停止状態　By　氷見悠人
+        private bool isView;        //カメラ操作中　By　氷見悠人
 
         //葉梨竜太
         private bool isOver;
@@ -58,6 +60,7 @@ namespace TeamWorkGame.Scene
         {
             this.gameDevice = gameDevice;
             sound = this.gameDevice.GetSound();
+            input = this.gameDevice.GetInputState();
             this.mapIndex = mapIndex;
             //isEnd = false;
         }
@@ -70,7 +73,9 @@ namespace TeamWorkGame.Scene
             //葉梨竜太
             isOver = false;
             isPause = false;    //一時停止状態　By　氷見悠人
-            
+            //isStarting = true;
+            isView = false;
+
             //全局Animation一時停止のスイッチ　By　氷見悠人
             FuncSwitch.AllAnimetionPause = false;
 
@@ -78,22 +83,22 @@ namespace TeamWorkGame.Scene
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
             waterLines = new List<WaterLine>();
-            foreach(var ice in map.MapThings.FindAll(x => x is Ice))
+            foreach (var ice in map.MapThings.FindAll(x => x is Ice))
             {
                 ((Ice)ice).SetWaters(waterLines);
             }
             coals = new List<GameObject>();
             coals = map.MapThings.FindAll(x => x is Coal);
             nowCoals = new List<GameObject>();
-            
-            //柏
-            player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines);
+
+            //氷見悠人
+            player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines, isView);
+
             //葉梨竜太
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player); //InputStateはGameDeviceからもらいます　By　氷見悠人
 
-            camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale);
-            //camera.SetAimPosition(player.Position + new Vector2(32, 32));
-            camera.SetLimitView(true);
+            camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale, true);
+
             fireMeter = new FireMeter();
 
             //Goalを取得とCamera設置  By　氷見悠人
@@ -118,11 +123,34 @@ namespace TeamWorkGame.Scene
             }
         }
 
+        private void CameraControl()
+        {
+            Vector2 pos = camera.AimPosition;
+            pos += input.RightVelocity() * 15;
+            camera.SetAimPosition(pos);
+            if (input.CheckTriggerKey(Keys.R, Buttons.LeftShoulder))
+            {
+                isView = false;
+                player.IsView = isView;
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
             {
+                //カメラ操作中、別の操作は不可
+                if (input.RightVelocity().LengthSquared() > 0)
+                {
+                    isView = true;
+                    player.IsView = isView;
+                }
+                if (isView)
+                {
+                    CameraControl();
+                }
+
                 //Goal出現の時に、全画面の更新を一時停止、Goalの演出だけをする By 氷見悠人
                 if (goal.State == GoalState.APPEARING)
                 {
@@ -167,8 +195,12 @@ namespace TeamWorkGame.Scene
                     //カメラの注視位置を更新
                     //camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
 
-                    camera.MoveAimPosition(player.Position + new Vector2(player.Width / 2, player.Height / 2));
+                    if (!isView)
+                    {
+                        camera.MoveAimPosition(player.Position + new Vector2(player.Width / 2, player.Height / 2));
+                    }
                     //Console.WriteLine(camera.OffSet);
+                    
                     //マップ上にある炭の数を取得
                     nowCoals = map.MapThings.FindAll(x => x is Coal);
 
@@ -206,7 +238,8 @@ namespace TeamWorkGame.Scene
             }
 
             //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
-            if (!player.IsDead && !isClear) {
+            if (!player.IsDead && !isClear)
+            {
                 if (gameDevice.GetInputState().CheckTriggerKey(Keys.Q, Parameter.MenuButton))
                 {
                     if (isOver == false)
@@ -226,7 +259,7 @@ namespace TeamWorkGame.Scene
                     }
                 }
             }
-            
+
             clearSelect.Update();
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
             if (isOver)                 //SceneのisOverで判断する

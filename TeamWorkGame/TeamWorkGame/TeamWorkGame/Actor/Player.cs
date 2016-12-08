@@ -23,6 +23,7 @@ namespace TeamWorkGame.Actor
     class Player : GameObject
     {
         // フィールド
+        private GameDevice gameDevice;
         private InputState inputState;          //入力管理
         private Sound sound;
         private Map map;
@@ -30,6 +31,7 @@ namespace TeamWorkGame.Actor
         private Direction diretion;             //向いている方向
         private List<Fire> firesList;               //投げ出した火
         private List<WaterLine> watersList;         //滝のリスト
+        
         private int fireMaxNum;                    //火の総数
         private int fireNum;                        //持っている火の数
         private Animation standAnime;           //待機アニメ
@@ -48,6 +50,19 @@ namespace TeamWorkGame.Actor
         private PlayerMotion playerMotion;
 
         private bool isOnBalloon;   //気球に乗ってるかどうか
+
+        private bool isView;                        //カメラ操作中か？
+        public bool IsView
+        {
+            get
+            {
+                return isView;
+            }
+            set
+            {
+                isView = value;
+            }
+        }
 
         public int FireNum
         {
@@ -69,14 +84,15 @@ namespace TeamWorkGame.Actor
         /// <param name="position">位置</param>
         /// <param name="velocity">移動量</param>
         /// <param name="fires">投げ出した火のList、書き出す</param>
-        public Player(GameDevice gameDevice, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList)
+        public Player(GameDevice gameDevice, Vector2 position, Vector2 velocity, ref List<Fire> firesList, ref List<WaterLine> watersList, bool isView)
             : base("hero", position, velocity, true, "Player")
         {
-            //InitLocalColRect();
+            this.gameDevice = gameDevice;
             inputState = gameDevice.GetInputState();
             sound = gameDevice.GetSound();
             this.firesList = firesList;
             this.watersList = watersList;
+            this.isView = isView;
             playerMotion = PlayerMotion.STAND;
         }
 
@@ -272,6 +288,15 @@ namespace TeamWorkGame.Actor
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            if (isView)
+            {
+                inputState = new InputState();
+            }
+            else
+            {
+                inputState = gameDevice.GetInputState();
+            }
+
             fallEffectTimer.Update();
             jumpEffectTimer.Update();
 
@@ -295,6 +320,7 @@ namespace TeamWorkGame.Actor
 
             if (isOnGround)
             {
+                //カメラ操作中は主人公に対する操作不可
                 if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                 {
                     velocity.Y = -Parameter.PlayerJumpPower;
