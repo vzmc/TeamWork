@@ -263,7 +263,8 @@ namespace TeamWorkGame.Actor
                 else {
                     if (other is Balloon)
                     {
-                        ((Balloon)other).IsPlayerOn = false;
+                        //((Balloon)other).IsPlayerOn = false;  //2016.12.7、新しい仕様書に合わせて変更
+                        isOnBalloon = false;
                     }
                 }
             }
@@ -300,21 +301,6 @@ namespace TeamWorkGame.Actor
             fallEffectTimer.Update();
             jumpEffectTimer.Update();
 
-            //気球と衝突判定
-            foreach (var m in map.MapThings.FindAll(x => x is Balloon))
-            {
-                if (base.CollisionCheck(m))
-                {
-                    if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
-                    {
-                        if (!(inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight) || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft)))
-                        {
-                            isOnBalloon = false;     //気球から降りる
-                        }
-                        isOnGround = false;
-                    }
-                }
-            }
             //普通は空中摩擦
             float friction = Parameter.AirFriction;
 
@@ -436,11 +422,11 @@ namespace TeamWorkGame.Actor
             //火と位置交換処理
             Teleport();
 
-            if (!isOnBalloon)
-            {
-                //火を投げる処理
-                ThrowFire();
-            }
+            //if (!isOnBalloon)     //2016.12.7仕様書に合わせて変更 By柏
+            //{
+            //火を投げる処理
+            ThrowFire();
+            //}
 
             if (playerMotion == PlayerMotion.THROW)
             {

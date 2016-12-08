@@ -1,7 +1,7 @@
 ﻿///作成by　柏
 ///最後修正by   柏
-///最後修正日   2016.11.30
-
+///最後修正日   2016.12.8
+///最後修正項目   2016.12.7新しい仕様書に合わせて修正
 
 using System;
 using System.Collections.Generic;
@@ -18,67 +18,186 @@ namespace TeamWorkGame.Actor
 
     public class Balloon : GameObject
     {
-        private Timer timer;
-        private int flyLevel;
-        private Vector2 startPosition;
-        private bool playerIsOn;
-        //private Animation animation;
-        //private AnimationPlayer animationPlayer;
-        //private bool IsAnimation = false;
+        private const int flyLevel = 5; //2016.12.7、新しい仕様書に合わせて修正、定数になる
+        private static readonly Point basketSize = new Point(28, 10);   //気球のかごのサイズ
+        private Vector2 startPosition;  //気球の初期位置
+        private bool playerIsOn;    //playerの乗る状態を保存する
+        private Player player;  //player気球に乗る状態をとるように
+                                //private Animation animation;
+                                //private AnimationPlayer animationPlayer;
+                                //private bool IsAnimation = false;
 
         public Balloon(Vector2 pos, Vector2 velo)
             : base("balloon", pos, velo, false, "balloon")
         {
             //animationPlayer = new AnimationPlayer();
+            startPosition = pos;    //ステージデータに合わせて、初期位置を設置する
 
-            startPosition = pos;
         }
 
+        /// <summary>
+        /// 気球の状態を初期化する
+        /// </summary>
         public override void Initialize()
         {
             base.Initialize();
-
-            flyLevel = 0;
-            playerIsOn = false;
+            //flyLevel = 0;     //2016.12.7、新しい仕様書に合わせて修正、定数になる
+            playerIsOn = false; //乗る状態初期化（乗ってない）
+            player = null;  //空っぽのplayerを生成する
         }
 
+        /// <summary>
+        /// 気球の状態を更新
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
-            //animationPlayer.PlayAnimation(animation);
 
-            if (!playerIsOn) {
-                //落下速度を３にした
-                for (int i = 0; i <Parameter.BalloonDown; i++) {
-                    if (PositionY == startPosition.Y) { return; }
-                    PositionY++;
-                }
+            //playerまだ取ってないとき、処理やらない
+            if (player == null) { return; }
+            playerIsOn = player.IsOnBalloon;    //player気球に乗る状態をとる
+            BalloonMoveDown();
+
+            //animationPlayer.PlayAnimation(animation);
+        }
+
+        /// <summary>
+        /// 気球下方向の移動処理
+        /// </summary>
+        private void BalloonMoveDown()
+        {
+            //移動速度を3にする
+            for (int i = 0; i < Parameter.BalloonMove; i++)
+            {
+                BalloonGoDownMove();
             }
         }
 
-        public bool IsPlayerOn {
-            get { return playerIsOn; }
-            set { playerIsOn = value; }
+
+        /// <summary>
+        /// 気球ピクセルずつの移動処理
+        /// </summary>
+        private void BalloonGoDownMove()
+        {
+            //playerが乗ってない場合、降りる
+            if (playerIsOn) { return; }
+            VelocityY = 1;  //下方向
+            if (!CanMoveDown()) { VelocityY = 0; }
+
+            BalloonMoveOne();
         }
 
 
+        /// <summary>
+        /// 画面に表示してる場合処理する
+        /// </summary>
+        /// <param name="other"></param>
         public override void AliveEvent(GameObject other)
         {
             if (other is Player)
             {
-                if (((Player)other).IsOnBalloon)
-                {
-                    other.Position = position;
-                    if (startPosition.Y - PositionY == Height * flyLevel) { return; }
-                    //移動速度を3にする
-                    for (int i = 1; i < Parameter.BalloonUp; i++) {
-                        int velo = (int)(startPosition.Y - PositionY - Height * flyLevel);
-                        if (velo > 0) { PositionY++; }
-                        else { PositionY--; }
-                    }
-                }
+                BalloonMoveUp((Player)other);
             }
         }
+
+        /// <summary>
+        /// 気球上方向の移動処理
+        /// </summary>
+        /// <param name="player"></param>
+        private void BalloonMoveUp(Player player)
+        {
+            //乗ってない場合移動しない
+            if (!playerIsOn) { return; }
+            //移動速度を3にする
+            for (int i = 0; i < Parameter.BalloonMove; i++)
+            {
+                BalloonGoUpMove(player);
+            }
+        }
+
+        /// <summary>
+        /// player乗ってる時、気球の状況をチェックして移動
+        /// </summary>
+        /// <param name="player"></param>
+        private void BalloonGoUpMove(Player player)
+        {
+            VelocityY = -1; //上方向
+            if (!CanMoveUp()) { VelocityY = 0; }
+
+            BalloonMoveOne();
+            PlayerOnBalloon(player);    //playerは気球の移動に合わせて移動
+        }
+
+
+        /// <summary>
+        /// playerIsOnのget,set
+        /// </summary>
+        public bool IsPlayerOn
+        {
+            get { return playerIsOn; }
+            set { playerIsOn = value; }
+        }
+
+        /// <summary>
+        /// あたり判定範囲設定
+        /// </summary>
+        /// <returns></returns>
+        protected override Rectangle InitLocalColRect()
+        {
+            //気球のかご部分は判定部分になってる
+            return new Rectangle(18, 54, basketSize.X, basketSize.Y);
+        }
+
+        /// <summary>
+        /// ピクセルずつ移動
+        /// </summary>
+        private void BalloonMoveOne()
+        {
+            PositionY += VelocityY;
+        }
+
+
+        /// <summary>
+        /// 気球が上方向移動できるかどうかをチェック
+        /// </summary>
+        /// <returns></returns>
+        private bool CanMoveUp()
+        {
+            //初期位置戻ったら止まる
+            if (startPosition.Y - PositionY >= Height * flyLevel)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 気球が下方向移動できるかどうかをチェック
+        /// </summary>
+        /// <returns></returns>
+        private bool CanMoveDown()
+        {
+            //上限位置に着いたら止まる
+            if (PositionY >= startPosition.Y)
+            {
+                return false;
+            }
+            return true;
+        }
+
+
+
+        /// <summary>
+        /// playerは気球に乗る処理
+        /// </summary>
+        private void PlayerOnBalloon(Player player)
+        {
+            //playerのＹ座標と気球のy座標を等しくする
+            player.PositionY = PositionY - basketSize.Y;
+        }
+
 
         /// <summary>
         /// 描画の再定義（透明値を追加）　By　氷見悠人　2016/10/20
@@ -96,19 +215,26 @@ namespace TeamWorkGame.Actor
             //}
         }
 
+        /// <summary>
+        /// 当たるobjectによっての行動
+        /// </summary>
+        /// <param name="other"></param>
         public override void EventHandle(GameObject other)
         {
-            //火の数によって行動する
             if (other is Player)
             {
-                if (!playerIsOn) {;
-                    ((Player)other).IsOnBalloon = true;
-                    ((Player)other).IsOnGround = true;
-                    playerIsOn = true;
-                }
-
-                flyLevel = ((Player)other).FireNum;
                 AliveEvent(other);
+
+                //気球に乗る瞬間、playerと気球の状態を変換する
+                if (playerIsOn) { return; }
+                other.Position = position - new Vector2(0, basketSize.Y);  //playerを気球のかごに乗せる
+                ((Player)other).IsOnBalloon = true;
+                ((Player)other).IsOnGround = true;
+
+                if (player != null) { return; }
+                player = (Player)other;     //playerをとる
+
+                //flyLevel = ((Player)other).FireNum;        //2016.12.7、新しい仕様書に合わせて修正
                 //IsAnimation = true;
             }
         }
