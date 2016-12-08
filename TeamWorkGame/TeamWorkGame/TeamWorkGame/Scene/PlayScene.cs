@@ -128,11 +128,6 @@ namespace TeamWorkGame.Scene
             Vector2 pos = camera.AimPosition;
             pos += input.RightVelocity() * 15;
             camera.SetAimPosition(pos);
-            if (input.CheckTriggerKey(Keys.R, Buttons.LeftShoulder))
-            {
-                isView = false;
-                player.IsView = isView;
-            }
         }
 
         public void Update(GameTime gameTime)
@@ -141,11 +136,17 @@ namespace TeamWorkGame.Scene
             if (!isClear && !isOver && !isPause)
             {
                 //カメラ操作中、別の操作は不可
-                if (input.RightVelocity().LengthSquared() > 0)
+                if (input.CheckDownKey(Keys.RightControl, Buttons.LeftShoulder))
                 {
                     isView = true;
                     player.IsView = isView;
                 }
+                else
+                {
+                    isView = false;
+                    player.IsView = isView;
+                }
+
                 if (isView)
                 {
                     CameraControl();
@@ -284,10 +285,6 @@ namespace TeamWorkGame.Scene
                 clearSelect.Initialize();
                 clearSelect.IsClear = false;
             }
-
-
-
-
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
