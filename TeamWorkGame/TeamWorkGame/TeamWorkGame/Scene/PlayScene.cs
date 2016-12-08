@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年11月17日
-// By　柏
+// 最終修正時間：2016年12月08日
+// By　佐瀬拓海
 /////////////////////////////////////////////////
 
 using System;
@@ -202,7 +202,7 @@ namespace TeamWorkGame.Scene
             }
             else
             {
-                FuncSwitch.AllAnimetionPause = true;
+                FuncSwitch.AllAnimetionPause = false;
             }
 
             //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
@@ -231,6 +231,7 @@ namespace TeamWorkGame.Scene
             isEnd = clearSelect.IsEnd;  //clear窓口からend状態をとる
             if (isOver)                 //SceneのisOverで判断する
             {
+                player.Death();
                 if (isPause) {
                     clearSelect.IsClear = true;
                     return;

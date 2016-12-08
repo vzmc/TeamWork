@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年11月30日
-// 当たり判定に関する処理 By 佐瀬拓海
+// 最終修正時間：2016年12月08日
+// 死んだときのアニメーション設定 By 佐瀬拓海
 /////////////////////////////////////////////////
 
 using System;
@@ -35,6 +35,7 @@ namespace TeamWorkGame.Actor
         private Animation standAnime;           //待機アニメ
         private Animation runAnime;             //走るアニメ
         private Animation throwAnime;           //投げるアニメ
+        private Animation deathAnime;           //死ぬアニメ
 
         private Timer jumpEffectTimer;
         private Timer fallEffectTimer;
@@ -100,6 +101,7 @@ namespace TeamWorkGame.Actor
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             throwAnime = new Animation(Renderer.GetTexture("throwAnime"), 0.1f, false);
+            deathAnime = new Animation(Renderer.GetTexture("deathAnime"), 0.1f, false);
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
 
@@ -130,6 +132,11 @@ namespace TeamWorkGame.Actor
                 animePlayer.PlayAnimation(runAnime);
                 playerMotion = PlayerMotion.RUN;
             }
+        }
+        public void Death()
+        {
+            animePlayer.PlayAnimation(deathAnime);
+            playerMotion = PlayerMotion.DEATH;
         }
 
         /// <summary>
@@ -213,7 +220,6 @@ namespace TeamWorkGame.Actor
             if (other.IsTrigger)
             {
                 flag = base.CollisionCheck(other);
-
                 if (flag)
                 {
                     other.EventHandle(this);
@@ -284,7 +290,6 @@ namespace TeamWorkGame.Actor
                     }
                 }
             }
-
             //普通は空中摩擦
             float friction = Parameter.AirFriction;
 
@@ -300,7 +305,6 @@ namespace TeamWorkGame.Actor
                 //地上にいると、摩擦は地面摩擦
                 friction = Parameter.GroundFriction;
             }
-
 
             //横方向のスピード計算
             //velocity.X = inputState.Velocity().X * Parameter.MaxPlayerHorizontalSpeed;
@@ -452,7 +456,7 @@ namespace TeamWorkGame.Actor
                 animePlayer.PlayAnimation(standAnime);
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
             }
-            if(IsRunning() || IsThrowing())
+            if(IsRunning() || IsThrowing() || IsDeath())
             {
                 if (Velocity.X > 0)
                     flip = SpriteEffects.FlipHorizontally;
@@ -511,6 +515,15 @@ namespace TeamWorkGame.Actor
         public bool IsThrowing()
         {
             return playerMotion == PlayerMotion.THROW;
+        }
+
+        /// <summary>
+        /// 死んだ状態ならtrue
+        /// </summary>
+        /// <returns></returns>
+        public bool IsDeath()
+        {
+            return playerMotion == PlayerMotion.DEATH;
         }
 
         /// <summary>

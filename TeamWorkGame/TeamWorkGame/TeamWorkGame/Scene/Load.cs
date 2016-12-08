@@ -26,6 +26,7 @@ namespace TeamWorkGame.Scene
         private int totalResouceNum;
 
         private Timer timer;
+        private Timer timer2;
 
         private string[,] TextureList()
         {
@@ -87,6 +88,7 @@ namespace TeamWorkGame.Scene
                 {"igniter", path},
                 {"spark1", path},
                 {"spark2", path},
+                {"deathAnime", path},
             };
 
             return list;
@@ -127,6 +129,7 @@ namespace TeamWorkGame.Scene
             bgmLoader = new BGMLoader(sound, BGMList());
             seLoader = new SELoader(sound, SEList());
             timer = new Timer(2);
+            timer2 = new Timer(2);
         }
 
 
@@ -138,6 +141,7 @@ namespace TeamWorkGame.Scene
             seLoader.Initialize();
             totalResouceNum = textureLoader.Count() + bgmLoader.Count() + seLoader.Count();
             timer.Initialize();
+            timer2.Initialize();
         }
 
         public bool IsEnd()
@@ -174,6 +178,10 @@ namespace TeamWorkGame.Scene
 
             if(timer.IsTime() && textureLoader.IsEnd() && bgmLoader.IsEnd() && seLoader.IsEnd())
             {
+                timer2.Update();
+            }
+            if (timer2.IsTime())
+            {
                 endFlag = true;
             }
 
@@ -197,8 +205,14 @@ namespace TeamWorkGame.Scene
             //{
             //    endFlag = true;
             //}
-
-            renderer.DrawTexture("logo", Vector2.Zero);
+            if (!timer.IsTime())
+            {
+                renderer.DrawTexture("logo", Vector2.Zero);
+            }
+            else
+            {
+                renderer.DrawTexture("teamlogo", Vector2.Zero);
+            }
         }
 
         public NextScene Next()

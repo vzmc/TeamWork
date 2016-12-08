@@ -10,5 +10,6 @@ namespace TeamWorkGame.Def
         STAND = 0,
         RUN,
         THROW,
+        DEATH,
     }
 }

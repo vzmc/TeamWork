@@ -2,6 +2,8 @@
 //ゲーム中使われている機能の統合
 //作成時間：2016/9/22
 //作成者：氷見悠人
+//最終更新日:2016/12/08
+//編集者:佐瀬拓海
 /////////////////////////////////////////////////////////////////////
 
 using System;
@@ -47,6 +49,7 @@ namespace TeamWorkGame.Device
             //ゲーム開始時に必要な最小限のリソースを読み込む
             renderer.LoadTexture("number", "./Texture/");
             renderer.LoadTexture("logo", "./Texture/");
+            renderer.LoadTexture("teamlogo", "./Texture/");     //チームロゴの読み込み
         }
 
 
