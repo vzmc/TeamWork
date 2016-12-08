@@ -78,6 +78,7 @@ namespace TeamWorkGame.Actor
                 flag = base.ObstacleCheck(other);
                 if (flag)
                 {
+                    velocity = new Vector2(0, 10);
                     //相手の処理を実行する
                     other.EventHandle(this);
                 }
