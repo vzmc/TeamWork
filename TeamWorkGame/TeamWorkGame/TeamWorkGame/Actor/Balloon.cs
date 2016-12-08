@@ -23,9 +23,9 @@ namespace TeamWorkGame.Actor
         private Vector2 startPosition;  //気球の初期位置
         private bool playerIsOn;    //playerの乗る状態を保存する
         private Player player;  //player気球に乗る状態をとるように
-                                //private Animation animation;
-                                //private AnimationPlayer animationPlayer;
-                                //private bool IsAnimation = false;
+        //private Animation animation;
+        //private AnimationPlayer animationPlayer;
+        //private bool IsAnimation = false;
 
         public Balloon(Vector2 pos, Vector2 velo)
             : base("balloon", pos, velo, false, "balloon")
@@ -56,7 +56,6 @@ namespace TeamWorkGame.Actor
 
             //playerまだ取ってないとき、処理やらない
             if (player == null) { return; }
-            playerIsOn = player.IsOnBalloon;    //player気球に乗る状態をとる
             BalloonMoveDown();
 
             //animationPlayer.PlayAnimation(animation);
@@ -230,6 +229,7 @@ namespace TeamWorkGame.Actor
                 other.Position = position - new Vector2(0, basketSize.Y);  //playerを気球のかごに乗せる
                 ((Player)other).IsOnBalloon = true;
                 ((Player)other).IsOnGround = true;
+                playerIsOn = true;
 
                 if (player != null) { return; }
                 player = (Player)other;     //playerをとる

@@ -331,8 +331,7 @@ namespace TeamWorkGame.Actor
                 else {
                     if (other is Balloon)
                     {
-                        //((Balloon)other).IsPlayerOn = false;  //2016.12.7、新しい仕様書に合わせて変更
-                        isOnBalloon = false;
+                        ((Balloon)other).IsPlayerOn = false;
                     }
                 }
             }
