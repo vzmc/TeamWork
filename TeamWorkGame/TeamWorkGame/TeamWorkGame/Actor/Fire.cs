@@ -14,6 +14,7 @@ using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Def;
 using TeamWorkGame.Utility;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Actor
 {
@@ -27,6 +28,8 @@ namespace TeamWorkGame.Actor
         Vector2 vlo = Vector2.Zero;
         //葉梨竜太
         private Vector2 startpos;　　　　　　　//投げだした位置
+        private Animation fireAnime;
+        private AnimationPlayer animePlayer;
 
 
         public Fire(Vector2 position, Vector2 velocity, List<WaterLine> waterline) : base("fire", position, velocity, true, "Fire")
@@ -44,6 +47,7 @@ namespace TeamWorkGame.Actor
             //timer = new Timer(Parameter.FireFlyTime);
             //葉梨竜太
             startpos = position;
+            fireAnime = new Animation(Renderer.GetTexture("fireAnime"), 0.1f, true);
         }
 
         protected override Rectangle InitLocalColRect()
@@ -156,6 +160,11 @@ namespace TeamWorkGame.Actor
            
         }
 
+        public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
+        {
+            animePlayer.PlayAnimation(fireAnime);
+            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
+        }
         /// <summary>
         /// 描画
         /// </summary>

@@ -60,6 +60,7 @@ namespace TeamWorkGame.Scene
                 {"backGround", path},
                 {"woodAnime", path},
                 {"strawAnime", path},
+                {"fireAnime", path},
                 {"text", path},
                 {"ground1", path},
                 {"ground2", path},
@@ -181,7 +182,7 @@ namespace TeamWorkGame.Scene
                 seLoader.Update();
             }
 
-            if(timer.IsTime() && textureLoader.IsEnd() && bgmLoader.IsEnd() && seLoader.IsEnd())
+            if (timer.IsTime() && textureLoader.IsEnd() && bgmLoader.IsEnd() && seLoader.IsEnd())
             {
                 timer2.Update();
             }
