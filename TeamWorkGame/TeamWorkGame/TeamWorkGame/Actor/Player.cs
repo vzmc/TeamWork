@@ -290,6 +290,8 @@ namespace TeamWorkGame.Actor
                     Fire tempfire = firesList[0];
                     firesList.RemoveAt(0);
                     firesList.Add(tempfire);
+                    //葉梨竜太
+                    tempfire.Velocity = new Vector2(0,10);
                 }
             }
         }
