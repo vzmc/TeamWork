@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月8日
-// ８方向への火の投げ分け対応 By 葉梨竜太
+// 最終修正時間：2016年12月14日
+// 火の飛び方の変更 By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -255,6 +255,8 @@ namespace TeamWorkGame.Actor
                     //単位ベクトル化
                     fireVelo.Normalize();
                     fire.Velocity = fireVelo * Parameter.FireSpeed;
+                    //葉梨竜太
+                    fire.SetStartPos();
 
                     firesList.Insert(0, fire);
                     fireNum--;

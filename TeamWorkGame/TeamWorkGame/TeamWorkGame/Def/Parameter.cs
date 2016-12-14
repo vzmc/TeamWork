@@ -2,7 +2,7 @@
 // 設定用パラメータのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月08日
+// 最終修正時間：2016年12月14日
 // By 葉梨竜太
 /////////////////////////////////////////////////
 
@@ -39,7 +39,8 @@ namespace TeamWorkGame.Def
         //public const int FireHorizontalSpeedY = 12;  　　　 ↓    //横に投げる時のY方向Speed分量
         //public const int FireHorizontalSpeedX = 12;　　　　 ↓　  //横に投げる時のX方向Speed分量
         public const int FireSpeed = 12;　　　　　　　　//火の速度（全方向一緒）
-        public const float FireFlyTime = 0.5f;          //火が落ちるまでの時間
+        public const int FireFly = 6;                   //火の飛ぶ距離
+        //public const float FireFlyTime = 0.5f;          //火が落ちるまでの時間
 
         public const int FireMaxNum = 5;                //火の総量   
         public const int MoveLightSpeed = 3;        //動く松明の速度

@@ -136,6 +136,7 @@ namespace TeamWorkGame.Scene
             {
                 if (player.IsDead)
                 {
+                    
                     renderer.DrawTexture("text", new Vector2(1280 / 2 - 152 / 2, 250), new Rectangle(0, (int)Text.MISS * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
                     renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
                     renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));

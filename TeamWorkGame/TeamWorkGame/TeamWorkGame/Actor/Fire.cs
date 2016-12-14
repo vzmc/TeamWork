@@ -2,8 +2,8 @@
 // 火のクラス
 // 作成時間：2016年9月25日
 // By 氷見悠人
-// 最終修正時間：2016年12月8日
-// やまなりから真っすぐに対応　By葉梨竜太
+// 最終修正時間：2016年12月14日
+// 火の飛び方の変更　By葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -25,6 +25,8 @@ namespace TeamWorkGame.Actor
         private Timer timer;                    //アニメーションの時間間隔
         private List<WaterLine> watersList;         //滝のリスト
         Vector2 vlo = Vector2.Zero;
+        //葉梨竜太
+        private Vector2 startpos;　　　　　　　//投げだした位置
 
 
         public Fire(Vector2 position, Vector2 velocity, List<WaterLine> waterline) : base("fire", position, velocity, true, "Fire")
@@ -39,7 +41,9 @@ namespace TeamWorkGame.Actor
             map = MapManager.GetNowMapData();
             //葉梨竜太
             //飛ぶ時間
-            timer = new Timer(Parameter.FireFlyTime);
+            //timer = new Timer(Parameter.FireFlyTime);
+            //葉梨竜太
+            startpos = position;
         }
 
         protected override Rectangle InitLocalColRect()
@@ -86,6 +90,10 @@ namespace TeamWorkGame.Actor
             return flag;
         }
 
+        public void SetStartPos()
+        {
+            startpos = position;
+        }
 
         public override void Update(GameTime gameTime)
         {
@@ -96,11 +104,17 @@ namespace TeamWorkGame.Actor
             //velocity.Y += gForce;
             //葉梨竜太
             //一定時間飛んだら落ちる
-            timer.Update();
-            if (timer.IsTime())
+            //timer.Update();
+            //if (timer.IsTime())
+            //{
+            //    velocity = new Vector2(0, 10);
+            //    timer.Initialize();
+            //}
+
+            //葉梨竜太
+            if (Math.Sqrt((position.X - startpos.X)*(position.X-startpos.X)+(position.Y - startpos.Y)*(position.Y-startpos.Y))>= Parameter.FireFly*64)
             {
                 velocity = new Vector2(0, 10);
-                timer.Initialize();
             }
 
             //マップ上の物と障害物判定
