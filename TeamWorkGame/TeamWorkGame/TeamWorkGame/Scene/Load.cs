@@ -1,6 +1,6 @@
 ﻿/////////////////////////
-//最終更新日　11/30
-//更新者　葉梨竜太
+//最終更新日　12/14
+//更新者　柏　 ＳＥ実装
 /////////////////////////
 using System;
 using System.Collections.Generic;
@@ -118,9 +118,15 @@ namespace TeamWorkGame.Scene
             string path = "./Sound/SE/";
             string[,] list = new string[,]
             {
-                {"cancel1", path},
-                {"decision1", path},
-                {"fire1",path},
+                {"cancel1"   ,path},
+                {"decision1" ,path},
+                {"fire1"     ,path},
+                {"bomb1"     ,path},     //by柏　2016.12.14追加
+                {"GameClear" ,path},     //by柏　2016.12.14追加
+                {"goalAppear",path},     //by柏　2016.12.14追加
+                {"pauseMenu" ,path},     //by柏　2016.12.14追加
+                {"dead"      ,path},     //by柏　2016.12.14追加
+                {"cursor"    ,path},     //by柏　2016.12.14追加
             };
 
             return list;

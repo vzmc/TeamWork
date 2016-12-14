@@ -565,13 +565,18 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sound\SE\bomb1.wav">
+      <Name>bomb1</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Texture\startText.png">
       <Name>startText</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Texture\startText2.png">
       <Name>startText2</Name>
       <Importer>TextureImporter</Importer>
@@ -583,6 +588,13 @@
       <Name>fadein</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sound\SE\GameClear.wav">
+      <Name>GameClear</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -600,10 +612,38 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Sound\SE\goalAppear.wav">
+      <Name>goalAppear</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sound\SE\pauseMenu.wav">
+      <Name>pauseMenu</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sound\SE\dead.wav">
+      <Name>dead</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Texture\fireAnime.png">
       <Name>fireAnime</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Sound\SE\cursor.wav">
+      <Name>cursor</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SoundEffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

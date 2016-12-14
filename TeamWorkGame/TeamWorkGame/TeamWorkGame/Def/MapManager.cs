@@ -3,9 +3,8 @@
 // マップ作成管理クラス
 // 作成時間：2016/9/30
 // 作成者：氷見悠人
-// 最終修正時間：2016年10月27日
-//ステージ1～29の追加
-// By　葉梨竜太
+// 最終修正時間：2016年12月14日
+// By　柏 ＳＥ実装
 /////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -15,6 +14,7 @@ using Microsoft.Xna.Framework;
 using TeamWorkGame.Utility;
 using TeamWorkGame.Actor;
 using System.Diagnostics;               //Assert
+using TeamWorkGame.Device;
 
 namespace TeamWorkGame.Def
 {
@@ -65,9 +65,10 @@ namespace TeamWorkGame.Def
 
         /// <summary>
         /// 今のマップを設置する
+        /// by柏　SE実装 2016.12.14
         /// </summary>
         /// <param name="index">設置したいStage番号</param>
-        public static void SetNowMap(int index)
+        public static void SetNowMap(int index, Sound sound)
         {
             List<GameObject> MapThings = new List<GameObject>();
             if (nowMapIndex != index)
@@ -79,7 +80,7 @@ namespace TeamWorkGame.Def
             }
             
             map = new Map(mapdata, blockSize, MapThings);
-            Method.CreateGimmicks(mapdata, MapThings);
+            Method.CreateGimmicks(mapdata, MapThings, sound);   //by柏　2016.12.14　sound引数追加
         }
 
         public static Vector2 PlayerStartPosition() {

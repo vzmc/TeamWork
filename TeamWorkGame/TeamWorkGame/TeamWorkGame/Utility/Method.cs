@@ -2,8 +2,8 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/11/30
-// 修正者:葉梨竜太
+// 最終修正時間：2016/12/14
+// 修正者: 柏　ＳＥ実装
 /////////////////////////////////////////////////////////
 using System;
 using System.IO;
@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework;
 using TeamWorkGame.Actor;
 using TeamWorkGame.Def;
 using System.Diagnostics;   //Assert用
-
+using TeamWorkGame.Device;
 
 namespace TeamWorkGame.Utility
 {
@@ -244,13 +244,14 @@ namespace TeamWorkGame.Utility
 
 
 
-        //by木材追加 長谷川修一 10/27
+
         /// <summary>
         /// ギミック設置
+        /// by柏　SE実装 2016.12.14
         /// </summary>
         /// <param name="mapdata">マップデータの二元配列</param>
         /// <param name="MapThings">マップ上の物のList</param>
-        public static void CreateGimmicks(int[,] mapdata, List<GameObject> MapThings)
+        public static void CreateGimmicks(int[,] mapdata, List<GameObject> MapThings, Sound sound)
         {
             for (int i = 0; i < mapdata.GetLength(0); i++)
             {
@@ -290,7 +291,7 @@ namespace TeamWorkGame.Utility
                             }
                         case (int)GimmickType.GOAL:
                             {
-                                Goal goal = new Goal(new Vector2(j * 64, i * 64));
+                                Goal goal = new Goal(new Vector2(j * 64, i * 64), sound);
                                 MapThings.Add(goal);
                                 break;
                             }
@@ -359,7 +360,7 @@ namespace TeamWorkGame.Utility
                             //葉梨竜太　11/30
                         case (int)GimmickType.BOMB:
                             {
-                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64));
+                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64), sound);
                                 MapThings.Add(bomb);
                                 break;
                             }

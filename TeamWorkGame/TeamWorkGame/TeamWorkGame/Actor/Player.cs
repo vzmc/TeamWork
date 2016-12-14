@@ -3,7 +3,7 @@
 // 作成時間：2016年9月24日
 // By 氷見悠人
 // 最終修正時間：2016年12月14日
-// 火の飛び方の変更 By 葉梨竜太
+// by柏 ＳＥ実装
 /////////////////////////////////////////////////
 
 using System;
@@ -151,6 +151,7 @@ namespace TeamWorkGame.Actor
         }
         public void Death()
         {
+            sound.PlaySE("dead");   //by柏　2016.12.14 ＳＥ実装
             animePlayer.PlayAnimation(deathAnime);
             playerMotion = PlayerMotion.DEATH;
         }

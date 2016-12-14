@@ -2,8 +2,8 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年12月08日
-// By　氷見悠人　カメラ操作
+// 最終修正時間：2016年12月14日
+// By　by柏　ＳＥ実装
 /////////////////////////////////////////////////
 
 using System;
@@ -83,7 +83,7 @@ namespace TeamWorkGame.Scene
             //全局Animation一時停止のスイッチ　By　氷見悠人
             FuncSwitch.AllAnimetionPause = false;
 
-            MapManager.SetNowMap(mapIndex);
+            MapManager.SetNowMap(mapIndex, sound);  // by柏　SE実装 2016.12.14
             map = MapManager.GetNowMapData();
             fires = new List<Fire>();
             waterLines = new List<WaterLine>();
@@ -99,7 +99,7 @@ namespace TeamWorkGame.Scene
             player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines, isView);
 
             //葉梨竜太
-            clearSelect = new ClearSelect(gameDevice.GetInputState(), player); //InputStateはGameDeviceからもらいます　By　氷見悠人
+            clearSelect = new ClearSelect(gameDevice.GetInputState(), player, sound);   //by 柏　2016.12.14 ＳＥ実装
 
             camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale, true);
 
@@ -228,6 +228,7 @@ namespace TeamWorkGame.Scene
                             stageSever.Charcoal = coals.Count - nowCoals.Count;
                             stageSever.SaveStageData();
 
+                            sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
                             isClear = true;
                             clearSelect.IsClear = true;
                             //FuncSwitch.AllAnimetionPause = true;
@@ -254,6 +255,8 @@ namespace TeamWorkGame.Scene
                 {
                     if (isOver == false)
                     {
+                        sound.PlaySE("pauseMenu");  //by柏　2016.12.14 ＳＥ実装
+
                         //全体Animationを一時停止
                         isPause = true;
                         clearSelect.IsPause = isPause;
@@ -262,6 +265,8 @@ namespace TeamWorkGame.Scene
                     }
                     else if (isOver == true)
                     {
+                        sound.PlaySE("pauseMenu");  //by柏　2016.12.14 ＳＥ実装
+
                         //全体Animationを一時停止解除
                         isPause = false;
                         clearSelect.IsPause = isPause;

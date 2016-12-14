@@ -2,6 +2,7 @@
 //マップのゴール
 //作成時間：2016/10/1
 //作成者：氷見悠人
+//最終修正：　by柏　2016.12.14 ＳＥ実装
 ////////////////////////////////////////////////////
 
 using System;
@@ -25,6 +26,7 @@ namespace TeamWorkGame.Actor
     {
         private Camera camera;
         private bool isOnFire;
+        private Sound sound;    //by柏　2016.12.14　ＳＥ実装
         public bool IsOnFire
         {
             get
@@ -59,8 +61,9 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public Goal(Vector2 pos) : base("goal", pos, Vector2.Zero, true, "Goal")
+        public Goal(Vector2 pos, Sound sound) : base("goal", pos, Vector2.Zero, true, "Goal")
         {
+            this.sound = sound;         //by柏　2016.12.14　ＳＥ実装
             state = GoalState.NONE;
             alpha = 0;
         }
@@ -89,6 +92,7 @@ namespace TeamWorkGame.Actor
             //Appear状態に移行
             if (state == GoalState.NONE && isComplete)
             {
+                sound.PlaySE("goalAppear");     //by柏　2016.12.14 ＳＥ実装
                 state = GoalState.APPEARING;
                 camera.SetLimitView(false);
             }

@@ -2,6 +2,8 @@
 //爆弾クラス
 //作成者　葉梨竜太
 //作成日時　11/30
+//最後修正日　2016.12.14
+//修正者と内容　柏、ＳＥ実装
 //////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -19,11 +21,12 @@ namespace TeamWorkGame.Actor
     {
         private bool isToDeath;
         private Map map;
+        protected Sound sound;       //2016.12.14、柏
 
-        public Bomb(Vector2 pos)
+        public Bomb(Vector2 pos, Sound sound)
             :base("bomb",pos,Vector2.Zero,false,"Bomb")
         {
-
+            this.sound = sound;
         }
 
         public override void Initialize()
@@ -55,14 +58,17 @@ namespace TeamWorkGame.Actor
             if (other is Fire)
             {
                 //other.IsDead = true;
+                sound.PlaySE("bomb1");
                 isShow = false;
             }
             if (other is Player)
             {
+                sound.PlaySE("bomb1");
                 isShow = false;
             }
             if(other is Igniter)
             {
+                sound.PlaySE("bomb1");
                 isShow = false;
             }
             spawnTimer.Initialize();

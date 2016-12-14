@@ -2,8 +2,8 @@
 //TitleSceneの選択機能
 //作成時間：2016/10/13
 //作成者：柏杳
-//最終修正時間：2016/11/10
-//最終修正者：柏杳
+//最終修正時間：2016/12/14
+//最終修正者：柏杳  ＳＥ実装
 //////////////////////////////////////////////////
 
 using System;
@@ -42,9 +42,11 @@ namespace TeamWorkGame.Scene
 
         private bool isStarted;
         private int x;
+        private Sound sound;    //by 柏　2016.12.14 ＳＥ実装
 
-        public TitleSelect(InputState inputState)
+        public TitleSelect(InputState inputState, Sound sound)
         {
+            this.sound = sound;    //by 柏　2016.12.14 ＳＥ実装
             this.inputState = inputState;
             Initialize();
         }
@@ -114,11 +116,13 @@ namespace TeamWorkGame.Scene
             if (!isStarted) { return; }
             if (inputState.IsKeyDown(Keys.Down) || inputState.IsKeyDown(Buttons.LeftThumbstickDown))
             {
+                sound.PlaySE("cursor");     //by柏　2016.12.14 ＳＥ実装
                 if (x == 3) { return; }
                 x++;
             }
             else if (inputState.IsKeyDown(Keys.Up) || inputState.IsKeyDown(Buttons.LeftThumbstickUp))
             {
+                sound.PlaySE("cursor");     //by柏　2016.12.14 ＳＥ実装
                 if (x == 1) { return; }
                 x--;
             }

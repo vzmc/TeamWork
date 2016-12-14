@@ -2,8 +2,8 @@
 //　クリア画面
 //  作成者：柏杳
 //
-//  最終更新日 12月08日
-//  By 佐瀬拓海
+//  最終更新日 2016.12.14
+//  by 柏　 ＳＥ実装
 /////////////////////////////////////////
 
 using System;
@@ -39,8 +39,11 @@ namespace TeamWorkGame.Scene
         private Vector2 retryTextPosition;
         private Vector2 nextTextPosition;
 
-        public ClearSelect(InputState inputState, Player player)
+        private Sound sound;   //by 柏　2016.12.14 ＳＥ実装
+
+        public ClearSelect(InputState inputState, Player player, Sound sound)
         {
+            this.sound = sound;   //by 柏　2016.12.14 ＳＥ実装
             this.inputState = inputState;
             this.player = player;
             Initialize();
@@ -83,6 +86,7 @@ namespace TeamWorkGame.Scene
             {
                 if (inputState.CheckTriggerKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
+                    sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                     if (player.IsDead || (!player.IsDead && isPause))
                     {
                         if (select == 1) { return; }
@@ -94,6 +98,7 @@ namespace TeamWorkGame.Scene
                 }
                 else if (inputState.CheckTriggerKey(Keys.Down, Buttons.LeftThumbstickDown))
                 {
+                    sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                     if (select == 2) { return; }
                     select++;
                 }

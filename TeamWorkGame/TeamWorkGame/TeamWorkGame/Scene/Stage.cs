@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////
 // ステージのクラス
-// 最終修正時間：2016年11月30日
-// By 葉梨竜太
+// 最終修正時間：2016年12月14日
+// by 柏 ＳＥ実装
 /////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -99,6 +99,7 @@ namespace TeamWorkGame.Scene
 
             if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
+                sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                 if (mapIndex >= sever.ClearStage / 6)
                 {
                     return;
@@ -113,7 +114,7 @@ namespace TeamWorkGame.Scene
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
-
+                sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                 mapIndex--;
                 if (mapIndex < 0)
                 {
@@ -125,10 +126,12 @@ namespace TeamWorkGame.Scene
 
             if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
+                sound.PlaySE("decision1");    //by 柏　2016.12.14 ＳＥ実装
                 isEnd = true;
             }
             else if (inputState.IsKeyDown(Keys.X) || inputState.IsKeyDown(Buttons.B))
             {
+                sound.PlaySE("cancel1");    //by 柏　2016.12.14 ＳＥ実装
                 isBack = true;
                 isEnd = true;
             }

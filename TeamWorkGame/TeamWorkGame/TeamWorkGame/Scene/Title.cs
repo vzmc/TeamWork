@@ -2,8 +2,8 @@
 //TitleScene
 //作成時間：2016/9/30
 //作成者：氷見悠人
-//最終修正時間：2016/11/30
-//修正者：葉梨竜太
+//最終修正時間：2016/12/14
+//修正者：柏　ＳＥ実装
 /////////////////////////////////////////////////
 
 using System;
@@ -52,7 +52,7 @@ namespace TeamWorkGame.Scene
 
         public void Initialize(int index)
         {
-            titleSelect = new TitleSelect(inputState);
+            titleSelect = new TitleSelect(inputState, sound);  //by柏　2016.12.14 ＳＥ実装
             titleSelect.Initialize();
             isEnd = false;
             sound.PlayBGM("village1");
@@ -78,6 +78,7 @@ namespace TeamWorkGame.Scene
                 {
                     //Startを表示するから、他の選択肢の表示を移す
                     titleSelect.GetStarted = true;
+                    sound.PlaySE("decision1");  //by 柏　2016.12.14　選択のＳＥを追加
                 }
             }
             else
