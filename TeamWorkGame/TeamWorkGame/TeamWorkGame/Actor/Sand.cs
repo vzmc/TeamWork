@@ -71,10 +71,10 @@ namespace TeamWorkGame.Actor
                 velocity = Vector2.Zero;
                 //gForce = 0.0f;
             }
-            else
-            {
-                velocity.Y += gForce;
-            }
+            //else
+            //{
+            //    velocity.Y += gForce;
+            //}
 
             position += velocity;
 
