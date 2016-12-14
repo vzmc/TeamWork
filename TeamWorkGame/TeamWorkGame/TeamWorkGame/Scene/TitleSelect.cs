@@ -58,7 +58,7 @@ namespace TeamWorkGame.Scene
             creditTextalpha = 1;
             exitTextalpha = 1;
             flashTimer = new Timer(0.2f);
-            startTextPosition = new Vector2(550, 600);
+            startTextPosition = new Vector2(320, 480);
             worldTextPosition = new Vector2(550, 400);
             creditTextPosition = new Vector2(550, 480);
             exitTextPosition = new Vector2(550, 560);
@@ -143,7 +143,14 @@ namespace TeamWorkGame.Scene
         {
             if (!isStarted)
             {
-                renderer.DrawTexture("text", startTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), startTextalpha);
+                if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                {
+                    renderer.DrawTexture("startText", startTextPosition, startTextalpha);
+                }
+                else
+                {
+                    renderer.DrawTexture("startText2", startTextPosition, startTextalpha); ;
+                }
                 //renderer.DrawTexture("GameStartText", startTextPosition, startTextalpha);
             }
             else {

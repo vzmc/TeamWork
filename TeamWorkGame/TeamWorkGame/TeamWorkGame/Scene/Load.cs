@@ -89,6 +89,8 @@ namespace TeamWorkGame.Scene
                 {"spark1", path},
                 {"spark2", path},
                 {"deathAnime", path},
+                {"startText", path},
+                {"startText2", path},
             };
 
             return list;
