@@ -356,6 +356,17 @@ namespace TeamWorkGame.Actor
         /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
+            if (isGoDie)
+            {
+                if(playerMotion != PlayerMotion.DEATH)
+                    Death();
+                if(animePlayer.FrameIndex >= deathAnime.FrameCount - 1)
+                {
+                    isDead = true;
+                }
+                return;
+            }
+
             if (isView)
             {
                 inputState = new InputState();

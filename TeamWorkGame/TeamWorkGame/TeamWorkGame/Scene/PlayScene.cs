@@ -267,7 +267,7 @@ namespace TeamWorkGame.Scene
             {
                 if (player.IsDead)
                 {
-                    player.Death();
+                    //player.Death();
                 }
                 if (isPause) {
                     clearSelect.IsClear = true;

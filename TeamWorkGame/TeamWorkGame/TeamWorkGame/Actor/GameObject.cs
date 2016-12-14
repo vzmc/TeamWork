@@ -31,6 +31,7 @@ namespace TeamWorkGame.Actor
         //protected Vector2 origin;       //描画の原点
 
         protected Vector2 velocity;     //移動量（tempを整数化）
+        protected bool isGoDie;         //死亡中
         protected bool isDead;          //生きているか？
         protected bool isOnGround;      //地上にいるか？
         protected string tag;           //タグ
@@ -152,6 +153,18 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        public bool IsGoDie
+        {
+            get
+            {
+                return IsGoDie;
+            }
+            set
+            {
+                isGoDie = value;
+            }
+        }
+
         public bool IsDead
         {
             get
@@ -237,6 +250,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         public virtual void Initialize()
         {
+            isGoDie = false;
             isDead = false;
             previousBottom = ColRect.Bottom;
             isOnGround = false;

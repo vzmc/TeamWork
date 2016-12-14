@@ -161,13 +161,14 @@ namespace TeamWorkGame.Utility
             Vector2 selfNowPositon = self.Position;
             Vector2 selfNowVelocity = self.Velocity;
             Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
-            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, (float)Math.Ceiling(selfNowVelocity.Y));
+            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, selfNowVelocity.Y);
+            Vector2 selfNextPosition = selfNowPositon + selfNowVelocity;
 
             Rectangle selfLocalColRect = self.LocalColRect;
 
             Rectangle selfNextColRectH = new Rectangle(self.LocalColRect.X + (int)selfNextPositionH.X, self.LocalColRect.Y + (int)selfNextPositionH.Y, self.LocalColRect.Width, self.LocalColRect.Height);
             Rectangle selfNextColRectV = new Rectangle(self.LocalColRect.X + (int)selfNextPositionV.X, self.LocalColRect.Y + (int)selfNextPositionV.Y, self.LocalColRect.Width, self.LocalColRect.Height);
-
+            Rectangle selfNextColRect = new Rectangle(self.LocalColRect.X + (int)selfNextPosition.X, self.LocalColRect.Y + (int)selfNextPosition.Y, self.LocalColRect.Width, self.LocalColRect.Height);
 
             Vector2 obstaclePosition = obstacle.Position;
             Rectangle obstacleColRect = obstacle.ColRect;
@@ -298,7 +299,7 @@ namespace TeamWorkGame.Utility
                                 Water water = new Water(new Vector2(j * 64, i * 64),Vector2.Zero);
                                 MapThings.Add(water);
                                 break;
-                            }
+                            }                        
                         case (int)GimmickType.WOOD:
                             {
                                 Wood wood = new Wood(new Vector2(j * 64, i * 64));
@@ -369,6 +370,12 @@ namespace TeamWorkGame.Utility
                                 break;
                             }
 
+                        //case (int)GimmickType.WATERLINE:
+                        //    {
+                        //        //WaterCreator waterCreator = new WaterCreator(new Vector2(j * 64, i * 64));
+                        //        //MapThings.Add(waterCreator);
+                        //        break;
+                        //    }
                     }
                 }
             }

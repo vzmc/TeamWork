@@ -89,6 +89,10 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
+            if(isGoDie)
+            {
+                isDead = true;
+            }
             //velocity.Y += gForce;
             //葉梨竜太
             //一定時間飛んだら落ちる
