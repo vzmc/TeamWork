@@ -80,8 +80,9 @@ namespace TeamWorkGame.Utility
                 }
             }
 
+
             //上下移動の判断
-            if(velocity.Y < 0)
+            if (velocity.Y < 0)
             {
                 nowUDPoints[0].X = colRect.Left + 1;
                 nowUDPoints[0].Y = colRect.Top;
@@ -120,7 +121,6 @@ namespace TeamWorkGame.Utility
                     isOnGround = false;
                 }
             }
-
             return flag;
         }
 

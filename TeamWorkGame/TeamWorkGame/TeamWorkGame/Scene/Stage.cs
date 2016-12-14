@@ -126,12 +126,12 @@ namespace TeamWorkGame.Scene
 
             if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
-                sound.PlaySE("decision1");    //by 柏　2016.12.14 ＳＥ実装
+                //sound.PlaySE("decision1");    //by 柏　2016.12.14 ＳＥ実装  (Next()のところにもう再生した　By　氷見悠人)
                 isEnd = true;
             }
             else if (inputState.IsKeyDown(Keys.X) || inputState.IsKeyDown(Buttons.B))
             {
-                sound.PlaySE("cancel1");    //by 柏　2016.12.14 ＳＥ実装
+                //sound.PlaySE("cancel1");    //by 柏　2016.12.14 ＳＥ実装    (Next()のところにもう再生した　By　氷見悠人)
                 isBack = true;
                 isEnd = true;
             }

@@ -393,12 +393,15 @@ namespace TeamWorkGame.Actor
                 if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                 {
                     velocity.Y = -Parameter.PlayerJumpPower;
-                    isOnGround = false;
+                    //isOnGround = false;
                     jumpEffectTimer.Initialize();
                     jumpEffectPos = position;
                 }
                 //地上にいると、摩擦は地面摩擦
                 friction = Parameter.GroundFriction;
+
+                //isOnGroundをReset
+                isOnGround = false;
             }
 
             //横方向のスピード計算
@@ -501,7 +504,6 @@ namespace TeamWorkGame.Actor
             Stand();
             //走る状態の切り替え判断
             Run();
-
             //火と位置交換処理
             Teleport();
 
@@ -516,7 +518,7 @@ namespace TeamWorkGame.Actor
                 ResetAnimation(throwAnime);
             }
 
-
+            //地図外か？
             CheckIsOut();
 
             if(!previousIsOnGround && isOnGround)

@@ -216,7 +216,7 @@ namespace TeamWorkGame.Scene
 
                     ChangeGoalStage(gameTime);
                     //マップの更新
-                    map.Update(gameTime);
+                    //map.Update(gameTime);
 
                     if (map.GetGoal() != null)
                         if (map.GetGoal().IsOnFire)

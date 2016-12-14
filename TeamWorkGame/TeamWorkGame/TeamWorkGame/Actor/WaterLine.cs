@@ -23,8 +23,7 @@ namespace TeamWorkGame.Actor
         private Map mapdata;
         private bool isCollisioned;
         private bool isDead;
-        private Timer startTimer;
-        
+        private Timer startTimer;        
 
         public bool IsDead
         {
@@ -42,6 +41,11 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        /// <summary>
+        /// 氷から生成する水滝
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="anime"></param>
         public WaterLine(Vector2 pos, Animation anime)
         {
             position = pos;
@@ -52,6 +56,9 @@ namespace TeamWorkGame.Actor
             Initialize();
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public void Initialize()
         {
             waters.Clear();
@@ -94,7 +101,7 @@ namespace TeamWorkGame.Actor
 
         private void RemoveWater()
         {
-            if(waters.Count > 0)
+            if (waters.Count > 0)
             {
                 waters.RemoveAt(0);
             }

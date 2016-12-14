@@ -35,5 +35,6 @@ namespace TeamWorkGame.Def
         SIGN,           //看板
         BOMB,           //爆弾
         IGNITER,        //導火線
+        //WATERLINE,      //水滝
     }
 }
