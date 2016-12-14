@@ -74,6 +74,7 @@
     <Compile Include="Actor\Straw.cs" />
     <Compile Include="Actor\Tree.cs" />
     <Compile Include="Actor\Water.cs" />
+    <Compile Include="Actor\WaterCreator.cs" />
     <Compile Include="Actor\WaterLine.cs" />
     <Compile Include="Actor\Wood.cs" />
     <Compile Include="Def\GimmickType.cs" />

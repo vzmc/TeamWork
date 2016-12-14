@@ -32,7 +32,7 @@ namespace TeamWorkGame.Actor
         {
             if(other is Fire || other is Player)
             {
-                other.IsDead = true;
+                other.IsGoDie = true;
             }
             else if(other.Tag == "Sand")
             {

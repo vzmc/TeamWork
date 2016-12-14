@@ -138,7 +138,7 @@ namespace TeamWorkGame.Actor
             }
 
             position += velocity;
-            
+
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
@@ -146,6 +146,7 @@ namespace TeamWorkGame.Actor
                 
             }
 
+            
             foreach (var wl in watersList)
             {
                 foreach (var w in wl.Waters)

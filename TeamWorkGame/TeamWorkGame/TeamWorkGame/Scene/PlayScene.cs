@@ -35,6 +35,8 @@ namespace TeamWorkGame.Scene
         private bool isPause;   //一時停止状態　By　氷見悠人
         private bool isView;        //カメラ操作中　By　氷見悠人
 
+        private float fadein;
+
         //葉梨竜太
         private bool isOver;
         private int mapIndex;
@@ -75,6 +77,8 @@ namespace TeamWorkGame.Scene
             isPause = false;    //一時停止状態　By　氷見悠人
             //isStarting = true;
             isView = false;
+
+            fadein = 1.0f;
 
             //全局Animation一時停止のスイッチ　By　氷見悠人
             FuncSwitch.AllAnimetionPause = false;
@@ -132,6 +136,11 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gameTime)
         {
+            if(fadein > 0)
+            {
+                fadein -= (float)(gameTime.ElapsedGameTime.TotalSeconds * 0.5);
+            }
+
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
             {
@@ -338,6 +347,11 @@ namespace TeamWorkGame.Scene
             //renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
             //renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
             //renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
+
+            if (fadein > 0)
+            {
+                renderer.DrawTexture("fadein", Vector2.Zero, fadein);
+            }
         }
 
         public Rectangle GetRect(int num)
