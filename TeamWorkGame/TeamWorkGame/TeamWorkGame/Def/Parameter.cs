@@ -43,6 +43,7 @@ namespace TeamWorkGame.Def
         //public const float FireFlyTime = 0.5f;          //火が落ちるまでの時間
 
         public const int FireMaxNum = 5;                //火の総量   
+        public const int FirstFireNum = 5;           //最初の火の量
         public const int MoveLightSpeed = 3;        //動く松明の速度
         public const int BalloonDown = 3;           //気球が下降する速度
         public const int BalloonUp = 3;            //気球が上昇する速度  

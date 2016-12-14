@@ -91,6 +91,8 @@ namespace TeamWorkGame.Scene
                 {"deathAnime", path},
                 {"startText", path},
                 {"startText2", path},
+                {"stageSelect_UI", path},
+                {"stageSelect_UI2", path},
             };
 
             return list;

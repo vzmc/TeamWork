@@ -32,7 +32,7 @@ namespace TeamWorkGame.Actor
         private List<Fire> firesList;               //投げ出した火
         private List<WaterLine> watersList;         //滝のリスト
         
-        private int fireMaxNum;                    //火の総数
+        private int firstFireNum;                    //火の総数
         private int fireNum;                        //持っている火の数
         private Animation standAnime;           //待機アニメ
         private Animation runAnime;             //走るアニメ
@@ -112,8 +112,8 @@ namespace TeamWorkGame.Actor
             gForce = Parameter.GForce;
 
             diretion = Direction.RIGHT;
-            fireMaxNum = Parameter.FireMaxNum;
-            fireNum = fireMaxNum;
+            firstFireNum = Parameter.FirstFireNum;
+            fireNum = firstFireNum;
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             throwAnime = new Animation(Renderer.GetTexture("throwAnime"), 0.1f, false);

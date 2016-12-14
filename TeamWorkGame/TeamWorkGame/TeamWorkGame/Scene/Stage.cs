@@ -73,7 +73,14 @@ namespace TeamWorkGame.Scene
         {
             renderer.DrawTexture("worldmap", Vector2.Zero);
 
-            renderer.DrawTexture("Zback", new Vector2(10, 10));
+            if(GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                renderer.DrawTexture("stageSelect_UI", new Vector2(0, 720 - 64));
+            }
+            else
+            {
+                renderer.DrawTexture("stageSelect_UI2", new Vector2(0, 720 - 64));
+            }
 
             animePlayer.PlayAnimation(standAnime);
             animePlayer.Draw(gameTime, renderer, herol[mapIndex], SpriteEffects.None, 1);

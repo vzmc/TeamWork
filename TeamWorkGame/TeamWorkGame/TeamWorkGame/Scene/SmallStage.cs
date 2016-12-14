@@ -60,19 +60,26 @@ namespace TeamWorkGame.Scene
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             mapl = new List<Vector2>()
             {
-                new Vector2(636,61),
-                new Vector2(636,293),
-                new Vector2(636,525),
-                new Vector2(636,757),
-                new Vector2(636,989),
-                new Vector2(636,1221),
+                new Vector2(636,41),
+                new Vector2(636,253),
+                new Vector2(636,465),
+                new Vector2(636,737),
+                new Vector2(636,949),
+                new Vector2(636,1161),
             };
         }
         public void Draw(GameTime gameTime, Renderer renderer)
         {
             renderer.DrawTexture("backGround", Vector2.Zero);
 
-            renderer.DrawTexture("Zback", new Vector2(10, 10));
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                renderer.DrawTexture("stageSelect_UI", new Vector2(0, 720 - 64));
+            }
+            else
+            {
+                renderer.DrawTexture("stageSelect_UI2", new Vector2(0, 720 - 64));
+            }
 
             renderer.DrawTexture("frame", flame = new Vector2(mapl[mapIndex].X - 10, mapl[mapIndex].Y - 10));
 
@@ -84,9 +91,9 @@ namespace TeamWorkGame.Scene
             renderer.DrawTexture("smallmap6", mapl[5]);
 
             if(mapIndex >=3)
-            renderer.DrawTexture("uparrow", new Vector2(550, 30));
+            renderer.DrawTexture("uparrow", new Vector2(550, 50));
             else
-            renderer.DrawTexture("downarrow", new Vector2(550, 600));
+            renderer.DrawTexture("downarrow", new Vector2(550, 550));
 
             for (int i = 0; i < mapl.Count(); i++)
             {

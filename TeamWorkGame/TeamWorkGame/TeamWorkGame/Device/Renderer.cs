@@ -55,6 +55,8 @@ namespace TeamWorkGame.Device
             }
 
             //画像の読み込みとDictionaryにアセット名と画像を追加
+
+
             textures.Add(name, contentManager.Load<Texture2D>(filepath + name));
         }
 
