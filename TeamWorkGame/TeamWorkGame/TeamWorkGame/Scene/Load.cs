@@ -61,6 +61,7 @@ namespace TeamWorkGame.Scene
                 {"woodAnime", path},
                 {"strawAnime", path},
                 {"fireAnime", path},
+                {"sideAnime", path},
                 {"text", path},
                 {"ground1", path},
                 {"ground2", path},
@@ -102,6 +103,7 @@ namespace TeamWorkGame.Scene
                 {"slow",path },
                 {"camerascroll",path },
                 {"aiming",path },
+                {"lowRunAnime", path},
             };
 
             return list;

@@ -9,7 +9,10 @@ namespace TeamWorkGame.Def
     {
         STAND = 0,
         RUN,
+        LOWRUN,
         THROW,
         DEATH,
+        SIDEWAYS,
+        
     }
 }

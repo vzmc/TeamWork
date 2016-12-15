@@ -31,13 +31,15 @@ namespace TeamWorkGame.Actor
         private Direction diretion;             //向いている方向
         private List<Fire> firesList;               //投げ出した火
         private List<WaterLine> watersList;         //滝のリスト
-        
+
         private int firstFireNum;                    //火の総数
         private int fireNum;                        //持っている火の数
-        private Animation standAnime;           //待機アニメ
+        private Animation standAnime;           //待機アニメ、正面
+        private Animation sidewaysAnime;            //待機アニメ、横
         private Animation runAnime;             //走るアニメ
         private Animation throwAnime;           //投げるアニメ
         private Animation deathAnime;           //死ぬアニメ
+        private Animation lowRunAnime;     //待機アニメ、横向き、弱い
 
         private Timer jumpEffectTimer;
         private Timer fallEffectTimer;
@@ -118,8 +120,10 @@ namespace TeamWorkGame.Actor
             fireNum = firstFireNum;
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            sidewaysAnime = new Animation(Renderer.GetTexture("sideAnime"), 0.1f, true);
             throwAnime = new Animation(Renderer.GetTexture("throwAnime"), 0.1f, false);
             deathAnime = new Animation(Renderer.GetTexture("deathAnime"), 0.1f, false);
+            lowRunAnime = new Animation(Renderer.GetTexture("lowRunAnime"), 0.1f, true);
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
 
@@ -132,20 +136,44 @@ namespace TeamWorkGame.Actor
         /// <summary>
         /// 立つ状態の判断
         /// </summary>
-        public void Stand()
+        private void Stand()
         {
-            if(velocity.X == 0 && !IsThrowing())
+            if (diretion == Direction.UP)// && !IsThrowing())
             {
                 playerMotion = PlayerMotion.STAND;
             }
         }
 
         /// <summary>
+        /// 横向きの状態の判断
+        /// </summary>
+        private void StandSideWays()
+        {
+            if ((diretion == Direction.LEFT || diretion == Direction.RIGHT))// && !IsThrowing())
+            {
+                animePlayer.PlayAnimation(sidewaysAnime);
+                playerMotion = PlayerMotion.SIDEWAYS;
+            }
+        }
+
+        /// <summary>
+        /// 横向きの状態の判断（弱い火）
+        /// </summary>
+        private void LowRun()
+        {
+            if ((diretion == Direction.LEFT || diretion == Direction.RIGHT))// && !IsThrowing())
+            {
+                animePlayer.PlayAnimation(lowRunAnime);
+                playerMotion = PlayerMotion.LOWRUN;
+            }
+        }
+
+        /// <summary>
         /// 走る状態の判断
         /// </summary>
-        public void Run()
+        private void Run()
         {
-            if(velocity.X != 0 && !IsThrowing())
+            if (diretion == Direction.LEFT || diretion == Direction.RIGHT)// && !IsThrowing())
             {
                 animePlayer.PlayAnimation(runAnime);
                 playerMotion = PlayerMotion.RUN;
@@ -163,26 +191,26 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void ThrowFire()
         {
-            if (fireNum > 1)
+            if (fireNum > 0)
             {
                 if (inputState.CheckTriggerKey(Parameter.ThrowKey, Parameter.ThrowButton))
                 {
                     Vector2 firePos = Vector2.Zero;
                     Vector2 fireVelo = Vector2.Zero;
                     Fire fire = new Fire(firePos, fireVelo, watersList);
-                                        
+
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     //Speedを固定にした
                     //葉梨竜太
                     //８方向に投げ分け対応                   
-                                        
-                    if (diretion == Direction.UP　|| inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+
+                    if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                     {
                         //右上
                         if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
                             fireVelo = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
                         //左上
-                        else if (inputState.CheckDownKey(Keys.Left,Buttons.LeftThumbstickLeft))
+                        else if (inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
                             fireVelo = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
                         //真上
                         else
@@ -209,7 +237,7 @@ namespace TeamWorkGame.Actor
                         else
                         {
                             fireVelo = new Vector2(-Parameter.FireSpeed, 0);
-                            firePos = isOnGround ? new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height): new Vector2(position.X - ColRect.Width, position.Y);
+                            firePos = isOnGround ? new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X - ColRect.Width, position.Y);
                         }
                     }
 
@@ -219,7 +247,7 @@ namespace TeamWorkGame.Actor
                         if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                         {
                             fireVelo = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
-                            firePos = new Vector2(position.X + ColRect.Width , position.Y - fire.ColRect.Height);
+                            firePos = new Vector2(position.X + ColRect.Width, position.Y - fire.ColRect.Height);
                         }
                         //右下
                         else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
@@ -233,7 +261,7 @@ namespace TeamWorkGame.Actor
                             fireVelo = new Vector2(Parameter.FireSpeed, 0);
                             firePos = isOnGround ? new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X + ColRect.Width, position.Y);
                         }
-                        
+
                     }
 
                     //if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.RightThumbstickUp))
@@ -355,6 +383,31 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
+        /// プレイヤーの移動系の処理全般
+        /// </summary>
+        private void MoveMotion()
+        {
+            //立つ状態の切り替え判断
+            Stand();
+            if (velocity.X != 0)
+            {
+                if (FireNum != 0)
+                {
+                    //走る状態の切り替え判断
+                    Run();
+                }
+                else
+                {
+                    LowRun();
+                }
+            }
+            else
+            {
+                StandSideWays();
+            }
+        }
+
+        /// <summary>
         /// 衝突区域判定
         /// </summary>
         /// <param name="other">対象</param>
@@ -406,7 +459,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void CheckIsOut()
         {
-            if(position.Y > map.MapHeight + 64)
+            if (position.Y > map.MapHeight + 64)
             {
                 isDead = true;
             }
@@ -420,9 +473,9 @@ namespace TeamWorkGame.Actor
         {
             if (isGoDie)
             {
-                if(playerMotion != PlayerMotion.DEATH)
+                if (playerMotion != PlayerMotion.DEATH)
                     Death();
-                if(animePlayer.FrameIndex >= deathAnime.FrameCount - 1)
+                if (animePlayer.FrameIndex >= deathAnime.FrameCount - 1)
                 {
                     isDead = true;
                 }
@@ -476,17 +529,17 @@ namespace TeamWorkGame.Actor
             {
                 velocity.X = Parameter.MaxPlayerHorizontalSpeed;
             }
-            else if(velocity.X < -Parameter.MaxPlayerHorizontalSpeed)
+            else if (velocity.X < -Parameter.MaxPlayerHorizontalSpeed)
             {
                 velocity.X = -Parameter.MaxPlayerHorizontalSpeed;
             }
 
             //方向判断
-            if (velocity.X > 0)
+            if (velocity.X > 0 || inputState.Velocity().X > 0)
             {
                 diretion = Direction.RIGHT;
             }
-            else if (velocity.X < 0)
+            else if (velocity.X < 0 || inputState.Velocity().X < 0)
             {
                 diretion = Direction.LEFT;
             }
@@ -558,10 +611,20 @@ namespace TeamWorkGame.Actor
                     CollisionCheck(w);
             }
 
-            //立つ状態の切り替え判断
-            Stand();
-            //走る状態の切り替え判断
-            Run();
+            CheckIsOut();
+            if (!previousIsOnGround && isOnGround)
+            {
+                fallEffectTimer.Initialize();
+                fallEffectPos = position;
+            }
+            previousIsOnGround = isOnGround;
+            //Console.WriteLine("isOnGround: " + isOnGround);
+
+            if (!IsThrowing())
+            {
+                //移動モーション関係はメソッド化by長谷川 12/15
+                MoveMotion();
+            }
             //火と位置交換処理
             Teleport();
 
@@ -607,16 +670,16 @@ namespace TeamWorkGame.Actor
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
             //状態によって描画方法が変わる
-            if(IsStanding())
+            if (IsStanding())
             {
                 animePlayer.PlayAnimation(standAnime);
-                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
+                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
             }
-            if(IsRunning() || IsThrowing() || IsDeath())
+            if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRun())
             {
-                if (Velocity.X > 0)
+                if (diretion == Direction.RIGHT)
                     flip = SpriteEffects.FlipHorizontally;
-                else if (Velocity.X < 0)
+                else if (diretion == Direction.LEFT)
                     flip = SpriteEffects.None;
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
             }
@@ -629,7 +692,7 @@ namespace TeamWorkGame.Actor
             if (!jumpEffectTimer.IsTime())
             {
                 Rectangle rect;
-                if(velocity.X >= 0)
+                if (velocity.X >= 0)
                 {
                     rect = new Rectangle(64 * 2, 0, 64, 64);
                 }
@@ -654,6 +717,20 @@ namespace TeamWorkGame.Actor
         public bool IsStanding()
         {
             return playerMotion == PlayerMotion.STAND;
+        }
+
+        /// <summary>
+        /// 横向き状態ならtrue
+        /// </summary>
+        /// <returns></returns>
+        public bool IsSideWays()
+        {
+            return playerMotion == PlayerMotion.SIDEWAYS;
+        }
+
+        public bool IsLowRun()
+        {
+            return playerMotion == PlayerMotion.LOWRUN;
         }
 
         /// <summary>
@@ -691,14 +768,7 @@ namespace TeamWorkGame.Actor
         {
             if (animePlayer.FrameNow() == animePlayer.Animation.FrameCount - 1)
             {
-                if (velocity.X != 0)
-                {
-                    playerMotion = PlayerMotion.RUN;
-                }
-                if (velocity.X == 0)
-                {
-                    playerMotion = PlayerMotion.STAND;
-                }
+                MoveMotion();
                 animePlayer.ResetAnimation(animation);
             }
         }
