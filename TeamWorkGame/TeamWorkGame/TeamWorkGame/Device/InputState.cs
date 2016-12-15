@@ -85,7 +85,7 @@ namespace TeamWorkGame.Device
             //    velocity.Normalize();   // 正規化メソッド
             //}
         }
-
+        
         private void UpdateRightVelocity()
         {
             rightVelocity = Vector2.Zero;    // 移動量をゼロで初期化

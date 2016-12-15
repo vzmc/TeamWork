@@ -3,7 +3,7 @@
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
 // 最終修正時間：2016/12/14
-// 修正者: 柏　ＳＥ実装
+// 修正者:葉梨竜太
 /////////////////////////////////////////////////////////
 using System;
 using System.IO;
@@ -351,9 +351,9 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(moveLight);
                                 break;
                             }
-                        case (int)GimmickType.SIGN:
+                        case (int)GimmickType.JSIGN:
                             {
-                                Sign sign = new Sign(new Vector2(j * 64, i * 64));
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64),(int)GimmickType.JSIGN);
                                 MapThings.Add(sign);
                                 break;
                             }
@@ -370,13 +370,38 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(igniter);
                                 break;
                             }
+                            //葉梨竜太
+                        case (int)GimmickType.MSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.MSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        case (int)GimmickType.RSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.RSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        case (int)GimmickType.LSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.LSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        case (int)GimmickType.CSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.CSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
 
-                        //case (int)GimmickType.WATERLINE:
-                        //    {
-                        //        //WaterCreator waterCreator = new WaterCreator(new Vector2(j * 64, i * 64));
-                        //        //MapThings.Add(waterCreator);
-                        //        break;
-                        //    }
+                            //case (int)GimmickType.WATERLINE:
+                            //    {
+                            //        //WaterCreator waterCreator = new WaterCreator(new Vector2(j * 64, i * 64));
+                            //        //MapThings.Add(waterCreator);
+                            //        break;
+                            //    }
                     }
                 }
             }

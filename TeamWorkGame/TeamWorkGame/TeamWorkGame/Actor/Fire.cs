@@ -118,7 +118,7 @@ namespace TeamWorkGame.Actor
             //葉梨竜太
             if (Math.Sqrt((position.X - startpos.X)*(position.X-startpos.X)+(position.Y - startpos.Y)*(position.Y-startpos.Y))>= Parameter.FireFly*64)
             {
-                velocity = new Vector2(0, 10);
+                velocity = new Vector2(0, Parameter.FireFall);
             }
 
             //マップ上の物と障害物判定
@@ -132,7 +132,7 @@ namespace TeamWorkGame.Actor
             //壁に当たるとvelocity = 0
             if(Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 }))
             {
-                velocity = new Vector2(0, 10);
+                velocity = new Vector2(0, Parameter.FireFall);
             }
 
             //地面にいると運動停止

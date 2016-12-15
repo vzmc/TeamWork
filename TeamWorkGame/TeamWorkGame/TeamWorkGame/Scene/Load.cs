@@ -1,6 +1,6 @@
 ﻿/////////////////////////
 //最終更新日　12/14
-//更新者　柏　 ＳＥ実装
+//更新者　葉梨竜太
 /////////////////////////
 using System;
 using System.Collections.Generic;
@@ -95,6 +95,13 @@ namespace TeamWorkGame.Scene
                 {"fadein", path},
                 {"stageSelect_UI", path},
                 {"stageSelect_UI2", path},
+                //葉梨竜太
+                {"jump",path },
+                {"move",path },
+                {"change",path},
+                {"slow",path },
+                {"camerascroll",path },
+                {"aiming",path },
             };
 
             return list;

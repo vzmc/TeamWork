@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月14日
-// by柏 ＳＥ実装
+// 最終修正時間：2016年12月15日
+// エイムつけた By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -48,6 +48,8 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.FlipHorizontally;
         private PlayerMotion playerMotion;
+
+        private Vector2 aim;
 
         private bool isOnBalloon;   //気球に乗ってるかどうか
 
@@ -172,7 +174,7 @@ namespace TeamWorkGame.Actor
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     //Speedを固定にした
                     //葉梨竜太
-                    //８方向に投げ分け対応
+                    //８方向に投げ分け対応                   
                                         
                     if (diretion == Direction.UP　|| inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                     {
@@ -270,6 +272,61 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        public void Aim()
+        {
+            if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+            {
+                //右上
+                if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+                    aim = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
+                //左上
+                else if (inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
+                    aim = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
+                //真上
+                else
+                   aim = new Vector2(0, -Parameter.FireSpeed);                
+            }
+
+            else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
+            {
+                //左上
+                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                {
+                    aim = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
+                }
+                //左下
+                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                {
+                    aim = new Vector2(-Parameter.FireSpeed, Parameter.FireSpeed);
+                }
+                //左
+                else
+                {
+                    aim = new Vector2(-Parameter.FireSpeed, 0);
+                }
+            }
+
+            else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+            {
+                //右上
+                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                {
+                    aim = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
+                }
+                //右下
+                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                {
+                    aim = new Vector2(Parameter.FireSpeed, Parameter.FireSpeed);
+                }
+                //右
+                else
+                {
+                    aim = new Vector2(Parameter.FireSpeed, 0);
+                }
+            }
+            aim.Normalize();
+        }
+
         /// <summary>
         /// マップ上いある火と位置交換（最後に投げ出した火は最初に交換）
         /// </summary>
@@ -292,7 +349,7 @@ namespace TeamWorkGame.Actor
                     firesList.RemoveAt(0);
                     firesList.Add(tempfire);
                     //葉梨竜太
-                    tempfire.Velocity = new Vector2(0,10);
+                    tempfire.Velocity = new Vector2(0,Parameter.FireFall);
                 }
             }
         }
@@ -474,17 +531,18 @@ namespace TeamWorkGame.Actor
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
-                if (m is Sign)      //Signの場合のみ上キーを押したときのみ判定
-                {
-                    if (inputState.GetKeyTrigger(Keys.Up))
-                    {
-                        CollisionCheck(m);
-                    }
-                }
-                else
-                {
-                    CollisionCheck(m);
-                }
+                //if (m is Sign)      //Signの場合のみ上キーを押したときのみ判定
+                //{
+                //    if (inputState.GetKeyTrigger(Keys.Up))
+                //    {
+                //        CollisionCheck(m);
+                //    }
+                //}
+                //else
+                //{
+                //葉梨竜太
+                CollisionCheck(m);
+                //}
             }
 
             //火と衝突判定
@@ -512,6 +570,7 @@ namespace TeamWorkGame.Actor
             //火を投げる処理
             ThrowFire();
             //}
+            Aim();
 
             if (playerMotion == PlayerMotion.THROW)
             {
@@ -580,6 +639,7 @@ namespace TeamWorkGame.Actor
                 }
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
+            renderer.DrawTexture("aiming",new Vector2(position.X+(Parameter.FireFly*64*aim.X) ,position.Y + (Parameter.FireFly * 64 * aim.Y)) * cameraScale + offset);
         }
 
         public override void EventHandle(GameObject other)
