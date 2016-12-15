@@ -51,7 +51,9 @@ namespace TeamWorkGame.Actor
         private SpriteEffects flip = SpriteEffects.FlipHorizontally;
         private PlayerMotion playerMotion;
 
-        private Vector2 aim;
+        private Vector2 aim; //エイムの向き
+        private Vector2 aimpos;
+        Fire fire;
 
         private bool isOnBalloon;   //気球に乗ってるかどうか
 
@@ -197,7 +199,7 @@ namespace TeamWorkGame.Actor
                 {
                     Vector2 firePos = Vector2.Zero;
                     Vector2 fireVelo = Vector2.Zero;
-                    Fire fire = new Fire(firePos, fireVelo, watersList);
+                    fire = new Fire(firePos, fireVelo, watersList);
 
                     //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
                     //Speedを固定にした
@@ -300,8 +302,12 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        /// <summary>
+        /// エイムの向きと位置
+        /// </summary>
         public void Aim()
         {
+            fire = new Fire(Vector2.Zero, Vector2.Zero, watersList);
             if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
             {
                 //右上
@@ -312,7 +318,9 @@ namespace TeamWorkGame.Actor
                     aim = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
                 //真上
                 else
-                   aim = new Vector2(0, -Parameter.FireSpeed);                
+                   aim = new Vector2(0, -Parameter.FireSpeed);
+
+                aimpos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
             }
 
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
@@ -321,16 +329,19 @@ namespace TeamWorkGame.Actor
                 if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
                     aim = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
+                    aimpos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
                 }
                 //左下
                 else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
                 {
                     aim = new Vector2(-Parameter.FireSpeed, Parameter.FireSpeed);
+                    aimpos = new Vector2(position.X - ColRect.Width, position.Y);
                 }
                 //左
                 else
                 {
                     aim = new Vector2(-Parameter.FireSpeed, 0);
+                    aimpos = isOnGround ? new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X - ColRect.Width, position.Y);
                 }
             }
 
@@ -340,19 +351,47 @@ namespace TeamWorkGame.Actor
                 if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
                     aim = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
+                    aimpos = new Vector2(position.X + ColRect.Width, position.Y - fire.ColRect.Height);
                 }
                 //右下
                 else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
                 {
                     aim = new Vector2(Parameter.FireSpeed, Parameter.FireSpeed);
+                    aimpos = new Vector2(position.X + ColRect.Width, position.Y);
                 }
                 //右
                 else
                 {
                     aim = new Vector2(Parameter.FireSpeed, 0);
+                    aimpos = isOnGround ? new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X + ColRect.Width, position.Y);
                 }
             }
             aim.Normalize();
+            aimpos.X = aimpos.X + (Parameter.FireFly * 64 * aim.X);
+            aimpos.Y = aimpos.Y + (Parameter.FireFly * 64 * aim.Y);
+            AimCheck();
+        }
+        /// <summary>
+        /// エイムがマップ内か？
+        /// </summary>
+        public void AimCheck()
+        {
+            if (aimpos.Y  > map.MapHeight)
+            {
+                aimpos.Y = map.MapHeight - 64;
+            }
+            if (aimpos.X+64  > map.MapWidth)
+            {
+                aimpos.X = map.MapWidth - 64;
+            }
+            if (aimpos.Y < 0)
+            {
+                aimpos.Y = 0;
+            }
+            if (aimpos.X < 0)
+            {
+                aimpos.X = 0;
+            }
         }
 
         /// <summary>
@@ -702,7 +741,8 @@ namespace TeamWorkGame.Actor
                 }
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
-            renderer.DrawTexture("aiming",new Vector2(position.X+(Parameter.FireFly*64*aim.X) ,position.Y + (Parameter.FireFly * 64 * aim.Y)) * cameraScale + offset);
+            if(!IsDeath())
+            renderer.DrawTexture("aiming",aimpos * cameraScale + offset);
         }
 
         public override void EventHandle(GameObject other)

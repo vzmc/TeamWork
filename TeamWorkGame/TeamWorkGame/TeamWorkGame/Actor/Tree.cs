@@ -73,10 +73,10 @@ namespace TeamWorkGame.Actor
         {
             if (other is Player && ((Player)other).FireNum >= Parameter.treefire)
             {
-                //if(other is Fire)
-                //{
-                //    other.IsDead = true;
-                //}
+                if (other is Fire)
+                {
+                    other.IsDead = true;
+                }
                 name = "fire";
                 IsTrigger = true;
                 scale = 3f;

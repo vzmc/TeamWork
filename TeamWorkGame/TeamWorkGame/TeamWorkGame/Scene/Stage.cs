@@ -87,7 +87,7 @@ namespace TeamWorkGame.Scene
 
             for (int i = 0; i < herol.Count(); i++)
             {
-                if (i > sever.ClearStage / 6)
+                if (i > (sever.ClearStage +1)/ 6)
                 {
                     renderer.DrawTexture("lock", herol[i]);
                 }
@@ -100,7 +100,7 @@ namespace TeamWorkGame.Scene
             if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
                 sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
-                if (mapIndex >= sever.ClearStage / 6)
+                if (mapIndex >= (sever.ClearStage+1) / 6)
                 {
                     return;
                 }

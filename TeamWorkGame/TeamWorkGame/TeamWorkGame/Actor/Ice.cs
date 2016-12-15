@@ -104,7 +104,7 @@ namespace TeamWorkGame.Actor
             }
             else if(other.Tag == "Fire")    //火が氷と接触すると消える
             {
-                //other.IsDead = true;
+                other.IsDead = true;
             }
             //葉梨竜太　11/30
             else if(other is Bomb)
