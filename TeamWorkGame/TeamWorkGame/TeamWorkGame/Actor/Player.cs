@@ -53,7 +53,6 @@ namespace TeamWorkGame.Actor
 
         private Vector2 aim; //エイムの向き
         private Vector2 aimpos;
-        Fire fire;
 
         private bool isOnBalloon;   //気球に乗ってるかどうか
 
@@ -133,6 +132,7 @@ namespace TeamWorkGame.Actor
             jumpEffectTimer.CurrentTime = 0;
             fallEffectTimer = new Timer(0.15f);
             fallEffectTimer.CurrentTime = 0;
+            aim = new Vector2(Parameter.FireSpeed, 0);
         }
 
         /// <summary>
@@ -193,97 +193,83 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void ThrowFire()
         {
+            //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
+            //Speedを固定にした
+            //葉梨竜太
+            //８方向に投げ分け対応 
+
+            if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+            {
+                aim.Y = -Parameter.FireSpeed;
+            }
+            if (inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
+            {
+                aim.X = -Parameter.FireSpeed;
+                if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                {
+                    aim.Y = Parameter.FireSpeed;
+                }
+            }
+            if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+            {
+                aim.X = Parameter.FireSpeed;
+                if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                {
+                    aim.Y = Parameter.FireSpeed;
+                }
+            }
+            
+            if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+            {
+                aimpos = new Vector2(position.X + ColRect.Width / 2 - 49/ 2, position.Y - 42);
+            }
+
+            else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
+            {
+                //左上
+                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                {
+                    aimpos = new Vector2(position.X - 49 / 2, position.Y - 42);
+                }
+                //左下
+                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                {
+                    aimpos = new Vector2(position.X - ColRect.Width, position.Y);
+                }
+                //左
+                else
+                {
+                    aimpos = isOnGround ? new Vector2(position.X - 49 / 2, position.Y - 42) : new Vector2(position.X - ColRect.Width, position.Y);
+                }
+            }
+
+            else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+            {
+                //右上
+                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                {
+                    aimpos = new Vector2(position.X + ColRect.Width, position.Y - 42);
+                }
+                //右下
+                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                {
+                    aimpos = new Vector2(position.X + ColRect.Width, position.Y);
+                }
+                //右
+                else
+                {
+                    aimpos = isOnGround ? new Vector2(position.X + ColRect.Width - 49 / 2, position.Y - 42) : new Vector2(position.X + ColRect.Width, position.Y);
+                }
+            }
+
             if (fireNum > 0)
             {
                 if (inputState.CheckTriggerKey(Parameter.ThrowKey, Parameter.ThrowButton))
-                {
-                    Vector2 firePos = Vector2.Zero;
-                    Vector2 fireVelo = Vector2.Zero;
-                    fire = new Fire(firePos, fireVelo, watersList);
+                {             
+                    Vector2 fireVelo = aim;
+                    Vector2 firePos = aimpos;                   
 
-                    //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
-                    //Speedを固定にした
-                    //葉梨竜太
-                    //８方向に投げ分け対応                   
-
-                    if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                    {
-                        //右上
-                        if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
-                            fireVelo = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
-                        //左上
-                        else if (inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
-                            fireVelo = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
-                        //真上
-                        else
-                            fireVelo = new Vector2(0, -Parameter.FireSpeed);
-
-                        firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                    }
-
-                    else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
-                    {
-                        //左上
-                        if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                        {
-                            fireVelo = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
-                            firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                        }
-                        //左下
-                        else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                        {
-                            fireVelo = new Vector2(-Parameter.FireSpeed, Parameter.FireSpeed);
-                            firePos = new Vector2(position.X - ColRect.Width, position.Y);
-                        }
-                        //左
-                        else
-                        {
-                            fireVelo = new Vector2(-Parameter.FireSpeed, 0);
-                            firePos = isOnGround ? new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X - ColRect.Width, position.Y);
-                        }
-                    }
-
-                    else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
-                    {
-                        //右上
-                        if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                        {
-                            fireVelo = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
-                            firePos = new Vector2(position.X + ColRect.Width, position.Y - fire.ColRect.Height);
-                        }
-                        //右下
-                        else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                        {
-                            fireVelo = new Vector2(Parameter.FireSpeed, Parameter.FireSpeed);
-                            firePos = new Vector2(position.X + ColRect.Width, position.Y);
-                        }
-                        //右
-                        else
-                        {
-                            fireVelo = new Vector2(Parameter.FireSpeed, 0);
-                            firePos = isOnGround ? new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X + ColRect.Width, position.Y);
-                        }
-
-                    }
-
-                    //if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.RightThumbstickUp))
-                    //{
-                    //    fireVelo = new Vector2(0, -Parameter.FireUpSpeed);
-                    //    firePos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                    //}
-                    //else if (diretion == Direction.LEFT)
-                    //{
-                    //    fireVelo = new Vector2(-Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
-                    //    firePos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                    //}
-                    //else if (diretion == Direction.RIGHT)
-                    //{
-                    //    fireVelo = new Vector2(Parameter.FireHorizontalSpeedX, -Parameter.FireHorizontalSpeedY);
-                    //    firePos = new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                    //}
-
-                    fire.Position = firePos;
-
+                    Fire fire = new Fire(firePos, fireVelo,watersList);
                     //葉梨竜太
                     //単位ベクトル化
                     fireVelo.Normalize();
@@ -299,78 +285,14 @@ namespace TeamWorkGame.Actor
                     playerMotion = PlayerMotion.THROW;
                     sound.PlaySE("fire1");
                 }
+                aim.Normalize();
+                aimpos.X = aimpos.X + (Parameter.FireFly * 64 * aim.X);
+                aimpos.Y = aimpos.Y + (Parameter.FireFly * 64 * aim.Y);
+                AimCheck();
+
             }
         }
-
-        /// <summary>
-        /// エイムの向きと位置
-        /// </summary>
-        public void Aim()
-        {
-            fire = new Fire(Vector2.Zero, Vector2.Zero, watersList);
-            if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-            {
-                //右上
-                if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
-                    aim = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
-                //左上
-                else if (inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
-                    aim = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
-                //真上
-                else
-                   aim = new Vector2(0, -Parameter.FireSpeed);
-
-                aimpos = new Vector2(position.X + ColRect.Width / 2 - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-            }
-
-            else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
-            {
-                //左上
-                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                {
-                    aim = new Vector2(-Parameter.FireSpeed, -Parameter.FireSpeed);
-                    aimpos = new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height);
-                }
-                //左下
-                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                {
-                    aim = new Vector2(-Parameter.FireSpeed, Parameter.FireSpeed);
-                    aimpos = new Vector2(position.X - ColRect.Width, position.Y);
-                }
-                //左
-                else
-                {
-                    aim = new Vector2(-Parameter.FireSpeed, 0);
-                    aimpos = isOnGround ? new Vector2(position.X - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X - ColRect.Width, position.Y);
-                }
-            }
-
-            else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
-            {
-                //右上
-                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                {
-                    aim = new Vector2(Parameter.FireSpeed, -Parameter.FireSpeed);
-                    aimpos = new Vector2(position.X + ColRect.Width, position.Y - fire.ColRect.Height);
-                }
-                //右下
-                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                {
-                    aim = new Vector2(Parameter.FireSpeed, Parameter.FireSpeed);
-                    aimpos = new Vector2(position.X + ColRect.Width, position.Y);
-                }
-                //右
-                else
-                {
-                    aim = new Vector2(Parameter.FireSpeed, 0);
-                    aimpos = isOnGround ? new Vector2(position.X + ColRect.Width - fire.ColRect.Width / 2, position.Y - fire.ColRect.Height) : new Vector2(position.X + ColRect.Width, position.Y);
-                }
-            }
-            aim.Normalize();
-            aimpos.X = aimpos.X + (Parameter.FireFly * 64 * aim.X);
-            aimpos.Y = aimpos.Y + (Parameter.FireFly * 64 * aim.Y);
-            AimCheck();
-        }
+        
         /// <summary>
         /// エイムがマップ内か？
         /// </summary>
@@ -672,7 +594,7 @@ namespace TeamWorkGame.Actor
             //火を投げる処理
             ThrowFire();
             //}
-            Aim();
+           
 
             if (playerMotion == PlayerMotion.THROW)
             {

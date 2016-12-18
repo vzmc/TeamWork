@@ -83,12 +83,18 @@ namespace TeamWorkGame.Scene
 
             renderer.DrawTexture("frame", flame = new Vector2(mapl[mapIndex].X - 10, mapl[mapIndex].Y - 10));
 
-            renderer.DrawTexture("smallmap1", mapl[0]);
-            renderer.DrawTexture("smallmap2", mapl[1]);
-            renderer.DrawTexture("smallmap3", mapl[2]);
-            renderer.DrawTexture("smallmap4", mapl[3]);
-            renderer.DrawTexture("smallmap5", mapl[4]);
-            renderer.DrawTexture("smallmap6", mapl[5]);
+            for(int i = 0; i < mapl.Count; i++)
+            {
+                renderer.DrawTexture("smallmap", mapl[i]);
+                renderer.DrawNumber("number", mapl[i]+new Vector2(516/2,163/2)-new Vector2(32/2,64/2), i+1);
+            }
+
+            //renderer.DrawTexture("smallmap1", mapl[0]);
+            //renderer.DrawTexture("smallmap2", mapl[1]);
+            //renderer.DrawTexture("smallmap3", mapl[2]);
+            //renderer.DrawTexture("smallmap4", mapl[3]);
+            //renderer.DrawTexture("smallmap5", mapl[4]);
+            //renderer.DrawTexture("smallmap6", mapl[5]);
 
             if(mapIndex >=3)
             renderer.DrawTexture("uparrow", new Vector2(550, 50));
