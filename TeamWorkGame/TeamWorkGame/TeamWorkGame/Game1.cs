@@ -75,6 +75,8 @@ namespace TeamWorkGame
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
             sceneManager.Add(SceneType.Stage, new Stage(gameDevice));
+
+            sceneManager.Add(SceneType.Credit, new Credit(gameDevice));
             //ƒXƒe[ƒW‘I‘ğ‚Ì’Ç‰Á
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú

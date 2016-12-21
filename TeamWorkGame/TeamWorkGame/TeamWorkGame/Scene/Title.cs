@@ -113,7 +113,7 @@ namespace TeamWorkGame.Scene
             else if (titleSelect.GetSelect == 2)
             {
                 //StaffSceneに入る（未完成）、暫定ステージ選択Sceneに入る
-                nextScene = new NextScene(SceneType.Stage, -1);
+                nextScene = new NextScene(SceneType.Credit, -1);
             }
             else
             {

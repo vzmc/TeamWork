@@ -15,6 +15,7 @@ namespace TeamWorkGame.Scene
         Load,
         Title,
         Stage,
+        Credit,
         //シーンの追加
         //葉梨竜太
         //２０１６年１０月１３日

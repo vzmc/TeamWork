@@ -101,8 +101,7 @@ namespace TeamWorkGame.Scene
 
             //氷見悠人
             player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines, isView);
-
-            //葉梨竜太
+            
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player, sound);   //by 柏　2016.12.14 ＳＥ実装
 
             camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale, true);

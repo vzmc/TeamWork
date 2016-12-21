@@ -98,6 +98,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Scene\ClearSelect.cs" />
+    <Compile Include="Scene\Credit.cs" />
     <Compile Include="Scene\Ending.cs" />
     <Compile Include="Scene\FireMeter.cs" />
     <Compile Include="Scene\IScene.cs" />
