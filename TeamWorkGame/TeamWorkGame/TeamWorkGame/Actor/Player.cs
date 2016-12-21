@@ -39,7 +39,8 @@ namespace TeamWorkGame.Actor
         private Animation runAnime;             //走るアニメ
         private Animation throwAnime;           //投げるアニメ
         private Animation deathAnime;           //死ぬアニメ
-        private Animation lowRunAnime;     //待機アニメ、横向き、弱い
+        private Animation lowRunAnime;     //走るアニメ、弱い
+        private Animation lowSidewaysAnime;    //待機アニメ、横、弱い
 
         private Timer jumpEffectTimer;
         private Timer fallEffectTimer;
@@ -125,6 +126,7 @@ namespace TeamWorkGame.Actor
             throwAnime = new Animation(Renderer.GetTexture("throwAnime"), 0.1f, false);
             deathAnime = new Animation(Renderer.GetTexture("deathAnime"), 0.1f, false);
             lowRunAnime = new Animation(Renderer.GetTexture("lowRunAnime"), 0.1f, true);
+            lowSidewaysAnime = new Animation(Renderer.GetTexture("lowSideAnime"), 0.1f, true);
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
 
@@ -136,6 +138,18 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
+        /// 立つ状態の判断（弱い火）
+        /// </summary>
+        private void LowStand()
+        {
+            if (diretion == Direction.UP)
+            {
+                animePlayer.PlayAnimation(lowSidewaysAnime);
+                playerMotion = PlayerMotion.LOWSTAND;
+            }
+        }
+
+        /// <summary>
         /// 立つ状態の判断
         /// </summary>
         private void Stand()
@@ -143,6 +157,18 @@ namespace TeamWorkGame.Actor
             if (diretion == Direction.UP)// && !IsThrowing())
             {
                 playerMotion = PlayerMotion.STAND;
+            }
+        }
+        /// <summary>
+        /// 横向きの状態の判断（弱い火）
+        /// </summary>
+        private void LowStandSideWays()
+        {
+            if ((diretion == Direction.LEFT || diretion == Direction.RIGHT))
+            {
+                //仮実装by長谷川
+                animePlayer.PlayAnimation(lowSidewaysAnime);
+                playerMotion = PlayerMotion.SIDEWAYS;
             }
         }
 
@@ -159,7 +185,7 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// 横向きの状態の判断（弱い火）
+        /// 走る状態の判断（弱い火）
         /// </summary>
         private void LowRun()
         {
@@ -218,10 +244,10 @@ namespace TeamWorkGame.Actor
                     aim.Y = Parameter.FireSpeed;
                 }
             }
-            
+
             if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
             {
-                aimpos = new Vector2(position.X + ColRect.Width / 2 - 49/ 2, position.Y - 42);
+                aimpos = new Vector2(position.X + ColRect.Width / 2 - 49 / 2, position.Y - 42);
             }
 
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
@@ -265,11 +291,11 @@ namespace TeamWorkGame.Actor
             if (fireNum > 0)
             {
                 if (inputState.CheckTriggerKey(Parameter.ThrowKey, Parameter.ThrowButton))
-                {             
+                {
                     Vector2 fireVelo = aim;
-                    Vector2 firePos = aimpos;                   
+                    Vector2 firePos = aimpos;
 
-                    Fire fire = new Fire(firePos, fireVelo,watersList);
+                    Fire fire = new Fire(firePos, fireVelo, watersList);
                     //葉梨竜太
                     //単位ベクトル化
                     fireVelo.Normalize();
@@ -292,17 +318,17 @@ namespace TeamWorkGame.Actor
 
             }
         }
-        
+
         /// <summary>
         /// エイムがマップ内か？
         /// </summary>
         public void AimCheck()
         {
-            if (aimpos.Y  > map.MapHeight)
+            if (aimpos.Y > map.MapHeight)
             {
                 aimpos.Y = map.MapHeight - 64;
             }
-            if (aimpos.X+64  > map.MapWidth)
+            if (aimpos.X + 64 > map.MapWidth)
             {
                 aimpos.X = map.MapWidth - 64;
             }
@@ -338,7 +364,7 @@ namespace TeamWorkGame.Actor
                     firesList.RemoveAt(0);
                     firesList.Add(tempfire);
                     //葉梨竜太
-                    tempfire.Velocity = new Vector2(0,Parameter.FireFall);
+                    tempfire.Velocity = new Vector2(0, Parameter.FireFall);
                 }
             }
         }
@@ -349,7 +375,14 @@ namespace TeamWorkGame.Actor
         private void MoveMotion()
         {
             //立つ状態の切り替え判断
-            Stand();
+            if (FireNum != 0)
+            {
+                Stand();
+            }
+            else
+            {
+                LowStand();
+            }
             if (velocity.X != 0)
             {
                 if (FireNum != 0)
@@ -364,7 +397,15 @@ namespace TeamWorkGame.Actor
             }
             else
             {
-                StandSideWays();
+                //横向き状態
+                if (FireNum != 0)
+                {
+                    StandSideWays();
+                }
+                else
+                {
+                    LowStandSideWays();
+                }
             }
         }
 
@@ -594,7 +635,7 @@ namespace TeamWorkGame.Actor
             //火を投げる処理
             ThrowFire();
             //}
-           
+
 
             if (playerMotion == PlayerMotion.THROW)
             {
@@ -604,7 +645,7 @@ namespace TeamWorkGame.Actor
             //地図外か？
             CheckIsOut();
 
-            if(!previousIsOnGround && isOnGround)
+            if (!previousIsOnGround && isOnGround)
             {
                 fallEffectTimer.Initialize();
                 fallEffectPos = position;
@@ -636,7 +677,7 @@ namespace TeamWorkGame.Actor
                 animePlayer.PlayAnimation(standAnime);
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
             }
-            if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRun())
+            if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRunning() || IsLowSideWays() || IsLowStanding())
             {
                 if (diretion == Direction.RIGHT)
                     flip = SpriteEffects.FlipHorizontally;
@@ -663,13 +704,18 @@ namespace TeamWorkGame.Actor
                 }
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
-            if(!IsDeath())
-            renderer.DrawTexture("aiming",aimpos * cameraScale + offset);
+            if (!IsDeath())
+                renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
         }
 
         public override void EventHandle(GameObject other)
         {
             //
+        }
+
+        public bool IsLowStanding()
+        {
+            return playerMotion == PlayerMotion.LOWSTAND;
         }
 
         /// <summary>
@@ -681,6 +727,11 @@ namespace TeamWorkGame.Actor
             return playerMotion == PlayerMotion.STAND;
         }
 
+        public bool IsLowSideWays()
+        {
+            return playerMotion == PlayerMotion.LOWSIDEWAYS;
+        }
+
         /// <summary>
         /// 横向き状態ならtrue
         /// </summary>
@@ -690,7 +741,7 @@ namespace TeamWorkGame.Actor
             return playerMotion == PlayerMotion.SIDEWAYS;
         }
 
-        public bool IsLowRun()
+        public bool IsLowRunning()
         {
             return playerMotion == PlayerMotion.LOWRUN;
         }

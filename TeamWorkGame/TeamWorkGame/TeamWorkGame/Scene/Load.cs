@@ -100,6 +100,8 @@ namespace TeamWorkGame.Scene
                 {"credit",path},
                 {"titleback",path},
                 { "firework", path},    //2016.12.21 by柏 clear演出用
+                {"treeAnime", path},
+                {"lowSideAnime",path},
             };
 
             return list;
