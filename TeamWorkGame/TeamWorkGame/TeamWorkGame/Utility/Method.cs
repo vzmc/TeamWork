@@ -360,7 +360,7 @@ namespace TeamWorkGame.Utility
                             //葉梨竜太　11/30
                         case (int)GimmickType.BOMB:
                             {
-                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64), sound);
+                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64), sound, Vector2.Zero);
                                 MapThings.Add(bomb);
                                 break;
                             }

@@ -22,9 +22,10 @@ namespace TeamWorkGame.Actor
         private bool isToDeath;
         private Map map;
         protected Sound sound;       //2016.12.14、柏
+        private float gForce;       //2016.12.21　佐瀬
 
-        public Bomb(Vector2 pos, Sound sound)
-            :base("bomb",pos,Vector2.Zero,false,"Bomb")
+        public Bomb(Vector2 pos, Sound sound, Vector2 velo)
+            :base("bomb",pos, velo, false,"Bomb")
         {
             this.sound = sound;
         }
@@ -35,10 +36,36 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;
             map = MapManager.GetNowMapData();
+            gForce = Parameter.GForce;
         }
 
         public override void Update(GameTime gameTime)
         {
+            //重力を付ける
+            velocity.Y += gForce;
+
+            //マップ上の物と障害物判定
+            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x.Tag != "Bomb"))
+            {
+                ObstacleCheck(m);
+            }
+
+            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
+
+            //地面にいると運動停止
+            if (isOnGround)
+            {
+                velocity = Vector2.Zero;
+            }
+
+            position += velocity;
+
+            //マップ上の物と衝突区域判定
+            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            {
+                CollisionCheck(m);
+            }
+
             Explosion();
             AliveUpdate();
         }
