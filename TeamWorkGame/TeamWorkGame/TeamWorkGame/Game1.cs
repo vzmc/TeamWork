@@ -69,7 +69,7 @@ namespace TeamWorkGame
             //IScene playScene = new PlayScene(gameDevice);
             sceneManager.Add(SceneType.Load, new Load(gameDevice));
 
-            sceneManager.Add(SceneType.Title, new Title(gameDevice));
+            sceneManager.Add(SceneType.Title, new Title(gameDevice, this.Exit));
             
             //ステージクラスの追加
             //葉梨竜太

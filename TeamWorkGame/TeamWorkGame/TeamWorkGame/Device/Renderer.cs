@@ -194,7 +194,7 @@ namespace TeamWorkGame.Device
                 "プログラムを確認してください");
             //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
 
-
+            
 
             if (IsInScreen(position, name))
                 spriteBatch.Draw(

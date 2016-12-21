@@ -30,7 +30,8 @@ namespace TeamWorkGame.Scene
         private GameDevice gameDevice;
         private InputState input;
         private Sound sound;
-        private bool isEnd;
+        private bool isEnd;     //終了、Fade開始
+        private bool isTrueEnd; //Fade終了、Scene終了
         private bool isClear;
         private bool isPause;   //一時停止状態　By　氷見悠人
         private bool isView;        //カメラ操作中　By　氷見悠人
@@ -50,6 +51,8 @@ namespace TeamWorkGame.Scene
         private ClearSelect clearSelect;    //clear後の選択画面
         private FireMeter fireMeter;
         private Goal goal;
+
+        private Timer StartTimer;
         //float zoomRate = 0.01f;
         //bool isDrawed = false;
 
@@ -69,6 +72,7 @@ namespace TeamWorkGame.Scene
 
         public void Initialize(int stageIndex)
         {
+            StartTimer = new Timer(1f);
             mapIndex = stageIndex;
             isEnd = false;
             isClear = false;
@@ -136,10 +140,21 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gameTime)
         {
-            if(fadein > 0)
+            //if(fadein > 0)
+            //{
+            //    fadein -= (float)(gameTime.ElapsedGameTime.TotalSeconds * 1f);
+            //    if(fadein < 0)
+            //    {
+            //        fadein = 0;
+            //    }
+            //}
+
+            StartTimer.Update();
+            if (StartTimer.IsTime())
             {
-                fadein -= (float)(gameTime.ElapsedGameTime.TotalSeconds * 0.5);
+                StartTimer.Stop();
             }
+
 
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
@@ -355,10 +370,14 @@ namespace TeamWorkGame.Scene
             //renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
             //renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
 
-            if (fadein > 0)
+            //if (fadein > 0)
+            //{
+            if (!StartTimer.IsTime())
             {
-                renderer.DrawTexture("fadein", Vector2.Zero, fadein);
-            }
+                float scale = 1.5f;
+                renderer.DrawTexture("text", new Vector2((Parameter.ScreenWidth - Parameter.TextWidth * scale) / 2, (Parameter.ScreenHeight - Parameter.TextHeight * scale) / 2), new Rectangle(0, 0, Parameter.TextWidth, Parameter.TextHeight), scale, 1);
+            }   //renderer.DrawTexture("fadein", Vector2.Zero, fadein);
+            //}
         }
 
         public Rectangle GetRect(int num)

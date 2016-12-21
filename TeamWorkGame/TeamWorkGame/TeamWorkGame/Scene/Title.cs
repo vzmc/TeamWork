@@ -26,12 +26,13 @@ namespace TeamWorkGame.Scene
         private Sound sound;
         private bool isEnd;
         private TitleSelect titleSelect;    //タイトルの選択肢を管理するクラス（柏）
+        private Action Exit;
 
-
-        public Title(GameDevice gameDevice)
+        public Title(GameDevice gameDevice, Action Exit)
         {
             inputState = gameDevice.GetInputState();
             sound = gameDevice.GetSound();
+            this.Exit = Exit;
             //Initialize();
         }
 
@@ -119,6 +120,7 @@ namespace TeamWorkGame.Scene
                 //終了処理、暫定ステージ選択Sceneに入る   
 
                 nextScene = new NextScene(SceneType.Stage, -1);
+                Exit();
             }
 
             sound.PlaySE("decision1");
