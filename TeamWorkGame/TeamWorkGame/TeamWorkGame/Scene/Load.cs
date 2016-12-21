@@ -1,6 +1,6 @@
 ﻿/////////////////////////
-//最終更新日　12/14
-//更新者　葉梨竜太
+//最終更新日　2016.12.21 
+//更新者　by柏 clear演出用画像追加
 /////////////////////////
 using System;
 using System.Collections.Generic;
@@ -97,6 +97,7 @@ namespace TeamWorkGame.Scene
                 {"camerascroll",path },
                 {"aiming",path },
                 {"lowRunAnime", path},
+                { "firework", path},    //2016.12.21 by柏 clear演出用
             };
 
             return list;

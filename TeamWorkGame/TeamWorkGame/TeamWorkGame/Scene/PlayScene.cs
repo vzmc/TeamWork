@@ -246,6 +246,7 @@ namespace TeamWorkGame.Scene
             else
             {
                 FuncSwitch.AllAnimetionPause = false;
+                sound.StopBGM();
             }
 
             //　ClearWindow2が出るように変更(KeyもQに変更)　By佐瀬拓海
@@ -298,6 +299,7 @@ namespace TeamWorkGame.Scene
             {
                 clearSelect.Initialize();
                 clearSelect.IsClear = false;
+                sound.PlayBGM("forest1");
             }
         }
 
