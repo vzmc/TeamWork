@@ -118,6 +118,8 @@
     <Compile Include="Utility\FuncSwitch.cs" />
     <Compile Include="Utility\Map.cs" />
     <Compile Include="Utility\Method.cs" />
+    <Compile Include="Utility\ParticleControl.cs" />
+    <Compile Include="Utility\Particle.cs" />
     <Compile Include="Utility\Range.cs" />
     <Compile Include="Utility\RectangleExtensions.cs" />
     <Compile Include="Utility\Timer.cs" />
