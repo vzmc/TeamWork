@@ -152,7 +152,7 @@ namespace TeamWorkGame.Scene
         private void ClearShow() {
             if (!isClear) { return; }
             if (clearLevel > 0) { particleControl.Update(); }
-            if (clearLevel > 1) { clearSelect.IsClear = true; }
+            if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.IsClear = true; }
             clearLevelTimer.Update();
             if (clearLevelTimer.IsTime()) {
                 clearLevel++;
@@ -411,7 +411,7 @@ namespace TeamWorkGame.Scene
             if (isClear && clearLevel >= 0)
             {
                 
-                if (clearLevel < 1) {
+                if (clearLevel < Parameter.ClearFireworksLevel) {
                     int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2 * (1 - clearLevelTimer.Rate()));
                     int Y = 100;
                     renderer.DrawTexture("clear", new Vector2(X, Y), 1 - clearLevelTimer.Rate(), 1);
@@ -421,7 +421,7 @@ namespace TeamWorkGame.Scene
                     renderer.DrawTexture("clear", new Vector2(X, Y));
                 }
                 
-                if (clearLevel > 1) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
+                if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
                 if (clearLevel > 0) { particleControl.Draw(renderer); }
 
             }
