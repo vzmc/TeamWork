@@ -97,9 +97,9 @@ namespace TeamWorkGame.Device
         /// カメラの各位置を設定
         /// </summary>
         /// <param name="aimPos">注視する位置</param>
-        private bool SetData(Vector2 aimPos)
+        private void SetData(Vector2 aimPos)
         {
-            bool isOut = false;
+            //bool isOut = false;
             if (IsLimitView)
             {
                 if (map.MapWidth >= Parameter.ScreenWidth)
@@ -108,31 +108,29 @@ namespace TeamWorkGame.Device
                     if (aimPos.X < Parameter.ScreenWidth / 2)
                     {
                         aimPos.X = Parameter.ScreenWidth / 2;
-                        isOut = true;
+                        //isOut = true;
                     }
                     if (aimPos.X > map.MapWidth * scale - Parameter.ScreenWidth / 2)
                     {
                         aimPos.X = map.MapWidth * scale - Parameter.ScreenWidth / 2;
-                        isOut = true;
+                        //isOut = true;
                     }
                 }
                 else
                 {
                     aimPos.X = map.MapWidth * scale / 2;
-                    isOut = true;
+                    //isOut = true;
                 }
-                
-                
 
                 if (aimPos.Y < Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = Parameter.ScreenHeight / 2;
-                    isOut = true;
+                    //isOut = true;
                 }
                 if (aimPos.Y > map.MapHeight * scale - Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = map.MapHeight * scale - Parameter.ScreenHeight / 2;
-                    isOut = true;
+                    //isOut = true;
                 }
             }
 
@@ -140,16 +138,16 @@ namespace TeamWorkGame.Device
             //centerPosition = aimPosition;
             position = aimPosition - new Vector2(Parameter.ScreenWidth / 2, Parameter.ScreenHeight / 2);
 
-            return isOut;
+            //return isOut;
         }
 
         /// <summary>
         /// カメラの注視位置を設定
         /// </summary>
         /// <param name="aimPos"></param>
-        public bool SetAimPosition(Vector2 aimPos)
+        public void SetAimPosition(Vector2 aimPos)
         {
-            return SetData(aimPos * scale);
+            SetData(aimPos * scale);
         }
 
         /// <summary>

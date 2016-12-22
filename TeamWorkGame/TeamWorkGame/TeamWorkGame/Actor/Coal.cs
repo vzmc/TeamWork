@@ -29,10 +29,10 @@ namespace TeamWorkGame.Actor
         private bool prevIsMove;
         private Vector2 coalPos;
 
-        public Coal(Vector2 pos, Vector2 velo):
+        public Coal(Vector2 pos, Vector2 velo) :
             base("coal", pos, velo, true, "coal")
         {
-            
+
         }
         public override void Initialize()
         {
@@ -55,7 +55,6 @@ namespace TeamWorkGame.Actor
             }
         }
 
-       
         public override void Update(GameTime gameTime)
         {
             if (isMove == false)//Playerとまだ触れてないとき
@@ -91,6 +90,7 @@ namespace TeamWorkGame.Actor
                 Move();
             }
         }
+
         public void Move()//画面右上のCoal表示まで移動させる
         {
             if (isMove)
@@ -99,60 +99,50 @@ namespace TeamWorkGame.Actor
                 velocity = distance;
                 velocity.Normalize();
                 velocity *= -20;
-                //if (position.X > coalPos.X)
-                //{
-                //    velocity.X = -10.0f;
-                //}
-                //if(position.X < coalPos.X)
-                //{
-                //    velocity.X = 10.0f;
-                //}
-                //if (position.Y > coalPos.Y)
-                //{
-                //    velocity.Y = -10.0f;
-                //}
-                //if (position.Y < coalPos.Y)
-                //{
-                //    velocity.Y = 10.0f;
-                //}
+
                 position += velocity;
 
-                if(Math.Abs(distance.X) < 10 || Math.Abs(distance.Y) < 10)
+                if (Math.Abs(distance.X) < 10 || Math.Abs(distance.Y) < 10)
                 {
                     isDead = true;
                 }
-                prevIsMove = isMove;
             }
         }
+
         public override void EventHandle(GameObject other)
         {
-            if(other is Player)
+            if (!isMove)
             {
-                if(((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数を回復
+                if (other is Player)
                 {
-                    if (!isMove)
+                    if (((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数を回復
                     {
+
                         ((Player)other).FireNum = ((Player)other).FireNum + 1;
+
                     }
+                    isMove = true;
                 }
-                prevIsMove = isMove;
-                isMove = true;
             }
         }
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)//Playerと触れる前と触れる後の描画処理
         {
+            if (prevIsMove == false && isMove == true)
+            {
+                position += offset;
+            }
+            
             if (!isMove)
             {
                 base.Draw(gameTime, renderer, offset, cameraScale);
             }
             if (isMove)
             {
-                if(prevIsMove == false && isMove == true)
-                {
-                    position += offset;
-                }
+                
                 renderer.DrawTexture(name, position);
             }
+
+            prevIsMove = isMove;
         }
     }
 }

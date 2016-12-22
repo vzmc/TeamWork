@@ -43,7 +43,7 @@ namespace TeamWorkGame.Scene
             //Vector2 pos = new Vector2((Parameter.ScreenWidth - 754) / 2, (Parameter.ScreenHeight - 127) / 2);
 
             //renderer.Begin();
-
+            
             renderer.DrawTexture("title", pos);
             titleSelect.Draw(renderer);
 
