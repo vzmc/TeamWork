@@ -31,12 +31,9 @@ namespace TeamWorkGame.Scene
         private InputState input;
         private Sound sound;
         private bool isEnd;     //終了、Fade開始
-        private bool isTrueEnd; //Fade終了、Scene終了
         private bool isClear;
         private bool isPause;   //一時停止状態　By　氷見悠人
         private bool isView;        //カメラ操作中　By　氷見悠人
-
-        private float fadein;
 
         //葉梨竜太
         private bool isOver;
@@ -81,8 +78,6 @@ namespace TeamWorkGame.Scene
             isPause = false;    //一時停止状態　By　氷見悠人
             //isStarting = true;
             isView = false;
-
-            fadein = 1.0f;
 
             //全局Animation一時停止のスイッチ　By　氷見悠人
             FuncSwitch.AllAnimetionPause = false;
@@ -148,21 +143,11 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gameTime)
         {
-            //if(fadein > 0)
-            //{
-            //    fadein -= (float)(gameTime.ElapsedGameTime.TotalSeconds * 1f);
-            //    if(fadein < 0)
-            //    {
-            //        fadein = 0;
-            //    }
-            //}
-
             StartTimer.Update();
             if (StartTimer.IsTime())
             {
                 StartTimer.Stop();
             }
-
 
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
@@ -378,14 +363,11 @@ namespace TeamWorkGame.Scene
             //renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
             //renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
 
-            //if (fadein > 0)
-            //{
             if (!StartTimer.IsTime())
             {
                 float scale = 1.5f;
                 renderer.DrawTexture("text", new Vector2((Parameter.ScreenWidth - Parameter.TextWidth * scale) / 2, (Parameter.ScreenHeight - Parameter.TextHeight * scale) / 2), new Rectangle(0, 0, Parameter.TextWidth, Parameter.TextHeight), scale, 1);
-            }   //renderer.DrawTexture("fadein", Vector2.Zero, fadein);
-            //}
+            }   
         }
 
         public Rectangle GetRect(int num)

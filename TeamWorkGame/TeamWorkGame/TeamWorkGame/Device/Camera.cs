@@ -102,21 +102,31 @@ namespace TeamWorkGame.Device
             bool isOut = false;
             if (IsLimitView)
             {
-                // Cameraの位置を制限する
-                if (aimPos.X < Parameter.ScreenWidth / 2)
+                if (map.MapWidth >= Parameter.ScreenWidth)
                 {
-                    aimPos.X = Parameter.ScreenWidth / 2;
+                    // Cameraの位置を制限する
+                    if (aimPos.X < Parameter.ScreenWidth / 2)
+                    {
+                        aimPos.X = Parameter.ScreenWidth / 2;
+                        isOut = true;
+                    }
+                    if (aimPos.X > map.MapWidth * scale - Parameter.ScreenWidth / 2)
+                    {
+                        aimPos.X = map.MapWidth * scale - Parameter.ScreenWidth / 2;
+                        isOut = true;
+                    }
+                }
+                else
+                {
+                    aimPos.X = map.MapWidth * scale / 2;
                     isOut = true;
                 }
+                
+                
+
                 if (aimPos.Y < Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = Parameter.ScreenHeight / 2;
-                    isOut = true;
-                }
-
-                if (aimPos.X > map.MapWidth * scale - Parameter.ScreenWidth / 2)
-                {
-                    aimPos.X = map.MapWidth * scale - Parameter.ScreenWidth / 2;
                     isOut = true;
                 }
                 if (aimPos.Y > map.MapHeight * scale - Parameter.ScreenHeight / 2)
