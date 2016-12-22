@@ -152,13 +152,32 @@ namespace TeamWorkGame.Scene
         private void ClearShow() {
             if (!isClear) { return; }
             if (clearLevel > 0) { particleControl.Update(); }
-
+            if (clearLevel > 1) { clearSelect.IsClear = true; }
             clearLevelTimer.Update();
             if (clearLevelTimer.IsTime()) {
                 clearLevel++;
                 clearLevelTimer.Initialize();
             }
         }
+
+        /// <summary>
+        /// ゴール後処理  by柏
+        /// </summary>
+        private void Goal() {
+            if (map.GetGoal() == null) { return; }
+            if (!map.GetGoal().IsOnFire) { return; }
+            stageSaver.ClearStage = mapIndex;
+            stageSaver.PlayTime = playTime / 60;
+            stageSaver.CurrentStage = mapIndex;
+            stageSaver.Charcoal = coals.Count - nowCoals.Count;
+            stageSaver.SaveStageData();
+            sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
+            isClear = true;
+
+            clearLevel = 0;     //by柏 Clear段階表示はじめ
+            //FuncSwitch.AllAnimetionPause = true;
+        }
+
 
         public void Update(GameTime gameTime)
         {
@@ -247,22 +266,7 @@ namespace TeamWorkGame.Scene
                     //マップの更新
                     //map.Update(gameTime);
 
-                    if (map.GetGoal() != null)
-                        if (map.GetGoal().IsOnFire)
-                        {
-                            //柏
-                            stageSaver.ClearStage = mapIndex;
-                            stageSaver.PlayTime = playTime / 60;
-                            stageSaver.CurrentStage = mapIndex;
-                            stageSaver.Charcoal = coals.Count - nowCoals.Count;
-                            stageSaver.SaveStageData();
-
-                            sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
-                            isClear = true;
-                            clearSelect.IsClear = true;
-                            clearLevel = 0;     //by柏 Clear段階表示はじめ
-                            //FuncSwitch.AllAnimetionPause = true;
-                        }
+                    Goal();
 
                     //葉梨竜太
                     if (player.IsDead)
@@ -369,16 +373,9 @@ namespace TeamWorkGame.Scene
 
             waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
-            if (isClear && clearLevel >= 0)
-            {
-                renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
-                if (clearLevel > 1) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
-                if (clearLevel > 0) { particleControl.Draw(renderer); }
 
-            }
-            else {
-                clearSelect.Draw(gameTime, renderer, camera.Scale);
-            }
+
+            DrawClear(renderer, gameTime);    //2015.12.22 by柏 Clearの段階的表示
             
 
             //clearSelect.Draw(gameTime, renderer, camera.Scale); //ClearSelectの引数を変更したためこちらも変更
@@ -405,8 +402,33 @@ namespace TeamWorkGame.Scene
             }   
         }
 
+        /// <summary>
+        /// Clear段階表示 by柏
+        /// </summary>
+        /// <param name="renderer"></param>
+        /// <param name="gameTime"></param>
+        public void DrawClear(Renderer renderer, GameTime gameTime) {
+            if (isClear && clearLevel >= 0)
+            {
+                
+                if (clearLevel < 1) {
+                    int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2 * (1 - clearLevelTimer.Rate()));
+                    int Y = 100;
+                    renderer.DrawTexture("clear", new Vector2(X, Y), 1 - clearLevelTimer.Rate(), 1);
+                } else {
+                    int X = Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2;
+                    int Y = 100;
+                    renderer.DrawTexture("clear", new Vector2(X, Y));
+                }
+                
+                if (clearLevel > 1) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
+                if (clearLevel > 0) { particleControl.Draw(renderer); }
 
-
+            }
+            else {
+                clearSelect.Draw(gameTime, renderer, camera.Scale);
+            }
+        }
 
 
         public Rectangle GetRect(int num)
