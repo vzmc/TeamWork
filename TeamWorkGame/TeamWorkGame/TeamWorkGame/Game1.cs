@@ -75,6 +75,7 @@ namespace TeamWorkGame
             //—t—œ—³‘¾
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
             sceneManager.Add(SceneType.Stage, new Stage(gameDevice));
+            sceneManager.Add(SceneType.StageIn, new StageIn(1.5f));
 
             sceneManager.Add(SceneType.Credit, new Credit(gameDevice));
             //ƒXƒe[ƒW‘I‘ğ‚Ì’Ç‰Á
@@ -95,94 +96,11 @@ namespace TeamWorkGame
         /// </summary>
         protected override void LoadContent()
         {
-
             // Create a new SpriteBatch, which can be used to draw textures.
             //LoadƒV[ƒ“‚ª•K—v‚È•¨‚ğæ‚É“Ç‚İæ‚é
             gameDevice.LoadContent();
             
-            //renderer.LoadTexture("hero");
-            //renderer.LoadTexture("light_off");
-            //renderer.LoadTexture("TileMapSource");
-            //renderer.LoadTexture("fire");
-            //renderer.LoadTexture("tree");
-            //renderer.LoadTexture("ice");
-            //renderer.LoadTexture("iron");
-            //renderer.LoadTexture("title");
-            //renderer.LoadTexture("clear");
-            //renderer.LoadTexture("goal");
-            //renderer.LoadTexture("coal");//²£‘ñŠC
-            //renderer.LoadTexture("number");//²£‘ñŠC
-            //renderer.LoadTexture("straw");
-            ////ƒ[ƒ‹ƒhƒ}ƒbƒv‚Ì’Ç‰Á
-            ////—t—œ—³‘¾
-            ////‚Q‚O‚P‚U”N‚P‚OŒ‚P‚Q“ú
-            //renderer.LoadTexture("worldmap");
-            ////ƒXƒe[ƒW‘I‘ğˆ‚Ì’Ç‰Á
-            ////”wŒi‚Ì’Ç‰Á
-            ////—t—œ—³‘¾
-            ////‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
-            //renderer.LoadTexture("smallmap");
-            //renderer.LoadTexture("frame");
-            //renderer.LoadTexture("forestBG");
-
-            ////by’·’JìCˆê  11/10
-            //renderer.LoadTexture("FireMeter");
-            //renderer.LoadTexture("iceAnime");
-            //renderer.LoadTexture("ironAnime");
-            //renderer.LoadTexture("wood");
-            //renderer.LoadTexture("playerAnime");
-            //renderer.LoadTexture("throwAnime");
-            //renderer.LoadTexture("sand");
-            //renderer.LoadTexture("backGround");
-            //renderer.LoadTexture("woodAnime");
-            //renderer.LoadTexture("strawAnime");
-            //renderer.LoadTexture("text");
-            //renderer.LoadTexture("standAnime");
-            //renderer.LoadTexture("ground1");
-            //renderer.LoadTexture("ground2");
-
-            ////”
-            //renderer.LoadTexture("ClearWindow");
-            //renderer.LoadTexture("ClearWindow2");
-            //renderer.LoadTexture("selecter");
-            //renderer.LoadTexture("GameStartText");
-            //renderer.LoadTexture("WorldText");
-            //renderer.LoadTexture("StaffText");
-            //renderer.LoadTexture("balloon");
-            //renderer.LoadTexture("Pause");
-            //renderer.LoadTexture("water");
-            //renderer.LoadTexture("smallmap1");
-            //renderer.LoadTexture("smallmap2");
-            //renderer.LoadTexture("smallmap3");
-            //renderer.LoadTexture("smallmap4");
-            //renderer.LoadTexture("smallmap5");
-            //renderer.LoadTexture("smallmap6");
-            //renderer.LoadTexture("lock");
-            //renderer.LoadTexture("Zback");
-            //renderer.LoadTexture("uparrow");
-            //renderer.LoadTexture("downarrow");
-
-            ////Sound‚ÌLoad
-            //LoadBGM();
-            //LoadSE();
-            // TODO: use this.Content to load your game content here
         }
-
-        //private void LoadBGM()
-        //{
-        //    string path = "./Sound/BGM/";
-        //    sound.LoadBGM("forest1", path);
-        //    sound.LoadBGM("worldmap1", path);
-        //    sound.LoadBGM("village1", path);
-        //}
-
-        //private void LoadSE()
-        //{
-        //    string path = "./Sound/SE/";
-        //    sound.LoadSE("cancel1", path);
-        //    sound.LoadSE("decision1", path);
-        //    sound.LoadSE("fire1", path);
-        //}
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -224,7 +142,7 @@ namespace TeamWorkGame
         protected override void Draw(GameTime gameTime)
         {
             //•`‰æƒNƒŠƒA‚ÌF‚ğİ’è
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             renderer.Begin();
             //ƒV[ƒ“‚Ì•`‰æ

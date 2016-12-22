@@ -20,6 +20,7 @@ namespace TeamWorkGame.Scene
         //葉梨竜太
         //２０１６年１０月１３日
         SmallStage,
+        StageIn,        //Stageに入る時の表示Scene　By　氷見悠人
         PlayScene,
         Ending
     }

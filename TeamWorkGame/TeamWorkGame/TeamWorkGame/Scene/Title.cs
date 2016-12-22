@@ -118,9 +118,8 @@ namespace TeamWorkGame.Scene
             else
             {
                 //終了処理、暫定ステージ選択Sceneに入る   
-
-                nextScene = new NextScene(SceneType.Stage, -1);
                 Exit();
+                nextScene = new NextScene(SceneType.Stage, -1);
             }
 
             sound.PlaySE("decision1");

@@ -215,7 +215,8 @@ namespace TeamWorkGame.Scene
             }
             else
             {
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex + stageIndex);
+                //nextScene = new NextScene(SceneType.PlayScene, mapIndex + stageIndex);
+                nextScene = new NextScene(SceneType.StageIn, mapIndex + stageIndex);
                 sound.PlaySE("decision1");
                 sound.StopBGM();
             }

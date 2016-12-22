@@ -306,6 +306,19 @@ namespace TeamWorkGame.Device
                         Color.White * alpha
                         );
                 }
+                else if (number[i] == '-')// "/"を描画する
+                {
+                    spriteBatch.Draw(
+                        textures[name],
+                        position,
+                        new Rectangle(12 * 32, 0, 32, 64),
+                        Color.White * alpha
+                        );
+                }
+                else if (number[i] == ' ')// "/"を描画する
+                {
+                    
+                }
                 else
                 {
                     //１文字分の数値を数値文字で取得
