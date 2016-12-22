@@ -95,25 +95,29 @@ namespace TeamWorkGame.Actor
         {
             if (isMove)
             {
-                if(position.X > coalPos.X)
-                {
-                    velocity.X = -10.0f;
-                }
-                if(position.X < coalPos.X)
-                {
-                    velocity.X = 10.0f;
-                }
-                if (position.Y > coalPos.Y)
-                {
-                    velocity.Y = -10.0f;
-                }
-                if (position.Y < coalPos.Y)
-                {
-                    velocity.Y = 10.0f;
-                }
+                Vector2 distance = position - coalPos;
+                velocity = distance;
+                velocity.Normalize();
+                velocity *= -20;
+                //if (position.X > coalPos.X)
+                //{
+                //    velocity.X = -10.0f;
+                //}
+                //if(position.X < coalPos.X)
+                //{
+                //    velocity.X = 10.0f;
+                //}
+                //if (position.Y > coalPos.Y)
+                //{
+                //    velocity.Y = -10.0f;
+                //}
+                //if (position.Y < coalPos.Y)
+                //{
+                //    velocity.Y = 10.0f;
+                //}
                 position += velocity;
 
-                if(coalPos.Length() - position.Length() >= -5.0f && coalPos.Length() - position.Length() <= 5.0f)
+                if(Math.Abs(distance.X) < 10 || Math.Abs(distance.Y) < 10)
                 {
                     isDead = true;
                 }
