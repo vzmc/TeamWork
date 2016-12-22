@@ -35,7 +35,7 @@ namespace TeamWorkGame.Scene
         private List<Vector2> mapl;
         private int mapnum;
         private bool isBack;
-        private StageSever sever;
+        private StageSaver sever;
         private Vector2 flame;
         private Animation standAnime;
         private AnimationPlayer animePlayer;
@@ -43,7 +43,7 @@ namespace TeamWorkGame.Scene
         public SmallStage(GameDevice gameDevice)
         {
             inputState = gameDevice.GetInputState();
-            sever = gameDevice.GetStageSever();
+            sever = gameDevice.GetStageSaver();
             mapIndex = 0;
             mapnum = 0;
             sound = gameDevice.GetSound();

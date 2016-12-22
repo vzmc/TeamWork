@@ -54,8 +54,9 @@ namespace TeamWorkGame.Scene
         //bool isDrawed = false;
 
         //柏
-        private StageSever stageSever;
+        private StageSaver stageSaver;
         private int playTime;
+        private ParticleControl particleControl;    //clear演出用
 
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
@@ -108,8 +109,9 @@ namespace TeamWorkGame.Scene
             goal.SetCamera(camera);
 
             //柏
-            stageSever = gameDevice.GetStageSever();
+            stageSaver = gameDevice.GetStageSaver();
             playTime = 0;
+            particleControl = new ParticleControl();   //by柏 Clear演出実装 2016.12.22
 
             //PlayBGM
             sound.PlayBGM("forest1");
@@ -148,6 +150,10 @@ namespace TeamWorkGame.Scene
             {
                 StartTimer.Stop();
             }
+            if (isClear) {
+                particleControl.Update();   //by柏 Clear演出更新 2016.12.22
+            }
+            
 
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
@@ -230,11 +236,11 @@ namespace TeamWorkGame.Scene
                         if (map.GetGoal().IsOnFire)
                         {
                             //柏
-                            stageSever.ClearStage = mapIndex;
-                            stageSever.PlayTime = playTime / 60;
-                            stageSever.CurrentStage = mapIndex;
-                            stageSever.Charcoal = coals.Count - nowCoals.Count;
-                            stageSever.SaveStageData();
+                            stageSaver.ClearStage = mapIndex;
+                            stageSaver.PlayTime = playTime / 60;
+                            stageSaver.CurrentStage = mapIndex;
+                            stageSaver.Charcoal = coals.Count - nowCoals.Count;
+                            stageSaver.SaveStageData();
 
                             sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
                             isClear = true;
@@ -347,6 +353,12 @@ namespace TeamWorkGame.Scene
 
             waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
+            if (isClear)
+            {
+                particleControl.Draw(renderer);
+            }
+
+
             clearSelect.Draw(gameTime, renderer, camera.Scale); //ClearSelectの引数を変更したためこちらも変更
 
             fireMeter.Draw(renderer, player);
@@ -357,6 +369,7 @@ namespace TeamWorkGame.Scene
             renderer.DrawNumber("number", new Vector2(1154, 16), "/", 1);
             renderer.DrawNumber2("number", new Vector2(1218, 16), coals.Count, 2);
 
+            
             //playTimeの表示(柏)
             //int[] playtime = stageSever.TimeCalculat(playTime/60);
             //renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);

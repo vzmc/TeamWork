@@ -1,5 +1,5 @@
-﻿// 最終修正時間：2016年11月17日
-// By 氷見悠人　画面外は描画しない
+﻿// 最終修正時間：2016年12月22日
+// By 柏　描画処理(拡大縮小,色付け)
 
 using System;
 using System.Collections.Generic;
@@ -233,6 +233,38 @@ namespace TeamWorkGame.Device
             if (IsInScreen(position, texture))
                 spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
         }
+
+        /// <summary>
+        /// 描画処理(拡大縮小,色付け)  by柏　2016.12.22
+        /// </summary>
+        /// <param name="name">アセット</param>
+        /// <param name="position">位置</param>
+        /// <param name="color"></param>
+        /// <param name="scale">拡大率</param>
+        /// <param name="alpha">透明度</param>
+        public void DrawTexture(string name, Vector2 position, Color color, float scale, float alpha = 1.0f)
+        {
+            //登録されているキーがなければエラー表示
+            Debug.Assert(
+                textures.ContainsKey(name),
+                "アセット名が間違えていませんか？\n" +
+                "大文字小文字間違ってませんか？\n" +
+                "LoadTextureで読み込んでますか？\n" +
+                "プログラムを確認してください");
+
+            if (IsInScreen(position, textures[name]))
+                spriteBatch.Draw(
+                    textures[name],
+                    position,
+                    new Rectangle(0, 0, textures[name].Width, textures[name].Height),
+                    color * alpha,
+                    0.0f,
+                    Vector2.Zero,
+                    scale,
+                    SpriteEffects.None,
+                    0);
+        }
+
 
         /// <summary>
         /// 画像回転用

@@ -1,6 +1,9 @@
 ﻿/////////////////////////////////////////////////////////////////////////
 // Timerクラス
 // 作成者：氷見悠人
+// 最後修正日：2016.12.22
+// 最後修正人：柏
+// 最後修正内容：経過時間比率の追加
 /////////////////////////////////////////////////////////////
 
 using System;
@@ -106,5 +109,15 @@ namespace TeamWorkGame.Utility
             this.limitTime = seconds * 60;
             Initialize();
         }
+
+        /// <summary>
+        /// 経過時間の比率 2016.12.22　by柏
+        /// </summary>
+        /// <returns></returns>
+        public float Rate()
+        {
+            return currentTime / limitTime;
+        }
+
     }
 }

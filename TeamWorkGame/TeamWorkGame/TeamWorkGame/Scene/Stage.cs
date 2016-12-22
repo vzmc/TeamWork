@@ -29,7 +29,7 @@ namespace TeamWorkGame.Scene
         private bool isEnd;
         private int mapIndex;
         public List<Vector2> herol;
-        private StageSever sever;
+        private StageSaver sever;
         private Animation standAnime;
         private AnimationPlayer animePlayer;
         private bool isBack;
@@ -38,7 +38,7 @@ namespace TeamWorkGame.Scene
         {
             inputState = gameDevice.GetInputState();
             sound = gameDevice.GetSound();
-            sever = gameDevice.GetStageSever();
+            sever = gameDevice.GetStageSaver();
             herol = new List<Vector2>()
             {
                 new Vector2(85,153),

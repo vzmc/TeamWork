@@ -34,6 +34,13 @@ namespace TeamWorkGame.Def
         public const float MaxPlayerHorizontalSpeed = 5f;   //Player横方向の最大速度
         public const float MaxPlayerVerticalSpeed = 10f;    //Player横方向の最大速度
 
+        //2016.12.22  by柏 花火関連
+        public const int FireworksCount = 16;       //一回の爆発生成してくる花火の個数
+        public const int FireworksReBurnCount = 2;  //再爆発回数
+        public const float FireworksSpeedDownRate = 0.95f;  //一回の爆発生成してくる花火の個数
+        public const int FireworksStartSpeedMin = 20;  //花火生成時の最小初速度
+        public const int FireworksStartSpeedMax = 35;  //花火生成時の最大初速度
+
         //葉梨竜太
         //public const int FireUpSpeed = 15;            　　　↓　  //真上に投げる時のSpeed；
         //public const int FireHorizontalSpeedY = 12;  　　　 ↓    //横に投げる時のY方向Speed分量
