@@ -49,7 +49,6 @@ namespace TeamWorkGame.Def
         public const int FireFly = 6;                   //火の飛ぶ距離
         //葉梨竜太
         public const int FireFall = 8;                  //火の落ちる速度
-        //public const float FireFlyTime = 0.5f;          //火が落ちるまでの時間
 
         public const int FireMaxNum = 5;                //火の総量   
         public const int FirstFireNum = 5;           //最初の火の量
@@ -61,7 +60,7 @@ namespace TeamWorkGame.Def
         public const float StrawBurn = 0.2f;       //藁ブロックの火が燃え移り始めるまでの時間        ※11/30現在、当たり判定がなくなってから火が燃え移り始める。
         public const float StrawAnimeTime = 0.5f;  //藁ブロックアニメ―ションの時間
         public const float TreeColTime = 0.3f;    //木ブロックの当たり判定が消えるまでの時間
-        public const float TreeAnimeTime = 5.0f;   //木ブロックアニメーションの時間
+        public const float TreeAnimeTime = 2.0f;   //木ブロックアニメーションの時間
         public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
         public const float WoodSpawnTime = 2.0f;   //木材ブロックの復活時間
         public const float IronAnimeTime = 1.0f;   //鉄ブロックアニメーションの時間

@@ -364,13 +364,44 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(bomb);
                                 break;
                             }
-                        case (int)GimmickType.IGNITER:
+                            //葉梨竜太
+                        case (int)GimmickType.IGNITER_UR:
                             {
-                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64));
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64),(int)GimmickType.IGNITER_UR);
                                 MapThings.Add(igniter);
                                 break;
                             }
-                            //葉梨竜太
+                        case (int)GimmickType.IGNITER_UL:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_UL);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_DR:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_DR);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_DL:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_DL);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_HIGHT:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_HIGHT);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_SIDE:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_SIDE);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        //葉梨竜太
                         case (int)GimmickType.MSIGN:
                             {
                                 Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.MSIGN);

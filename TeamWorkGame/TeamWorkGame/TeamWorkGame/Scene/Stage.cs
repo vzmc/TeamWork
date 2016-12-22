@@ -30,9 +30,12 @@ namespace TeamWorkGame.Scene
         private int mapIndex;
         public List<Vector2> herol;
         private StageSaver sever;
+        private Animation animation;
         private Animation standAnime;
         private AnimationPlayer animePlayer;
         private bool isBack;
+        private Vector2 position;
+       
 
         public Stage(GameDevice gameDevice)
         {
@@ -56,6 +59,8 @@ namespace TeamWorkGame.Scene
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             sound.PlayBGM("worldmap1");
             isBack = false;
+            animation = standAnime;
+            position = herol[mapIndex];
         }
 
         public void Initialize(int index)
@@ -66,6 +71,8 @@ namespace TeamWorkGame.Scene
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             sound.PlayBGM("worldmap1");
             isBack = false;
+            animation = standAnime;
+            position = herol[mapIndex];
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -82,8 +89,8 @@ namespace TeamWorkGame.Scene
                 renderer.DrawTexture("stageSelect_UI2", new Vector2(0, 720 - 64));
             }
 
-            animePlayer.PlayAnimation(standAnime);
-            animePlayer.Draw(gameTime, renderer, herol[mapIndex], SpriteEffects.None, 1);
+            animePlayer.PlayAnimation(animation);
+            animePlayer.Draw(gameTime, renderer, position, SpriteEffects.None, 1);
 
             for (int i = 0; i < herol.Count(); i++)
             {
@@ -104,25 +111,26 @@ namespace TeamWorkGame.Scene
                 {
                     return;
                 }
-                mapIndex++;
-                if (mapIndex > 4)
+                if (mapIndex >= 4)
                 {
-                    mapIndex = 4;
+                    return;
                 }
+                
+                mapIndex++;
 
 
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
                 sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
-                mapIndex--;
-                if (mapIndex < 0)
+                if (mapIndex <= 0)
                 {
-                    mapIndex = 0;
+                    return;
                 }
+                mapIndex--;
             }
-
-
+            
+            position = herol[mapIndex];
 
             if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {
@@ -136,7 +144,7 @@ namespace TeamWorkGame.Scene
                 isEnd = true;
             }
         }
-
+        
         public bool IsEnd()
         {
             return isEnd;

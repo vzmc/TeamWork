@@ -2,7 +2,7 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月15日
+// 最終修正時間：2016年12月22日
 // エイムつけた By 葉梨竜太
 /////////////////////////////////////////////////
 
@@ -254,40 +254,28 @@ namespace TeamWorkGame.Actor
 
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
             {
-                //左上
-                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                    aimpos = new Vector2(position.X - ColRect.Width, position.Y-42);
+                    if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                    {
+                        aimpos = new Vector2(position.X - ColRect.Width, position.Y);
+                    }
+                else if(diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
-                    aimpos = new Vector2(position.X - 49 / 2, position.Y - 42);
-                }
-                //左下
-                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                {
-                    aimpos = new Vector2(position.X - ColRect.Width, position.Y);
-                }
-                //左
-                else
-                {
-                    aimpos = isOnGround ? new Vector2(position.X - 49 / 2, position.Y - 42) : new Vector2(position.X - ColRect.Width, position.Y);
+                    aimpos = new Vector2(position.X + ColRect.Width / 2 - 49 / 2, position.Y - 42);
                 }
             }
 
             else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
             {
-                //右上
-                if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                {
-                    aimpos = new Vector2(position.X + ColRect.Width, position.Y - 42);
-                }
-                //右下
-                else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                {
-                    aimpos = new Vector2(position.X + ColRect.Width, position.Y);
-                }
-                //右
-                else
-                {
-                    aimpos = isOnGround ? new Vector2(position.X + ColRect.Width - 49 / 2, position.Y - 42) : new Vector2(position.X + ColRect.Width, position.Y);
-                }
+                    aimpos =  new Vector2(position.X + ColRect.Width, position.Y-42);
+                    if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+                    {
+                        aimpos = new Vector2(position.X + ColRect.Width, position.Y);
+                    }
+                    else if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+                    {
+                        aimpos = new Vector2(position.X + ColRect.Width / 2 - 49 / 2, position.Y - 42);
+                    }
             }
 
             if (fireNum > 0)
@@ -317,7 +305,6 @@ namespace TeamWorkGame.Actor
                 aimpos.X = aimpos.X + (Parameter.FireFly * 64 * aim.X);
                 aimpos.Y = aimpos.Y + (Parameter.FireFly * 64 * aim.Y);
                 AimCheck();
-
             }
         }
 

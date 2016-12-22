@@ -22,7 +22,7 @@ namespace TeamWorkGame.Scene
         private Vector2 textpos;
         private Timer time;
         private float alpha;
-
+        private bool alphaflag;
 
         public Credit(GameDevice gameDevice)
         {
@@ -37,6 +37,7 @@ namespace TeamWorkGame.Scene
             textpos = new Vector2(Parameter.ScreenWidth / 2 - Parameter.TextWidth / 2, 0 - Parameter.TextHeight);
             time = new Timer(1f);
             alpha = 1.0f;
+            alphaflag = true;
         }
 
         public void Update(GameTime gameTime)
@@ -51,10 +52,9 @@ namespace TeamWorkGame.Scene
             
             if (time.IsTime())
             {
-                if (alpha == 1.0f)
-                    alpha = 0.5f;
-                else if (alpha == 0.5f)
-                    alpha = 1.0f;
+
+                alphaflag = !alphaflag;
+                alpha = alphaflag ? 1.0f : 0.5f;
                 time.Initialize();
             }
 

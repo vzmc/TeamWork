@@ -1,4 +1,8 @@
-﻿using System;
+﻿////////////////////////////////////
+//最終更新日 12/22
+//By葉梨竜太
+////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,10 +20,13 @@ namespace TeamWorkGame.Actor
         private bool isToDeath;
         //private float scale;
         private Map map;
+        private int igniter;
 
-        public Igniter(Vector2 pos)
+        public Igniter(Vector2 pos,int igniter)
             : base("igniter", pos, Vector2.Zero, true, "Igniter")
         {
+            //葉梨竜太
+            this.igniter = igniter;
         }
 
         protected override Rectangle InitLocalColRect()
@@ -69,7 +76,29 @@ namespace TeamWorkGame.Actor
         {
             if (isShow == true)
             {
-                Rectangle rect = new Rectangle(0, 0, 64, 64);
+                //葉梨竜太
+                Rectangle rect = new Rectangle(128,0,64,64);
+                switch (igniter)
+                {
+                    case (int)GimmickType.IGNITER_UR:
+                        break;
+                    case (int)GimmickType.IGNITER_UL:
+                        rect = new Rectangle(0, 0, 64, 64);
+                        break;
+                    case (int)GimmickType.IGNITER_DR:
+                        rect = new Rectangle(128, 128, 64, 64);
+                        break;
+                    case (int)GimmickType.IGNITER_DL:
+                        rect = new Rectangle(0, 128, 64, 64);
+                        break;
+                    case (int)GimmickType.IGNITER_HIGHT:
+                        rect = new Rectangle(0, 64, 64, 64);
+                        break;
+                    case (int)GimmickType.IGNITER_SIDE:
+                        rect = new Rectangle(64, 0, 64, 64);
+                        break;
+                }
+                
                 renderer.DrawTexture(name, position * cameraScale + offset, rect, cameraScale, alpha);
             }
         }

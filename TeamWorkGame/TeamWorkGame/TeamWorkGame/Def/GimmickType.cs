@@ -38,7 +38,13 @@ namespace TeamWorkGame.Def
         RSIGN,          //投げる看板
         LSIGN,          //入れ替わり看板
         CSIGN,          //カメラ看板
-        IGNITER,        //導火線
+        //葉梨竜太
+        IGNITER_UL,     //導火線
+        IGNITER_UR,
+        IGNITER_DL,
+        IGNITER_DR,
+        IGNITER_HIGHT,
+        IGNITER_SIDE,
         //WATERLINE,      //水滝
     }
 }
