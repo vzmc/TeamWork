@@ -182,7 +182,6 @@ namespace TeamWorkGame.Scene
             {
                 if (player.IsDead)
                 {
-                    
                     renderer.DrawTexture("text", new Vector2(1280 / 2 - 152 / 2, 250), new Rectangle(0, (int)Text.MISS * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
                     renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), retryTextalpha);
                     renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
@@ -198,7 +197,6 @@ namespace TeamWorkGame.Scene
                     }
                     else {
                         //renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
-                        renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
                         renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), nextTextalpha);
                         renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), retryTextalpha);
                         renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);

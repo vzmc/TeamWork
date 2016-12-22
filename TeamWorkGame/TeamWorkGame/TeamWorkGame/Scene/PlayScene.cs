@@ -57,7 +57,8 @@ namespace TeamWorkGame.Scene
         private StageSaver stageSaver;
         private int playTime;
         private ParticleControl particleControl;    //clear演出用
-
+        private int clearLevel;         //clear関連内容は段階的表示用
+        private Timer clearLevelTimer;    //clear関連内容は段階的表示用
 
         public PlayScene(GameDevice gameDevice, int mapIndex = 0)
         {
@@ -111,7 +112,9 @@ namespace TeamWorkGame.Scene
             //柏
             stageSaver = gameDevice.GetStageSaver();
             playTime = 0;
-            particleControl = new ParticleControl();   //by柏 Clear演出実装 2016.12.22
+            particleControl = new ParticleControl();   //Clear演出実装 2016.12.22
+            clearLevel = -1;                         //Clear関連内容の表示段階管理
+            clearLevelTimer = new Timer(1.0f);      //Clear関連内容の段階表示タイミング
 
             //PlayBGM
             sound.PlayBGM("forest1");
@@ -143,6 +146,20 @@ namespace TeamWorkGame.Scene
             camera.SetAimPosition(pos);
         }
 
+        /// <summary>
+        /// Clear演出 by柏 2016.12.22
+        /// </summary>
+        private void ClearShow() {
+            if (!isClear) { return; }
+            if (clearLevel > 0) { particleControl.Update(); }
+
+            clearLevelTimer.Update();
+            if (clearLevelTimer.IsTime()) {
+                clearLevel++;
+                clearLevelTimer.Initialize();
+            }
+        }
+
         public void Update(GameTime gameTime)
         {
             StartTimer.Update();
@@ -150,10 +167,8 @@ namespace TeamWorkGame.Scene
             {
                 StartTimer.Stop();
             }
-            if (isClear) {
-                particleControl.Update();   //by柏 Clear演出更新 2016.12.22
-            }
-            
+
+            ClearShow();
 
             //死んでいないと更新する
             if (!isClear && !isOver && !isPause)
@@ -245,6 +260,7 @@ namespace TeamWorkGame.Scene
                             sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
                             isClear = true;
                             clearSelect.IsClear = true;
+                            clearLevel = 0;     //by柏 Clear段階表示はじめ
                             //FuncSwitch.AllAnimetionPause = true;
                         }
 
@@ -353,13 +369,19 @@ namespace TeamWorkGame.Scene
 
             waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
-            if (isClear)
+            if (isClear && clearLevel >= 0)
             {
-                particleControl.Draw(renderer);
+                renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
+                if (clearLevel > 1) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
+                if (clearLevel > 0) { particleControl.Draw(renderer); }
+
             }
+            else {
+                clearSelect.Draw(gameTime, renderer, camera.Scale);
+            }
+            
 
-
-            clearSelect.Draw(gameTime, renderer, camera.Scale); //ClearSelectの引数を変更したためこちらも変更
+            //clearSelect.Draw(gameTime, renderer, camera.Scale); //ClearSelectの引数を変更したためこちらも変更
 
             fireMeter.Draw(renderer, player);
 
@@ -382,6 +404,10 @@ namespace TeamWorkGame.Scene
                 renderer.DrawTexture("text", new Vector2((Parameter.ScreenWidth - Parameter.TextWidth * scale) / 2, (Parameter.ScreenHeight - Parameter.TextHeight * scale) / 2), new Rectangle(0, 0, Parameter.TextWidth, Parameter.TextHeight), scale, 1);
             }   
         }
+
+
+
+
 
         public Rectangle GetRect(int num)
         {
