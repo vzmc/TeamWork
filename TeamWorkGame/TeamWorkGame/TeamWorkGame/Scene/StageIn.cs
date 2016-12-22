@@ -28,9 +28,10 @@ namespace TeamWorkGame.Scene
 
         public void Initialize(int index = -1)
         {
+            isEnd = false;
             timer.Initialize();
             this.index = index;
-            if (index <= 0)
+            if (index >= 0)
             {
                 int bigIndex = index / StageDef.SmallIndexMax + 1;
                 int smallIndex = index % StageDef.SmallIndexMax + 1;

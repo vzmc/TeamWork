@@ -411,7 +411,8 @@ namespace TeamWorkGame.Scene
                     mapIndex++;
                 }
 
-                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+                //nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+                nextScene = new NextScene(SceneType.StageIn, mapIndex);
             }
             else if (clearSelect.GetSelect == 1)
             {     //RePlay
