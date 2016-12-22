@@ -78,11 +78,13 @@ namespace TeamWorkGame.Def
         public const Keys TeleportKey = Keys.C;
         public const Keys ThrowKey = Keys.X;
         public const Keys MenuKey = Keys.Enter;
+        public const Keys CameraKey = Keys.LeftShift;
 
         public const Buttons JumpButton = Buttons.A;
         public const Buttons TeleportButton = Buttons.LeftTrigger;
         public const Buttons ThrowButton = Buttons.RightTrigger;
         public const Buttons MenuButton = Buttons.Start;
+        public const Buttons CameraButton = Buttons.LeftShoulder;
 
 
         public static readonly List<GimmickType> ImpassableTiles = new List<GimmickType>()

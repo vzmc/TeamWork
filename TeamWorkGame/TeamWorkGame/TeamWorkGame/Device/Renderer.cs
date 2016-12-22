@@ -235,6 +235,31 @@ namespace TeamWorkGame.Device
         }
 
         /// <summary>
+        /// 画像回転用
+        /// </summary>
+        /// <param name="name">アセット名</param>
+        /// <param name="position">描画位置</param>
+        /// <param name="range">切り出し範囲</param>
+        /// <param name="spriteEffects">向き</param>
+        /// <param name="alpha">透明値</param>
+        /// <param name="rotation">回転角度</param>
+        /// <param name="scale">スケール</param>
+        public void DrawTexture(string name, Vector2 position, Rectangle range, SpriteEffects spriteEffects, float alpha = 1.0f, float rotation = 0.0f, float scale = 1.0f)
+        {
+            //登録されているキーがなければエラー表示
+            //Debug.Assert(
+            //    textures.ContainsKey(name),
+            //    "アセット名が間違えていませんか？\n" +
+            //    "大文字小文字間違ってませんか？\n" +
+            //    "loadtextureで読み込んでますか？\n" +
+            //    "プログラムを確認してください");
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
+
+            if (IsInScreen(position, name))
+                spriteBatch.Draw(textures[name], position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
+        }
+
+        /// <summary>
         /// 数字の描画（整数のみ版）
         /// </summary>
         /// <param name="name">アセット名</param>

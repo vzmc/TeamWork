@@ -133,7 +133,9 @@ namespace TeamWorkGame.Scene
         private void CameraControl()
         {
             Vector2 pos = camera.AimPosition;
-            pos += input.RightVelocity() * 15;
+            //カメラの移動 矢印キーに変更
+            //pos += input.RightVelocity() * 15;
+            pos += input.Velocity() * 15;
             camera.SetAimPosition(pos);
         }
 
@@ -159,7 +161,7 @@ namespace TeamWorkGame.Scene
             if (!isClear && !isOver && !isPause)
             {
                 //カメラ操作中、別の操作は不可
-                if (input.CheckDownKey(Keys.RightControl, Buttons.LeftShoulder))
+                if (input.CheckDownKey(Parameter.CameraKey, Parameter.CameraButton))
                 {
                     isView = true;
                     player.IsView = isView;

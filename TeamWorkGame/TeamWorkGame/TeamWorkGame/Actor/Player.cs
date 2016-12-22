@@ -129,6 +129,7 @@ namespace TeamWorkGame.Actor
             lowSidewaysAnime = new Animation(Renderer.GetTexture("lowSideAnime"), 0.1f, true);
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
+            animePlayer.PlayAnimation(standAnime);
 
             jumpEffectTimer = new Timer(0.15f);
             jumpEffectTimer.CurrentTime = 0;
@@ -156,6 +157,7 @@ namespace TeamWorkGame.Actor
         {
             if (diretion == Direction.UP)// && !IsThrowing())
             {
+                animePlayer.PlayAnimation(standAnime);
                 playerMotion = PlayerMotion.STAND;
             }
         }
@@ -370,42 +372,34 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// プレイヤーの移動系の処理全般
+        /// プレイヤーの移動系の処理
         /// </summary>
         private void MoveMotion()
         {
-            //立つ状態の切り替え判断
-            if (FireNum != 0)
+            Stand();
+            if(velocity.X != 0)
             {
-                Stand();
+                Run();
             }
             else
             {
-                LowStand();
+                StandSideWays();
             }
+        }
+
+        /// <summary>
+        /// プレイヤーの移動系の処理（弱い）
+        /// </summary>
+        private void LowMoveMotion()
+        {
+            LowStand();
             if (velocity.X != 0)
             {
-                if (FireNum != 0)
-                {
-                    //走る状態の切り替え判断
-                    Run();
-                }
-                else
-                {
-                    LowRun();
-                }
+                LowRun();
             }
             else
             {
-                //横向き状態
-                if (FireNum != 0)
-                {
-                    StandSideWays();
-                }
-                else
-                {
-                    LowStandSideWays();
-                }
+                LowStandSideWays();
             }
         }
 
@@ -624,8 +618,15 @@ namespace TeamWorkGame.Actor
 
             if (!IsThrowing())
             {
-                //移動モーション関係はメソッド化by長谷川 12/15
-                MoveMotion();
+                if (FireNum != 0)
+                {
+                    //移動モーション関係はメソッド化by長谷川 12/15
+                    MoveMotion();
+                }
+                else
+                {
+                    LowMoveMotion();
+                }
             }
             //火と位置交換処理
             Teleport();
@@ -671,20 +672,21 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
+            //必要ないっぽいのでコメントアウトby長谷川
             //状態によって描画方法が変わる
-            if (IsStanding())
-            {
-                animePlayer.PlayAnimation(standAnime);
-                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-            }
-            if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRunning() || IsLowSideWays() || IsLowStanding())
-            {
+            //if (IsStanding())
+            //{
+
+            //    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+            //}
+            //if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRunning() || IsLowSideWays() || IsLowStanding())
+            //{
                 if (diretion == Direction.RIGHT)
                     flip = SpriteEffects.FlipHorizontally;
                 else if (diretion == Direction.LEFT)
                     flip = SpriteEffects.None;
                 animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-            }
+            //}
 
             //JumpのEffect描画
             if (!fallEffectTimer.IsTime())
@@ -713,52 +715,52 @@ namespace TeamWorkGame.Actor
             //
         }
 
-        public bool IsLowStanding()
-        {
-            return playerMotion == PlayerMotion.LOWSTAND;
-        }
+        //public bool IsLowStanding()
+        //{
+        //    return playerMotion == PlayerMotion.LOWSTAND;
+        //}
 
-        /// <summary>
-        /// 立っている状態ならtrue
-        /// </summary>
-        /// <returns></returns>
-        public bool IsStanding()
-        {
-            return playerMotion == PlayerMotion.STAND;
-        }
+        ///// <summary>
+        ///// 立っている状態ならtrue
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool IsStanding()
+        //{
+        //    return playerMotion == PlayerMotion.STAND;
+        //}
 
-        public bool IsLowSideWays()
-        {
-            return playerMotion == PlayerMotion.LOWSIDEWAYS;
-        }
+        //public bool IsLowSideWays()
+        //{
+        //    return playerMotion == PlayerMotion.LOWSIDEWAYS;
+        //}
 
-        /// <summary>
-        /// 横向き状態ならtrue
-        /// </summary>
-        /// <returns></returns>
-        public bool IsSideWays()
-        {
-            return playerMotion == PlayerMotion.SIDEWAYS;
-        }
+        ///// <summary>
+        ///// 横向き状態ならtrue
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool IsSideWays()
+        //{
+        //    return playerMotion == PlayerMotion.SIDEWAYS;
+        //}
 
-        public bool IsLowRunning()
-        {
-            return playerMotion == PlayerMotion.LOWRUN;
-        }
+        //public bool IsLowRunning()
+        //{
+        //    return playerMotion == PlayerMotion.LOWRUN;
+        //}
 
-        /// <summary>
-        /// 移動している状態ならtrue
-        /// </summary>
-        /// <returns></returns>
-        public bool IsRunning()
-        {
-            return playerMotion == PlayerMotion.RUN;
-        }
+        ///// <summary>
+        ///// 移動している状態ならtrue
+        ///// </summary>
+        ///// <returns></returns>
+        //public bool IsRunning()
+        //{
+        //    return playerMotion == PlayerMotion.RUN;
+        //}
 
-        /// <summary>
-        /// 投げている状態ならtrue
-        /// </summary>
-        /// <returns></returns>
+        ///// <summary>
+        ///// 投げている状態ならtrue
+        ///// </summary>
+        ///// <returns></returns>
         public bool IsThrowing()
         {
             return playerMotion == PlayerMotion.THROW;
@@ -781,7 +783,14 @@ namespace TeamWorkGame.Actor
         {
             if (animePlayer.FrameNow() == animePlayer.Animation.FrameCount - 1)
             {
-                MoveMotion();
+                if (FireNum != 0)
+                {
+                    MoveMotion();
+                }
+                else
+                {
+                    LowMoveMotion();
+                }
                 animePlayer.ResetAnimation(animation);
             }
         }
