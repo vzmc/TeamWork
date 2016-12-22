@@ -102,6 +102,9 @@ namespace TeamWorkGame.Scene
                 { "firework", path},    //2016.12.21 by柏 clear演出用
                 {"treeAnime", path},
                 {"lowSideAnime",path},
+                {"diagonalWater",path},
+                {"verticalWater",path},
+                {"horizontalWater",path},
             };
 
             return list;

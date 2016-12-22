@@ -18,7 +18,7 @@ namespace TeamWorkGame.Actor
 {
     public class Water : GameObject
     {
-        public Water(Vector2 pos, Vector2 velo) : base("vater", pos, velo, true, "Water")
+        public Water(Vector2 pos, Vector2 velo) : base("water", pos, velo, true, "Water")
         {
 
         }
