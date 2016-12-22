@@ -134,8 +134,15 @@ namespace TeamWorkGame.Scene
         {
             Vector2 pos = camera.AimPosition;
             //カメラの移動 矢印キーに変更
-            //pos += input.RightVelocity() * 15;
-            pos += input.Velocity() * 15;
+           
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                pos += input.RightVelocity() * 15;
+            }
+            else
+            {
+                pos += input.Velocity() * 15;
+            }
             camera.SetAimPosition(pos);
         }
 

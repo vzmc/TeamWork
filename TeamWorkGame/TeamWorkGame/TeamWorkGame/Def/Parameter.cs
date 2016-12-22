@@ -53,7 +53,7 @@ namespace TeamWorkGame.Def
         public const float StrawColTime = 0.03f;   //藁ブロックの当たり判定が消えるまでの時間
         public const float StrawBurn = 0.2f;       //藁ブロックの火が燃え移り始めるまでの時間        ※11/30現在、当たり判定がなくなってから火が燃え移り始める。
         public const float StrawAnimeTime = 0.5f;  //藁ブロックアニメ―ションの時間
-        public const float TreeColTime = 0.01f;    //木ブロックの当たり判定が消えるまでの時間
+        public const float TreeColTime = 0.3f;    //木ブロックの当たり判定が消えるまでの時間
         public const float TreeAnimeTime = 5.0f;   //木ブロックアニメーションの時間
         public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
         public const float WoodSpawnTime = 2.0f;   //木材ブロックの復活時間
