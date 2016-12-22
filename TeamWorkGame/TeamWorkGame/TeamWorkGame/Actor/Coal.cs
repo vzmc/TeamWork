@@ -130,7 +130,10 @@ namespace TeamWorkGame.Actor
             {
                 if(((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数を回復
                 {
-                    ((Player)other).FireNum = ((Player)other).FireNum + 1;
+                    if (!isMove)
+                    {
+                        ((Player)other).FireNum = ((Player)other).FireNum + 1;
+                    }
                 }
                 prevIsMove = isMove;
                 isMove = true;
