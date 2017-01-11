@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////
 // SceneType
-// 最終修正時間：2016年10月13日
-// By　葉梨竜太
+// 最終修正時間：2011年1月11日
+// By　柏
 /////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -22,6 +22,7 @@ namespace TeamWorkGame.Scene
         SmallStage,
         StageIn,        //Stageに入る時の表示Scene　By　氷見悠人
         PlayScene,
-        Ending
+        Ending,
+        None,   //by柏　エラー防ぐ
     }
 }

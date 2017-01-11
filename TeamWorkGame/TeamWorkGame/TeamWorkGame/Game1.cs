@@ -83,7 +83,10 @@ namespace TeamWorkGame
             //‚Q‚O‚P‚U”N‚P‚OŒ‚P‚R“ú
             sceneManager.Add(SceneType.SmallStage, new SmallStage(gameDevice));
             sceneManager.Add(SceneType.PlayScene, new PlayScene(gameDevice, 0));
-            //sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
+
+            //ƒGƒ“ƒfƒBƒ“ƒO‰‰o’Ç‰Á@by”@2017.1.11
+            //sceneManager.Add(SceneType.ToEnd, new ToEnd(1.2f));
+            sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
 
 
             sceneManager.Change(new NextScene(SceneType.Load, -1));

@@ -2,7 +2,9 @@
 // シーンの管理
 // 作成時間：2016/9/23
 // 作成者：氷見悠人
-// 修正時間：2016/12/21　　Scene終了のFadeInOut
+// 修正時間：2017/1/11
+// 修正者：柏
+// 修正内容：lastStageClearのフェイド処理
 //////////////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -75,7 +77,6 @@ namespace TeamWorkGame.Scene
             }
 
             currentScene = scenes[nxetScene.sceneType];
-
             currentScene.Initialize(nxetScene.stageIndex);
         }
 
@@ -115,19 +116,44 @@ namespace TeamWorkGame.Scene
 
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            if (currentScene == null)
-            {
+            if (currentScene == null) {
                 return;
             }
-            else
-            {
+            else {
                 currentScene.Draw(gameTime, renderer);
             }
 
             if(alpha > 0)
             {
-                renderer.DrawTexture("fadein", Vector2.Zero, alpha);
+                if (IsLastStage()) {
+                    fadeTime = 1f;
+                    renderer.DrawTexture("fadeEnd", Vector2.Zero, alpha);
+                }
+                else {
+                    fadeTime = 0.2f;
+                    renderer.DrawTexture("fadein", Vector2.Zero, alpha);
+                }
             }
         }
+
+        /// <summary>
+        /// lastStageチェック by柏　2017.1.11
+        /// </summary>
+        /// <returns></returns>
+        private bool IsLastStage() {
+            SceneType nextSceneType = currentScene.GetNext().sceneType;
+            SceneType currentSceneType = SceneType.None;
+            foreach (var s in scenes) {
+                if (s.Value == currentScene) {
+                    currentSceneType = s.Key;
+                }
+            }
+            if ((currentSceneType == SceneType.PlayScene && nextSceneType == SceneType.Ending) ||
+                (currentSceneType == SceneType.Ending    && nextSceneType == SceneType.Title)){
+                return true;
+            }
+            return false;
+        }
+
     }
 }

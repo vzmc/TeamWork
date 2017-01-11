@@ -1,6 +1,6 @@
 ﻿/////////////////////////
-//最終更新日　2016.12.21 
-//更新者　by柏 clear演出用画像追加
+//最終更新日　2016.1.11
+//更新者　by柏 End演出用画像追加
 /////////////////////////
 using System;
 using System.Collections.Generic;
@@ -99,12 +99,14 @@ namespace TeamWorkGame.Scene
                 {"lowRunAnime", path},
                 {"credit",path},
                 {"titleback",path},
-                { "firework", path},    //2016.12.21 by柏 clear演出用
+                {"firework", path},    //2016.12.21 by柏 clear演出用
                 {"treeAnime", path},
                 {"lowSideAnime",path},
                 {"diagonalWater",path},
                 {"verticalWater",path},
                 {"horizontalWater",path},
+                {"fadeEnd",path},      //2016.1.11 by柏 end演出用
+                {"ToTitleText",path}      //2016.1.11 by柏 end演出用
                 {"coaleffect",path},//葉梨竜太
                 {"goalsign",path},
                 {"bombEffect",path},
@@ -245,5 +247,7 @@ namespace TeamWorkGame.Scene
             NextScene nextScene = new NextScene(SceneType.Title, -1);
             return nextScene;
         }
+
+        public NextScene GetNext() { return Next(); }
     }
 }

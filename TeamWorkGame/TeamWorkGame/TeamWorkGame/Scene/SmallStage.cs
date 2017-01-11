@@ -223,6 +223,20 @@ namespace TeamWorkGame.Scene
             return nextScene;
         }
 
+        public NextScene GetNext()
+        {
+            NextScene nextScene;
+            if (isBack)
+            {
+                nextScene = new NextScene(SceneType.Stage, stageIndex);
+            }
+            else
+            {
+                nextScene = new NextScene(SceneType.StageIn, mapIndex + stageIndex);
+            }
+            return nextScene;
+        }
+
         public void ShutDown()
         {
 

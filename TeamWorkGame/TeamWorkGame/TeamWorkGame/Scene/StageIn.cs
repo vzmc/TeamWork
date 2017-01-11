@@ -57,6 +57,10 @@ namespace TeamWorkGame.Scene
             return nextScene;
         }
 
+        public NextScene GetNext() {
+            return Next();
+        }
+
         public void ShutDown()
         {
 

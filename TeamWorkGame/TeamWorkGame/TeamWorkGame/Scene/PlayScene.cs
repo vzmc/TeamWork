@@ -152,7 +152,9 @@ namespace TeamWorkGame.Scene
         private void ClearShow() {
             if (!isClear) { return; }
             if (clearLevel > 0) { particleControl.Update(); }
-            if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.IsClear = true; }
+            if (clearLevel > Parameter.ClearSelectLevel) {
+                clearSelect.IsClear = true;     //選択できるようになる
+            }
             clearLevelTimer.Update();
             if (clearLevelTimer.IsTime()) {
                 clearLevel++;
@@ -161,26 +163,31 @@ namespace TeamWorkGame.Scene
         }
 
         /// <summary>
-        /// ゴール後処理  by柏
+        /// ゴール後処理  by柏  2016.12.22
         /// </summary>
         private void Goal() {
             if (map.GetGoal() == null) { return; }
             if (!map.GetGoal().IsOnFire) { return; }
+            isClear = true;
+            sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
+            clearLevel = 0;     //by柏 Clear段階表示はじめ 2016.12.22
+
             stageSaver.ClearStage = mapIndex;
             stageSaver.PlayTime = playTime / 60;
             stageSaver.CurrentStage = mapIndex;
             stageSaver.Charcoal = coals.Count - nowCoals.Count;
             stageSaver.SaveStageData();
-            sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
-            isClear = true;
-
-            clearLevel = 0;     //by柏 Clear段階表示はじめ
-            //FuncSwitch.AllAnimetionPause = true;
         }
 
 
         public void Update(GameTime gameTime)
         {
+            if (isClear && mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1) {
+                clearSelect.GetSelect = 0;
+                isEnd = true;
+                return;
+            }
+
             StartTimer.Update();
             if (StartTimer.IsTime())
             {
@@ -266,7 +273,7 @@ namespace TeamWorkGame.Scene
                     //マップの更新
                     //map.Update(gameTime);
 
-                    Goal();
+                    Goal();     //ゴール後処理  by柏  2016.12.22
 
                     //葉梨竜太
                     if (player.IsDead)
@@ -373,13 +380,9 @@ namespace TeamWorkGame.Scene
 
             waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
-
-
-            DrawClear(renderer, gameTime);    //2015.12.22 by柏 Clearの段階的表示
+            //2015.12.22 by柏 Clearの段階的表示
+            DrawClear(renderer, gameTime);    
             
-
-            //clearSelect.Draw(gameTime, renderer, camera.Scale); //ClearSelectの引数を変更したためこちらも変更
-
             fireMeter.Draw(renderer, player);
 
             //炭の取得数を描画 By佐瀬拓海
@@ -388,12 +391,8 @@ namespace TeamWorkGame.Scene
             renderer.DrawNumber("number", new Vector2(1154, 16), "/", 1);
             renderer.DrawNumber2("number", new Vector2(1218, 16), coals.Count, 2);
 
-            
-            //playTimeの表示(柏)
-            //int[] playtime = stageSever.TimeCalculat(playTime/60);
-            //renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
-            //renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
-            //renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
+            //2015.12.22 by柏 playTimeの表示(非表示中)
+            //ShowPlayTime(renderer);
 
             if (!StartTimer.IsTime())
             {
@@ -405,29 +404,31 @@ namespace TeamWorkGame.Scene
         /// <summary>
         /// Clear段階表示 by柏
         /// </summary>
-        /// <param name="renderer"></param>
-        /// <param name="gameTime"></param>
+        /// <param name="renderer">描画用クラス</param>
+        /// <param name="gameTime">ゲーム時間</param>
         public void DrawClear(Renderer renderer, GameTime gameTime) {
-            if (isClear && clearLevel >= 0)
-            {
-                
-                if (clearLevel < Parameter.ClearFireworksLevel) {
-                    int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2 * (1 - clearLevelTimer.Rate()));
-                    int Y = 100;
-                    renderer.DrawTexture("clear", new Vector2(X, Y), 1 - clearLevelTimer.Rate(), 1);
-                } else {
-                    int X = Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2;
-                    int Y = 100;
-                    renderer.DrawTexture("clear", new Vector2(X, Y));
-                }
-                
-                if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
-                if (clearLevel > 0) { particleControl.Draw(renderer); }
-
-            }
-            else {
+            if (clearLevel < 0) {
                 clearSelect.Draw(gameTime, renderer, camera.Scale);
+                return;
             }
+            float size = (clearLevel < Parameter.ClearFireworksLevel) ? (1 - clearLevelTimer.Rate()) : 1.0f;
+            int Y = 100;
+            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2 * size);
+            renderer.DrawTexture("clear", new Vector2(X, Y), size, 1);
+
+            particleControl.Draw(renderer);
+            if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
+        }
+
+        /// <summary>
+        /// プレータイムの表示
+        /// </summary>
+        /// <param name="renderer"></param>
+        public void ShowPlayTime(Renderer renderer) {
+            int[] playtime = stageSaver.TimeCalculat(playTime / 60);
+            renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
+            renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
+            renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
         }
 
 
@@ -457,14 +458,16 @@ namespace TeamWorkGame.Scene
                 if (mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1)
                 {
                     mapIndex = 0;
+                    nextScene = new NextScene(SceneType.Ending, -1);
                 }
                 else
                 {
                     mapIndex++;
+                    nextScene = new NextScene(SceneType.StageIn, mapIndex);
                 }
 
                 //nextScene = new NextScene(SceneType.PlayScene, mapIndex);
-                nextScene = new NextScene(SceneType.StageIn, mapIndex);
+               
             }
             else if (clearSelect.GetSelect == 1)
             {     //RePlay
@@ -480,5 +483,31 @@ namespace TeamWorkGame.Scene
 
             return nextScene;
         }
+
+        public NextScene GetNext() {
+            NextScene nextScene;
+            if (clearSelect.GetSelect == 0)
+            { 
+                if (mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1)
+                {
+                    nextScene = new NextScene(SceneType.Ending, -1);
+                }
+                else
+                {
+                    nextScene = new NextScene(SceneType.StageIn, mapIndex);
+                }
+            }
+            else if (clearSelect.GetSelect == 1)
+            {     //RePlay
+                nextScene = new NextScene(SceneType.PlayScene, mapIndex);
+            }
+            else
+            {     //World
+                nextScene = new NextScene(SceneType.Stage, -1);
+            }
+            return nextScene;
+        }
+
+
     }
 }

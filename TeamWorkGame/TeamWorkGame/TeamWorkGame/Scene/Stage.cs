@@ -166,6 +166,19 @@ namespace TeamWorkGame.Scene
             return nextScene;
         }
 
+        public NextScene GetNext() {
+            NextScene nextScene;
+            if (isBack == true)
+            {
+                nextScene = new NextScene(SceneType.Title);
+            }
+            else
+            {
+                nextScene = new NextScene(SceneType.SmallStage, mapIndex * 6);
+            }
+            return nextScene;
+        }
+
         public void ShutDown()
         {
         }

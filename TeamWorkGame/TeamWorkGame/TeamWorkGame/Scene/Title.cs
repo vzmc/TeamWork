@@ -126,5 +126,27 @@ namespace TeamWorkGame.Scene
 
             return nextScene;
         }
+
+        public NextScene GetNext() {
+            NextScene nextScene;
+
+            //選択肢によって、次のシーンに移す
+            if (titleSelect.GetSelect == 1)
+            {
+                //ステージ選択Sceneに入る
+                nextScene = new NextScene(SceneType.Stage, -1);
+            }
+            else if (titleSelect.GetSelect == 2)
+            {
+                //StaffSceneに入る（未完成）、暫定ステージ選択Sceneに入る
+                nextScene = new NextScene(SceneType.Credit, -1);
+            }
+            else
+            {
+                nextScene = new NextScene(SceneType.Stage, -1);
+            }
+            return nextScene;
+        }
+
     }
 }
