@@ -88,6 +88,8 @@ namespace TeamWorkGame.Actor
 
                 position += velocity;
 
+                effpos = position;
+
                 //マップ上の物と衝突区域判定
                 foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
                 {
