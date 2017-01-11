@@ -77,7 +77,6 @@ namespace TeamWorkGame.Actor
                 CollisionCheck(m);
             }
             
-            AliveUpdate();
             DeathUpdate();
             animationPlayer.PlayAnimation(bombEffect);
         }
