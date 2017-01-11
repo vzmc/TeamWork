@@ -57,7 +57,7 @@ namespace TeamWorkGame.Actor
         {
             velocity.Y += gForce;
 
-            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x.Tag != "Sand"))
+            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x != this))
             {
                 ObstacleCheck(m);
             }
