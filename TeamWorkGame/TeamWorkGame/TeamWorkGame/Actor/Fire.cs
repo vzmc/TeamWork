@@ -87,6 +87,10 @@ namespace TeamWorkGame.Actor
                 if (flag)
                 {
                     velocity = new Vector2(0, 10);
+                    if(IsOnGround)
+                    {
+                        velocity = Vector2.Zero;
+                    }
                     //相手の処理を実行する
                     other.EventHandle(this);
                 }
@@ -130,7 +134,7 @@ namespace TeamWorkGame.Actor
 
             //葉梨竜太
             //壁に当たるとvelocity = 0
-            if(Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 }))
+            if (Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 }))
             {
                 velocity = new Vector2(0, Parameter.FireFall);
             }

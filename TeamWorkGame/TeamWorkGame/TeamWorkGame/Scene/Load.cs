@@ -106,7 +106,7 @@ namespace TeamWorkGame.Scene
                 {"verticalWater",path},
                 {"horizontalWater",path},
                 {"fadeEnd",path},      //2016.1.11 by柏 end演出用
-                {"ToTitleText",path}      //2016.1.11 by柏 end演出用
+                {"ToTitleText",path},      //2016.1.11 by柏 end演出用
                 {"coaleffect",path},//葉梨竜太
                 {"goalsign",path},
                 {"bombEffect",path},

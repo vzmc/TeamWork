@@ -50,12 +50,14 @@ namespace TeamWorkGame.Actor
             //重力を付ける
             velocity.Y += gForce;
 
-            //マップ上の物と障害物判定
-            foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x.Tag != "Bomb"))
+            if (!IsTrigger)
             {
-                ObstacleCheck(m);
+                //マップ上の物と障害物判定
+                foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x != this))
+                {
+                    ObstacleCheck(m);
+                }
             }
-
             Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
             //地面にいると運動停止 //アニメーションが始まったら運動停止by長谷川
