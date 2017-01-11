@@ -465,6 +465,7 @@ namespace TeamWorkGame.Actor
                 return;
             }
 
+            //カメラ操作中は主人公に対する操作不可
             if (isView)
             {
                 inputState = new InputState();
@@ -478,11 +479,10 @@ namespace TeamWorkGame.Actor
             jumpEffectTimer.Update();
 
             //普通は空中摩擦
-            float friction = Parameter.AirFriction;
+            //float friction = Parameter.AirFriction;
 
             if (isOnGround)
             {
-                //カメラ操作中は主人公に対する操作不可
                 if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
                 {
                     velocity.Y = -Parameter.PlayerJumpPower;
@@ -491,31 +491,31 @@ namespace TeamWorkGame.Actor
                     jumpEffectPos = position;
                 }
                 //地上にいると、摩擦は地面摩擦
-                friction = Parameter.GroundFriction;
+                //friction = Parameter.GroundFriction;
 
                 //isOnGroundをReset
                 isOnGround = false;
             }
 
             //横方向のスピード計算
-            //velocity.X = inputState.Velocity().X * Parameter.MaxPlayerHorizontalSpeed;
-            velocity.X += inputState.Velocity().X * Parameter.PlayerAccelerationX;
+            velocity.X = inputState.Velocity().X * Parameter.MaxPlayerHorizontalSpeed;
+            //velocity.X += inputState.Velocity().X * Parameter.PlayerAccelerationX;
 
             //摩擦計算
-            friction = Math.Abs(velocity.X) > friction ? friction : velocity.X;
-            friction = friction * velocity.X > 0 ? -friction : friction;
+            //friction = Math.Abs(velocity.X) > friction ? friction : velocity.X;
+            //friction = friction * velocity.X > 0 ? -friction : friction;
 
-            velocity.X += friction;
+            //velocity.X += friction;
 
             //速度制限
-            if (velocity.X > Parameter.MaxPlayerHorizontalSpeed)
-            {
-                velocity.X = Parameter.MaxPlayerHorizontalSpeed;
-            }
-            else if (velocity.X < -Parameter.MaxPlayerHorizontalSpeed)
-            {
-                velocity.X = -Parameter.MaxPlayerHorizontalSpeed;
-            }
+            //if (velocity.X > Parameter.MaxPlayerHorizontalSpeed)
+            //{
+            //    velocity.X = Parameter.MaxPlayerHorizontalSpeed;
+            //}
+            //else if (velocity.X < -Parameter.MaxPlayerHorizontalSpeed)
+            //{
+            //    velocity.X = -Parameter.MaxPlayerHorizontalSpeed;
+            //}
 
             //方向判断
             if (velocity.X > 0 || inputState.Velocity().X > 0)
