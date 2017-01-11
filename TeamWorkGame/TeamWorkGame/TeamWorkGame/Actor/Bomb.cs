@@ -19,7 +19,6 @@ namespace TeamWorkGame.Actor
 {
     public class Bomb : GameObject
     {
-        private bool isToDeath;
         private Map map;
         protected Sound sound;       //2016.12.14、柏
         private float gForce;       //2016.12.21　佐瀬
@@ -38,7 +37,6 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            isToDeath = false;
             isShow = true;
             map = MapManager.GetNowMapData();
             gForce = Parameter.GForce;
@@ -76,11 +74,11 @@ namespace TeamWorkGame.Actor
             {
                 CollisionCheck(m);
             }
-
+            
+            AliveUpdate();
             DeathUpdate();
             animationPlayer.PlayAnimation(bombEffect);
         }
-
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
             renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
@@ -100,7 +98,7 @@ namespace TeamWorkGame.Actor
         {
             if (other is Fire)
             {
-                //other.IsDead = true;
+                ////other.IsDead = true;
                 sound.PlaySE("bomb1");
                 isShow = false;
             }
@@ -157,6 +155,5 @@ namespace TeamWorkGame.Actor
                 }
             }
         }
-
     }
 }

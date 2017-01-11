@@ -78,7 +78,7 @@ namespace TeamWorkGame.Device
         public void Draw(GameTime gameTime, Renderer renderer, Vector2 position, SpriteEffects spriteEffects, float cameraScale)
         {
             if (Animation == null)
-                throw new NotSupportedException("アニメション指定していません！");
+                throw new NotSupportedException("アニメーション指定していません！");
 
             if (!isPaused && !FuncSwitch.AllAnimetionPause)
             {

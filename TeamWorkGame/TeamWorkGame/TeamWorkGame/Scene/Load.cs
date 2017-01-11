@@ -105,6 +105,8 @@ namespace TeamWorkGame.Scene
                 {"diagonalWater",path},
                 {"verticalWater",path},
                 {"horizontalWater",path},
+                {"coaleffect",path},//葉梨竜太
+                {"goalsign",path},
                 {"bombEffect",path},
             };
 

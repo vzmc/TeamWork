@@ -2,8 +2,8 @@
 // プレーヤーのクラス
 // 作成時間：2016年9月24日
 // By 氷見悠人
-// 最終修正時間：2016年12月22日
-// エイムつけた By 葉梨竜太
+// 最終修正時間：2017年1月11日
+// 火の飛ぶ方向を上下左右に　By 葉梨竜太
 /////////////////////////////////////////////////
 
 using System;
@@ -143,7 +143,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void LowStand()
         {
-            if (diretion == Direction.UP)
+            if (diretion == Direction.UP || diretion == Direction.DOWN) //葉梨竜太　Down追加
             {
                 animePlayer.PlayAnimation(lowSidewaysAnime);
                 playerMotion = PlayerMotion.LOWSTAND;
@@ -155,7 +155,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void Stand()
         {
-            if (diretion == Direction.UP)// && !IsThrowing())
+            if (diretion == Direction.UP || diretion == Direction.DOWN)//葉梨竜太　Down追加// && !IsThrowing()) 
             {
                 animePlayer.PlayAnimation(standAnime);
                 playerMotion = PlayerMotion.STAND;
@@ -223,60 +223,47 @@ namespace TeamWorkGame.Actor
         {
             //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
             //Speedを固定にした
-            //葉梨竜太
-            //８方向に投げ分け対応 
+            //上下左右にした
 
-            if (inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+            if (diretion == Direction.UP||inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
             {
-                aim.Y = -Parameter.FireSpeed;
+                aim = new Vector2(0, -Parameter.FireSpeed);
+                aimpos = new Vector2(position.X, position.Y - 64);
             }
-            if (inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
-            {
-                aim.X = -Parameter.FireSpeed;
-                if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                {
-                    aim.Y = Parameter.FireSpeed;
-                }
-            }
-            if (inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
-            {
-                aim.X = Parameter.FireSpeed;
-                if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                {
-                    aim.Y = Parameter.FireSpeed;
-                }
-            }
+            else if (diretion == Direction.DOWN||inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+            {                
 
-            if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-            {
-                aimpos = new Vector2(position.X + ColRect.Width / 2 - 49 / 2, position.Y - 42);
+                aim = new Vector2(0, Parameter.FireSpeed);
+                aimpos =IsOnGround?position:new Vector2(position.X, position.Y + 64);
             }
-
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
             {
-                    aimpos = new Vector2(position.X - ColRect.Width, position.Y-42);
-                    if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                    {
-                        aimpos = new Vector2(position.X - ColRect.Width, position.Y);
-                    }
-                else if(diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                {
-                    aimpos = new Vector2(position.X + ColRect.Width / 2 - 49 / 2, position.Y - 42);
-                }
+                aim = new Vector2(-Parameter.FireSpeed, 0);
+                aimpos = new Vector2(position.X - 42, position.Y - 32);
             }
-
             else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
             {
-                    aimpos =  new Vector2(position.X + ColRect.Width, position.Y-42);
-                    if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-                    {
-                        aimpos = new Vector2(position.X + ColRect.Width, position.Y);
-                    }
-                    else if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-                    {
-                        aimpos = new Vector2(position.X + ColRect.Width / 2 - 49 / 2, position.Y - 42);
-                    }
+                aim = new Vector2(Parameter.FireSpeed, 0);
+                aimpos = new Vector2(position.X + 42, position.Y - 32);
             }
+
+
+            //if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+            //{
+            //    aimpos = new Vector2(position.X, position.Y - 64);
+            //}
+            //else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+            //{
+            //    aimpos = new Vector2(position.X, position.Y + 64);
+            //}
+            //else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
+            //{
+            //    aimpos = new Vector2(position.X - 64, position.Y-32);
+            //}
+            //else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
+            //{
+            //    aimpos = new Vector2(position.X + 64, position.Y - 32);                    
+            //}
 
             if (fireNum > 0)
             {
@@ -530,6 +517,10 @@ namespace TeamWorkGame.Actor
             {
                 diretion = Direction.UP;
             }
+            else if (inputState.Velocity().Y > 0)//葉梨竜太
+            {
+                diretion = Direction.DOWN;
+            }
 
             //縦スピード計算
             velocity.Y += gForce;
@@ -693,7 +684,7 @@ namespace TeamWorkGame.Actor
                 }
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
-            if (!IsDeath())
+            if (!IsDeath()&&fireNum > 0)//葉梨竜太
                 renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
         }
 

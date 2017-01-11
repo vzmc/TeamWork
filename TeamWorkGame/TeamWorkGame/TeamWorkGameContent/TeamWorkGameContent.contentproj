@@ -661,6 +661,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Texture\coaleffect.png">
+      <Name>coaleffect</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Texture\goalsign.png">
+      <Name>goalsign</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Texture\bombEffect.png">
       <Name>bombEffect</Name>
       <Importer>TextureImporter</Importer>

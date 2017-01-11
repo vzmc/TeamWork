@@ -2,7 +2,9 @@
 //マップのゴール
 //作成時間：2016/10/1
 //作成者：氷見悠人
-//最終修正：　by柏　2016.12.14 ＳＥ実装
+//最終修正時間：2017/1/11
+//ゴールの上の矢印を付けた
+//By　葉梨竜太　
 ////////////////////////////////////////////////////
 
 using System;
@@ -27,6 +29,11 @@ namespace TeamWorkGame.Actor
         private Camera camera;
         private bool isOnFire;
         private Sound sound;    //by柏　2016.12.14　ＳＥ実装
+        //葉梨竜太
+        private Vector2 signpos;
+        private Vector2 signvelo;
+        private Vector2 startpos;
+        private Vector2 endpos;
         public bool IsOnFire
         {
             get
@@ -75,6 +82,12 @@ namespace TeamWorkGame.Actor
             alpha = 0;
             isComplete = false;
             isOnFire = false;
+            //葉梨竜太
+            signpos = position - new Vector2(0, 64);
+            startpos = signpos;
+            endpos = startpos - new Vector2(0, 32);
+            signvelo = new Vector2(0, 1);
+
         }
 
         protected override Rectangle InitLocalColRect()
@@ -106,7 +119,26 @@ namespace TeamWorkGame.Actor
                     //FuncSwitch.AllAnimetionPause = false;
                     camera.SetLimitView(true);
                     alpha = 1.0f;
+
                 }
+            }
+            //葉梨竜太
+            SignMove();
+        }
+        //葉梨竜太
+        /// <summary>
+        /// 動く矢印
+        /// </summary>
+        public void SignMove()
+        {
+            signpos += signvelo;
+            if(signpos.Y >= startpos.Y)
+            {
+                signvelo = new Vector2(0, -1);
+            }
+            if(signpos.Y <= endpos.Y)
+            {
+                signvelo = new Vector2(0, 1);
             }
         }
 
@@ -131,6 +163,8 @@ namespace TeamWorkGame.Actor
             if (state == GoalState.APPEARING || state == GoalState.SHOW)
             {
                 base.Draw(gameTime, renderer, offset, cameraScale);
+                //葉梨竜太
+                renderer.DrawTexture("goalsign", signpos*cameraScale+offset);
             }
         }
 
