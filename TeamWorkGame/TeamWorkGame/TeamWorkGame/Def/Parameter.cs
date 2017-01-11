@@ -54,6 +54,7 @@ namespace TeamWorkGame.Def
         //葉梨竜太
         public const int FireFall = 8;                  //火の落ちる速度
 
+        //ギミック関連
         public const int FireMaxNum = 5;                //火の総量   
         public const int FirstFireNum = 2;           //最初の火の量
         public const int MoveLightSpeed = 3;        //動く松明の速度
@@ -72,6 +73,8 @@ namespace TeamWorkGame.Def
         public const float IceAnimeTime = 1.0f;    //アイスブロックアニメーションの時間
         public const float IceSpawnTime = 2.0f;    //アイスブロックの復活時間
         public const float WaterFlowSpeed = 0.3f;  //水が下のマスに流れるまでの時間
+        public const float BombColTime = 1.0f;     //爆弾が消えるまでの時間
+        public const float BombAnimeTime = 0.5f;   //爆発エフェクトのアニメーション時間
 
         //必要な火の量(数字以上で燃える)
         public const int icefire = 2;

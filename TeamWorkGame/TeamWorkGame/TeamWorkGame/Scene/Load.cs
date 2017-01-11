@@ -105,6 +105,7 @@ namespace TeamWorkGame.Scene
                 {"diagonalWater",path},
                 {"verticalWater",path},
                 {"horizontalWater",path},
+                {"bombEffect",path},
             };
 
             return list;
