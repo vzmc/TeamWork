@@ -148,8 +148,8 @@ namespace TeamWorkGame.Scene
                     currentSceneType = s.Key;
                 }
             }
-            if ((currentSceneType == SceneType.PlayScene && nextSceneType == SceneType.Ending) ||
-                (currentSceneType == SceneType.Ending    && nextSceneType == SceneType.Title)){
+            if ((currentSceneType == SceneType.PlayScene && nextSceneType == SceneType.Ending && currentScene.IsEnd()) ||
+                (currentSceneType == SceneType.Ending    && nextSceneType == SceneType.Title && !currentScene.IsEnd())){
                 return true;
             }
             return false;
