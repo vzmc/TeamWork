@@ -30,7 +30,7 @@ namespace TeamWorkGame.Actor
         private Vector2 startpos;　　　　　　　//投げだした位置
         private Animation fireAnime;
         private AnimationPlayer animePlayer;
-
+        private bool isFall;
 
         public Fire(Vector2 position, Vector2 velocity, List<WaterLine> waterline) : base("fire", position, velocity, true, "Fire")
         {
@@ -48,6 +48,7 @@ namespace TeamWorkGame.Actor
             //葉梨竜太
             startpos = position;
             fireAnime = new Animation(Renderer.GetTexture("fireAnime"), 0.1f, true);
+            isFall = false;
         }
 
         protected override Rectangle InitLocalColRect()
@@ -86,11 +87,11 @@ namespace TeamWorkGame.Actor
                 flag = base.ObstacleCheck(other);
                 if (flag)
                 {
-                    velocity = new Vector2(0, 10);
-                    if(IsOnGround)
-                    {
-                        velocity = Vector2.Zero;
-                    }
+                    isFall = true;
+                    //if (IsOnGround)
+                    //{
+                    //    velocity = Vector2.Zero;
+                    //}
                     //相手の処理を実行する
                     other.EventHandle(this);
                 }
@@ -105,10 +106,12 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
-            if(isGoDie)
+            if (isGoDie)
             {
                 isDead = true;
             }
+
+            isOnGround = false;
             //velocity.Y += gForce;
             //葉梨竜太
             //一定時間飛んだら落ちる
@@ -119,31 +122,43 @@ namespace TeamWorkGame.Actor
             //    timer.Initialize();
             //}
 
-            //葉梨竜太
-            if (Math.Sqrt((position.X - startpos.X)*(position.X-startpos.X)+(position.Y - startpos.Y)*(position.Y-startpos.Y))>= Parameter.FireFly*64)
+            if (isFall)
             {
                 velocity = new Vector2(0, Parameter.FireFall);
+            }
+
+            //葉梨竜太
+            if (Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 })
+                || Math.Sqrt((position.X - startpos.X) * (position.X - startpos.X) + (position.Y - startpos.Y) * (position.Y - startpos.Y)) >= Parameter.FireFly * 64 )
+            {
+                isFall = true;
             }
 
             //マップ上の物と障害物判定
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger))
             {
                 ObstacleCheck(m);
-               
             }
+
+            //Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
             //葉梨竜太
             //壁に当たるとvelocity = 0
-            if (Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 }))
-            {
-                velocity = new Vector2(0, Parameter.FireFall);
-            }
+            //if ()
+            //{
+            //    velocity = new Vector2(0, Parameter.FireFall);
+            //}
+
+
+            
 
             //地面にいると運動停止
-            if (isOnGround)
-            {
-                velocity = Vector2.Zero;
-            }
+            //if (isOnGround)
+            //{
+            //    velocity = Vector2.Zero;
+            //}
+
+
 
             position += velocity;
 
@@ -151,17 +166,13 @@ namespace TeamWorkGame.Actor
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
                 CollisionCheck(m);
-                
             }
 
-            
             foreach (var wl in watersList)
             {
                 foreach (var w in wl.Waters)
                     CollisionCheck(w);
             }
-
-           
         }
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
@@ -184,7 +195,7 @@ namespace TeamWorkGame.Actor
         /// <param name="other"></param>
         public override void EventHandle(GameObject other)
         {
-            if(other is Player)
+            if (other is Player)
             {
                 if (((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数がMax以上にならないよう変更
                 {

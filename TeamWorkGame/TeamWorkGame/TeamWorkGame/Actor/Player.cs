@@ -58,6 +58,10 @@ namespace TeamWorkGame.Actor
         private bool isOnBalloon;   //気球に乗ってるかどうか
 
         private bool isView;                        //カメラ操作中か？
+
+        private List<FireDust> fireDustList;
+        private Timer makeFireDustTimer;
+
         public bool IsView
         {
             get
@@ -136,6 +140,45 @@ namespace TeamWorkGame.Actor
             fallEffectTimer = new Timer(0.15f);
             fallEffectTimer.CurrentTime = 0;
             aim = new Vector2(Parameter.FireSpeed, 0);
+
+            //FireDust
+            fireDustList = new List<FireDust>();
+            makeFireDustTimer = new Timer(0.1f);
+        }
+
+        private void MakeFireDust()
+        {
+            if(velocity.LengthSquared() > 1)
+            {
+                if(makeFireDustTimer.IsTime())
+                {
+                    fireDustList.Add(new FireDust(position, Vector2.Zero));
+                    makeFireDustTimer.Initialize();
+                }
+            }
+            else
+            {
+                makeFireDustTimer.Initialize();
+            }
+        }
+
+        private void UpdateFireDust(GameTime gameTime)
+        {
+            makeFireDustTimer.Update();
+            fireDustList.RemoveAll(x => x.IsDead);
+            MakeFireDust();
+            foreach (var f in fireDustList)
+            {
+                f.Update(gameTime);
+            }
+        }
+
+        private void DrawFireDust(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
+        {
+            foreach (var f in fireDustList)
+            {
+                f.Draw(gameTime, renderer, offset, cameraScale);
+            }
         }
 
         /// <summary>
@@ -615,6 +658,7 @@ namespace TeamWorkGame.Actor
             ThrowFire();
             //}
 
+            UpdateFireDust(gameTime);
 
             if (playerMotion == PlayerMotion.THROW)
             {
@@ -650,6 +694,7 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
+            DrawFireDust(gameTime, renderer, offset, cameraScale);
             //必要ないっぽいのでコメントアウトby長谷川
             //状態によって描画方法が変わる
             //if (IsStanding())
@@ -659,7 +704,7 @@ namespace TeamWorkGame.Actor
             //}
             //if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRunning() || IsLowSideWays() || IsLowStanding())
             //{
-                if (diretion == Direction.RIGHT)
+            if (diretion == Direction.RIGHT)
                     flip = SpriteEffects.FlipHorizontally;
                 else if (diretion == Direction.LEFT)
                     flip = SpriteEffects.None;
@@ -685,7 +730,11 @@ namespace TeamWorkGame.Actor
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
             if (!IsDeath()&&fireNum > 0)//葉梨竜太
+            {
                 renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
+            }
+
+            
         }
 
         public override void EventHandle(GameObject other)

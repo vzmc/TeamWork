@@ -110,6 +110,7 @@ namespace TeamWorkGame.Scene
                 {"coaleffect",path},//葉梨竜太
                 {"goalsign",path},
                 {"bombEffect",path},
+                {"FireDust", path},
             };
 
             return list;
