@@ -149,13 +149,20 @@ namespace TeamWorkGame.Actor
             isthrow = true;
         }
 
+        /// <summary>
+        /// 火の粉を生成
+        /// </summary>
         private void MakeFireDust()
         {
+            if(fireNum <= 0)
+            {
+                return;
+            }
             if(velocity.LengthSquared() > 1)
             {
                 if(makeFireDustTimer.IsTime())
                 {
-                    fireDustList.Add(new FireDust(position, Vector2.Zero));
+                    fireDustList.Add(new FireDust(position, Vector2.Zero, fireNum));
                     makeFireDustTimer.Initialize();
                 }
             }
@@ -165,6 +172,10 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        /// <summary>
+        /// 火の粉の更新処理
+        /// </summary>
+        /// <param name="gameTime"></param>
         private void UpdateFireDust(GameTime gameTime)
         {
             makeFireDustTimer.Update();
@@ -176,6 +187,13 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        /// <summary>
+        /// 火の粉の描画処理
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="renderer"></param>
+        /// <param name="offset"></param>
+        /// <param name="cameraScale"></param>
         private void DrawFireDust(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
             foreach (var f in fireDustList)
@@ -666,6 +684,7 @@ namespace TeamWorkGame.Actor
             ThrowFire();
             //}
 
+            //火の粉の更新処理
             UpdateFireDust(gameTime);
 
             if (playerMotion == PlayerMotion.THROW)

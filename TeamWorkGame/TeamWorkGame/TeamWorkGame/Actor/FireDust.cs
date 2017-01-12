@@ -1,5 +1,5 @@
 ﻿// 
-//火の粉
+//火の粉　By　氷見悠人
 //
 
 using System;
@@ -18,19 +18,25 @@ namespace TeamWorkGame.Actor
     {
         private Animation anime;             //アニメ
         private AnimationPlayer animePlayer;    //アニメ再生器
-        private float lifeTime;
-        private float frameTime;
+        private float disappearTime;        //消え始める時間
+        private float lifeTime; 
 
-        public FireDust(Vector2 pos, Vector2 velo) : base("FireDust", pos, velo, true, "FireDust")
+        public FireDust(Vector2 pos, Vector2 velo, int fireNum) : base("FireDust", pos, velo, true, "FireDust")
         {
             anime = new Animation(Renderer.GetTexture("FireDust"), 0.1f, true);
             animePlayer.PlayAnimation(anime);
-            lifeTime = 0.5f;
+            disappearTime = 0.2f;
+            SetLifeTime(fireNum);
         }
 
         public override void EventHandle(GameObject other)
         {
             
+        }
+
+        public void SetLifeTime(int fireNum)
+        {
+            lifeTime = (float)fireNum / (float)Parameter.FireMaxNum;
         }
 
         public override void Update(GameTime gameTime)
@@ -41,16 +47,16 @@ namespace TeamWorkGame.Actor
             }
             else
             {
+
+                alpha = lifeTime > disappearTime ? (1.0f) : (lifeTime / disappearTime);
                 lifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
-                position.Y += 0.5f;
+                position.Y += 0.3f;
             }
         }
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            //base.Draw(gameTime, renderer, offset, cameraScale);
-            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
-            //}
+            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale, alpha);
         }
     }
 }

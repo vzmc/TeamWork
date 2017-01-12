@@ -75,7 +75,7 @@ namespace TeamWorkGame.Device
         /// <param name="renderer"></param>
         /// <param name="position">描画位置</param>
         /// <param name="spriteEffects">向き</param>
-        public void Draw(GameTime gameTime, Renderer renderer, Vector2 position, SpriteEffects spriteEffects, float cameraScale)
+        public void Draw(GameTime gameTime, Renderer renderer, Vector2 position, SpriteEffects spriteEffects, float cameraScale = 1.0f, float alpha = 1.0f)
         {
             if (Animation == null)
                 throw new NotSupportedException("アニメーション指定していません！");
@@ -106,7 +106,7 @@ namespace TeamWorkGame.Device
             // Draw the current frame.
             //spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
             //今のフレイムを描画
-            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects, 1.0f, 0.0f, cameraScale);
+            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects, alpha, 0.0f, cameraScale);
         }
 
         public bool Reset(bool isShow)
