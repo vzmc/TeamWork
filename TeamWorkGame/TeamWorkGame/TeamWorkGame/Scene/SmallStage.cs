@@ -210,7 +210,7 @@ namespace TeamWorkGame.Scene
             NextScene nextScene;
             if (isBack) 
             {
-                nextScene = new NextScene(SceneType.Stage, stageIndex);
+                nextScene = new NextScene(SceneType.Stage);
                 sound.PlaySE("cancel1");
             }
             else

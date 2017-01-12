@@ -26,6 +26,7 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animationPlayer;
         private bool IsAnimation = false;
         private Vector2 effectPosition; //エフェクト用の位置
+        private bool isSound = false;
 
         public Bomb(Vector2 pos, Sound sound, Vector2 velo)
             :base("bomb",pos, velo, false,"Bomb")
@@ -99,18 +100,14 @@ namespace TeamWorkGame.Actor
         {
             if (other is Fire)
             {
-                ////other.IsDead = true;
-                sound.PlaySE("bomb1");
                 isShow = false;
             }
             if (other is Player)
             {
-                sound.PlaySE("bomb1");
                 isShow = false;
             }
             if(other is Igniter)
             {
-                sound.PlaySE("bomb1");
                 isShow = false;
             }
         }
@@ -153,6 +150,12 @@ namespace TeamWorkGame.Actor
                 {
                     if (ColRect.Intersects(m.ColRect))
                         m.EventHandle(this);
+                }
+
+                if (isSound == false)
+                {
+                    sound.PlaySE("bomb1");
+                    isSound = true;
                 }
             }
         }

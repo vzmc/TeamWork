@@ -54,7 +54,6 @@ namespace TeamWorkGame.Actor
             map = MapManager.GetNowMapData();
             //葉梨竜太
             animation = new Animation(Renderer.GetTexture("coaleffect"), 0.05f, false);
-            effpos = position;
         }
         public void ToDeath()
         {
@@ -129,10 +128,10 @@ namespace TeamWorkGame.Actor
                     if (((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数を回復
                     {
                         //葉梨竜太
-                        isAnimation = true;
                         ((Player)other).FireNum = ((Player)other).FireNum + 1;
 
                     }
+                    isAnimation = true;
                     isMove = true;
                 }
             }
@@ -163,7 +162,6 @@ namespace TeamWorkGame.Actor
                     isAnimation = false;
                 }
             }
-
             prevIsMove = isMove;
         }
     }

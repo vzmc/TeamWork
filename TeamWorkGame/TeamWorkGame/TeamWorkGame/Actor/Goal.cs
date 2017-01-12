@@ -164,7 +164,7 @@ namespace TeamWorkGame.Actor
             {
                 base.Draw(gameTime, renderer, offset, cameraScale);
                 //葉梨竜太
-                renderer.DrawTexture("goalsign", signpos*cameraScale+offset);
+                renderer.DrawTexture("goalsign", signpos*cameraScale+offset,0.7f);
             }
         }
 

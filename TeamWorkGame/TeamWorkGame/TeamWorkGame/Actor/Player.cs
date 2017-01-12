@@ -62,6 +62,8 @@ namespace TeamWorkGame.Actor
         private List<FireDust> fireDustList;
         private Timer makeFireDustTimer;
 
+
+        private bool isthrow;
         public bool IsView
         {
             get
@@ -144,6 +146,7 @@ namespace TeamWorkGame.Actor
             //FireDust
             fireDustList = new List<FireDust>();
             makeFireDustTimer = new Timer(0.1f);
+            isthrow = true;
         }
 
         private void MakeFireDust()
@@ -267,6 +270,7 @@ namespace TeamWorkGame.Actor
             //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
             //Speedを固定にした
             //上下左右にした
+            isthrow = true;
 
             if (diretion == Direction.UP||inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
             {
@@ -274,10 +278,10 @@ namespace TeamWorkGame.Actor
                 aimpos = new Vector2(position.X, position.Y - 64);
             }
             else if (diretion == Direction.DOWN||inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-            {                
-
+            {          
                 aim = new Vector2(0, Parameter.FireSpeed);
-                aimpos =IsOnGround?position:new Vector2(position.X, position.Y + 64);
+                aimpos = new Vector2(position.X, position.Y + 64);
+                isthrow = isOnGround ? false : true;
             }
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
             {
@@ -312,19 +316,23 @@ namespace TeamWorkGame.Actor
             {
                 if (inputState.CheckTriggerKey(Parameter.ThrowKey, Parameter.ThrowButton))
                 {
-                    Vector2 fireVelo = aim;
-                    Vector2 firePos = aimpos;
+                    if (isthrow)
+                    {
+                        Vector2 fireVelo = aim;
+                        Vector2 firePos = aimpos;
 
-                    Fire fire = new Fire(firePos, fireVelo, watersList);
-                    //葉梨竜太
-                    //単位ベクトル化
-                    fireVelo.Normalize();
-                    fire.Velocity = fireVelo * Parameter.FireSpeed;
-                    //葉梨竜太
-                    fire.SetStartPos();
+                        Fire fire = new Fire(firePos, fireVelo, watersList);
+                        //葉梨竜太
+                        //単位ベクトル化
+                        fireVelo.Normalize();
+                        fire.Velocity = fireVelo * Parameter.FireSpeed;
+                        //葉梨竜太
+                        fire.SetStartPos();
 
-                    firesList.Insert(0, fire);
-                    fireNum--;
+                        firesList.Insert(0, fire);
+                        fireNum--;
+                    }
+                    
 
                     //投げる状態に入る
                     animePlayer.PlayAnimation(throwAnime);
