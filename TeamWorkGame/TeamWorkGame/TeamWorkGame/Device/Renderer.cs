@@ -210,7 +210,7 @@ namespace TeamWorkGame.Device
         }
 
         /// <summary>
-        /// アニメーションの描画用の
+        /// アニメーションの描画用(標準)
         /// </summary>
         /// <param name="texture">"画像"</param>
         /// <param name="position">描画位置</param>
@@ -232,6 +232,32 @@ namespace TeamWorkGame.Device
 
             if (IsInScreen(position, texture))
                 spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, Vector2.Zero, scale, spriteEffects, 0.0f);
+        }
+
+        /// <summary>
+        /// アニメーションの描画用(中心座標設定用)
+        /// </summary>
+        /// <param name="texture">"画像"</param>
+        /// <param name="position">描画位置</param>
+        /// <param name="range">切り出し範囲</param>
+        /// <param name="spriteEffects">向き</param>
+        /// <param name="origin">中心座標</param>
+        /// <param name="alpha">透明値</param>
+        /// <param name="rotation">回転角度</param>
+        /// <param name="scale">スケール</param>
+        public void DrawTexture(Texture2D texture, Vector2 position, Rectangle range, SpriteEffects spriteEffects,Vector2 origin, float alpha = 1.0f, float rotation = 0.0f, float scale = 1.0f)
+        {
+            //登録されているキーがなければエラー表示
+            //Debug.Assert(
+            //    textures.ContainsKey(name),
+            //    "アセット名が間違えていませんか？\n" +
+            //    "大文字小文字間違ってませんか？\n" +
+            //    "loadtextureで読み込んでますか？\n" +
+            //    "プログラムを確認してください");
+            //position = new Vector2((float)Math.Round(position.X), (float)Math.Round(position.Y));
+
+            if (IsInScreen(position, texture))
+                spriteBatch.Draw(texture, position, range, Color.White * alpha, rotation, origin, scale, spriteEffects, 0.0f);
         }
 
         /// <summary>

@@ -109,6 +109,50 @@ namespace TeamWorkGame.Device
             renderer.DrawTexture(Animation.Texture, position, range, spriteEffects, alpha, 0.0f, cameraScale);
         }
 
+        /// <summary>
+        /// アニメーションの描画(回転用)
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="renderer"></param>
+        /// <param name="position">描画位置</param>
+        /// <param name="spriteEffects">向き</param>
+        /// <param name="origin">中心座標</param>
+        /// <param name="rotation">回転角度</param>
+        /// <param name="cameraScale"></param>
+        public void Draw(GameTime gameTime, Renderer renderer, Vector2 position, SpriteEffects spriteEffects,Vector2 origin,float rotation ,float cameraScale)
+        {
+            if (Animation == null)
+                throw new NotSupportedException("アニメーション指定していません！");
+
+            if (!isPaused && !FuncSwitch.AllAnimetionPause)
+            {
+                // 経過時間計算
+                time += (float)gameTime.ElapsedGameTime.TotalSeconds;
+                while (time > Animation.FrameTime)
+                {
+                    time -= Animation.FrameTime;
+
+                    //Loopの処理
+                    if (Animation.IsLooping)
+                    {
+                        frameIndex = (frameIndex + 1) % Animation.FrameCount;
+                    }
+                    else
+                    {
+                        frameIndex = Math.Min(frameIndex + 1, Animation.FrameCount - 1);
+                    }
+                }
+            }
+
+            //今描画する画像範囲を計算
+            Rectangle range = new Rectangle(FrameIndex * Animation.Texture.Height, 0, Animation.Texture.Height, Animation.Texture.Height);
+
+            // Draw the current frame.
+            //spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
+            //今のフレイムを描画
+            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects, origin, 1.0f, rotation, cameraScale);
+        }
+
         public bool Reset(bool isShow)
         {
             if (isShow)

@@ -36,6 +36,8 @@ namespace TeamWorkGame.Actor
         private bool isAnimation = false;
         private Vector2 effpos;
 
+        //長谷川修一
+        private float angle; //回転角度
         public Coal(Vector2 pos, Vector2 velo) :
             base("coal", pos, velo, true, "coal")
         {
@@ -54,6 +56,7 @@ namespace TeamWorkGame.Actor
             map = MapManager.GetNowMapData();
             //葉梨竜太
             animation = new Animation(Renderer.GetTexture("coaleffect"), 0.05f, false);
+            angle = 0.0f;
         }
         public void ToDeath()
         {
@@ -89,6 +92,8 @@ namespace TeamWorkGame.Actor
 
                 effpos = position;
 
+
+
                 //マップ上の物と衝突区域判定
                 foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
                 {
@@ -98,6 +103,7 @@ namespace TeamWorkGame.Actor
             else//Playerと触れた後
             {
                 Move();
+                angle += MathHelper.ToRadians(1); //フレーム当たりx度回転
             }
         }
 
@@ -156,7 +162,9 @@ namespace TeamWorkGame.Actor
             if (isAnimation)
             {
                 animePlayer.PlayAnimation(animation);
-                animePlayer.Draw(gameTime, renderer, (effpos - new Vector2(64, 64)) * cameraScale + offset, SpriteEffects.None, 3.0f);
+                Vector2 origin = new Vector2(32, 32);//炭エフェクト、中心座標の変更by長谷川
+                //回転するように変更by長谷川
+                animePlayer.Draw(gameTime, renderer, (effpos + new Vector2(32, 32)) * cameraScale + offset, SpriteEffects.None,origin,angle, 3.0f);
                 if(animePlayer.FrameNow() >=animation.FrameCount-1)
                 {
                     isAnimation = false;
