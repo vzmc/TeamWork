@@ -2,8 +2,8 @@
 // 重要のメソッド達
 // 作成時間：2016/10/1
 // 作成者：氷見悠人　
-// 最終修正時間：2016/12/22
-// 修正者:葉梨竜太
+// 最終修正時間：2017/1/18
+// 修正者:柏
 /////////////////////////////////////////////////////////
 using System;
 using System.IO;
@@ -204,7 +204,10 @@ namespace TeamWorkGame.Utility
 
                     if (selfNowVelocity.Y >= 0)
                     {
-                        self.PositionY = obstacleColRect.Y - (selfLocalColRect.Y + selfLocalColRect.Height);
+                        if (!(obstacle is Tree))    //2017.1.18　by柏　樹木とのあたり判定不具合修正
+                        {
+                            self.PositionY = obstacleColRect.Y - (selfLocalColRect.Y + selfLocalColRect.Height);
+                        }
                         self.IsOnGround = true;
                     }
                     else

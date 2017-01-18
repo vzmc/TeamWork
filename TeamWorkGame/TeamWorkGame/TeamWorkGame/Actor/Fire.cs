@@ -129,7 +129,7 @@ namespace TeamWorkGame.Actor
 
             //葉梨竜太
             if (Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 })
-                || Math.Sqrt((position.X - startpos.X) * (position.X - startpos.X) + (position.Y - startpos.Y) * (position.Y - startpos.Y)) >= Parameter.FireFly * 64 )
+                || Math.Sqrt((position.X - startpos.X) * (position.X - startpos.X) + (position.Y - startpos.Y) * (position.Y - startpos.Y)) >= Parameter.FireFly * 64)
             {
                 isFall = true;
             }
