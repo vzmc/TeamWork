@@ -362,12 +362,10 @@ namespace TeamWorkGame.Scene
                     {
                         renderer.DrawTexture("ground1", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
                     }
-                    //if (MapManager.GetNowMapArr()[i, j] == 1 || MapManager.GetNowMapArr()[i, j] == 2)
-                    //{
-                    //    renderer.DrawTexture("TileMapSource", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, GetRect(map.Data[i, j]), camera.Scale, 1.0f);
-                    //}
                 }
             }
+
+            waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
             foreach (var x in map.MapThings)//By　佐瀬 拓海
             {
@@ -378,7 +376,6 @@ namespace TeamWorkGame.Scene
 
             fires.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
-            waterLines.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
             //2015.12.22 by柏 Clearの段階的表示
             DrawClear(renderer, gameTime);    
