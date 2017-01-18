@@ -127,8 +127,8 @@ namespace TeamWorkGame.Scene
 
             float size = (clearLevel < (int)EndLevel.Clear) ? (1 - clearLevelTimer.Rate()) : 1.0f;
             int Y = 100;
-            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2 * size);
-            renderer.DrawTexture("clear", new Vector2(X, Y), size, 1);
+            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("lastclear").Width / 2 * size);
+            renderer.DrawTexture("lastclear", new Vector2(X, Y), size, 1);
 
             if (clearLevel < (int)EndLevel.FireWorks) { return; }
             particleControl.Draw(renderer);

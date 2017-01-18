@@ -703,6 +703,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Texture\lastclear.png">
+      <Name>lastclear</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Texture\stone.png">
       <Name>stone</Name>
       <Importer>TextureImporter</Importer>
