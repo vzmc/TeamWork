@@ -294,6 +294,8 @@ namespace TeamWorkGame.Actor
             //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
             //Speedを固定にした
             //上下左右にした
+            
+
             isthrow = true;
 
             if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
@@ -310,12 +312,12 @@ namespace TeamWorkGame.Actor
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
             {
                 aim = new Vector2(-Parameter.FireSpeed, 0);
-                aimpos = new Vector2(position.X - 42, position.Y - 32);
+                aimpos = new Vector2(position.X-64, position.Y);
             }
             else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
             {
                 aim = new Vector2(Parameter.FireSpeed, 0);
-                aimpos = new Vector2(position.X + 42, position.Y - 32);
+                aimpos = new Vector2(position.X+64, position.Y);
             }
 
             if (fireNum > 0)

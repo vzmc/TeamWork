@@ -38,8 +38,8 @@ namespace TeamWorkGame.Scene
         private bool isMove;
         private Vector2 startpos;
         private Vector2 endpos;
-        private Timer time;
-        private Timer totaltime;
+        private float time;
+        private float totaltime;
 
         public Stage(GameDevice gameDevice)
         {
@@ -112,47 +112,53 @@ namespace TeamWorkGame.Scene
         //    {
         //        try
         //        {
-        //            startpos = herol[mapIndex-1];
+        //            startpos = herol[mapIndex - 1];
         //            endpos = herol[mapIndex];
         //        }
-        //        catch(ArgumentOutOfRangeException iore)
+        //        catch (ArgumentOutOfRangeException iore)
         //        {
         //            return;
         //        }
-        //
+
         //        Vector2 velocity = endpos - startpos;
         //        velocity.Normalize();
         //        position = position + velocity * 3;
-        //
-        //        if () 
+
+        //        totaltime = (int)((Math.Sqrt((endpos.X-startpos.X) + (endpos.Y-startpos.Y))) / 3);
+
+        //        time += (float)gametime.ElapsedGameTime.TotalSeconds;
+
+        //        if (time > totaltime)
         //        {
         //            isMove = false;
+        //            time = 0;
         //        }
         //    }
         //}
 
         public void Update(GameTime gametime)
         {
-            //MapAnimation(gametime);
+           // MapAnimation(gametime);
 
             //if (isMove == false)
             //{
-            if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
-            {
-                sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
-                if (mapIndex >= (sever.ClearStage + 1) / 6)
+                if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
                 {
-                    return;
-                }
-                if (mapIndex >= 4)
-                {
-                    return;
-                }
-                //isMove = true;
+                    sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
+                    if (mapIndex >= (sever.ClearStage + 1) / 6)
+                    {
+                        return;
+                    }
+                    if (mapIndex >= 4)
+                    {
+                        return;
+                    }
+                    // = true;
 
-                mapIndex++;
+                    mapIndex++;
 
 
+              // }
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
