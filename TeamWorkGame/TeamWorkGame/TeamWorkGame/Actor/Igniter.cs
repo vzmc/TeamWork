@@ -55,10 +55,11 @@ namespace TeamWorkGame.Actor
 
         public void ToDeath()
         {
-            if (!isToDeath)
-            {
-                isToDeath = true;
-            }
+            //if (!isToDeath)
+            //{
+            name = "igniter2";
+            isToDeath = true;
+            //}
         }
 
         public override void Update(GameTime gameTime)
@@ -74,8 +75,8 @@ namespace TeamWorkGame.Actor
         /// <param name="offset"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            if (isShow == true)
-            {
+            //if (!isToDeath)
+            //{
                 //葉梨竜太
                 Rectangle rect = new Rectangle(128,0,64,64);
                 switch (igniter)
@@ -100,7 +101,11 @@ namespace TeamWorkGame.Actor
                 }
                 
                 renderer.DrawTexture(name, position * cameraScale + offset, rect, cameraScale, alpha);
-            }
+            //}
+            //else
+            //{
+            //    renderer.DrawTexture()
+            //}
         }
 
         public override void EventHandle(GameObject other)
@@ -119,17 +124,15 @@ namespace TeamWorkGame.Actor
         //spawnTimerで復活 by長谷川修一
         public override void DeathUpdate()
         {
-            if (isShow == false)
-            {
-                deathTimer.Update();
-                if (deathTimer.IsTime())
-                {
-                    isTrigger = true;
-                    //scale = 1.5f;
-                    //name = "fire";
-                    ToDeath();
-                }
-            }
+            //if (isShow == false)
+            //{
+                //deathTimer.Update();
+                //if (deathTimer.IsTime())
+                //{
+                    //isTrigger = true;
+                    //ToDeath();
+                //}
+            //}
             if (isToDeath)
             {
                 burnTimer.Update();
@@ -141,6 +144,7 @@ namespace TeamWorkGame.Actor
                     localColRect.Width += 2;
                     localColRect.Height += 2;
                     CheckOhter();
+                    isDead = true;
                 }
             }
         }
@@ -174,20 +178,20 @@ namespace TeamWorkGame.Actor
         {
             if (other is Fire || other is Player)
             {
-                isShow = false;
+                //isShow = false;
+                ToDeath();
+                //isToDeath = true;
             }
             if (other is Igniter)
             {
                 if (((Igniter)other).IsToDeath)
                 {
-                    isShow = false;
+                    //isShow = false;
+                    ToDeath();
+                   // isToDeath = true;
                 }
             }
         }
 
-        //public float GetScale()
-        //{
-        //    return scale;
-        //}
     }
 }

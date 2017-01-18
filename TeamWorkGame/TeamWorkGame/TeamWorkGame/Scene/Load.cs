@@ -81,6 +81,7 @@ namespace TeamWorkGame.Scene
                 {"JumpEffect", path},
                 {"sign", path},
                 {"igniter", path},
+                {"igniter2", path},
                 {"spark1", path},
                 {"spark2", path},
                 {"deathAnime", path},
