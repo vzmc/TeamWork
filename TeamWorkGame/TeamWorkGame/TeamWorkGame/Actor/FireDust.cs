@@ -1,5 +1,5 @@
 ﻿// 
-//火の粉　By　氷見悠人
+//火の粉Effect　By　氷見悠人
 //
 
 using System;
@@ -34,6 +34,10 @@ namespace TeamWorkGame.Actor
             
         }
 
+        /// <summary>
+        /// 存在時間を設定
+        /// </summary>
+        /// <param name="fireNum"></param>
         public void SetLifeTime(int fireNum)
         {
             lifeTime = (float)fireNum / (float)Parameter.FireMaxNum;
@@ -47,7 +51,6 @@ namespace TeamWorkGame.Actor
             }
             else
             {
-
                 alpha = lifeTime > disappearTime ? (1.0f) : (lifeTime / disappearTime);
                 lifeTime -= (float)gameTime.ElapsedGameTime.TotalSeconds;
                 position.Y += 0.3f;

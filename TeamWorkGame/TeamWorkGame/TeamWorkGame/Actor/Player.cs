@@ -62,6 +62,8 @@ namespace TeamWorkGame.Actor
         private List<FireDust> fireDustList;
         private Timer makeFireDustTimer;
 
+        private FireEnergy fireEnergy;
+
 
         private bool isthrow;
         public bool IsView
@@ -146,6 +148,10 @@ namespace TeamWorkGame.Actor
             //FireDust
             fireDustList = new List<FireDust>();
             makeFireDustTimer = new Timer(0.1f);
+
+            //FireEnergy
+            fireEnergy = new FireEnergy(position, 50);
+
             isthrow = true;
         }
 
@@ -154,13 +160,13 @@ namespace TeamWorkGame.Actor
         /// </summary>
         private void MakeFireDust()
         {
-            if(fireNum <= 0)
+            if (fireNum <= 0)
             {
                 return;
             }
-            if(velocity.LengthSquared() > 1)
+            if (velocity.LengthSquared() > 1)
             {
-                if(makeFireDustTimer.IsTime())
+                if (makeFireDustTimer.IsTime())
                 {
                     fireDustList.Add(new FireDust(position, Vector2.Zero, fireNum));
                     makeFireDustTimer.Initialize();
@@ -290,13 +296,13 @@ namespace TeamWorkGame.Actor
             //上下左右にした
             isthrow = true;
 
-            if (diretion == Direction.UP||inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
+            if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
             {
                 aim = new Vector2(0, -Parameter.FireSpeed);
                 aimpos = new Vector2(position.X, position.Y - 48);
             }
-            else if (diretion == Direction.DOWN||inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-            {          
+            else if (diretion == Direction.DOWN || inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
+            {
                 aim = new Vector2(0, Parameter.FireSpeed);
                 aimpos = new Vector2(position.X, position.Y + 64);
                 isthrow = isOnGround ? false : true;
@@ -311,24 +317,6 @@ namespace TeamWorkGame.Actor
                 aim = new Vector2(Parameter.FireSpeed, 0);
                 aimpos = new Vector2(position.X + 42, position.Y - 32);
             }
-
-
-            //if (diretion == Direction.UP || inputState.CheckDownKey(Keys.Up, Buttons.LeftThumbstickUp))
-            //{
-            //    aimpos = new Vector2(position.X, position.Y - 64);
-            //}
-            //else if (inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
-            //{
-            //    aimpos = new Vector2(position.X, position.Y + 64);
-            //}
-            //else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
-            //{
-            //    aimpos = new Vector2(position.X - 64, position.Y-32);
-            //}
-            //else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
-            //{
-            //    aimpos = new Vector2(position.X + 64, position.Y - 32);                    
-            //}
 
             if (fireNum > 0)
             {
@@ -350,7 +338,7 @@ namespace TeamWorkGame.Actor
                         firesList.Insert(0, fire);
                         fireNum--;
                     }
-                    
+
 
                     //投げる状態に入る
                     animePlayer.PlayAnimation(throwAnime);
@@ -420,7 +408,7 @@ namespace TeamWorkGame.Actor
         private void MoveMotion()
         {
             Stand();
-            if(velocity.X != 0)
+            if (velocity.X != 0)
             {
                 Run();
             }
@@ -482,7 +470,8 @@ namespace TeamWorkGame.Actor
                 {
                     other.EventHandle(this);
                 }
-                else {
+                else
+                {
                     if (other is Balloon)
                     {
                         ((Balloon)other).IsPlayerOn = false;
@@ -534,9 +523,6 @@ namespace TeamWorkGame.Actor
             fallEffectTimer.Update();
             jumpEffectTimer.Update();
 
-            //普通は空中摩擦
-            //float friction = Parameter.AirFriction;
-
             if (isOnGround)
             {
                 if (inputState.CheckTriggerKey(Parameter.JumpKey, Parameter.JumpButton))
@@ -546,8 +532,6 @@ namespace TeamWorkGame.Actor
                     jumpEffectTimer.Initialize();
                     jumpEffectPos = position;
                 }
-                //地上にいると、摩擦は地面摩擦
-                //friction = Parameter.GroundFriction;
 
                 //isOnGroundをReset
                 isOnGround = false;
@@ -555,23 +539,6 @@ namespace TeamWorkGame.Actor
 
             //横方向のスピード計算
             velocity.X = inputState.Velocity().X * Parameter.MaxPlayerHorizontalSpeed;
-            //velocity.X += inputState.Velocity().X * Parameter.PlayerAccelerationX;
-
-            //摩擦計算
-            //friction = Math.Abs(velocity.X) > friction ? friction : velocity.X;
-            //friction = friction * velocity.X > 0 ? -friction : friction;
-
-            //velocity.X += friction;
-
-            //速度制限
-            //if (velocity.X > Parameter.MaxPlayerHorizontalSpeed)
-            //{
-            //    velocity.X = Parameter.MaxPlayerHorizontalSpeed;
-            //}
-            //else if (velocity.X < -Parameter.MaxPlayerHorizontalSpeed)
-            //{
-            //    velocity.X = -Parameter.MaxPlayerHorizontalSpeed;
-            //}
 
             //方向判断
             if (velocity.X > 0 || inputState.Velocity().X > 0)
@@ -627,18 +594,7 @@ namespace TeamWorkGame.Actor
             //マップ上の物と衝突区域判定
             foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             {
-                //if (m is Sign)      //Signの場合のみ上キーを押したときのみ判定
-                //{
-                //    if (inputState.GetKeyTrigger(Keys.Up))
-                //    {
-                //        CollisionCheck(m);
-                //    }
-                //}
-                //else
-                //{
-                //葉梨竜太
                 CollisionCheck(m);
-                //}
             }
 
             //火と衝突判定
@@ -678,11 +634,7 @@ namespace TeamWorkGame.Actor
             //火と位置交換処理
             Teleport();
 
-            //if (!isOnBalloon)     //2016.12.7仕様書に合わせて変更 By柏
-            //{
-            //火を投げる処理
             ThrowFire();
-            //}
 
             //火の粉の更新処理
             UpdateFireDust(gameTime);
@@ -702,6 +654,10 @@ namespace TeamWorkGame.Actor
             }
             previousIsOnGround = isOnGround;
             //Console.WriteLine("isOnGround: " + isOnGround);
+
+            fireEnergy.SetFireNum(fireNum);
+            fireEnergy.SetCenterPosition(position);
+            fireEnergy.Update(gameTime);
         }
 
         public bool GetState()
@@ -723,20 +679,18 @@ namespace TeamWorkGame.Actor
         {
             DrawFireDust(gameTime, renderer, offset, cameraScale);
             //必要ないっぽいのでコメントアウトby長谷川
-            //状態によって描画方法が変わる
-            //if (IsStanding())
-            //{
 
-            //    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-            //}
-            //if (IsRunning() || IsThrowing() || IsDeath() || IsSideWays() || IsLowRunning() || IsLowSideWays() || IsLowStanding())
-            //{
+            if (!IsDeath() && fireNum > 0)//葉梨竜太
+            {
+                renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
+                fireEnergy.Draw(gameTime, renderer, offset, cameraScale);
+            }
+
             if (diretion == Direction.RIGHT)
-                    flip = SpriteEffects.FlipHorizontally;
-                else if (diretion == Direction.LEFT)
-                    flip = SpriteEffects.None;
-                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-            //}
+                flip = SpriteEffects.FlipHorizontally;
+            else if (diretion == Direction.LEFT)
+                flip = SpriteEffects.None;
+            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
 
             //JumpのEffect描画
             if (!fallEffectTimer.IsTime())
@@ -756,60 +710,12 @@ namespace TeamWorkGame.Actor
                 }
                 renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
             }
-            if (!IsDeath()&&fireNum > 0)//葉梨竜太
-            {
-                renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
-            }
-
-            
         }
 
         public override void EventHandle(GameObject other)
         {
             //
         }
-
-        //public bool IsLowStanding()
-        //{
-        //    return playerMotion == PlayerMotion.LOWSTAND;
-        //}
-
-        ///// <summary>
-        ///// 立っている状態ならtrue
-        ///// </summary>
-        ///// <returns></returns>
-        //public bool IsStanding()
-        //{
-        //    return playerMotion == PlayerMotion.STAND;
-        //}
-
-        //public bool IsLowSideWays()
-        //{
-        //    return playerMotion == PlayerMotion.LOWSIDEWAYS;
-        //}
-
-        ///// <summary>
-        ///// 横向き状態ならtrue
-        ///// </summary>
-        ///// <returns></returns>
-        //public bool IsSideWays()
-        //{
-        //    return playerMotion == PlayerMotion.SIDEWAYS;
-        //}
-
-        //public bool IsLowRunning()
-        //{
-        //    return playerMotion == PlayerMotion.LOWRUN;
-        //}
-
-        ///// <summary>
-        ///// 移動している状態ならtrue
-        ///// </summary>
-        ///// <returns></returns>
-        //public bool IsRunning()
-        //{
-        //    return playerMotion == PlayerMotion.RUN;
-        //}
 
         ///// <summary>
         ///// 投げている状態ならtrue

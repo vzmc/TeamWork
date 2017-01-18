@@ -62,6 +62,7 @@
     <Compile Include="Actor\Coal.cs" />
     <Compile Include="Actor\Fire.cs" />
     <Compile Include="Actor\FireDust.cs" />
+    <Compile Include="Actor\FireEnergy.cs" />
     <Compile Include="Actor\GameObject.cs" />
     <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Ice.cs" />

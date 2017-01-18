@@ -112,15 +112,6 @@ namespace TeamWorkGame.Actor
             }
 
             isOnGround = false;
-            //velocity.Y += gForce;
-            //葉梨竜太
-            //一定時間飛んだら落ちる
-            //timer.Update();
-            //if (timer.IsTime())
-            //{
-            //    velocity = new Vector2(0, 10);
-            //    timer.Initialize();
-            //}
 
             if (isFall)
             {
@@ -139,26 +130,6 @@ namespace TeamWorkGame.Actor
             {
                 ObstacleCheck(m);
             }
-
-            //Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
-
-            //葉梨竜太
-            //壁に当たるとvelocity = 0
-            //if ()
-            //{
-            //    velocity = new Vector2(0, Parameter.FireFall);
-            //}
-
-
-            
-
-            //地面にいると運動停止
-            //if (isOnGround)
-            //{
-            //    velocity = Vector2.Zero;
-            //}
-
-
 
             position += velocity;
 
@@ -180,14 +151,6 @@ namespace TeamWorkGame.Actor
             animePlayer.PlayAnimation(fireAnime);
             animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
         }
-        /// <summary>
-        /// 描画
-        /// </summary>
-        /// <param name="renderer"></param>
-        //public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
-        //{
-        //    renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, 1.0f);
-        //}
 
         /// <summary>
         /// 事件処理
@@ -197,7 +160,7 @@ namespace TeamWorkGame.Actor
         {
             if (other is Player)
             {
-                if (((Player)other).FireNum < Parameter.FireMaxNum)//Fireの数がMax以上にならないよう変更
+                if (((Player)other).FireNum < Parameter.FireMaxNum) //Fireの数がMax以上にならないよう変更
                 {
                     ((Player)other).FireNum++;
                 }
