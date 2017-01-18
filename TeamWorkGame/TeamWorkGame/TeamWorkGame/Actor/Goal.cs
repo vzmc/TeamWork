@@ -87,7 +87,6 @@ namespace TeamWorkGame.Actor
             startpos = signpos;
             endpos = startpos - new Vector2(0, 32);
             signvelo = new Vector2(0, 1);
-
         }
 
         protected override Rectangle InitLocalColRect()

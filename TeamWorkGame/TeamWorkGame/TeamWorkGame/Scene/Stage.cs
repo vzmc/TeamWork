@@ -35,7 +35,11 @@ namespace TeamWorkGame.Scene
         private AnimationPlayer animePlayer;
         private bool isBack;
         private Vector2 position;
-       
+        private bool isMove;
+        private Vector2 startpos;
+        private Vector2 endpos;
+        private Timer time;
+        private Timer totaltime;
 
         public Stage(GameDevice gameDevice)
         {
@@ -73,6 +77,7 @@ namespace TeamWorkGame.Scene
             isBack = false;
             animation = standAnime;
             position = herol[mapIndex];
+            isMove = false;
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -80,7 +85,7 @@ namespace TeamWorkGame.Scene
         {
             renderer.DrawTexture("worldmap", Vector2.Zero);
 
-            if(GamePad.GetState(PlayerIndex.One).IsConnected)
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
                 renderer.DrawTexture("stageSelect_UI", new Vector2(0, 720 - 64));
             }
@@ -94,20 +99,48 @@ namespace TeamWorkGame.Scene
 
             for (int i = 0; i < herol.Count(); i++)
             {
-                if (i > (sever.ClearStage +1)/ 6)
+                if (i > (sever.ClearStage + 1) / 6)
                 {
                     renderer.DrawTexture("lock", herol[i]);
                 }
             }
         }
 
+        //public void MapAnimation(GameTime gametime)
+        //{
+        //    if (isMove)
+        //    {
+        //        try
+        //        {
+        //            startpos = herol[mapIndex-1];
+        //            endpos = herol[mapIndex];
+        //        }
+        //        catch(ArgumentOutOfRangeException iore)
+        //        {
+        //            return;
+        //        }
+        //
+        //        Vector2 velocity = endpos - startpos;
+        //        velocity.Normalize();
+        //        position = position + velocity * 3;
+        //
+        //        if () 
+        //        {
+        //            isMove = false;
+        //        }
+        //    }
+        //}
+
         public void Update(GameTime gametime)
         {
+            //MapAnimation(gametime);
 
+            //if (isMove == false)
+            //{
             if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
             {
                 sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
-                if (mapIndex >= (sever.ClearStage+1) / 6)
+                if (mapIndex >= (sever.ClearStage + 1) / 6)
                 {
                     return;
                 }
@@ -115,7 +148,8 @@ namespace TeamWorkGame.Scene
                 {
                     return;
                 }
-                
+                //isMove = true;
+
                 mapIndex++;
 
 
@@ -127,8 +161,11 @@ namespace TeamWorkGame.Scene
                 {
                     return;
                 }
+
+                //isMove = true;
                 mapIndex--;
             }
+        
             
             position = herol[mapIndex];
 

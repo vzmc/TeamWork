@@ -429,6 +429,13 @@ namespace TeamWorkGame.Utility
                                 MapThings.Add(sign);
                                 break;
                             }
+                            //　1/13　葉梨竜太
+                        case (int)GimmickType.ROCK:
+                            {
+                                Stone stone = new Stone(new Vector2(j * 64, i * 64));
+                                MapThings.Add(stone);
+                                break;
+                            }
 
                             //case (int)GimmickType.WATERLINE:
                             //    {

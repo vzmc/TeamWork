@@ -111,6 +111,7 @@ namespace TeamWorkGame.Scene
                 {"goalsign",path},
                 {"bombEffect",path},
                 {"FireDust", path},
+                {"stone",path},//葉梨竜太
             };
 
             return list;

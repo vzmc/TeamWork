@@ -73,6 +73,7 @@
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\Sand.cs" />
     <Compile Include="Actor\Sign.cs" />
+    <Compile Include="Actor\Stone.cs" />
     <Compile Include="Actor\Straw.cs" />
     <Compile Include="Actor\Tree.cs" />
     <Compile Include="Actor\Water.cs" />
