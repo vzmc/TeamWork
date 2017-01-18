@@ -3,15 +3,10 @@
 ///最後修正日   2016.12.8
 ///最後修正項目   2016.12.7新しい仕様書に合わせて修正
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Def;
 using TeamWorkGame.Utility;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Actor
 {
@@ -23,6 +18,8 @@ namespace TeamWorkGame.Actor
         private Vector2 startPosition;  //気球の初期位置
         private bool playerIsOn;    //playerの乗る状態を保存する
         private Player player;  //player気球に乗る状態をとるように
+        private bool stopFlag;  //気球はブロックに当たると止まる
+        private Rectangle checkRect;    //ブロックとの当たり範囲
         //private Animation animation;
         //private AnimationPlayer animationPlayer;
         //private bool IsAnimation = false;
@@ -32,7 +29,7 @@ namespace TeamWorkGame.Actor
         {
             //animationPlayer = new AnimationPlayer();
             startPosition = pos;    //ステージデータに合わせて、初期位置を設置する
-
+            checkRect = new Rectangle(0, 0, 64, 64);
         }
 
         /// <summary>
@@ -44,6 +41,7 @@ namespace TeamWorkGame.Actor
             //flyLevel = 0;     //2016.12.7、新しい仕様書に合わせて修正、定数になる
             playerIsOn = false; //乗る状態初期化（乗ってない）
             player = null;  //空っぽのplayerを生成する
+            isTrigger = true;
         }
 
         /// <summary>
@@ -96,7 +94,7 @@ namespace TeamWorkGame.Actor
         {
             if (other is Player)
             {
-                BalloonMoveUp((Player)other);
+                BalloonMoveUp((Player)other);                
             }
         }
 
@@ -111,6 +109,14 @@ namespace TeamWorkGame.Actor
             //移動速度を3にする
             for (int i = 0; i < Parameter.BalloonMove; i++)
             {
+                //毎回移動する前にブロックと当たったかどうかチェックする
+                stopFlag = Method.MapObstacleCheck(ref position, checkRect, ref velocity, ref isOnGround, MapManager.GetNowMapData(), new int[] { 1, 2 });
+
+                //当たったら、プレーヤーの位置を設定し、気球はもう移動しない
+                if (stopFlag) {
+                    player.PositionY= position.Y - basketSize.Y;
+                    return;
+                }
                 BalloonGoUpMove(player);
             }
         }
