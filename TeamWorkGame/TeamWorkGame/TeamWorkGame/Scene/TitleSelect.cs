@@ -2,8 +2,8 @@
 //TitleSceneの選択機能
 //作成時間：2016/10/13
 //作成者：柏杳
-//最終修正時間：2016/12/14
-//最終修正者：柏杳  ＳＥ実装
+//最終修正時間：2017/01/18
+//最終修正者：長谷川
 //////////////////////////////////////////////////
 
 using System;
@@ -13,6 +13,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 using TeamWorkGame.Device;
 using TeamWorkGame.Utility;
 using TeamWorkGame.Def;
@@ -39,6 +40,10 @@ namespace TeamWorkGame.Scene
         private Vector2 selectPosition1;
         private Vector2 selectPosition2;
         private Vector2 selectPosition3;
+
+        //アニメーション関係
+        private AnimationPlayer animePlayer;
+        private Animation standAnime;
 
         private bool isStarted;
         private int x;
@@ -67,6 +72,10 @@ namespace TeamWorkGame.Scene
             selectPosition1 = new Vector2(470, 390);
             selectPosition2 = new Vector2(470, 470);
             selectPosition3 = new Vector2(470, 550);
+
+            animePlayer = new AnimationPlayer();
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            animePlayer.PlayAnimation(standAnime);
         }
 
         public void Update()
@@ -143,7 +152,7 @@ namespace TeamWorkGame.Scene
 
 
         //状況に合わせて描画する
-        public void Draw(Renderer renderer)
+        public void Draw(Renderer renderer, GameTime gameTime)
         {
             if (!isStarted)
             {
@@ -165,14 +174,18 @@ namespace TeamWorkGame.Scene
                 renderer.DrawTexture("text", exitTextPosition, new Rectangle(0, (int)Text.EXIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), exitTextalpha);
                 switch (x)
                 {
+                    //アニメーションに変更by長谷川
                     case 1:
-                        renderer.DrawTexture("hero", selectPosition1);
+                        animePlayer.Draw(gameTime, renderer, selectPosition1, SpriteEffects.None);
+                        //renderer.DrawTexture("hero", selectPosition1);
                         break;
                     case 2:
-                        renderer.DrawTexture("hero", selectPosition2);
+                        animePlayer.Draw(gameTime, renderer, selectPosition2, SpriteEffects.None);
+                        //renderer.DrawTexture("hero", selectPosition2);
                         break;
                     case 3:
-                        renderer.DrawTexture("hero", selectPosition3);
+                        animePlayer.Draw(gameTime, renderer, selectPosition3, SpriteEffects.None);
+                        //renderer.DrawTexture("hero", selectPosition3);
                         break;
                 }
 

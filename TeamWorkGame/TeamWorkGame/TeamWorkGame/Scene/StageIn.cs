@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using TeamWorkGame.Device;
 using TeamWorkGame.Def;
 using TeamWorkGame.Utility;
+
 
 namespace TeamWorkGame.Scene
 {
@@ -20,6 +22,10 @@ namespace TeamWorkGame.Scene
         private Vector2 wordPosition;
         private Vector2 charaPosition;
         private float scale;
+
+        //アニメーション関係
+        private AnimationPlayer animePlayer;
+        private Animation standAnime;
 
         public StageIn(float time)
         {
@@ -43,6 +49,10 @@ namespace TeamWorkGame.Scene
             scale = 1.5f;
             wordPosition = new Vector2((Parameter.ScreenWidth - width) / 2, (Parameter.ScreenHeight - height) / 2 - 64);
             charaPosition = new Vector2((Parameter.ScreenWidth - 64 * scale) / 2, wordPosition.Y + 128);
+
+            animePlayer = new AnimationPlayer();
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            animePlayer.PlayAnimation(standAnime);
         }
 
         public bool IsEnd()
@@ -79,7 +89,8 @@ namespace TeamWorkGame.Scene
         {
             //renderer.DrawTexture("fadein", Vector2.Zero);
             renderer.DrawNumber("number", wordPosition, word, 5);
-            renderer.DrawTexture("hero", charaPosition, scale, 1.0f);
+            animePlayer.Draw(gameTime, renderer, charaPosition, SpriteEffects.None, scale);
+            //renderer.DrawTexture("hero", charaPosition, scale, 1.0f);
         }
     }
 }

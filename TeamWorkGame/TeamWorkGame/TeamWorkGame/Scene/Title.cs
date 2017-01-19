@@ -45,7 +45,7 @@ namespace TeamWorkGame.Scene
             //renderer.Begin();
             
             renderer.DrawTexture("title", pos);
-            titleSelect.Draw(renderer);
+            titleSelect.Draw(renderer,gameTime);
 
             //renderer.End();
 

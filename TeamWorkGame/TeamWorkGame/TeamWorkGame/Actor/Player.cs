@@ -41,6 +41,8 @@ namespace TeamWorkGame.Actor
         private Animation deathAnime;           //死ぬアニメ
         private Animation lowRunAnime;     //走るアニメ、弱い
         private Animation lowSidewaysAnime;    //待機アニメ、横、弱い
+        private Animation lowStandAnime; //正面アニメ、弱い
+        private Animation lowDeathAnime; //死ぬアニメ、弱い
 
         private Timer jumpEffectTimer;
         private Timer fallEffectTimer;
@@ -135,6 +137,9 @@ namespace TeamWorkGame.Actor
             deathAnime = new Animation(Renderer.GetTexture("deathAnime"), 0.1f, false);
             lowRunAnime = new Animation(Renderer.GetTexture("lowRunAnime"), 0.1f, true);
             lowSidewaysAnime = new Animation(Renderer.GetTexture("lowSideAnime"), 0.1f, true);
+            lowStandAnime = new Animation(Renderer.GetTexture("lowStandAnime"), 0.1f, true);
+            lowDeathAnime = new Animation(Renderer.GetTexture("lowDeathAnime"), 0.1f, false);
+
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
             animePlayer.PlayAnimation(standAnime);
@@ -215,7 +220,7 @@ namespace TeamWorkGame.Actor
         {
             if (diretion == Direction.UP || diretion == Direction.DOWN) //葉梨竜太　Down追加
             {
-                animePlayer.PlayAnimation(lowSidewaysAnime);
+                animePlayer.PlayAnimation(lowStandAnime);
                 playerMotion = PlayerMotion.LOWSTAND;
             }
         }
@@ -279,6 +284,14 @@ namespace TeamWorkGame.Actor
                 playerMotion = PlayerMotion.RUN;
             }
         }
+
+        private void LowDeath()
+        {
+            sound.PlaySE("dead");
+            animePlayer.PlayAnimation(lowDeathAnime);
+            playerMotion = PlayerMotion.DEATH;
+        }
+
         public void Death()
         {
             sound.PlaySE("dead");   //by柏　2016.12.14 ＳＥ実装
@@ -504,7 +517,17 @@ namespace TeamWorkGame.Actor
             if (isGoDie)
             {
                 if (playerMotion != PlayerMotion.DEATH)
-                    Death();
+                {
+                    if (FireNum == 0)
+                    {
+                        LowDeath();
+                    }
+                    else
+                    {
+                        Death();
+                    }
+                }
+
                 if (animePlayer.FrameIndex >= deathAnime.FrameCount - 1)
                 {
                     isDead = true;

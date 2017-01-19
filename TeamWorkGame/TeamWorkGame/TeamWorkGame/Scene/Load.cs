@@ -114,6 +114,8 @@ namespace TeamWorkGame.Scene
                 {"bombEffect",path},
                 {"FireDust", path},
                 {"stone",path},//葉梨竜太
+                {"lowDeathAnime",path},
+                {"lowStandAnime",path},
             };
 
             return list;
