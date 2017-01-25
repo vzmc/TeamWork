@@ -76,7 +76,7 @@ namespace TeamWorkGame.Scene
         public void Initialize(int index)
         {
             isEnd = false;
-            mapIndex = 0;
+            mapIndex = index;
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
             runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
@@ -181,20 +181,23 @@ namespace TeamWorkGame.Scene
                 }
             }
 
-            MapAnimation();       
-            
+            MapAnimation();
+
             //position = herol[mapIndex];
 
-            if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
+            if (isMove == false)
             {
-                //sound.PlaySE("decision1");    //by 柏　2016.12.14 ＳＥ実装  (Next()のところにもう再生した　By　氷見悠人)
-                isEnd = true;
-            }
-            else if (inputState.IsKeyDown(Keys.X) || inputState.IsKeyDown(Buttons.B))
-            {
-                //sound.PlaySE("cancel1");    //by 柏　2016.12.14 ＳＥ実装    (Next()のところにもう再生した　By　氷見悠人)
-                isBack = true;
-                isEnd = true;
+                if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
+                {
+                    //sound.PlaySE("decision1");    //by 柏　2016.12.14 ＳＥ実装  (Next()のところにもう再生した　By　氷見悠人)
+                    isEnd = true;
+                }
+                else if (inputState.IsKeyDown(Keys.X) || inputState.IsKeyDown(Buttons.B))
+                {
+                    //sound.PlaySE("cancel1");    //by 柏　2016.12.14 ＳＥ実装    (Next()のところにもう再生した　By　氷見悠人)
+                    isBack = true;
+                    isEnd = true;
+                }
             }
         }
         

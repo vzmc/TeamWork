@@ -72,7 +72,7 @@ namespace TeamWorkGame.Actor
                 //other.IsDead = true;
                 isShow = false; 
             }
-            if (other is Player)
+            if (other is Player && ((Player)other).FireNum >= Parameter.woodfire)
             {
                 isShow = false;
             }

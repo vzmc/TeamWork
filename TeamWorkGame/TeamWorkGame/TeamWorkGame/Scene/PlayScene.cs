@@ -475,7 +475,7 @@ namespace TeamWorkGame.Scene
             }
             else
             {     //World
-                nextScene = new NextScene(SceneType.Stage, -1);
+                nextScene = new NextScene(SceneType.Stage, mapIndex/6);
             }
 
             sound.PlaySE("decision1");

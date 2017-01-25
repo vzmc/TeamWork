@@ -133,8 +133,16 @@ namespace TeamWorkGame.Scene
             if (clearLevel < (int)EndLevel.FireWorks) { return; }
             particleControl.Draw(renderer);
 
-            if (clearLevel < (int)EndLevel.Text) { return; }
-            renderer.DrawTexture("ToTitleText", new Vector2(330, 500), textAlph);
+            if (GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                if (clearLevel < (int)EndLevel.Text) { return; }
+                renderer.DrawTexture("titleback", new Vector2(330, 500), textAlph);
+            }
+            else
+            {
+                if (clearLevel < (int)EndLevel.Text) { return; }
+                renderer.DrawTexture("ToTitleText", new Vector2(330, 500), textAlph);
+            }
         }
 
     }

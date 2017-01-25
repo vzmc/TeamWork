@@ -19,6 +19,8 @@ namespace TeamWorkGame.Actor
         private Vector2 startpos;
         private Vector2 endpos;
         private int speed;
+        private bool isReturn;
+        private Timer time;
 
         public bool IsOn
         {
@@ -40,7 +42,8 @@ namespace TeamWorkGame.Actor
 
         public override void Initialize()
         {
-
+            isReturn = false;
+            time = new Timer(1.5f);
             base.Initialize();
         }
 
@@ -70,19 +73,37 @@ namespace TeamWorkGame.Actor
         }
         public void Move()
         {
-            velocity = endpos - startpos;
-            velocity.Normalize();
-            velocity *= speed;
-            position += velocity;
+            if (isReturn == false)
+            {
+                velocity = endpos - startpos;
+                velocity.Normalize();
+                velocity *= speed;
+                position += velocity;
+            }
 
             if (position.X > endpos.X || position.X < startpos.X)
             {
-                speed = speed * -1;
+                isReturn = true;
+                time.Update();
+                if (time.IsTime())
+                {
+                    time.Initialize();
+                    isReturn = false;
+                    speed = speed * -1;
+                }
             }
             if (position.Y < startpos.Y || position.Y > endpos.Y)
             {
-                speed = speed * -1;
+                isReturn = true;
+                time.Update();
+                if (time.IsTime())
+                {
+                    time.Initialize();
+                    isReturn = false;
+                    speed = speed * -1;
+                }
             }
+            
         }
     }
 }

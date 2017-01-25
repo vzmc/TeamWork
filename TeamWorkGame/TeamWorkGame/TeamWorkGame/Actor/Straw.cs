@@ -164,7 +164,7 @@ namespace TeamWorkGame.Actor
 
         public override void DeathEvent(GameObject other)
         {
-            if (other is Fire || other is Player)
+            if ((other is Fire) || (other is Player && ((Player)other).FireNum >= Parameter.strawfire)) 
             {
                 isShow = false;
             }

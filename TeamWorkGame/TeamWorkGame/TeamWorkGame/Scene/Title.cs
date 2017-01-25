@@ -109,7 +109,7 @@ namespace TeamWorkGame.Scene
             {
                 sound.StopBGM();
                 //ステージ選択Sceneに入る
-                nextScene = new NextScene(SceneType.Stage, -1);
+                nextScene = new NextScene(SceneType.Stage, 0);
             }
             else if (titleSelect.GetSelect == 2)
             {
