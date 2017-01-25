@@ -1,7 +1,7 @@
 ﻿/////////////////////////////
 //木材クラス
-//最終修正時間:2016年11月30日
-//by 葉梨竜太
+//最終修正時間:2017年01月25日
+//by 氷見悠人　Bug修正
 /////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -43,11 +43,14 @@ namespace TeamWorkGame.Actor
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             if (IsAnimation)
             {
                 animationPlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
                 IsAnimation = animationPlayer.Reset(isShow);
+            }
+            else
+            {
+                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
         }
 
@@ -61,7 +64,7 @@ namespace TeamWorkGame.Actor
             else
             {
                 AliveEvent(other);
-                IsAnimation = true;
+                
             }
         }
 
@@ -70,11 +73,13 @@ namespace TeamWorkGame.Actor
             if (other is Fire)
             {
                 //other.IsDead = true;
-                isShow = false; 
+                isShow = false;
+                IsAnimation = true;
             }
             if (other is Player && ((Player)other).FireNum >= Parameter.woodfire)
             {
                 isShow = false;
+                IsAnimation = true;
             }
             spawnTimer.Initialize();
         }
