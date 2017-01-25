@@ -715,6 +715,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Texture\titlebackA.png">
+      <Name>titlebackA</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Texture\goalAnime.png">
       <Name>goalAnime</Name>
       <Importer>TextureImporter</Importer>

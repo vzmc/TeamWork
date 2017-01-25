@@ -118,6 +118,7 @@ namespace TeamWorkGame.Scene
                 {"lowStandAnime",path},
                 {"templeground",path},
                 //{"fade_strow",path},
+                {"titlebackA",path},
                 {"goalAnime",path},
                 {"armsUpAnime",path},
             };

@@ -136,7 +136,7 @@ namespace TeamWorkGame.Scene
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
                 if (clearLevel < (int)EndLevel.Text) { return; }
-                renderer.DrawTexture("titleback", new Vector2(330, 500), textAlph);
+                renderer.DrawTexture("titlebackA", new Vector2(330, 500), textAlph);
             }
             else
             {
