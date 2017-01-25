@@ -57,6 +57,7 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor\ArmsUp.cs" />
     <Compile Include="Actor\Balloon.cs" />
     <Compile Include="Actor\Bomb.cs" />
     <Compile Include="Actor\Coal.cs" />

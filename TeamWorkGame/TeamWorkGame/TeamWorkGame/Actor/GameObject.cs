@@ -413,13 +413,21 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// 透明値を返す
+        /// 透明値プロパティ
         /// </summary>
         /// <returns></returns>
-        public float GetAlpha()
+        public float Alpha
         {
-            return alpha;
+            get
+            {
+                return alpha;
+            }
+            set
+            {
+                alpha = value;
+            }
         }
+
         
         /// <summary>
         /// 衝突事件の処理

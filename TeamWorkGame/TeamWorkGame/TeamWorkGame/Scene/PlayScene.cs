@@ -169,6 +169,7 @@ namespace TeamWorkGame.Scene
             if (map.GetGoal() == null) { return; }
             if (!map.GetGoal().IsOnFire) { return; }
             isClear = true;
+            player.IsClear = true;
             sound.PlaySE("GameClear");  //by柏 SE実装 2016.12.14
             clearLevel = 0;     //by柏 Clear段階表示はじめ 2016.12.22
 

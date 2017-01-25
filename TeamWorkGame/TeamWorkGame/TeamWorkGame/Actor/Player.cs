@@ -49,6 +49,8 @@ namespace TeamWorkGame.Actor
         private Vector2 jumpEffectPos;
         private Vector2 fallEffectPos;
         private bool previousIsOnGround;
+        private bool isClear;
+        private float jumpEffectAlpha;
 
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.FlipHorizontally;
@@ -56,6 +58,7 @@ namespace TeamWorkGame.Actor
 
         private Vector2 aim; //エイムの向き
         private Vector2 aimpos;
+        private Vector2 armsUpPos; //ばんざいする位置
 
         private bool isOnBalloon;   //気球に乗ってるかどうか
 
@@ -147,6 +150,7 @@ namespace TeamWorkGame.Actor
             lowStandAnime = new Animation(Renderer.GetTexture("lowStandAnime"), 0.1f, true);
             lowDeathAnime = new Animation(Renderer.GetTexture("lowDeathAnime"), 0.1f, false);
 
+            isClear = false;
             isOnBalloon = false;
             playerMotion = PlayerMotion.STAND;
             animePlayer.PlayAnimation(standAnime);
@@ -156,7 +160,8 @@ namespace TeamWorkGame.Actor
             fallEffectTimer = new Timer(0.15f);
             fallEffectTimer.CurrentTime = 0;
             aim = new Vector2(Parameter.FireSpeed, 0);
-
+            jumpEffectAlpha = 1.0f;
+            armsUpPos = new Vector2(560, 210);
             //FireDust
             fireDustList = new List<FireDust>();
             makeFireDustTimer = new Timer(0.1f);
@@ -314,6 +319,7 @@ namespace TeamWorkGame.Actor
             //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
             //Speedを固定にした
             //上下左右にした
+
 
             isthrow = true;
 
@@ -730,38 +736,41 @@ namespace TeamWorkGame.Actor
         /// <param name="renderer"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            DrawFireDust(gameTime, renderer, offset, cameraScale);
-            //必要ないっぽいのでコメントアウトby長谷川
-
-            if (!IsDeath() && fireNum > 0)//葉梨竜太
+            if (!isClear)
             {
-                renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
-                fireEnergy.Draw(gameTime, renderer, offset, cameraScale);
-            }
+                DrawFireDust(gameTime, renderer, offset, cameraScale);
+                //必要ないっぽいのでコメントアウトby長谷川
 
-            if (diretion == Direction.RIGHT)
-                flip = SpriteEffects.FlipHorizontally;
-            else if (diretion == Direction.LEFT)
-                flip = SpriteEffects.None;
-            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
-
-            //JumpのEffect描画
-            if (!fallEffectTimer.IsTime())
-            {
-                renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64), cameraScale, 1.0f);
-            }
-            if (!jumpEffectTimer.IsTime())
-            {
-                Rectangle rect;
-                if (velocity.X >= 0)
+                if (!IsDeath() && fireNum > 0)//葉梨竜太
                 {
-                    rect = new Rectangle(64 * 2, 0, 64, 64);
+                    renderer.DrawTexture("aiming", aimpos * cameraScale + offset);
+                    fireEnergy.Draw(gameTime, renderer, offset, cameraScale);
                 }
-                else
+
+                if (diretion == Direction.RIGHT)
+                    flip = SpriteEffects.FlipHorizontally;
+                else if (diretion == Direction.LEFT)
+                    flip = SpriteEffects.None;
+                animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, flip, cameraScale);
+
+                //JumpのEffect描画
+                if (!fallEffectTimer.IsTime())
                 {
-                    rect = new Rectangle(64, 0, 64, 64);
+                    renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64), cameraScale, jumpEffectAlpha);
                 }
-                renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, 1.0f);
+                if (!jumpEffectTimer.IsTime())
+                {
+                    Rectangle rect;
+                    if (velocity.X >= 0)
+                    {
+                        rect = new Rectangle(64 * 2, 0, 64, 64);
+                    }
+                    else
+                    {
+                        rect = new Rectangle(64, 0, 64, 64);
+                    }
+                    renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, jumpEffectAlpha);
+                }
             }
         }
 
@@ -807,5 +816,30 @@ namespace TeamWorkGame.Actor
                 animePlayer.ResetAnimation(animation);
             }
         }
+
+        public void Vanish()
+        {
+            //alpha = 0.0f;
+            fireEnergy.Vanish();
+            fireDustList.Clear();
+            jumpEffectAlpha = 0.0f;
+        }
+
+        //public void ClearMove(Vector2 offset, float camerascale)
+        //{
+        //    Vector2 direction = (armsUpPos - position) * camerascale + offset;
+        //    direction.Normalize();
+        //    position += direction * 2;
+        //    if (position == armsUpPos)
+        //    {
+        //        direction = Vector2.Zero;
+        //    }
+        // }
+        public bool IsClear
+        {
+            get { return isClear; }
+            set { isClear = value; }
+        }
+
     }
 }

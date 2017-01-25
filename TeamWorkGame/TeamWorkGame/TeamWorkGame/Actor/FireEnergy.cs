@@ -113,5 +113,10 @@ namespace TeamWorkGame.Actor
                 renderer.DrawTexture("fire", fp + offset, scale, 1.0f);
             }
         }
+
+        public void Vanish()
+        {
+            firePosList.Clear();
+        }
     }
 }

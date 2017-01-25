@@ -106,7 +106,7 @@ namespace TeamWorkGame.Device
             // Draw the current frame.
             //spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
             //今のフレイムを描画
-            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects, alpha, 0.0f, cameraScale);
+            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects,alpha, 0.0f, cameraScale);
         }
 
         /// <summary>

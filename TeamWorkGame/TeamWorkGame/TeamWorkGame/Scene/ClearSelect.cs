@@ -30,6 +30,7 @@ namespace TeamWorkGame.Scene
         private bool isPause;
         private bool isEnd;     //選択完了状態
         private Player player;
+        private ArmsUp armsUp;
         //Animation関連
         private Animation standAnime;
         private AnimationPlayer animePlayer;
@@ -51,6 +52,7 @@ namespace TeamWorkGame.Scene
             this.sound = sound;   //by 柏　2016.12.14 ＳＥ実装
             this.inputState = inputState;
             this.player = player;
+            armsUp = new ArmsUp(new Vector2(560, 210), Vector2.Zero);
             Initialize();
         }
 
@@ -150,6 +152,12 @@ namespace TeamWorkGame.Scene
                 {
                     isEnd = true;
                 }
+
+                if (!IsPause && !player.IsDead)
+                {
+
+                  //  player.Vanish();
+                }
             }
         }
 
@@ -200,6 +208,7 @@ namespace TeamWorkGame.Scene
                         renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), nextTextalpha);
                         renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), retryTextalpha);
                         renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
+                        armsUp.Draw(gameTime, renderer, Vector2.Zero, cameraScale);
                     }
                     
                 }

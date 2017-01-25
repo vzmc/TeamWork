@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using TeamWorkGame.Device;
 using TeamWorkGame.Utility;
 
@@ -34,6 +35,11 @@ namespace TeamWorkGame.Actor
         private Vector2 signvelo;
         private Vector2 startpos;
         private Vector2 endpos;
+
+        //アニメーション
+        private AnimationPlayer animePlayer;
+        private Animation goalAnime;
+        private bool isAnimation = false;
         public bool IsOnFire
         {
             get
@@ -73,6 +79,8 @@ namespace TeamWorkGame.Actor
             this.sound = sound;         //by柏　2016.12.14　ＳＥ実装
             state = GoalState.NONE;
             alpha = 0;
+            animePlayer = new AnimationPlayer();
+            goalAnime = new Animation(Renderer.GetTexture("goalAnime"), 0.6f, true);
         }
 
         public override void Initialize()
@@ -150,9 +158,11 @@ namespace TeamWorkGame.Actor
                 other.Velocity = velocity;
                 other.Position = new Vector2(ColRect.Left + ColRect.Width / 2 - other.Width / 2, ColRect.Top - other.ColRect.Height - other.LocalColRect.Top);
                 other.IsOnGround = true;
+                other.Alpha = 0.0f;
                 if (other is Player)
                 {
                     isOnFire = true;
+                    //other.Position = new Vector2(ColRect.Left + ColRect.Width / 2 - other.Width / 2 - 100, ColRect.Top - other.ColRect.Height - other.LocalColRect.Top);
                 }
             }
         }
@@ -165,7 +175,13 @@ namespace TeamWorkGame.Actor
                 base.Draw(gameTime, renderer, offset, cameraScale);
                 //葉梨竜太
                 renderer.DrawTexture("goalsign", signpos*cameraScale+offset,0.7f);
+                if (IsOnFire)
+                {
+                    animePlayer.PlayAnimation(goalAnime);
+                    animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
+                }
             }
+                 
         }
     }
 }

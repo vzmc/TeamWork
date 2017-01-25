@@ -15,5 +15,6 @@ namespace TeamWorkGame.Def
         DEATH,
         SIDEWAYS,
         LOWSIDEWAYS,        
+        ARMSUP,
     }
 }
