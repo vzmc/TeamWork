@@ -70,7 +70,14 @@ namespace TeamWorkGame.Scene
         }
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            renderer.DrawTexture("backGround", Vector2.Zero);
+            if (stageIndex/6 >= 4)
+            {
+                renderer.DrawTexture("templeground", Vector2.Zero);
+            }
+            else
+            {
+                renderer.DrawTexture("backGround", Vector2.Zero);
+            }
 
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {

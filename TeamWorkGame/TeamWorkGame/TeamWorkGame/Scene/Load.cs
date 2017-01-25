@@ -116,6 +116,8 @@ namespace TeamWorkGame.Scene
                 {"stone",path},//葉梨竜太
                 {"lowDeathAnime",path},
                 {"lowStandAnime",path},
+                {"templeground",path},
+                //{"fade_strow",path},
             };
 
             return list;

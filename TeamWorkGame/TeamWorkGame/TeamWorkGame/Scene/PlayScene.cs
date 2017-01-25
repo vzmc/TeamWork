@@ -102,7 +102,7 @@ namespace TeamWorkGame.Scene
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player, sound);   //by 柏　2016.12.14 ＳＥ実装
 
             camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale, true);
-
+            player.SetCamera(camera);
             fireMeter = new FireMeter();
 
             //Goalを取得とCamera設置  By　氷見悠人
@@ -178,7 +178,6 @@ namespace TeamWorkGame.Scene
             stageSaver.Charcoal = coals.Count - nowCoals.Count;
             stageSaver.SaveStageData();
         }
-
 
         public void Update(GameTime gameTime)
         {
@@ -347,7 +346,10 @@ namespace TeamWorkGame.Scene
         //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            renderer.DrawTexture("backGround", Vector2.Zero);
+            if (mapIndex >= 24)
+                renderer.DrawTexture("templeground", Vector2.Zero);
+            else
+                renderer.DrawTexture("backGround", Vector2.Zero);
 
             for (int i = 0; i < map.Data.GetLength(0); i++)
             {
@@ -410,8 +412,8 @@ namespace TeamWorkGame.Scene
             }
             float size = (clearLevel < Parameter.ClearFireworksLevel) ? (1 - clearLevelTimer.Rate()) : 1.0f;
             int Y = 100;
-            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("clear").Width / 2 * size);
-            renderer.DrawTexture("clear", new Vector2(X, Y), size, 1);
+            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("text").Width / 2 * size*2);
+            renderer.DrawTexture("text", new Vector2(X, Y),new Rectangle(0, 7*Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), size*2, 1);
 
             particleControl.Draw(renderer);
             if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.Draw(gameTime, renderer, camera.Scale); }

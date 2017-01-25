@@ -66,6 +66,7 @@ namespace TeamWorkGame.Actor
 
         private FireEnergy fireEnergy;
 
+        private Camera camera;
 
         private bool isthrow;
         public bool IsView
@@ -110,6 +111,12 @@ namespace TeamWorkGame.Actor
             this.watersList = watersList;
             this.isView = isView;
             playerMotion = PlayerMotion.STAND;
+            
+        }
+
+        public void SetCamera(Camera ca)
+        {
+            camera = ca;
         }
 
         //当たり判定変更by長谷川修一
@@ -307,7 +314,6 @@ namespace TeamWorkGame.Actor
             //投げ出した火の位置と速度を計算（初期位置は自身とぶつからないように）
             //Speedを固定にした
             //上下左右にした
-            
 
             isthrow = true;
 
@@ -325,12 +331,12 @@ namespace TeamWorkGame.Actor
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
             {
                 aim = new Vector2(-Parameter.FireSpeed, 0);
-                aimpos = new Vector2(position.X-64, position.Y);
+                aimpos = new Vector2(position.X-50, position.Y);
             }
             else if (diretion == Direction.RIGHT || inputState.CheckDownKey(Keys.Right, Buttons.LeftThumbstickRight))
             {
                 aim = new Vector2(Parameter.FireSpeed, 0);
-                aimpos = new Vector2(position.X+64, position.Y);
+                aimpos = new Vector2(position.X+50, position.Y);
             }
 
             if (fireNum > 0)
@@ -339,6 +345,7 @@ namespace TeamWorkGame.Actor
                 {
                     if (isthrow)
                     {
+                        
                         Vector2 fireVelo = aim;
                         Vector2 firePos = aimpos;
 
@@ -372,22 +379,43 @@ namespace TeamWorkGame.Actor
         /// </summary>
         public void AimCheck()
         {
-            if (aimpos.Y > map.MapHeight)
+            Vector2 aimpos2 = aimpos + camera.OffSet;
+
+            if (aimpos2.Y > Parameter.ScreenHeight)
             {
-                aimpos.Y = map.MapHeight - 64;
+                aimpos2.Y = Parameter.ScreenHeight - 64;
             }
-            if (aimpos.X + 64 > map.MapWidth)
+            if (aimpos2.X + 64 > Parameter.ScreenWidth)
             {
-                aimpos.X = map.MapWidth - 64;
+                aimpos2.X = Parameter.ScreenWidth - 64;
             }
-            if (aimpos.Y < 0)
+            if (aimpos2.Y < 0)
             {
-                aimpos.Y = 0;
+                aimpos2.Y = 0;
             }
-            if (aimpos.X < 0)
+            if (aimpos2.X < 0)
             {
-                aimpos.X = 0;
+                aimpos2.X = 0;
             }
+
+            aimpos = aimpos2 - camera.OffSet;
+
+            //if (aimpos.Y > map.MapHeight)
+            //{
+            //    aimpos.Y = map.MapHeight - 64;
+            //}
+            //if (aimpos.X + 64 > map.MapWidth)
+            //{
+            //    aimpos.X = map.MapWidth - 64;
+            //}
+            //if (aimpos.Y < 0)
+            //{
+            //    aimpos.Y = 0;
+            //}
+            //if (aimpos.X < 0)
+            //{
+            //    aimpos.X = 0;
+            //}
         }
 
         /// <summary>

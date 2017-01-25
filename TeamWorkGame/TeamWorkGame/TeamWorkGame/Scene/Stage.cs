@@ -32,6 +32,7 @@ namespace TeamWorkGame.Scene
         private StageSaver sever;
         private Animation animation;
         private Animation standAnime;
+        private Animation runAnime;
         private AnimationPlayer animePlayer;
         private bool isBack;
         private Vector2 position;
@@ -40,6 +41,7 @@ namespace TeamWorkGame.Scene
         private Vector2 endpos;
         private float time;
         private float totaltime;
+        private SpriteEffects direction;
 
         public Stage(GameDevice gameDevice)
         {
@@ -61,10 +63,14 @@ namespace TeamWorkGame.Scene
             mapIndex = 0;
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
             sound.PlayBGM("worldmap1");
             isBack = false;
             animation = standAnime;
             position = herol[mapIndex];
+            isMove = false;
+            time = 0;
+            direction = SpriteEffects.FlipHorizontally;
         }
 
         public void Initialize(int index)
@@ -73,11 +79,14 @@ namespace TeamWorkGame.Scene
             mapIndex = 0;
             sever.LoadStageData();
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            runAnime = new Animation(Renderer.GetTexture("playerAnime"), 0.1f, true);
             sound.PlayBGM("worldmap1");
             isBack = false;
             animation = standAnime;
             position = herol[mapIndex];
             isMove = false;
+            time = 0;
+            direction = SpriteEffects.FlipHorizontally;
         }
 
         //描画の開始と終了は全部Game1のDrawに移動した
@@ -95,7 +104,7 @@ namespace TeamWorkGame.Scene
             }
 
             animePlayer.PlayAnimation(animation);
-            animePlayer.Draw(gameTime, renderer, position, SpriteEffects.None, 1);
+            animePlayer.Draw(gameTime, renderer, position, direction, 1);
 
             for (int i = 0; i < herol.Count(); i++)
             {
@@ -106,43 +115,33 @@ namespace TeamWorkGame.Scene
             }
         }
 
-        //public void MapAnimation(GameTime gametime)
-        //{
-        //    if (isMove)
-        //    {
-        //        try
-        //        {
-        //            startpos = herol[mapIndex - 1];
-        //            endpos = herol[mapIndex];
-        //        }
-        //        catch (ArgumentOutOfRangeException iore)
-        //        {
-        //            return;
-        //        }
+        public void MapAnimation()
+        {
+            if (isMove)
+            {
+                animation = runAnime;
 
-        //        Vector2 velocity = endpos - startpos;
-        //        velocity.Normalize();
-        //        position = position + velocity * 3;
+                Vector2 velocity = endpos - startpos;
+                velocity.Normalize();
+                totaltime = Parameter.MapSpeedTime;
 
-        //        totaltime = (int)((Math.Sqrt((endpos.X-startpos.X) + (endpos.Y-startpos.Y))) / 3);
+                position = startpos + (time / totaltime) * (endpos - startpos);
+                time++;
 
-        //        time += (float)gametime.ElapsedGameTime.TotalSeconds;
-
-        //        if (time > totaltime)
-        //        {
-        //            isMove = false;
-        //            time = 0;
-        //        }
-        //    }
-        //}
+                if (time > totaltime)
+                {
+                    isMove = false;
+                    time = 0;
+                    animation = standAnime;
+                }
+            }
+        }
 
         public void Update(GameTime gametime)
-        {
-           // MapAnimation(gametime);
-
-            //if (isMove == false)
-            //{
-                if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
+        {            
+            if (inputState.IsKeyDown(Keys.Right) || inputState.IsKeyDown(Buttons.LeftThumbstickRight))
+            {
+                if (isMove == false)
                 {
                     sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                     if (mapIndex >= (sever.ClearStage + 1) / 6)
@@ -153,27 +152,38 @@ namespace TeamWorkGame.Scene
                     {
                         return;
                     }
-                    // = true;
+                    isMove = true;
 
                     mapIndex++;
 
-
-              // }
+                    startpos = herol[mapIndex - 1];
+                    endpos = herol[mapIndex];
+                    direction = SpriteEffects.FlipHorizontally;
+                }
+               
             }
             else if (inputState.IsKeyDown(Keys.Left) || inputState.IsKeyDown(Buttons.LeftThumbstickLeft))
             {
-                sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
-                if (mapIndex <= 0)
+                if (isMove == false)
                 {
-                    return;
-                }
+                    sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
+                    if (mapIndex <= 0)
+                    {
+                        return;
+                    }
 
-                //isMove = true;
-                mapIndex--;
+                    isMove = true;
+                    mapIndex--;
+
+                    startpos = herol[mapIndex + 1];
+                    endpos = herol[mapIndex];
+                    direction = SpriteEffects.None;
+                }
             }
-        
+
+            MapAnimation();       
             
-            position = herol[mapIndex];
+            //position = herol[mapIndex];
 
             if (inputState.IsKeyDown(Keys.Z) || inputState.IsKeyDown(Keys.Space) || inputState.IsKeyDown(Keys.Enter) || inputState.IsKeyDown(Buttons.A))
             {

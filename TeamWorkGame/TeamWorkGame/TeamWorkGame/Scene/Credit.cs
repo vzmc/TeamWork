@@ -52,7 +52,6 @@ namespace TeamWorkGame.Scene
             
             if (time.IsTime())
             {
-
                 alphaflag = !alphaflag;
                 alpha = alphaflag ? 1.0f : 0.5f;
                 time.Initialize();

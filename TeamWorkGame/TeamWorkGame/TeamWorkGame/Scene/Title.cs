@@ -66,7 +66,7 @@ namespace TeamWorkGame.Scene
 
         public void ShutDown()
         {
-            sound.StopBGM();
+           // sound.StopBGM();
         }
 
         public void Update(GameTime gametime)
@@ -107,6 +107,7 @@ namespace TeamWorkGame.Scene
             //選択肢によって、次のシーンに移す
             if (titleSelect.GetSelect == 1)
             {
+                sound.StopBGM();
                 //ステージ選択Sceneに入る
                 nextScene = new NextScene(SceneType.Stage, -1);
             }
@@ -117,6 +118,7 @@ namespace TeamWorkGame.Scene
             }
             else
             {
+                sound.StopBGM();
                 //終了処理、暫定ステージ選択Sceneに入る   
                 Exit();
                 nextScene = new NextScene(SceneType.Stage, -1);

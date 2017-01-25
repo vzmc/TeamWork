@@ -33,20 +33,7 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
-            if (!IsTrigger)
-            {
-                //マップ上の物と障害物判定
-                foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x != this))
-                {
-                    ObstacleCheck(m);
-                }
-            }
-            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
-
-            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
-            {
-                CollisionCheck(m);
-            }
+            
         }
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
