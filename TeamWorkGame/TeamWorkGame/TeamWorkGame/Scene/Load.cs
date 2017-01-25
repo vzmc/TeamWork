@@ -73,7 +73,7 @@ namespace TeamWorkGame.Scene
                 {"StaffText", path},
                 {"balloon", path},
                 {"Pause", path},
-                {"water", path},
+                //{"water", path},
                 {"lock", path},
                 {"uparrow", path},
                 {"downarrow", path},
@@ -82,8 +82,8 @@ namespace TeamWorkGame.Scene
                 {"sign", path},
                 {"igniter", path},
                 {"igniter2", path},
-                {"spark1", path},
-                {"spark2", path},
+                //{"spark1", path},
+                //{"spark2", path},
                 {"deathAnime", path},
                 {"startText", path},
                 {"startText2", path},
@@ -103,7 +103,7 @@ namespace TeamWorkGame.Scene
                 {"firework", path},    //2016.12.21 by柏 clear演出用
                 {"treeAnime", path},
                 {"lowSideAnime",path},
-                {"diagonalWater",path},
+                //{"diagonalWater",path},
                 {"verticalWater",path},
                 {"horizontalWater",path},
                 {"fadeEnd",path},        //2016.1.11 by柏 end演出用

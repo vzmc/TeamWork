@@ -124,6 +124,7 @@ namespace TeamWorkGame.Actor
             //葉梨竜太
             SignMove();
         }
+        
         //葉梨竜太
         /// <summary>
         /// 動く矢印
@@ -166,10 +167,5 @@ namespace TeamWorkGame.Actor
                 renderer.DrawTexture("goalsign", signpos*cameraScale+offset,0.7f);
             }
         }
-
-        //public void PlayEffect()
-        //{
-
-        //}
     }
 }

@@ -90,7 +90,6 @@
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\InputState.cs" />
     <Compile Include="Device\Loader.cs" />
-    <Compile Include="Device\Motion.cs" />
     <Compile Include="Device\Renderer.cs" />
     <Compile Include="Scene\SELoader.cs" />
     <Compile Include="Device\Sound.cs" />
@@ -124,7 +123,6 @@
     <Compile Include="Utility\Particle\ParticleControl.cs" />
     <Compile Include="Utility\Particle\Particle.cs" />
     <Compile Include="Utility\Range.cs" />
-    <Compile Include="Utility\RectangleExtensions.cs" />
     <Compile Include="Utility\Timer.cs" />
   </ItemGroup>
   <ItemGroup>

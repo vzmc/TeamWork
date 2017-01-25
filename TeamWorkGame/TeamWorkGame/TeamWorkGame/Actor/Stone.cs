@@ -18,7 +18,7 @@ namespace TeamWorkGame.Actor
     public class Stone : GameObject
     {
 
-        private Map map;
+        //private Map map;
         public Stone(Vector2 pos)
             :base("stone",pos,Vector2.Zero,false,"Stone")
         {
@@ -28,7 +28,7 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            map = MapManager.GetNowMapData();
+            //map = MapManager.GetNowMapData();
         }
 
         public override void Update(GameTime gameTime)

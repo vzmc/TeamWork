@@ -265,11 +265,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\load.bmp">
-      <Name>load</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Texture\lock.png">
       <Name>lock</Name>
       <Importer>TextureImporter</Importer>
@@ -335,11 +330,6 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\TileMapSource.png">
-      <Name>TileMapSource</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Texture\title.png">
       <Name>title</Name>
       <Importer>TextureImporter</Importer>
@@ -352,11 +342,6 @@
     </Compile>
     <Compile Include="Texture\uparrow.png">
       <Name>uparrow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Texture\water.png">
-      <Name>water</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -446,16 +431,6 @@
   <ItemGroup>
     <Compile Include="Texture\igniter.png">
       <Name>igniter</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Texture\spark1.png">
-      <Name>spark1</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Texture\spark2.png">
-      <Name>spark2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -644,11 +619,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texture\diagonalWater.png">
-      <Name>diagonalWater</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
     <Compile Include="Texture\horizontalWater.png">
       <Name>horizontalWater</Name>
       <Importer>TextureImporter</Importer>

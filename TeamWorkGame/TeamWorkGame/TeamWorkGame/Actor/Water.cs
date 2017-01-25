@@ -18,9 +18,18 @@ namespace TeamWorkGame.Actor
 {
     public class Water : GameObject
     {
-        public Water(Vector2 pos, Vector2 velo) : base("water", pos, velo, true, "Water")
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="velo"></param>
+        /// <param name="type">0：水平　1：垂直</param>
+        public Water(Vector2 pos, Vector2 velo, int type = 0) : base("horizontalWater", pos, velo, true, "Water")
         {
-
+            if(type == 1)
+            {
+                name = "verticalWater";
+            }
         }
 
         public override void Initialize()

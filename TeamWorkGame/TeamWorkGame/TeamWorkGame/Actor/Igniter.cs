@@ -124,15 +124,6 @@ namespace TeamWorkGame.Actor
         //spawnTimerで復活 by長谷川修一
         public override void DeathUpdate()
         {
-            //if (isShow == false)
-            //{
-                //deathTimer.Update();
-                //if (deathTimer.IsTime())
-                //{
-                    //isTrigger = true;
-                    //ToDeath();
-                //}
-            //}
             if (isToDeath)
             {
                 burnTimer.Update();
@@ -178,17 +169,13 @@ namespace TeamWorkGame.Actor
         {
             if (other is Fire || other is Player)
             {
-                //isShow = false;
                 ToDeath();
-                //isToDeath = true;
             }
             if (other is Igniter)
             {
                 if (((Igniter)other).IsToDeath)
                 {
-                    //isShow = false;
                     ToDeath();
-                   // isToDeath = true;
                 }
             }
         }

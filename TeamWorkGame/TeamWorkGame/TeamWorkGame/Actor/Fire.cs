@@ -21,9 +21,8 @@ namespace TeamWorkGame.Actor
     public class Fire : GameObject
     {
         private Map map;        //マップ情報
-        private float gForce;   //重力
-        private Motion motion;  //アニメーションの動作
-        private Timer timer;                    //アニメーションの時間間隔
+        //private float gForce;   //重力
+        //private Timer timer;                    //アニメーションの時間間隔
         private List<WaterLine> watersList;         //滝のリスト
         Vector2 vlo = Vector2.Zero;
         //葉梨竜太
@@ -31,6 +30,7 @@ namespace TeamWorkGame.Actor
         private Animation fireAnime;
         private AnimationPlayer animePlayer;
         private bool isFall;
+        //private Timer deathTimer;
 
         public Fire(Vector2 position, Vector2 velocity, List<WaterLine> waterline) : base("fire", position, velocity, true, "Fire")
         {
@@ -40,7 +40,7 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            gForce = Parameter.GForce;
+            //gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
             //葉梨竜太
             //飛ぶ時間
@@ -49,12 +49,13 @@ namespace TeamWorkGame.Actor
             startpos = position;
             fireAnime = new Animation(Renderer.GetTexture("fireAnime"), 0.1f, true);
             isFall = false;
+            //deathTimer = new Timer(0.3f);
+            animePlayer.PlayAnimation(fireAnime);
         }
 
         protected override Rectangle InitLocalColRect()
         {
             return new Rectangle(8, 22, 49, 42);
-            //return new Rectangle(15, 10, 32, 44);
         }
 
         /// <summary>
@@ -88,10 +89,6 @@ namespace TeamWorkGame.Actor
                 if (flag)
                 {
                     isFall = true;
-                    //if (IsOnGround)
-                    //{
-                    //    velocity = Vector2.Zero;
-                    //}
                     //相手の処理を実行する
                     other.EventHandle(this);
                 }
@@ -108,7 +105,15 @@ namespace TeamWorkGame.Actor
         {
             if (isGoDie)
             {
-                isDead = true;
+                if (alpha > 0)
+                {
+                    alpha -= 4.0f * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+                else
+                {
+                    isDead = true;
+                }
+                return;
             }
 
             isOnGround = false;
@@ -139,6 +144,7 @@ namespace TeamWorkGame.Actor
                 CollisionCheck(m);
             }
 
+            //滝と判定
             foreach (var wl in watersList)
             {
                 foreach (var w in wl.Waters)
@@ -148,8 +154,8 @@ namespace TeamWorkGame.Actor
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            animePlayer.PlayAnimation(fireAnime);
-            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
+            //animePlayer.PlayAnimation(fireAnime);
+            animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale, alpha);
         }
 
         /// <summary>

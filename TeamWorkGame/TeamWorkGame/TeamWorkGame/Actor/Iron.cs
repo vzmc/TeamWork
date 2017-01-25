@@ -54,14 +54,6 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
-            //if (isToDeath)
-            //{
-            //    timer.Update();
-            //    if (timer.IsTime())
-            //    {
-            //        isDead = true;
-            //    }
-            //}
             AliveUpdate();
             animationPlayer.PlayAnimation(animation);
         }

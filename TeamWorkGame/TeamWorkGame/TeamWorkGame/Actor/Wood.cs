@@ -17,9 +17,6 @@ namespace TeamWorkGame.Actor
 {
     public class Wood : GameObject
     {
-        //private Timer timer;
-        //private bool isToDeath;
-        //private float scale;
         private Animation animation;
         private AnimationPlayer animationPlayer;
         private bool IsAnimation = false;
@@ -33,34 +30,15 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            //timer = new Timer(2.0f);
-            //isToDeath = false;
             isShow = true;
             animation = new Animation(Renderer.GetTexture("woodAnime"), Parameter.WoodAnimeTime / 3, false);
             SetTimer(Parameter.WoodAnimeTime, Parameter.WoodSpawnTime);
-            //scale = 1.0f;
         }
-
-        //public void ToDeath()
-        //{
-        //    if (!isToDeath)
-        //    {
-        //        isToDeath = true;
-        //    }
-        //}
 
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
             animationPlayer.PlayAnimation(animation);
-            //if (isToDeath)
-            //{
-            //    timer.Update();
-            //    if (timer.IsTime())
-            //    {
-            //        IsDead = true;
-            //    }
-            //}
         }
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
@@ -85,40 +63,7 @@ namespace TeamWorkGame.Actor
                 AliveEvent(other);
                 IsAnimation = true;
             }
-            //if (other is Fire)
-            //{
-            //    other.IsDead = true;
-            //}
-            //ToDeath();
         }
-
-        //見えていないときは火になって当たり判定が消える
-        //spawnTimerで復活 by長谷川修一
-        //public override void AliveUpdate()
-        //{
-        //    if (isShow == false)
-        //    {
-        //        deathTimer.Update();
-        //        if (deathTimer.IsTime())
-        //        {
-        //            isTrigger = true;
-        //            scale = 1.5f;
-        //            name = "fire";
-        //        }
-        //        spawnTimer.Update();
-        //        if (spawnTimer.IsTime())
-        //        {
-        //            isShow = true;
-        //            scale = 1.0f;
-        //            name = "wood";
-        //            deathTimer.Initialize();      
-        //        }
-        //    }
-        //    else
-        //    {
-        //        isTrigger = false;
-        //    }
-       // }
 
         public override void AliveEvent(GameObject other)
         {
@@ -133,10 +78,5 @@ namespace TeamWorkGame.Actor
             }
             spawnTimer.Initialize();
         }
-
-        //public float GetScale()
-        //{
-        //    return scale;
-        //}
     }
 }

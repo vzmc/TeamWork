@@ -113,7 +113,7 @@ namespace TeamWorkGame.Actor
 
         private void MakeWater()
         {
-            Water water = new Water(position + (new Vector2(0, 64)) * waters.Count, Vector2.Zero);
+            Water water = new Water(position + (new Vector2(0, 64)) * waters.Count, Vector2.Zero, 1);
             waters.Add(water);
         }
 
