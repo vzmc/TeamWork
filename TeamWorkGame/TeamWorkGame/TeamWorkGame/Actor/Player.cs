@@ -50,7 +50,6 @@ namespace TeamWorkGame.Actor
         private Vector2 fallEffectPos;
         private bool previousIsOnGround;
         private bool isClear;
-        private float jumpEffectAlpha;
 
         private AnimationPlayer animePlayer;    //アニメ再生器
         private SpriteEffects flip = SpriteEffects.FlipHorizontally;
@@ -160,7 +159,6 @@ namespace TeamWorkGame.Actor
             fallEffectTimer = new Timer(0.15f);
             fallEffectTimer.CurrentTime = 0;
             aim = new Vector2(Parameter.FireSpeed, 0);
-            jumpEffectAlpha = 1.0f;
             armsUpPos = new Vector2(560, 210);
             //FireDust
             fireDustList = new List<FireDust>();
@@ -756,7 +754,7 @@ namespace TeamWorkGame.Actor
                 //JumpのEffect描画
                 if (!fallEffectTimer.IsTime())
                 {
-                    renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64), cameraScale, jumpEffectAlpha);
+                    renderer.DrawTexture("JumpEffect", fallEffectPos * cameraScale + offset, new Rectangle(0, 0, 64, 64), cameraScale);
                 }
                 if (!jumpEffectTimer.IsTime())
                 {
@@ -769,7 +767,7 @@ namespace TeamWorkGame.Actor
                     {
                         rect = new Rectangle(64, 0, 64, 64);
                     }
-                    renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale, jumpEffectAlpha);
+                    renderer.DrawTexture("JumpEffect", jumpEffectPos * cameraScale + offset, rect, cameraScale);
                 }
             }
         }
@@ -817,24 +815,6 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public void Vanish()
-        {
-            //alpha = 0.0f;
-            fireEnergy.Vanish();
-            fireDustList.Clear();
-            jumpEffectAlpha = 0.0f;
-        }
-
-        //public void ClearMove(Vector2 offset, float camerascale)
-        //{
-        //    Vector2 direction = (armsUpPos - position) * camerascale + offset;
-        //    direction.Normalize();
-        //    position += direction * 2;
-        //    if (position == armsUpPos)
-        //    {
-        //        direction = Vector2.Zero;
-        //    }
-        // }
         public bool IsClear
         {
             get { return isClear; }

@@ -152,12 +152,6 @@ namespace TeamWorkGame.Scene
                 {
                     isEnd = true;
                 }
-
-                if (!IsPause && !player.IsDead)
-                {
-
-                  //  player.Vanish();
-                }
             }
         }
 
