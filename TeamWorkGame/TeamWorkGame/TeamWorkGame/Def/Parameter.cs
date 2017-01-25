@@ -50,7 +50,7 @@ namespace TeamWorkGame.Def
         //public const int FireUpSpeed = 15;            　　　↓　  //真上に投げる時のSpeed；
         //public const int FireHorizontalSpeedY = 12;  　　　 ↓    //横に投げる時のY方向Speed分量
         //public const int FireHorizontalSpeedX = 12;　　　　 ↓　  //横に投げる時のX方向Speed分量
-        public const int FireSpeed = 12;　　　　　　　　//火の速度（全方向一緒）
+        public const int FireSpeed = 11;　　　　　　　　//火の速度（全方向一緒）
         public const int FireFly = 6;                   //火の飛ぶ距離
         //葉梨竜太
         public const int FireFall = 10;                  //火の落ちる速度
