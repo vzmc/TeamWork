@@ -163,6 +163,11 @@ namespace TeamWorkGame.Device
             return true;
         }
 
+        public bool IsEnd()
+        {
+            return frameIndex >= animation.FrameCount - 1;
+        }
+
         /// <summary>
         /// ループしないアニメーションのリセット
         /// </summary>

@@ -3,7 +3,7 @@
 //作成者　葉梨竜太
 //作成日時　11/30
 //最後修正日　2016.12.14
-//修正者と内容　柏、ＳＥ実装
+//修正者 氷見悠人　爆弾のいろいろ修正
 //////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -26,13 +26,12 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animationPlayer;
         private bool IsAnimation = false;
         private Vector2 effectPosition; //エフェクト用の位置
-        private bool isSound = false;
+        //private bool isSound = false;
 
         public Bomb(Vector2 pos, Sound sound, Vector2 velo)
             :base("bomb",pos, velo, false,"Bomb")
         {
             this.sound = sound;
-            animationPlayer = new AnimationPlayer();
         }
 
         public override void Initialize()
@@ -42,12 +41,20 @@ namespace TeamWorkGame.Actor
             map = MapManager.GetNowMapData();
             gForce = Parameter.GForce;
             bombEffect = new Animation(Renderer.GetTexture("bombEffect"), Parameter.BombAnimeTime / 7, false);
+            animationPlayer = new AnimationPlayer();
+            animationPlayer.PlayAnimation(bombEffect);
             effectPosition = Vector2.Zero;
             SetTimer(Parameter.BombColTime);
         }
 
         public override void Update(GameTime gameTime)
         {
+            if(!isShow)
+            {
+                DeathUpdate();
+                return;
+            }
+
             //重力を付ける
             velocity.Y += gForce;
 
@@ -58,9 +65,9 @@ namespace TeamWorkGame.Actor
                 {
                     ObstacleCheck(m);
                 }
+                Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
             }
-            Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
-
+            
             //地面にいると運動停止 //アニメーションが始まったら運動停止by長谷川
             if (isOnGround || IsAnimation)
             {
@@ -72,31 +79,32 @@ namespace TeamWorkGame.Actor
             //エフェクト用のポジション取得 by長谷川
             effectPosition = new Vector2(position.X - 64, position.Y - 64);
 
-            //マップ上の物と衝突区域判定
-            foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
-            {
-                CollisionCheck(m);
-            }
+            ////マップ上の物と衝突区域判定
+            //foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+            //{
+            //    CollisionCheck(m);
+            //}
             
-            DeathUpdate();
-            animationPlayer.PlayAnimation(bombEffect);
+            
         }
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             if(IsAnimation)
             {
                 animationPlayer.Draw(gameTime, renderer, effectPosition * cameraScale + offset, SpriteEffects.None, cameraScale);
-                IsAnimation = animationPlayer.Reset(isShow);
+                //IsAnimation = animationPlayer.Reset(isShow);
+                if (animationPlayer.IsEnd())
+                {
+                    isDead = true;
+                }
+            }
+            else
+            {
+                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
         }
 
         public override void EventHandle(GameObject other)
-        {
-            DeathEvent(other);
-        }
-
-        public override void DeathEvent(GameObject other)
         {
             if (other is Fire)
             {
@@ -106,7 +114,7 @@ namespace TeamWorkGame.Actor
             {
                 isShow = false;
             }
-            if(other is Igniter)
+            if (other is Igniter)
             {
                 isShow = false;
             }
@@ -116,46 +124,40 @@ namespace TeamWorkGame.Actor
         public override void DeathUpdate()
         {
             //DeaathEventが発生したら
-            if (isShow == false)
+            //タイマー更新
+            deathTimer.Update();
+            if (deathTimer.IsTime())
             {
-                //タイマー更新
-                deathTimer.Update();
-                if (deathTimer.IsTime())
-                {
-                    //当たり判定消滅
-                    isTrigger = true;
-                    //爆発
-                    Explosion();
-                    //爆弾画像を透明にして
-                    alpha = 0.0f;
-                    //アニメーションを開始
-                    IsAnimation = true;
-                }
+                deathTimer.Initialize();
+                deathTimer.Stop();
+                Explosion();
             }
         }
 
+        /// <summary>
+        /// 爆発
+        /// </summary>
         public void Explosion()
         {
-            if (isShow == false)
+            //アニメーションを開始
+            IsAnimation = true;
+
+            //当たり判定変更
+            isTrigger = true;
+            //当たり判定範囲拡大
+            localColRect.Offset(-1, -1);
+            localColRect.Width += 2;
+            localColRect.Height += 2;
+
+            //SE
+            sound.PlaySE("bomb1");
+
+            //爆発処理
+            foreach (var m in map.MapThings)
             {
-
-                if (alpha != 0.0f)
+                if (ColRect.Intersects(m.ColRect))
                 {
-                    localColRect.Offset(-1, -1);
-                    localColRect.Width += 2;
-                    localColRect.Height += 2;
-                }
-
-                foreach (var m in map.MapThings)
-                {
-                    if (ColRect.Intersects(m.ColRect))
-                        m.EventHandle(this);
-                }
-
-                if (isSound == false)
-                {
-                    sound.PlaySE("bomb1");
-                    isSound = true;
+                    m.EventHandle(this);
                 }
             }
         }

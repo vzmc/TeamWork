@@ -87,7 +87,6 @@ namespace TeamWorkGame.Actor
                 animationPlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
                 IsAnimation = animationPlayer.Reset(isShow);
             }
-
         }
 
         public override void EventHandle(GameObject other)
