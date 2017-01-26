@@ -103,6 +103,7 @@ namespace TeamWorkGame.Actor
 
         public override void Update(GameTime gameTime)
         {
+            CheckIsOut();
             if (isGoDie)
             {
                 if (alpha > 0)
@@ -156,6 +157,16 @@ namespace TeamWorkGame.Actor
         {
             //animePlayer.PlayAnimation(fireAnime);
             animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale, alpha);
+        }
+        /// <summary>
+        /// 地図の下に落ちたか？
+        /// </summary>
+        private void CheckIsOut()
+        {
+            if (position.Y > map.MapHeight + 64)
+            {
+                isDead = true;
+            }
         }
 
         /// <summary>
