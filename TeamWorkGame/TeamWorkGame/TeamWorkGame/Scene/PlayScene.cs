@@ -376,11 +376,25 @@ namespace TeamWorkGame.Scene
                     //動かないマップチップはここで描画 by 長谷川修一
                     if (MapManager.GetNowMapArr()[i, j] == 1)
                     {
-                        renderer.DrawTexture("ground2", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                        if (mapIndex / 6 == 3)
+                        {
+                            renderer.DrawTexture("ground4", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                        }
+                        else
+                        {
+                            renderer.DrawTexture("ground2", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                        }
                     }
                     if (MapManager.GetNowMapArr()[i, j] == 2)
                     {
-                        renderer.DrawTexture("ground1", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                        if (mapIndex / 6 == 3)
+                        {
+                            renderer.DrawTexture("ground3", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                        }
+                        else
+                        {
+                            renderer.DrawTexture("ground1", map.GetBlockPosition(new BlockIndex(j, i)) * camera.Scale + camera.OffSet, camera.Scale, 1.0f);
+                        }
                     }
                 }
             }

@@ -124,6 +124,8 @@ namespace TeamWorkGame.Scene
                 {"desertground",path},
                 {"mountainground",path}, 
                 {"forestground",path},
+                {"ground3",path},
+                {"ground4",path},
             };
 
             return list;
