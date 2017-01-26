@@ -56,7 +56,7 @@ namespace TeamWorkGame.Actor
             gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
             //葉梨竜太
-            animation = new Animation(Renderer.GetTexture("coaleffect"), 0.05f, false);
+            animation = new Animation(Renderer.GetTexture("coaleffect"), 0.1f, false);
             angle = 0.0f;
         }
         public void ToDeath()
@@ -162,7 +162,7 @@ namespace TeamWorkGame.Actor
             {
                 Vector2 origin = new Vector2(32, 32);//炭エフェクト、中心座標の変更by長谷川
                 //回転するように変更by長谷川
-                animePlayer.Draw(gameTime, renderer, (effpos + new Vector2(32, 32)) * cameraScale + offset, SpriteEffects.None,origin,angle, 3.0f);
+                animePlayer.Draw(gameTime, renderer, (effpos + new Vector2(32, 32)) * cameraScale + offset, SpriteEffects.None, origin, angle, 3.0f, 0.7f);
                 if(animePlayer.FrameNow() >=animation.FrameCount-1)
                 {
                     isAnimation = false;
