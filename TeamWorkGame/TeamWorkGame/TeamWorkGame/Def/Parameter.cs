@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace TeamWorkGame.Def
@@ -99,6 +100,9 @@ namespace TeamWorkGame.Def
         public const Buttons ThrowButton = Buttons.RightTrigger;
         public const Buttons MenuButton = Buttons.Start;
         public const Buttons CameraButton = Buttons.LeftShoulder;
+
+        //UI関連
+        public static readonly Vector2 CoalPosition = new Vector2(1070, 60);
 
 
         public static readonly List<GimmickType> ImpassableTiles = new List<GimmickType>()

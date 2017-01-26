@@ -52,7 +52,7 @@ namespace TeamWorkGame.Actor
             //追加　佐瀬拓海
             isMove = false;
             prevIsMove = false;
-            coalPos = new Vector2(1024, 16);
+            coalPos = Parameter.CoalPosition;
             gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
             //葉梨竜太

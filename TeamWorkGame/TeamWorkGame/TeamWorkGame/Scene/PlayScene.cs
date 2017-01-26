@@ -51,8 +51,6 @@ namespace TeamWorkGame.Scene
         private Goal goal;
 
         private Timer StartTimer;
-        //float zoomRate = 0.01f;
-        //bool isDrawed = false;
 
         //柏
         private StageSaver stageSaver;
@@ -99,7 +97,7 @@ namespace TeamWorkGame.Scene
 
             //氷見悠人
             player = new Player(gameDevice, MapManager.PlayerStartPosition(), Vector2.Zero, ref fires, ref waterLines, isView);
-            
+
             clearSelect = new ClearSelect(gameDevice.GetInputState(), player, sound);   //by 柏　2016.12.14 ＳＥ実装
 
             camera = new Camera(player.Position + new Vector2(32, 32), Parameter.CameraScale, true);
@@ -135,7 +133,7 @@ namespace TeamWorkGame.Scene
         {
             Vector2 pos = camera.AimPosition;
             //カメラの移動 矢印キーに変更
-           
+
             if (GamePad.GetState(PlayerIndex.One).IsConnected)
             {
                 pos += input.RightVelocity() * 15;
@@ -150,14 +148,17 @@ namespace TeamWorkGame.Scene
         /// <summary>
         /// Clear演出 by柏 2016.12.22
         /// </summary>
-        private void ClearShow() {
+        private void ClearShow()
+        {
             if (!isClear) { return; }
             if (clearLevel > 0) { particleControl.Update(); }
-            if (clearLevel > Parameter.ClearSelectLevel) {
+            if (clearLevel > Parameter.ClearSelectLevel)
+            {
                 clearSelect.IsClear = true;     //選択できるようになる
             }
             clearLevelTimer.Update();
-            if (clearLevelTimer.IsTime()) {
+            if (clearLevelTimer.IsTime())
+            {
                 clearLevel++;
                 clearLevelTimer.Initialize();
             }
@@ -166,7 +167,8 @@ namespace TeamWorkGame.Scene
         /// <summary>
         /// ゴール後処理  by柏  2016.12.22
         /// </summary>
-        private void Goal() {
+        private void Goal()
+        {
             if (map.GetGoal() == null) { return; }
             if (!map.GetGoal().IsOnFire) { return; }
             isClear = true;
@@ -183,7 +185,8 @@ namespace TeamWorkGame.Scene
 
         public void Update(GameTime gameTime)
         {
-            if (isClear && mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1) {
+            if (isClear && mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1)
+            {
                 clearSelect.GetSelect = 0;
                 isEnd = true;
                 return;
@@ -259,20 +262,16 @@ namespace TeamWorkGame.Scene
                     map.Update(gameTime);
 
                     //カメラの注視位置を更新
-                    //camera.SetAimPosition(player.Position + new Vector2(player.ImageSize.Width / 2, player.ImageSize.Height / 2));
-
                     if (!isView)
                     {
                         camera.MoveAimPosition(player.Position + new Vector2(player.Width / 2, player.Height / 2));
                     }
                     //Console.WriteLine(camera.OffSet);
-                    
+
                     //マップ上にある炭の数を取得
                     nowCoals = map.MapThings.FindAll(x => x is Coal);
 
                     ChangeGoalStage(gameTime);
-                    //マップの更新
-                    //map.Update(gameTime);
 
                     Goal();     //ゴール後処理  by柏  2016.12.22
 
@@ -326,11 +325,13 @@ namespace TeamWorkGame.Scene
                 {
                     //player.Death();
                 }
-                if (isPause) {
+                if (isPause)
+                {
                     clearSelect.IsClear = true;
                     return;
                 }
-                else {
+                else
+                {
                     if (clearSelect.IsClear) { return; }
                 }
                 if (clearSelect.IsClear) { return; }
@@ -412,14 +413,14 @@ namespace TeamWorkGame.Scene
 
 
             //2016.12.22 by柏 Clearの段階的表示
-            DrawClear(renderer, gameTime);    
-            
+            DrawClear(renderer, gameTime);
+
             fireMeter.Draw(renderer, player);
 
             //炭の取得数を描画 By佐瀬拓海
             //2017.1.26 by柏 表示大きさ、位置調整
-            renderer.DrawTexture("coal", new Vector2(1034, 56));
-            renderer.DrawNumber3("number", new Vector2(1145, 76),(coals.Count - nowCoals.Count).ToString(), 2, 0.5f);
+            renderer.DrawTexture("coal", Parameter.CoalPosition, 0.7f, 1.0f);
+            renderer.DrawNumber3("number", new Vector2(1145, 76), (coals.Count - nowCoals.Count).ToString(), 2, 0.5f);
             renderer.DrawNumber3("number", new Vector2(1184, 76), "/", 1, 0.5f);
             renderer.DrawNumber3("number", new Vector2(1220, 76), coals.Count.ToString(), 2, 0.5f);
 
@@ -433,7 +434,7 @@ namespace TeamWorkGame.Scene
             {
                 float scale = 1.5f;
                 renderer.DrawTexture("text", new Vector2((Parameter.ScreenWidth - Parameter.TextWidth * scale) / 2, (Parameter.ScreenHeight - Parameter.TextHeight * scale) / 2), new Rectangle(0, 0, Parameter.TextWidth, Parameter.TextHeight), scale, 1);
-            }   
+            }
         }
 
         /// <summary>
@@ -441,15 +442,17 @@ namespace TeamWorkGame.Scene
         /// </summary>
         /// <param name="renderer">描画用クラス</param>
         /// <param name="gameTime">ゲーム時間</param>
-        public void DrawClear(Renderer renderer, GameTime gameTime) {
-            if (clearLevel < 0) {
+        public void DrawClear(Renderer renderer, GameTime gameTime)
+        {
+            if (clearLevel < 0)
+            {
                 clearSelect.Draw(gameTime, renderer, camera.Scale);
                 return;
             }
             float size = (clearLevel < Parameter.ClearFireworksLevel) ? (1 - clearLevelTimer.Rate()) : 1.0f;
             int Y = 100;
-            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("text").Width / 2 * size*2);
-            renderer.DrawTexture("text", new Vector2(X, Y),new Rectangle(0, 7*Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), size*2, 1);
+            int X = (int)(Parameter.ScreenWidth / 2 - Renderer.GetTexture("text").Width / 2 * size * 2);
+            renderer.DrawTexture("text", new Vector2(X, Y), new Rectangle(0, 7 * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), size * 2, 1);
 
             particleControl.Draw(renderer);
             if (clearLevel > Parameter.ClearSelectLevel) { clearSelect.Draw(gameTime, renderer, camera.Scale); }
@@ -459,7 +462,8 @@ namespace TeamWorkGame.Scene
         /// プレータイムの表示 by柏
         /// </summary>
         /// <param name="renderer"></param>
-        public void ShowPlayTime(Renderer renderer) {
+        public void ShowPlayTime(Renderer renderer)
+        {
             int[] playtime = stageSaver.TimeCalculat(playTime / 60);
             renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
             renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
@@ -516,7 +520,7 @@ namespace TeamWorkGame.Scene
                 }
 
                 //nextScene = new NextScene(SceneType.PlayScene, mapIndex);
-               
+
             }
             else if (clearSelect.GetSelect == 1)
             {     //RePlay
@@ -525,7 +529,7 @@ namespace TeamWorkGame.Scene
             }
             else
             {     //World
-                nextScene = new NextScene(SceneType.Stage, mapIndex/6);
+                nextScene = new NextScene(SceneType.Stage, mapIndex / 6);
             }
 
             sound.PlaySE("decision1");
@@ -533,10 +537,11 @@ namespace TeamWorkGame.Scene
             return nextScene;
         }
 
-        public NextScene GetNext() {
+        public NextScene GetNext()
+        {
             NextScene nextScene;
             if (clearSelect.GetSelect == 0)
-            { 
+            {
                 if (mapIndex == StageDef.BigIndexMax * StageDef.SmallIndexMax - 1)
                 {
                     nextScene = new NextScene(SceneType.Ending, -1);
@@ -556,7 +561,5 @@ namespace TeamWorkGame.Scene
             }
             return nextScene;
         }
-
-
     }
 }
