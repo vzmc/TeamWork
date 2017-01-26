@@ -104,7 +104,6 @@ namespace TeamWorkGame.Def
         //UI関連
         public static readonly Vector2 CoalPosition = new Vector2(1070, 60);
 
-
         public static readonly List<GimmickType> ImpassableTiles = new List<GimmickType>()
         {
             GimmickType.GROUND1, GimmickType.GROUND2,

@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
 // Game1
-// 最終修正時間：2016年11月17日
+// 最終修正時間：2017年1月26日
 // By　氷見悠人
 /////////////////////////////////////////////////
 
@@ -40,6 +40,7 @@ namespace TeamWorkGame
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             graphicsDeviceManager.PreferredBackBufferWidth = Parameter.ScreenWidth;       //画面横幅
             graphicsDeviceManager.PreferredBackBufferHeight = Parameter.ScreenHeight;      //画面縦幅
+            //graphicsDeviceManager.IsFullScreen = true;
 
             //コンテンツデータの保存フォルダをContentに設定
             Content.RootDirectory = "Content";
@@ -70,7 +71,7 @@ namespace TeamWorkGame
             sceneManager.Add(SceneType.Load, new Load(gameDevice));
 
             sceneManager.Add(SceneType.Title, new Title(gameDevice, this.Exit));
-            
+
             //ステージクラスの追加
             //葉梨竜太
             //２０１６年１０月１２日
@@ -103,7 +104,7 @@ namespace TeamWorkGame
             // Create a new SpriteBatch, which can be used to draw textures.
             //Loadシーンが必要な物を先に読み取る
             gameDevice.LoadContent();
-            
+
         }
 
         /// <summary>
@@ -132,6 +133,11 @@ namespace TeamWorkGame
             
             //ゲームデバイス更新
             gameDevice.Update(gameTime);
+
+            if ((gameDevice.GetInputState().GetKeyTrigger(Keys.F)))
+            {
+                graphicsDeviceManager.ToggleFullScreen();
+            }
 
             //シーンの更新
             sceneManager.Update(gameTime);
