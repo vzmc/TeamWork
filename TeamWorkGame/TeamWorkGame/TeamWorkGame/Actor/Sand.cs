@@ -2,8 +2,8 @@
 //砂のクラス
 //作成時間：１１月０２日
 //By　佐瀬　拓海
-//最終更新日：11月30日
-//By　葉梨竜太
+//最終更新日：1月26日
+//By　氷見悠人　砂が落下中と当たり判定しない
 ///////////////////////////////
 using Microsoft.Xna.Framework;
 using System;
@@ -18,8 +18,6 @@ namespace TeamWorkGame.Actor
 {
     public class Sand : GameObject
     {
-        private bool isToDeath;
-        
         private float gForce;
         private Map map;
 
@@ -32,30 +30,23 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            isToDeath = false;
-
             gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
         }
 
         protected override Rectangle InitLocalColRect()
         {
-            //
             return base.InitLocalColRect();
         }
-
-        //public void ToDeath()
-        //{
-        //    if (!isToDeath)
-        //    {
-        //        isToDeath = true;
-        //    }
-        //}
-
 
         public override void Update(GameTime gameTime)
         {
             velocity.Y += gForce;
+
+            if(velocity.Y < 1 && velocity.Y > 0)
+            {
+                velocity.Y = 1;
+            }
 
             foreach (var m in map.MapThings.FindAll(x => !x.IsTrigger && x != this))
             {
@@ -64,17 +55,16 @@ namespace TeamWorkGame.Actor
 
             Method.MapObstacleCheck(ref position, localColRect, ref velocity, ref isOnGround, map, new int[] { 1, 2 });
 
-
             //地面にいると運動停止
             if (isOnGround)
             {
                 velocity = Vector2.Zero;
-                //gForce = 0.0f;
+                isTrigger = false;
             }
-            //else
-            //{
-            //    velocity.Y += gForce;
-            //}
+            else
+            {
+                isTrigger = true;
+            }
 
             position += velocity;
 
@@ -95,10 +85,6 @@ namespace TeamWorkGame.Actor
             {
                 BombEvent(other);
             }
-            //if (other is Player)
-            //{
-            //    //ToDeath();
-            //}
         }
     }
 }

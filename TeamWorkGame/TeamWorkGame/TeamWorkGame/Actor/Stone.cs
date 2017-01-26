@@ -17,7 +17,6 @@ namespace TeamWorkGame.Actor
 {
     public class Stone : GameObject
     {
-
         //private Map map;
         public Stone(Vector2 pos)
             :base("stone",pos,Vector2.Zero,false,"Stone")

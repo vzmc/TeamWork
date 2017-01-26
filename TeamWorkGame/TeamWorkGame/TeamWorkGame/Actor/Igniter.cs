@@ -22,7 +22,7 @@ namespace TeamWorkGame.Actor
         private Map map;
         private int igniter;
 
-        public Igniter(Vector2 pos,int igniter)
+        public Igniter(Vector2 pos, int igniter)
             : base("igniter", pos, Vector2.Zero, true, "Igniter")
         {
             //葉梨竜太
@@ -75,37 +75,30 @@ namespace TeamWorkGame.Actor
         /// <param name="offset"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            //if (!isToDeath)
-            //{
-                //葉梨竜太
-                Rectangle rect = new Rectangle(128,0,64,64);
-                switch (igniter)
-                {
-                    case (int)GimmickType.IGNITER_UR:
-                        break;
-                    case (int)GimmickType.IGNITER_UL:
-                        rect = new Rectangle(0, 0, 64, 64);
-                        break;
-                    case (int)GimmickType.IGNITER_DR:
-                        rect = new Rectangle(128, 128, 64, 64);
-                        break;
-                    case (int)GimmickType.IGNITER_DL:
-                        rect = new Rectangle(0, 128, 64, 64);
-                        break;
-                    case (int)GimmickType.IGNITER_HIGHT:
-                        rect = new Rectangle(0, 64, 64, 64);
-                        break;
-                    case (int)GimmickType.IGNITER_SIDE:
-                        rect = new Rectangle(64, 0, 64, 64);
-                        break;
-                }
-                
-                renderer.DrawTexture(name, position * cameraScale + offset, rect, cameraScale, alpha);
-            //}
-            //else
-            //{
-            //    renderer.DrawTexture()
-            //}
+            //葉梨竜太
+            Rectangle rect = new Rectangle(128, 0, 64, 64);
+            switch (igniter)
+            {
+                case (int)GimmickType.IGNITER_UR:
+                    break;
+                case (int)GimmickType.IGNITER_UL:
+                    rect = new Rectangle(0, 0, 64, 64);
+                    break;
+                case (int)GimmickType.IGNITER_DR:
+                    rect = new Rectangle(128, 128, 64, 64);
+                    break;
+                case (int)GimmickType.IGNITER_DL:
+                    rect = new Rectangle(0, 128, 64, 64);
+                    break;
+                case (int)GimmickType.IGNITER_HIGHT:
+                    rect = new Rectangle(0, 64, 64, 64);
+                    break;
+                case (int)GimmickType.IGNITER_SIDE:
+                    rect = new Rectangle(64, 0, 64, 64);
+                    break;
+            }
+
+            renderer.DrawTexture(name, position * cameraScale + offset, rect, cameraScale, alpha);
         }
 
         public override void EventHandle(GameObject other)
@@ -152,7 +145,7 @@ namespace TeamWorkGame.Actor
                             m.EventHandle(this);
                     }
                 }
-                if(m is Bomb)
+                if (m is Bomb)
                 {
                     if (!((Bomb)m).IsDead)
                     {

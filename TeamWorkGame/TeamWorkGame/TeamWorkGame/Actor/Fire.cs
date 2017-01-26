@@ -40,7 +40,6 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
-            //gForce = Parameter.GForce;
             map = MapManager.GetNowMapData();
             //葉梨竜太
             //飛ぶ時間
@@ -149,13 +148,14 @@ namespace TeamWorkGame.Actor
             foreach (var wl in watersList)
             {
                 foreach (var w in wl.Waters)
+                {
                     CollisionCheck(w);
+                }
             }
         }
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            //animePlayer.PlayAnimation(fireAnime);
             animePlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale, alpha);
         }
         /// <summary>

@@ -29,7 +29,7 @@ namespace TeamWorkGame.Actor
         public Iron(Vector2 pos, Vector2 velo)
             : base("iron", pos, velo, false, "Iron")
         {
-            animationPlayer = new AnimationPlayer();
+            //animationPlayer = new AnimationPlayer();
         }
 
         public override void Initialize()
@@ -39,6 +39,7 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;
             animation = new Animation(Renderer.GetTexture("ironAnime"), Parameter.IronAnimeTime / 4, false);//4はフレーム数
+            animationPlayer.PlayAnimation(animation);
             SetTimer(Parameter.IronAnimeTime, 5f);
         }
         /// <summary>
@@ -55,7 +56,6 @@ namespace TeamWorkGame.Actor
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
-            animationPlayer.PlayAnimation(animation);
         }
 
         public override void AliveEvent(GameObject other)
@@ -80,12 +80,15 @@ namespace TeamWorkGame.Actor
         /// <param name="offset"></param>
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
-            renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             //アニメーションの追加 by 長谷川修一
             if (IsAnimation)
             {
                 animationPlayer.Draw(gameTime, renderer, position * cameraScale + offset, SpriteEffects.None, cameraScale);
                 IsAnimation = animationPlayer.Reset(isShow);
+            }
+            else
+            {
+                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
             }
         }
 

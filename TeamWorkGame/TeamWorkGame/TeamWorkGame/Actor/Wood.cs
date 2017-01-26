@@ -24,7 +24,7 @@ namespace TeamWorkGame.Actor
         public Wood(Vector2 pos)
             : base("wood", pos, Vector2.Zero, false, "Wood")
         {
-            animationPlayer = new AnimationPlayer();
+            //animationPlayer = new AnimationPlayer();
         }
 
         public override void Initialize()
@@ -32,13 +32,14 @@ namespace TeamWorkGame.Actor
             base.Initialize();
             isShow = true;
             animation = new Animation(Renderer.GetTexture("woodAnime"), Parameter.WoodAnimeTime / 3, false);
+            animationPlayer.PlayAnimation(animation);
             SetTimer(Parameter.WoodAnimeTime, Parameter.WoodSpawnTime);
         }
 
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
-            animationPlayer.PlayAnimation(animation);
+            
         }
 
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)

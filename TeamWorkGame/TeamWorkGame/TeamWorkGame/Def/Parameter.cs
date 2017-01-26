@@ -68,13 +68,13 @@ namespace TeamWorkGame.Def
         public const float TreeColTime = 0.3f;    //木ブロックの当たり判定が消えるまでの時間
         public const float TreeAnimeTime = 2.0f;   //木ブロックアニメーションの時間
         public const float WoodAnimeTime = 1.0f;   //木材ブロックアニメーションの時間
-        public const float WoodSpawnTime = 2.0f;   //木材ブロックの復活時間
+        public const float WoodSpawnTime = 2.5f;   //木材ブロックの復活時間
         public const float IronAnimeTime = 1.0f;   //鉄ブロックアニメーションの時間
         public const float IronSpawnTime = 4.0f;   //鉄ブロックの復活時間
         public const float IceAnimeTime = 1.0f;    //アイスブロックアニメーションの時間
-        public const float IceSpawnTime = 2.0f;    //アイスブロックの復活時間
+        public const float IceSpawnTime = 3.5f;    //アイスブロックの復活時間
         public const float WaterFlowSpeed = 0.3f;  //水が下のマスに流れるまでの時間
-        public const float BombColTime = 1.0f;     //爆弾が消えるまでの時間
+        public const float BombColTime = 2.0f;     //爆弾が消えるまでの時間
         public const float BombAnimeTime = 0.5f;   //爆発エフェクトのアニメーション時間
 
         //必要な火の量(数字以上で燃える)

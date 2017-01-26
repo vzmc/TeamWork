@@ -403,23 +403,6 @@ namespace TeamWorkGame.Actor
             }
 
             aimpos = aimpos2 - camera.OffSet;
-
-            //if (aimpos.Y > map.MapHeight)
-            //{
-            //    aimpos.Y = map.MapHeight - 64;
-            //}
-            //if (aimpos.X + 64 > map.MapWidth)
-            //{
-            //    aimpos.X = map.MapWidth - 64;
-            //}
-            //if (aimpos.Y < 0)
-            //{
-            //    aimpos.Y = 0;
-            //}
-            //if (aimpos.X < 0)
-            //{
-            //    aimpos.X = 0;
-            //}
         }
 
         /// <summary>

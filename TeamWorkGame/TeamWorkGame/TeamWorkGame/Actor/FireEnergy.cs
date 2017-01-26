@@ -114,9 +114,9 @@ namespace TeamWorkGame.Actor
             }
         }
 
-        public void Vanish()
-        {
-            firePosList.Clear();
-        }
+        //public void Vanish()
+        //{
+        //    firePosList.Clear();
+        //}
     }
 }

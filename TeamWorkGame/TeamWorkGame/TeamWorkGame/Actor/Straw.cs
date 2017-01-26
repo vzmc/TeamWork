@@ -43,7 +43,7 @@ namespace TeamWorkGame.Actor
             isShow = true;
             map = MapManager.GetNowMapData();
             animation = new Animation(Renderer.GetTexture("strawAnime"), Parameter.StrawAnimeTime / 3, false);
-            animationPlayer = new AnimationPlayer();
+            //animationPlayer = new AnimationPlayer();
             animationPlayer.PlayAnimation(animation);
             SetTimer(Parameter.StrawColTime);//当たり判定が消え始めるまでの時間
         }

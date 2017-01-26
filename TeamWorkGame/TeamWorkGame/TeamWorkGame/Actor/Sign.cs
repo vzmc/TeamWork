@@ -48,10 +48,7 @@ namespace TeamWorkGame.Actor
                 case (int)GimmickType.CSIGN:
                     renderer.DrawTexture("camerascroll", new Vector2(position.X - image.Width / 2, position.Y - image.Height) * cameraScale + offset, cameraScale, alpha);
                     break;
-
-
             }
-
         }
 
         public override void Update(GameTime gameTime)
@@ -60,9 +57,7 @@ namespace TeamWorkGame.Actor
         }
         public override void EventHandle(GameObject other)
         {
-            //葉梨竜太
-            //isDead = true;
-        }
 
+        }
     }
 }

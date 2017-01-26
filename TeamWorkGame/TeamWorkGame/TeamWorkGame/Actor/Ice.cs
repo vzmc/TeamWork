@@ -27,7 +27,7 @@ namespace TeamWorkGame.Actor
 
         public Ice(Vector2 pos, Vector2 velo) : base("ice", pos, velo, false, "Ice")
         {
-            animationPlayer = new AnimationPlayer();
+            
         }
 
         public override void Initialize()
@@ -36,6 +36,8 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;      //初期値はtrue by佐瀬拓海
             animation = new Animation(Renderer.GetTexture("iceAnime"), Parameter.IceAnimeTime / 2, false);
+            //animationPlayer = new AnimationPlayer(animation);
+            animationPlayer.PlayAnimation(animation);
             SetTimer(Parameter.IceAnimeTime, Parameter.IceSpawnTime);
         }
 
@@ -58,7 +60,6 @@ namespace TeamWorkGame.Actor
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
-            animationPlayer.PlayAnimation(animation);
         }
 
         public override void AliveEvent(GameObject other)

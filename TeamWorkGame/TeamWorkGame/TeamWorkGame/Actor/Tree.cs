@@ -29,7 +29,7 @@ namespace TeamWorkGame.Actor
         public Tree(Vector2 pos)
             : base("tree", pos, Vector2.Zero, false, "Tree")
         {
-            animationPlayer = new AnimationPlayer();
+            //animationPlayer = new AnimationPlayer();
         }
 
         public void ToDeath()
@@ -47,22 +47,13 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;
             animation = new Animation(Renderer.GetTexture("treeAnime"), Parameter.TreeAnimeTime / 10, false);
+            animationPlayer.PlayAnimation(animation);
             SetTimer(Parameter.TreeColTime);//当たり判定がなくなるまでの時間
         }
 
         public override void Update(GameTime gameTime)
         {
             DeathUpdate();
-            animationPlayer.PlayAnimation(animation);
-            //if(isToDeath)
-            //{
-            //    timer.Update();
-            //    if(timer.IsTime())
-            //    {
-            //        IsDead = true;
-            //    }
-
-            //}
         }
 
         /// <summary>
@@ -89,21 +80,9 @@ namespace TeamWorkGame.Actor
             {
                 DeathEvent(other);
                 IsAnimation = true;
-                //if (other is Fire)
-                //{
-                //    other.IsDead = true;
-                //}
-                //name = "fire";
-                //IsTrigger = true;
-                ////scale = 3f;
-                //ToDeath();
+
             }
         }
-
-        //public float GetScale()
-        //{
-        //    return 1.0f;//scale;
-        //}
 
         public override void DeathUpdate()
         {
@@ -114,7 +93,6 @@ namespace TeamWorkGame.Actor
                 {
                     alpha = 0.0f;
                     IsTrigger = true;
-                    //ToDeath();
                     timer.Update();
                     if (timer.IsTime())
                     {

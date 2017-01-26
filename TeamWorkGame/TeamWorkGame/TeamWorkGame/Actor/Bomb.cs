@@ -26,7 +26,9 @@ namespace TeamWorkGame.Actor
         private AnimationPlayer animationPlayer;
         private bool IsAnimation = false;
         private Vector2 effectPosition; //エフェクト用の位置
-        //private bool isSound = false;
+        private Vector2 randOffset;
+        private static Random rnd = new Random();
+        private float flashTimer;
 
         public Bomb(Vector2 pos, Sound sound, Vector2 velo)
             :base("bomb",pos, velo, false,"Bomb")
@@ -37,14 +39,17 @@ namespace TeamWorkGame.Actor
         public override void Initialize()
         {
             base.Initialize();
+            //scale = 1.0f;
             isShow = true;
             map = MapManager.GetNowMapData();
             gForce = Parameter.GForce;
             bombEffect = new Animation(Renderer.GetTexture("bombEffect"), Parameter.BombAnimeTime / 7, false);
-            animationPlayer = new AnimationPlayer();
+            //animationPlayer = new AnimationPlayer();
             animationPlayer.PlayAnimation(bombEffect);
             effectPosition = Vector2.Zero;
             SetTimer(Parameter.BombColTime);
+            flashTimer = 0.0f;
+            randOffset = Vector2.Zero;
         }
 
         public override void Update(GameTime gameTime)
@@ -52,6 +57,22 @@ namespace TeamWorkGame.Actor
             if(!isShow)
             {
                 DeathUpdate();
+
+                if (flashTimer <= 0.0f)
+                {
+                    randOffset = new Vector2(rnd.Next(-1, 1), rnd.Next(-1, 1));
+                    randOffset *= 5f;
+                    flashTimer = 0.05f;
+                }
+                else
+                {
+                    flashTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+                }
+            }
+
+
+            if (IsAnimation)
+            {
                 return;
             }
 
@@ -69,23 +90,20 @@ namespace TeamWorkGame.Actor
             }
             
             //地面にいると運動停止 //アニメーションが始まったら運動停止by長谷川
-            if (isOnGround || IsAnimation)
+            if (isOnGround)
             {
                 velocity = Vector2.Zero;
             }
 
             position += velocity;
 
-            //エフェクト用のポジション取得 by長谷川
-            effectPosition = new Vector2(position.X - 64, position.Y - 64);
+            
 
             ////マップ上の物と衝突区域判定
             //foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
             //{
             //    CollisionCheck(m);
             //}
-            
-            
         }
         public override void Draw(GameTime gameTime, Renderer renderer, Vector2 offset, float cameraScale)
         {
@@ -100,7 +118,7 @@ namespace TeamWorkGame.Actor
             }
             else
             {
-                renderer.DrawTexture(name, position * cameraScale + offset, cameraScale, alpha);
+                renderer.DrawTexture(name, position * cameraScale + randOffset + offset, cameraScale, 1.0f);
             }
         }
 
@@ -128,9 +146,12 @@ namespace TeamWorkGame.Actor
             deathTimer.Update();
             if (deathTimer.IsTime())
             {
-                deathTimer.Initialize();
-                deathTimer.Stop();
-                Explosion();
+                if (isOnGround)
+                {
+                    deathTimer.Initialize();
+                    deathTimer.Stop();
+                    Explosion();
+                }
             }
         }
 
@@ -139,6 +160,9 @@ namespace TeamWorkGame.Actor
         /// </summary>
         public void Explosion()
         {
+            //エフェクト用のポジション取得 by長谷川
+            effectPosition = new Vector2(position.X - 64, position.Y - 64);
+            
             //アニメーションを開始
             IsAnimation = true;
 

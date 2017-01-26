@@ -43,6 +43,7 @@ namespace TeamWorkGame.Actor
         {
             //葉梨竜太
             animePlayer = new AnimationPlayer();
+            animePlayer.PlayAnimation(animation);
         }
         public override void Initialize()
         {
@@ -92,13 +93,11 @@ namespace TeamWorkGame.Actor
 
                 effpos = position;
 
-
-
                 //マップ上の物と衝突区域判定
-                foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
-                {
-                    CollisionCheck(m);
-                }
+                //foreach (var m in map.MapThings.FindAll(x => x.IsTrigger))
+                //{
+                //    CollisionCheck(m);
+                //}
             }
             else//Playerと触れた後
             {
@@ -161,7 +160,6 @@ namespace TeamWorkGame.Actor
             //葉梨竜太
             if (isAnimation)
             {
-                animePlayer.PlayAnimation(animation);
                 Vector2 origin = new Vector2(32, 32);//炭エフェクト、中心座標の変更by長谷川
                 //回転するように変更by長谷川
                 animePlayer.Draw(gameTime, renderer, (effpos + new Vector2(32, 32)) * cameraScale + offset, SpriteEffects.None,origin,angle, 3.0f);

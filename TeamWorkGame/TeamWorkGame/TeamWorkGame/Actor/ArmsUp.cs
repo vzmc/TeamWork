@@ -18,7 +18,7 @@ namespace TeamWorkGame.Actor
 
         public ArmsUp(Vector2 pos, Vector2 velo) : base("hero", pos, velo, false, "hero")
         {
-            animePlayer = new AnimationPlayer();
+            //animePlayer = new AnimationPlayer();
             armsUpAnime = new Animation(Renderer.GetTexture("armsUpAnime"), 1.0f, true);
             animePlayer.PlayAnimation(armsUpAnime);
         }

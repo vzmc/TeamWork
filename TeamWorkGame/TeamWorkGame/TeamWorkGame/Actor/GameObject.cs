@@ -284,7 +284,7 @@ namespace TeamWorkGame.Actor
         /// <returns></returns>
         public virtual bool CollisionCheck(GameObject other)
         {
-            bool flag = false;//Method.CollisionCheck(position + colOffset, colSize.Width, colSize.Height, other.position + other.colOffset, other.colSize.Width, other.colSize.Height);
+            bool flag = false;
             flag = ColRect.Intersects(other.ColRect);
             return flag;
         }
