@@ -1,5 +1,5 @@
-﻿// 最終修正時間：2016年12月22日
-// By 柏　描画処理(拡大縮小,色付け)
+﻿// 最終修正時間：2017年1月27日
+// By 柏　数字描画の大きさ調整できるように
 
 using System;
 using System.Collections.Generic;
@@ -454,5 +454,63 @@ namespace TeamWorkGame.Device
                 position.X -= 32;
             }
         }
+
+
+        /// <summary>
+        /// 数字の描画（整数のみ版、右端揃え、大きさ調整でき） by柏
+        /// </summary>
+        /// <param name="name">アセット名</param>
+        /// <param name="position">位置</param>
+        /// <param name="number">表示したい数字（文字）</param>
+        /// <param name="digit">表示したい桁数</param>
+        /// <param name="scale">大きさ</param>
+        /// <param name="alpha">透明値</param>
+        public void DrawNumber3(string name, Vector2 position, string number, int digit, float scale = 1.0f, float alpha = 1.0f)
+        {
+            Debug.Assert(
+                textures.ContainsKey(name),
+                "アセット名が間違えていませんか？\n" +
+                "大文字小文字間違ってませんか？\n" +
+                "LoadTextureで読み込んでますか？\n" +
+                "プログラムを確認してください");
+
+            Rectangle rect;
+            for (int i = 0; i < digit; i++)
+            {
+                if (i >= number.Length) { break; }
+                if (number[i] == '.') {
+                    rect = new Rectangle(10 * 32, 0, 32, 64);
+                }
+                else if (number[i] == '/'){         // "/"を描画する 
+                    rect = new Rectangle(11 * 32, 0, 32, 64);
+                }
+                else if (number[i] == '-'){         // "-"を描画する 
+                    rect = new Rectangle(12 * 32, 0, 32, 64);
+                }
+                else if (number[i] == ' ') {        // " "を描画する 
+                    rect = new Rectangle(0, 0, 0, 0);
+                }
+                else {
+                    //１文字分の数値を数値文字で取得
+                    char n = number[i];
+                    rect = new Rectangle((n - '0') * 32, 0, 32, 64);
+                }
+                spriteBatch.Draw(
+                        textures[name],
+                        position,
+                        rect,
+                        Color.White * alpha,
+                        0.0f,
+                        Vector2.Zero,
+                        scale,
+                        SpriteEffects.None,
+                        0
+                        );
+
+                position.X += 32;
+            }
+        }
+
+
     }
 }

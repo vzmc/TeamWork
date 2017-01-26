@@ -2,8 +2,9 @@
 //プレイシーン
 //作成時間：2016/9/26
 //作成者：氷見悠人
-// 最終修正時間：2016年12月14日
-// By　by柏　ＳＥ実装
+// 最終修正時間：2017年1月26日
+// 修正内容:stageNumの表示と合わせて調整
+// by柏
 /////////////////////////////////////////////////
 
 using System;
@@ -396,19 +397,23 @@ namespace TeamWorkGame.Scene
             fires.ForEach(x => x.Draw(gameTime, renderer, camera.OffSet, camera.Scale));
 
 
-            //2015.12.22 by柏 Clearの段階的表示
+            //2016.12.22 by柏 Clearの段階的表示
             DrawClear(renderer, gameTime);    
             
             fireMeter.Draw(renderer, player);
 
             //炭の取得数を描画 By佐瀬拓海
-            renderer.DrawTexture("coal", new Vector2(1024, 16));
-            renderer.DrawNumber2("number", new Vector2(1122, 16), coals.Count - nowCoals.Count, 2);
-            renderer.DrawNumber("number", new Vector2(1154, 16), "/", 1);
-            renderer.DrawNumber2("number", new Vector2(1218, 16), coals.Count, 2);
+            //2017.1.26 by柏 表示大きさ、位置調整
+            renderer.DrawTexture("coal", new Vector2(1034, 56));
+            renderer.DrawNumber3("number", new Vector2(1145, 76),(coals.Count - nowCoals.Count).ToString(), 2, 0.5f);
+            renderer.DrawNumber3("number", new Vector2(1184, 76), "/", 1, 0.5f);
+            renderer.DrawNumber3("number", new Vector2(1220, 76), coals.Count.ToString(), 2, 0.5f);
 
-            //2015.12.22 by柏 playTimeの表示(非表示中)
+            //2016.12.22 by柏 playTimeの表示(非表示中)
             //ShowPlayTime(renderer);
+
+            //2017.1.26 by柏 stageNumberの表示
+            ShowStageNum(renderer);
 
             if (!StartTimer.IsTime())
             {
@@ -437,7 +442,7 @@ namespace TeamWorkGame.Scene
         }
 
         /// <summary>
-        /// プレータイムの表示
+        /// プレータイムの表示 by柏
         /// </summary>
         /// <param name="renderer"></param>
         public void ShowPlayTime(Renderer renderer) {
@@ -445,6 +450,20 @@ namespace TeamWorkGame.Scene
             renderer.DrawNumber("number", new Vector2(1152, 128), playtime[0]);
             renderer.DrawNumber("number", new Vector2(1182, 128), "/", 1);
             renderer.DrawNumber("number", new Vector2(1216, 128), playtime[1]);
+        }
+
+
+        /// <summary>
+        /// StageNumの表示 by柏   2017.1.26
+        /// </summary>
+        /// <param name="renderer"></param>
+        public void ShowStageNum(Renderer renderer)
+        {
+            int bigStage = mapIndex / StageDef.BigIndexMax + 1;
+            int smallStage = mapIndex % StageDef.BigIndexMax + 1;
+            renderer.DrawNumber3("number", new Vector2(1152, 16), bigStage.ToString(), 1, 0.7f);
+            renderer.DrawNumber3("number", new Vector2(1185, 16), "-", 1, 0.7f);
+            renderer.DrawNumber3("number", new Vector2(1216, 16), smallStage.ToString(), 1, 0.7f);
         }
 
 
