@@ -347,10 +347,26 @@ namespace TeamWorkGame.Scene
         //描画の開始と終了は全部Game1のDrawに移動した
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            if (mapIndex >= 24)
+            if (mapIndex / 6 == 4)
+            {
                 renderer.DrawTexture("templeground", Vector2.Zero);
+            }
+            else if (mapIndex / 6 == 3)
+            {
+                renderer.DrawTexture("desertground", Vector2.Zero);
+            }
+            else if (mapIndex / 6 == 2)
+            {
+                renderer.DrawTexture("mountainground", Vector2.Zero);
+            }
+            else if (mapIndex / 6 == 1)
+            {
+                renderer.DrawTexture("forestground", Vector2.Zero);
+            }
             else
+            {
                 renderer.DrawTexture("backGround", Vector2.Zero);
+            }
 
             for (int i = 0; i < map.Data.GetLength(0); i++)
             {

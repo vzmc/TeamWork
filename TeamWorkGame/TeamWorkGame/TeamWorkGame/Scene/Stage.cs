@@ -50,11 +50,11 @@ namespace TeamWorkGame.Scene
             sever = gameDevice.GetStageSaver();
             herol = new List<Vector2>()
             {
-                new Vector2(85,153),
-                new Vector2(270,310),
-                new Vector2(610,340),
-                new Vector2(933,460),
-                new Vector2(1110,336),
+                new Vector2(143-32,200-55),
+                new Vector2(307-32,317-55),
+                new Vector2(736-32,348-55),
+                new Vector2(967-32,469-55),
+                new Vector2(1052-32,369-55),
             };
         }
         public void Initialize()

@@ -33,7 +33,7 @@ namespace TeamWorkGame.Def
         public const float PlayerJumpPower = 13f;
         public const float MaxPlayerHorizontalSpeed = 5f;   //Player横方向の最大速度
         public const float MaxPlayerVerticalSpeed = 10f;    //Player横方向の最大速度
-        public const float MapSpeedTime = 60f;     //マップ上でのキャラクターが一回につき移動する時間（フレーム）
+        public const float MapSpeedTime = 45f;     //マップ上でのキャラクターが一回につき移動する時間（フレーム）
 
         //2016.12.22  by柏
         //花火関連

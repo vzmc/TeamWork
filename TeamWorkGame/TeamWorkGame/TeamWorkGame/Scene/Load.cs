@@ -121,6 +121,9 @@ namespace TeamWorkGame.Scene
                 {"titlebackA",path},
                 {"goalAnime",path},
                 {"armsUpAnime",path},
+                {"desertground",path},
+                {"mountainground",path}, 
+                {"forestground",path},
             };
 
             return list;

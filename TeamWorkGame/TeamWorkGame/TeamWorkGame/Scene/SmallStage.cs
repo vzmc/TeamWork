@@ -70,9 +70,21 @@ namespace TeamWorkGame.Scene
         }
         public void Draw(GameTime gameTime, Renderer renderer)
         {
-            if (stageIndex/6 >= 4)
+            if (stageIndex/6 == 4)
             {
                 renderer.DrawTexture("templeground", Vector2.Zero);
+            }
+            else if (stageIndex / 6 == 3)
+            {
+                renderer.DrawTexture("desertground", Vector2.Zero);
+            }
+            else if(stageIndex/6 == 2)
+            {
+                renderer.DrawTexture("mountainground", Vector2.Zero);
+            }
+            else if (stageIndex / 6 == 1)
+            {
+                renderer.DrawTexture("forestground", Vector2.Zero);
             }
             else
             {
