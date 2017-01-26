@@ -68,7 +68,14 @@ namespace TeamWorkGame.Scene
             renderer.DrawTexture("backGround", Vector2.Zero);
             renderer.DrawTexture("credit", creditpos);
             renderer.DrawTexture("text", textpos, new Rectangle(0, (int)Text.CREDIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-            renderer.DrawTexture("titleback", new Vector2(Parameter.ScreenWidth-500, Parameter.ScreenHeight-70),alpha);
+            if (!GamePad.GetState(PlayerIndex.One).IsConnected)
+            {
+                renderer.DrawTexture("Zback", new Vector2(Parameter.ScreenWidth - 500, Parameter.ScreenHeight - 70), alpha);
+            }
+            else
+            {
+                renderer.DrawTexture("titleback", new Vector2(Parameter.ScreenWidth - 500, Parameter.ScreenHeight - 70), alpha);
+            }
         }
 
         public void ShutDown()

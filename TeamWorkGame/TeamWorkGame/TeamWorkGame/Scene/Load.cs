@@ -126,6 +126,7 @@ namespace TeamWorkGame.Scene
                 {"forestground",path},
                 {"ground3",path},
                 {"ground4",path},
+                {"Zback", path},
             };
 
             return list;
