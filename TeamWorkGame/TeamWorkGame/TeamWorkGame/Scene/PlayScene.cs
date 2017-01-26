@@ -459,8 +459,8 @@ namespace TeamWorkGame.Scene
         /// <param name="renderer"></param>
         public void ShowStageNum(Renderer renderer)
         {
-            int bigStage = mapIndex / StageDef.BigIndexMax + 1;
-            int smallStage = mapIndex % StageDef.BigIndexMax + 1;
+            int bigStage = mapIndex / StageDef.SmallIndexMax + 1;
+            int smallStage = mapIndex % StageDef.SmallIndexMax + 1;
             renderer.DrawNumber3("number", new Vector2(1152, 16), bigStage.ToString(), 1, 0.7f);
             renderer.DrawNumber3("number", new Vector2(1185, 16), "-", 1, 0.7f);
             renderer.DrawNumber3("number", new Vector2(1216, 16), smallStage.ToString(), 1, 0.7f);
