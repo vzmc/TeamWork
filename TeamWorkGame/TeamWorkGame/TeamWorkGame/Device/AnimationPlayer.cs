@@ -106,7 +106,7 @@ namespace TeamWorkGame.Device
             // Draw the current frame.
             //spriteBatch.Draw(Animation.Texture, position, source, Color.White, 0.0f, Origin, 1.0f, spriteEffects, 0.0f);
             //今のフレイムを描画
-            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects,alpha, 0.0f, cameraScale);
+            renderer.DrawTexture(Animation.Texture, position, range, spriteEffects, alpha, 0.0f, cameraScale);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace TeamWorkGame.Device
         /// <param name="origin">中心座標</param>
         /// <param name="rotation">回転角度</param>
         /// <param name="cameraScale"></param>
-        public void Draw(GameTime gameTime, Renderer renderer, Vector2 position, SpriteEffects spriteEffects,Vector2 origin,float rotation ,float cameraScale, float alpha)
+        public void Draw(GameTime gameTime, Renderer renderer, Vector2 position, SpriteEffects spriteEffects, Vector2 origin, float rotation, float cameraScale, float alpha)
         {
             if (Animation == null)
                 throw new NotSupportedException("アニメーション指定していません！");
@@ -174,7 +174,7 @@ namespace TeamWorkGame.Device
         /// <param name="animation">リセットしたいアニメーション</param>
         public void ResetAnimation(Animation animation)
         {
-            if(frameIndex == Animation.FrameCount - 1)
+            if (frameIndex == Animation.FrameCount - 1)
             {
                 frameIndex = 0;
             }

@@ -42,8 +42,8 @@ namespace TeamWorkGame.Actor
             base("coal", pos, velo, true, "coal")
         {
             //葉梨竜太
-            animePlayer = new AnimationPlayer();
-            animePlayer.PlayAnimation(animation);
+            //animePlayer = new AnimationPlayer();
+            
         }
         public override void Initialize()
         {
@@ -57,6 +57,7 @@ namespace TeamWorkGame.Actor
             map = MapManager.GetNowMapData();
             //葉梨竜太
             animation = new Animation(Renderer.GetTexture("coaleffect"), 0.1f, false);
+            animePlayer.PlayAnimation(animation);
             angle = 0.0f;
         }
         public void ToDeath()

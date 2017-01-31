@@ -329,7 +329,7 @@ namespace TeamWorkGame.Actor
             else if (diretion == Direction.DOWN || inputState.CheckDownKey(Keys.Down, Buttons.LeftThumbstickDown))
             {
                 aim = new Vector2(0, Parameter.FireSpeed);
-                aimpos = new Vector2(position.X, position.Y + 64);
+                aimpos = new Vector2(position.X, position.Y + 60);
                 isthrow = isOnGround ? false : true;
             }
             else if (diretion == Direction.LEFT || inputState.CheckDownKey(Keys.Left, Buttons.LeftThumbstickLeft))
