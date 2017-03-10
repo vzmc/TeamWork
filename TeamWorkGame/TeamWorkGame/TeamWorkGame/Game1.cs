@@ -1,24 +1,15 @@
 /////////////////////////////////////////////////
 // Game1
-// 最終修正時間：2016年11月17日
-// By　柏
+// 最終修正時間：2017年1月26日
+// By　張ユービン
 /////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
-using TeamWorkGame.Actor;
 using TeamWorkGame.Def;
 using TeamWorkGame.Device;
 using TeamWorkGame.Scene;
-using TeamWorkGame.Utility;
 
 namespace TeamWorkGame
 {
@@ -40,6 +31,7 @@ namespace TeamWorkGame
             graphicsDeviceManager = new GraphicsDeviceManager(this);
             graphicsDeviceManager.PreferredBackBufferWidth = Parameter.ScreenWidth;       //画面横幅
             graphicsDeviceManager.PreferredBackBufferHeight = Parameter.ScreenHeight;      //画面縦幅
+            //graphicsDeviceManager.IsFullScreen = true;
 
             //コンテンツデータの保存フォルダをContentに設定
             Content.RootDirectory = "Content";
@@ -69,18 +61,25 @@ namespace TeamWorkGame
             //IScene playScene = new PlayScene(gameDevice);
             sceneManager.Add(SceneType.Load, new Load(gameDevice));
 
-            sceneManager.Add(SceneType.Title, new Title(gameDevice));
-            
+            sceneManager.Add(SceneType.Title, new Title(gameDevice, this.Exit));
+
             //ステージクラスの追加
             //葉梨竜太
             //２０１６年１０月１２日
             sceneManager.Add(SceneType.Stage, new Stage(gameDevice));
+
+            sceneManager.Add(SceneType.StageIn, new StageIn(1.0f));
+
+            sceneManager.Add(SceneType.Credit, new Credit(gameDevice));
             //ステージ選択の追加
             //葉梨竜太
             //２０１６年１０月１３日
             sceneManager.Add(SceneType.SmallStage, new SmallStage(gameDevice));
             sceneManager.Add(SceneType.PlayScene, new PlayScene(gameDevice, 0));
-            //sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
+
+            //エンディング演出追加　by柏　2017.1.11
+            //sceneManager.Add(SceneType.ToEnd, new ToEnd(1.2f));
+            sceneManager.Add(SceneType.Ending, new Ending(gameDevice));
 
 
             sceneManager.Change(new NextScene(SceneType.Load, -1));
@@ -93,94 +92,11 @@ namespace TeamWorkGame
         /// </summary>
         protected override void LoadContent()
         {
-
             // Create a new SpriteBatch, which can be used to draw textures.
             //Loadシーンが必要な物を先に読み取る
             gameDevice.LoadContent();
-            
-            //renderer.LoadTexture("hero");
-            //renderer.LoadTexture("light_off");
-            //renderer.LoadTexture("TileMapSource");
-            //renderer.LoadTexture("fire");
-            //renderer.LoadTexture("tree");
-            //renderer.LoadTexture("ice");
-            //renderer.LoadTexture("iron");
-            //renderer.LoadTexture("title");
-            //renderer.LoadTexture("clear");
-            //renderer.LoadTexture("goal");
-            //renderer.LoadTexture("coal");//佐瀬拓海
-            //renderer.LoadTexture("number");//佐瀬拓海
-            //renderer.LoadTexture("straw");
-            ////ワールドマップの追加
-            ////葉梨竜太
-            ////２０１６年１０月１２日
-            //renderer.LoadTexture("worldmap");
-            ////ステージ選択肢の追加
-            ////背景の追加
-            ////葉梨竜太
-            ////２０１６年１０月１３日
-            //renderer.LoadTexture("smallmap");
-            //renderer.LoadTexture("frame");
-            //renderer.LoadTexture("forestBG");
 
-            ////by長谷川修一  11/10
-            //renderer.LoadTexture("FireMeter");
-            //renderer.LoadTexture("iceAnime");
-            //renderer.LoadTexture("ironAnime");
-            //renderer.LoadTexture("wood");
-            //renderer.LoadTexture("playerAnime");
-            //renderer.LoadTexture("throwAnime");
-            //renderer.LoadTexture("sand");
-            //renderer.LoadTexture("backGround");
-            //renderer.LoadTexture("woodAnime");
-            //renderer.LoadTexture("strawAnime");
-            //renderer.LoadTexture("text");
-            //renderer.LoadTexture("standAnime");
-            //renderer.LoadTexture("ground1");
-            //renderer.LoadTexture("ground2");
-
-            ////柏
-            //renderer.LoadTexture("ClearWindow");
-            //renderer.LoadTexture("ClearWindow2");
-            //renderer.LoadTexture("selecter");
-            //renderer.LoadTexture("GameStartText");
-            //renderer.LoadTexture("WorldText");
-            //renderer.LoadTexture("StaffText");
-            //renderer.LoadTexture("balloon");
-            //renderer.LoadTexture("Pause");
-            //renderer.LoadTexture("water");
-            //renderer.LoadTexture("smallmap1");
-            //renderer.LoadTexture("smallmap2");
-            //renderer.LoadTexture("smallmap3");
-            //renderer.LoadTexture("smallmap4");
-            //renderer.LoadTexture("smallmap5");
-            //renderer.LoadTexture("smallmap6");
-            //renderer.LoadTexture("lock");
-            //renderer.LoadTexture("Zback");
-            //renderer.LoadTexture("uparrow");
-            //renderer.LoadTexture("downarrow");
-
-            ////SoundのLoad
-            //LoadBGM();
-            //LoadSE();
-            // TODO: use this.Content to load your game content here
         }
-
-        //private void LoadBGM()
-        //{
-        //    string path = "./Sound/BGM/";
-        //    sound.LoadBGM("forest1", path);
-        //    sound.LoadBGM("worldmap1", path);
-        //    sound.LoadBGM("village1", path);
-        //}
-
-        //private void LoadSE()
-        //{
-        //    string path = "./Sound/SE/";
-        //    sound.LoadSE("cancel1", path);
-        //    sound.LoadSE("decision1", path);
-        //    sound.LoadSE("fire1", path);
-        //}
 
         /// <summary>
         /// UnloadContent will be called once per game and is the place to unload
@@ -209,6 +125,11 @@ namespace TeamWorkGame
             //ゲームデバイス更新
             gameDevice.Update(gameTime);
 
+            if ((gameDevice.GetInputState().GetKeyTrigger(Keys.F)))
+            {
+                graphicsDeviceManager.ToggleFullScreen();
+            }
+
             //シーンの更新
             sceneManager.Update(gameTime);
 
@@ -222,7 +143,7 @@ namespace TeamWorkGame
         protected override void Draw(GameTime gameTime)
         {
             //描画クリア時の色を設定
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             renderer.Begin();
             //シーンの描画

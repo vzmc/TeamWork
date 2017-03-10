@@ -1,7 +1,9 @@
 ﻿///////////////////////////////////////////////////////////////////////////
 //ゲーム中使われている機能の統合
 //作成時間：2016/9/22
-//作成者：氷見悠人
+//作成者：張ユービン
+//最終更新日:2016/12/08
+//編集者:佐瀬拓海
 /////////////////////////////////////////////////////////////////////
 
 using System;
@@ -21,19 +23,14 @@ namespace TeamWorkGame.Device
         private InputState input;   //入力
         private Sound sound;        //サウンド
         private static Random rand = new Random(); //乱数
-        private StageSever stageSever;  //stageごとのclear状態を保存する用
+        private StageSaver stageSaver;  //stageごとのclear状態を保存する用
 
         public GameDevice(ContentManager content, GraphicsDevice graphics)
         {
             renderer = new Renderer(content, graphics);
             input = new InputState();
             sound = new Sound(content);
-            stageSever = new StageSever();
-        }
-
-        public void InitiInitialize()
-        {
-
+            stageSaver = new StageSaver();
         }
 
         public void Update(GameTime gameTime)
@@ -47,6 +44,7 @@ namespace TeamWorkGame.Device
             //ゲーム開始時に必要な最小限のリソースを読み込む
             renderer.LoadTexture("number", "./Texture/");
             renderer.LoadTexture("logo", "./Texture/");
+            renderer.LoadTexture("teamlogo", "./Texture/");     //チームロゴの読み込み
         }
 
 
@@ -90,8 +88,8 @@ namespace TeamWorkGame.Device
         /// stageSeverの取得
         /// </summary>
         /// <returns></returns>
-        public StageSever GetStageSever() {
-            return stageSever;
+        public StageSaver GetStageSaver() {
+            return stageSaver;
         }
 
     }

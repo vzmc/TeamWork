@@ -2,8 +2,8 @@
 //　クリア画面
 //  作成者：柏杳
 //
-//  最終更新日 11月30日
-//  By 葉梨竜太
+//  最終更新日 2016.12.14
+//  by 柏　 ＳＥ実装
 /////////////////////////////////////////
 
 using System;
@@ -30,6 +30,7 @@ namespace TeamWorkGame.Scene
         private bool isPause;
         private bool isEnd;     //選択完了状態
         private Player player;
+        private ArmsUp armsUp;
         //Animation関連
         private Animation standAnime;
         private AnimationPlayer animePlayer;
@@ -39,10 +40,19 @@ namespace TeamWorkGame.Scene
         private Vector2 retryTextPosition;
         private Vector2 nextTextPosition;
 
-        public ClearSelect(InputState inputState, Player player)
+        private Sound sound;   //by 柏　2016.12.14 ＳＥ実装
+
+        private Timer flashTimer;
+        private float retryTextalpha;
+        private float worldTextalpha;
+        private float nextTextalpha;
+
+        public ClearSelect(InputState inputState, Player player, Sound sound)
         {
+            this.sound = sound;   //by 柏　2016.12.14 ＳＥ実装
             this.inputState = inputState;
             this.player = player;
+            armsUp = new ArmsUp(new Vector2(560, 210), Vector2.Zero);
             Initialize();
         }
 
@@ -70,6 +80,11 @@ namespace TeamWorkGame.Scene
             retryTextPosition = new Vector2(550, 450);
             nextTextPosition = new Vector2(550, 350);
 
+            flashTimer = new Timer(0.2f);
+            retryTextalpha = 1.0f;
+            worldTextalpha = 1.0f;
+            nextTextalpha = 1.0f;
+
             standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);//StandAnimeの実体生成
 
             isPause = false;
@@ -77,12 +92,44 @@ namespace TeamWorkGame.Scene
             isEnd = false;
         }
 
+        //点滅する処理
+        private void Flash()
+        {
+            flashTimer.Update();
+            if (flashTimer.IsTime())
+            {
+                switch (select)
+                {
+                    case 0:
+                        worldTextalpha = 1.0f;
+                        retryTextalpha = 1.0f;
+                        if (nextTextalpha == 1.0f) { nextTextalpha = 0.5f; flashTimer.Initialize(); }
+                        else { nextTextalpha = 1.0f; flashTimer.Initialize(); }
+                        break;
+                    case 1:
+                        worldTextalpha = 1.0f;
+                        nextTextalpha = 1.0f;
+                        if (retryTextalpha == 1.0f) { retryTextalpha = 0.5f; flashTimer.Initialize(); }
+                            else { retryTextalpha = 1.0f; flashTimer.Initialize(); }
+                            break;
+                    case 2:
+                        retryTextalpha = 1.0f;
+                        nextTextalpha = 1.0f;
+                        if (worldTextalpha == 1.0f) { worldTextalpha = 0.5f; flashTimer.Initialize(); }
+                        else { worldTextalpha = 1.0f; flashTimer.Initialize(); }
+                        break;
+                }
+            }
+        }
+
         public void Update()
         {
+            Flash();
             if (isClear)    //clear状態だけ選択有効
             {
                 if (inputState.CheckTriggerKey(Keys.Up, Buttons.LeftThumbstickUp))
                 {
+                    sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                     if (player.IsDead || (!player.IsDead && isPause))
                     {
                         if (select == 1) { return; }
@@ -94,6 +141,7 @@ namespace TeamWorkGame.Scene
                 }
                 else if (inputState.CheckTriggerKey(Keys.Down, Buttons.LeftThumbstickDown))
                 {
+                    sound.PlaySE("cursor");    //by 柏　2016.12.14 ＳＥ実装
                     if (select == 2) { return; }
                     select++;
                 }
@@ -137,8 +185,8 @@ namespace TeamWorkGame.Scene
                 if (player.IsDead)
                 {
                     renderer.DrawTexture("text", new Vector2(1280 / 2 - 152 / 2, 250), new Rectangle(0, (int)Text.MISS * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                    renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                    renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                    renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), retryTextalpha);
+                    renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
                     //renderer.DrawTexture("ClearWindow2", new Vector2(350, 250));
                 }
                 else
@@ -146,15 +194,15 @@ namespace TeamWorkGame.Scene
                     if (isPause)
                     {
                         renderer.DrawTexture("Pause", new Vector2(1280 / 2 - 472 / 2, 100));
-                        renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                        renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                        renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), retryTextalpha);
+                        renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
                     }
                     else {
                         //renderer.DrawTexture("ClearWindow", new Vector2(350, 250));
-                        renderer.DrawTexture("clear", new Vector2(1280 / 2 - 472 / 2, 100));
-                        renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                        renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
-                        renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight));
+                        renderer.DrawTexture("text", nextTextPosition, new Rectangle(0, (int)Text.NEXT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), nextTextalpha);
+                        renderer.DrawTexture("text", retryTextPosition, new Rectangle(0, (int)Text.RETRY * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), retryTextalpha);
+                        renderer.DrawTexture("text", worldTextPosition, new Rectangle(0, (int)Text.WORLD * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), worldTextalpha);
+                        armsUp.Draw(gameTime, renderer, Vector2.Zero, cameraScale);
                     }
                     
                 }

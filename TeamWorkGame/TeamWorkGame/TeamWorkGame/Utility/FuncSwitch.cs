@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿//======================
+//全局機能のコントロール
+//作成者：張ユービン
+//======================
 
 namespace TeamWorkGame.Utility
 {

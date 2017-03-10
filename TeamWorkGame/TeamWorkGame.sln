@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamWorkGame", "TeamWorkGame\TeamWorkGame\TeamWorkGame.csproj", "{27A0C48C-81B5-4DBB-BC53-F557B30E03C6}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "TeamWorkGameContent", "TeamWorkGame\TeamWorkGameContent\TeamWorkGameContent.contentproj", "{76A51D39-8192-4A99-8B6F-51C68AF7685D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamWorkGameContent", "TeamWorkGame\TeamWorkGameContent\TeamWorkGameContent.contentproj", "{76A51D39-8192-4A99-8B6F-51C68AF7685D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

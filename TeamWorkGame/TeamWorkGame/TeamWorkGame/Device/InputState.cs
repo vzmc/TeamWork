@@ -1,7 +1,7 @@
 ﻿///////////////////////////////////////////////////////////////
 // キーボード and GamePad入力処理
 // 作成時間：2016/9/22
-// 作成者：氷見悠人
+// 作成者：張ユービン
 // 修正時間：2016/10/26
 ///////////////////////////////////////////////////////////
 
@@ -21,6 +21,7 @@ namespace TeamWorkGame.Device
     {
         //フィールド
         private Vector2 velocity;   // 移動量の宣言
+        private Vector2 rightVelocity;  //カメラ移動用
 
         //キー
         private KeyboardState currentKey;   //現在のキー
@@ -34,6 +35,7 @@ namespace TeamWorkGame.Device
         public InputState()
         {
             velocity = Vector2.Zero;
+            rightVelocity = Vector2.Zero;
         }
 
         /// <summary>
@@ -43,6 +45,11 @@ namespace TeamWorkGame.Device
         public Vector2 Velocity()
         {
             return velocity;
+        }
+
+        public Vector2 RightVelocity()
+        {
+            return rightVelocity;
         }
 
         /// <summary>
@@ -77,6 +84,36 @@ namespace TeamWorkGame.Device
             //{
             //    velocity.Normalize();   // 正規化メソッド
             //}
+        }
+        
+        private void UpdateRightVelocity()
+        {
+            rightVelocity = Vector2.Zero;    // 移動量をゼロで初期化
+
+            // 十字キーの操作処理
+            if (CheckDownKey(Keys.D, Buttons.RightThumbstickRight))
+            {
+                rightVelocity.X += 1.0f;
+            }
+            if (CheckDownKey(Keys.A, Buttons.RightThumbstickLeft))
+            {
+                rightVelocity.X += -1.0f;
+            }
+
+            if (CheckDownKey(Keys.W, Buttons.RightThumbstickUp))
+            {
+                rightVelocity.Y += -1.0f;
+            }
+            if (CheckDownKey(Keys.S, Buttons.RightThumbstickDown))
+            {
+                rightVelocity.Y += 1.0f;
+            }
+
+            //正規化する（長さ１の単位ベクトルに）
+            if (rightVelocity.Length() != 0.0f)
+            {
+                rightVelocity.Normalize();   // 正規化メソッド
+            }
         }
 
         /// <summary>
@@ -216,6 +253,7 @@ namespace TeamWorkGame.Device
 
             // 移動量の更新
             UpdateVelocity();
+            UpdateRightVelocity();
         }
     }
 }

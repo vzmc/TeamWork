@@ -1,20 +1,17 @@
 ﻿////////////////////////////////////////////////////////////
 // 重要のメソッド達
 // 作成時間：2016/10/1
-// 作成者：氷見悠人　
-// 最終修正時間：2016/11/30
-// 修正者:葉梨竜太
+// 作成者：張ユービン　
+// 最終修正時間：2017/1/18
+// 修正者:柏 SE実装
 /////////////////////////////////////////////////////////
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using TeamWorkGame.Actor;
 using TeamWorkGame.Def;
-using System.Diagnostics;   //Assert用
-
+using TeamWorkGame.Device;
 
 namespace TeamWorkGame.Utility
 {
@@ -55,14 +52,14 @@ namespace TeamWorkGame.Utility
                 nextLRPoints[0] = nowLRPoints[0] + new Vector2(velocity.X, 0);
                 nextLRPoints[1] = nowLRPoints[1] + new Vector2(velocity.X, 0);
 
-                if(map.IsInBlock(nextLRPoints[0], ref blockPos, data) || map.IsInBlock(nextLRPoints[1], ref blockPos, data))
+                if (map.IsInBlock(nextLRPoints[0], ref blockPos, data) || map.IsInBlock(nextLRPoints[1], ref blockPos, data))
                 {
                     velocity.X = 0;
                     position.X = blockPos.X + map.BlockSize - localColRect.X;
                     flag = true;
                 }
             }
-            else if(velocity.X > 0)
+            else if (velocity.X > 0)
             {
                 nowLRPoints[0].X = colRect.Right;
                 nowLRPoints[0].Y = colRect.Top + 1;
@@ -81,7 +78,7 @@ namespace TeamWorkGame.Utility
             }
 
             //上下移動の判断
-            if(velocity.Y < 0)
+            if (velocity.Y < 0)
             {
                 nowUDPoints[0].X = colRect.Left + 1;
                 nowUDPoints[0].Y = colRect.Top;
@@ -98,7 +95,7 @@ namespace TeamWorkGame.Utility
                     flag = true;
                 }
             }
-            else if(velocity.Y > 0)
+            else if (velocity.Y > 0)
             {
                 nowUDPoints[0].X = colRect.Left + 1;
                 nowUDPoints[0].Y = colRect.Bottom;
@@ -120,7 +117,6 @@ namespace TeamWorkGame.Utility
                     isOnGround = false;
                 }
             }
-
             return flag;
         }
 
@@ -140,7 +136,7 @@ namespace TeamWorkGame.Utility
 
             if ((position1.X <= position2.X + width2 - 1 && position1.X + width1 - 1 >= position2.X))
             {
-                if((position1.Y <= position2.Y + height2 - 1 && position1.Y + height1 - 1 >= position2.Y))
+                if ((position1.Y <= position2.Y + height2 - 1 && position1.Y + height1 - 1 >= position2.Y))
                 {
                     flag = true;
                 }
@@ -161,13 +157,14 @@ namespace TeamWorkGame.Utility
             Vector2 selfNowPositon = self.Position;
             Vector2 selfNowVelocity = self.Velocity;
             Vector2 selfNextPositionH = selfNowPositon + new Vector2(selfNowVelocity.X, 0);
-            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, (float)Math.Ceiling(selfNowVelocity.Y));
+            Vector2 selfNextPositionV = selfNowPositon + new Vector2(0, selfNowVelocity.Y);
+            Vector2 selfNextPosition = selfNowPositon + selfNowVelocity;
 
             Rectangle selfLocalColRect = self.LocalColRect;
 
             Rectangle selfNextColRectH = new Rectangle(self.LocalColRect.X + (int)selfNextPositionH.X, self.LocalColRect.Y + (int)selfNextPositionH.Y, self.LocalColRect.Width, self.LocalColRect.Height);
             Rectangle selfNextColRectV = new Rectangle(self.LocalColRect.X + (int)selfNextPositionV.X, self.LocalColRect.Y + (int)selfNextPositionV.Y, self.LocalColRect.Width, self.LocalColRect.Height);
-
+            Rectangle selfNextColRect = new Rectangle(self.LocalColRect.X + (int)selfNextPosition.X, self.LocalColRect.Y + (int)selfNextPosition.Y, self.LocalColRect.Width, self.LocalColRect.Height);
 
             Vector2 obstaclePosition = obstacle.Position;
             Rectangle obstacleColRect = obstacle.ColRect;
@@ -197,34 +194,33 @@ namespace TeamWorkGame.Utility
             //縦方向の判定
             //if (selfNowVelocity.Y != 0)
             //{
-                if (selfNextColRectV.Intersects(obstacleColRect))
-                {
-                    flag = true;
+            if (selfNextColRectV.Intersects(obstacleColRect))
+            {
+                flag = true;
 
-                    if (selfNowVelocity.Y >= 0)
+                if (selfNowVelocity.Y >= 0)
+                {
+                    if (!(obstacle is Tree))    //2017.1.18　by柏　樹木とのあたり判定不具合修正
                     {
                         self.PositionY = obstacleColRect.Y - (selfLocalColRect.Y + selfLocalColRect.Height);
-                        self.IsOnGround = true;
                     }
-                    else
-                    {
-                        self.PositionY = obstacleColRect.Y + obstacleColRect.Height - selfLocalColRect.Y;
-                    }
-
-                    self.VelocityY = 0;
+                    self.IsOnGround = true;
                 }
-            //}
+                else
+                {
+                    self.PositionY = obstacleColRect.Y + obstacleColRect.Height - selfLocalColRect.Y;
+                }
 
-            //if (flag)
-            //{
-            //    Console.WriteLine("!!!!!!!!!!!!!1");
+                self.VelocityY = 0;
+            }
             //}
 
             return flag;
         }
 
 
-        public static Vector2 PlayerStartPosition(int[,] mapdata) {
+        public static Vector2 PlayerStartPosition(int[,] mapdata)
+        {
             for (int i = 0; i < mapdata.GetLength(0); i++)
             {
                 for (int j = 0; j < mapdata.GetLength(1); j++)
@@ -243,13 +239,14 @@ namespace TeamWorkGame.Utility
 
 
 
-        //by木材追加 長谷川修一 10/27
+
         /// <summary>
         /// ギミック設置
+        /// by柏　SE実装 2016.12.14
         /// </summary>
         /// <param name="mapdata">マップデータの二元配列</param>
         /// <param name="MapThings">マップ上の物のList</param>
-        public static void CreateGimmicks(int[,] mapdata, List<GameObject> MapThings)
+        public static void CreateGimmicks(int[,] mapdata, List<GameObject> MapThings, Sound sound)
         {
             for (int i = 0; i < mapdata.GetLength(0); i++)
             {
@@ -289,13 +286,13 @@ namespace TeamWorkGame.Utility
                             }
                         case (int)GimmickType.GOAL:
                             {
-                                Goal goal = new Goal(new Vector2(j * 64, i * 64));
+                                Goal goal = new Goal(new Vector2(j * 64, i * 64), sound);
                                 MapThings.Add(goal);
                                 break;
                             }
                         case (int)GimmickType.WATER:
                             {
-                                Water water = new Water(new Vector2(j * 64, i * 64),Vector2.Zero);
+                                Water water = new Water(new Vector2(j * 64, i * 64), Vector2.Zero);
                                 MapThings.Add(water);
                                 break;
                             }
@@ -324,12 +321,12 @@ namespace TeamWorkGame.Utility
                                 break;
                             }
 
-                            //葉梨竜太
+                        //葉梨竜太
                         case (int)GimmickType.HIGHLIGHT3:
                             {
                                 MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2(j * 64, (i + 3) * 64), Parameter.MoveLightSpeed);
                                 MapThings.Add(moveLight);
-                                break; 
+                                break;
                             }
                         case (int)GimmickType.SIDELIGHT3:
                             {
@@ -345,31 +342,99 @@ namespace TeamWorkGame.Utility
                             }
                         case (int)GimmickType.SIDELIGHT5:
                             {
-                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j+5) * 64, i * 64), Parameter.MoveLightSpeed);
+                                MoveLight moveLight = new MoveLight(new Vector2(j * 64, i * 64), new Vector2((j + 5) * 64, i * 64), Parameter.MoveLightSpeed);
                                 MapThings.Add(moveLight);
                                 break;
                             }
-                        case (int)GimmickType.SIGN:
+                        case (int)GimmickType.JSIGN:
                             {
-                                Sign sign = new Sign(new Vector2(j * 64, i * 64));
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.JSIGN);
                                 MapThings.Add(sign);
                                 break;
                             }
-                            //葉梨竜太　11/30
+                        //葉梨竜太　11/30
                         case (int)GimmickType.BOMB:
                             {
-                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64));
+                                Bomb bomb = new Bomb(new Vector2(j * 64, i * 64), sound, Vector2.Zero);
                                 MapThings.Add(bomb);
                                 break;
                             }
-
+                        //葉梨竜太
+                        case (int)GimmickType.IGNITER_UR:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_UR);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_UL:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_UL);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_DR:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_DR);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_DL:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_DL);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_HIGHT:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_HIGHT);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        case (int)GimmickType.IGNITER_SIDE:
+                            {
+                                Igniter igniter = new Igniter(new Vector2(j * 64, i * 64), (int)GimmickType.IGNITER_SIDE);
+                                MapThings.Add(igniter);
+                                break;
+                            }
+                        //葉梨竜太
+                        case (int)GimmickType.MSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.MSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        case (int)GimmickType.RSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.RSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        case (int)GimmickType.LSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.LSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        case (int)GimmickType.CSIGN:
+                            {
+                                Sign sign = new Sign(new Vector2(j * 64, i * 64), (int)GimmickType.CSIGN);
+                                MapThings.Add(sign);
+                                break;
+                            }
+                        //　1/13　葉梨竜太
+                        case (int)GimmickType.ROCK:
+                            {
+                                Stone stone = new Stone(new Vector2(j * 64, i * 64));
+                                MapThings.Add(stone);
+                                break;
+                            }
                     }
                 }
             }
         }
 
         /// <summary>
-        /// ファイルからStageの情報を読み取る BY 氷見悠人　2016/10/31
+        /// ファイルからStageの情報を読み取る BY 張ユービン　2016/10/31
         /// </summary>
         /// <param name="bigIndex"></param>
         /// <param name="smallIndex"></param>
@@ -437,7 +502,7 @@ namespace TeamWorkGame.Utility
                 }
                 reader.Close();
             }
-            
+
             return mapdatas;
         }
     }

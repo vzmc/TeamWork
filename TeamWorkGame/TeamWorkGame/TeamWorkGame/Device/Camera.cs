@@ -1,7 +1,7 @@
 ﻿/////////////////////////////////////////////////////////////////////////////
 // カメラ処理
 // 作成時間：2016/9/25
-// 作成者：氷見悠人
+// By 張ユービン
 /////////////////////////////////////////////////////////////
 
 using System;
@@ -99,31 +99,46 @@ namespace TeamWorkGame.Device
         /// <param name="aimPos">注視する位置</param>
         private void SetData(Vector2 aimPos)
         {
+            //bool isOut = false;
             if (IsLimitView)
             {
-                // Cameraの位置を制限する
-                if (aimPos.X < Parameter.ScreenWidth / 2)
+                if (map.MapWidth >= Parameter.ScreenWidth)
                 {
-                    aimPos.X = Parameter.ScreenWidth / 2;
+                    // Cameraの位置を制限する
+                    if (aimPos.X < Parameter.ScreenWidth / 2)
+                    {
+                        aimPos.X = Parameter.ScreenWidth / 2;
+                        //isOut = true;
+                    }
+                    if (aimPos.X > map.MapWidth * scale - Parameter.ScreenWidth / 2)
+                    {
+                        aimPos.X = map.MapWidth * scale - Parameter.ScreenWidth / 2;
+                        //isOut = true;
+                    }
                 }
+                else
+                {
+                    aimPos.X = map.MapWidth * scale / 2;
+                    //isOut = true;
+                }
+
                 if (aimPos.Y < Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = Parameter.ScreenHeight / 2;
-                }
-
-                if (aimPos.X > map.MapWidth * scale - Parameter.ScreenWidth / 2)
-                {
-                    aimPos.X = map.MapWidth * scale - Parameter.ScreenWidth / 2;
+                    //isOut = true;
                 }
                 if (aimPos.Y > map.MapHeight * scale - Parameter.ScreenHeight / 2)
                 {
                     aimPos.Y = map.MapHeight * scale - Parameter.ScreenHeight / 2;
+                    //isOut = true;
                 }
             }
 
             aimPosition = aimPos;
             //centerPosition = aimPosition;
             position = aimPosition - new Vector2(Parameter.ScreenWidth / 2, Parameter.ScreenHeight / 2);
+
+            //return isOut;
         }
 
         /// <summary>

@@ -1,6 +1,6 @@
 ﻿///////////////////////////////////////////////////////////////////////
 // マップデータクラス
-// 作成者：氷見悠人
+// 作成者：張ユービン
 ////////////////////////////////////////////////
 
 using System;
@@ -21,7 +21,8 @@ namespace TeamWorkGame.Utility
         UP,
         DOWN,
         LEFT,
-        RIGHT
+        RIGHT,
+        
     }
 
     enum TileCollision
@@ -84,6 +85,14 @@ namespace TeamWorkGame.Utility
 
         public void Update(GameTime gameTime)
         {
+            //By　張
+            //foreach(var x in MapThings)
+            //{
+            //    if(x.PositionY > MapHeight)
+            //    {
+            //        x.IsDead = true;
+            //    }
+            //}
             //マップ上に死んだ物を消す
             MapThings.RemoveAll(x => x.IsDead);
         }

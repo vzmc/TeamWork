@@ -1,18 +1,14 @@
 ﻿//////////////////////////////////////////////////////////////////////////////
 // 氷クラス
-// 作成者：氷見悠人
+// 作成者：張ユービン
 // 最終修正時間：2016/11/30
 // By 葉梨竜太
 ////////////////////////////////////////////////////////////////////////////
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Microsoft.Xna.Framework;
 using TeamWorkGame.Device;
 using TeamWorkGame.Def;
-using TeamWorkGame.Utility;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace TeamWorkGame.Actor
@@ -27,7 +23,7 @@ namespace TeamWorkGame.Actor
 
         public Ice(Vector2 pos, Vector2 velo) : base("ice", pos, velo, false, "Ice")
         {
-            animationPlayer = new AnimationPlayer();
+            
         }
 
         public override void Initialize()
@@ -36,6 +32,8 @@ namespace TeamWorkGame.Actor
             isToDeath = false;
             isShow = true;      //初期値はtrue by佐瀬拓海
             animation = new Animation(Renderer.GetTexture("iceAnime"), Parameter.IceAnimeTime / 2, false);
+            //animationPlayer = new AnimationPlayer(animation);
+            animationPlayer.PlayAnimation(animation);
             SetTimer(Parameter.IceAnimeTime, Parameter.IceSpawnTime);
         }
 
@@ -58,14 +56,13 @@ namespace TeamWorkGame.Actor
         public override void Update(GameTime gameTime)
         {
             AliveUpdate();
-            animationPlayer.PlayAnimation(animation);
         }
 
         public override void AliveEvent(GameObject other)
         {
             if (other is Fire)
             {
-                other.IsDead = true;
+                //other.IsDead = true;
                 isShow = false;         //不可視化
             }
             if (other is Player)
@@ -76,7 +73,7 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// 描画の再定義（透明値を追加）　By　氷見悠人　2016/10/20
+        /// 描画の再定義（透明値を追加）　By　張ユービン　2016/10/20
         /// </summary>
         /// <param name="gameTime"></param>
         /// <param name="renderer"></param>
@@ -104,7 +101,7 @@ namespace TeamWorkGame.Actor
             }
             else if(other.Tag == "Fire")    //火が氷と接触すると消える
             {
-                other.IsDead = true;
+                other.IsGoDie = true;
             }
             //葉梨竜太　11/30
             else if(other is Bomb)

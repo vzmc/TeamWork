@@ -57,19 +57,24 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Actor\ArmsUp.cs" />
     <Compile Include="Actor\Balloon.cs" />
     <Compile Include="Actor\Bomb.cs" />
     <Compile Include="Actor\Coal.cs" />
     <Compile Include="Actor\Fire.cs" />
+    <Compile Include="Actor\FireDust.cs" />
+    <Compile Include="Actor\FireEnergy.cs" />
     <Compile Include="Actor\GameObject.cs" />
     <Compile Include="Actor\Goal.cs" />
     <Compile Include="Actor\Ice.cs" />
+    <Compile Include="Actor\Igniter.cs" />
     <Compile Include="Actor\Iron.cs" />
     <Compile Include="Actor\Light.cs" />
     <Compile Include="Actor\MoveLight.cs" />
     <Compile Include="Actor\Player.cs" />
     <Compile Include="Actor\Sand.cs" />
     <Compile Include="Actor\Sign.cs" />
+    <Compile Include="Actor\Stone.cs" />
     <Compile Include="Actor\Straw.cs" />
     <Compile Include="Actor\Tree.cs" />
     <Compile Include="Actor\Water.cs" />
@@ -86,7 +91,6 @@
     <Compile Include="Device\GameDevice.cs" />
     <Compile Include="Device\InputState.cs" />
     <Compile Include="Device\Loader.cs" />
-    <Compile Include="Device\Motion.cs" />
     <Compile Include="Device\Renderer.cs" />
     <Compile Include="Device\SELoader.cs" />
     <Compile Include="Device\Sound.cs" />
@@ -97,6 +101,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Scene\ClearSelect.cs" />
+    <Compile Include="Scene\Credit.cs" />
     <Compile Include="Scene\Ending.cs" />
     <Compile Include="Scene\FireMeter.cs" />
     <Compile Include="Scene\IScene.cs" />
@@ -107,16 +112,17 @@
     <Compile Include="Scene\SceneManager.cs" />
     <Compile Include="Scene\SmallStage.cs" />
     <Compile Include="Scene\Stage.cs" />
+    <Compile Include="Scene\StageIn.cs" />
     <Compile Include="Scene\Title.cs" />
     <Compile Include="Scene\TitleSelect.cs" />
-    <Compile Include="Size.cs" />
+    <Compile Include="Utility\Size.cs" />
     <Compile Include="Device\Animation.cs" />
     <Compile Include="Device\AnimationPlayer.cs" />
     <Compile Include="Utility\FuncSwitch.cs" />
     <Compile Include="Utility\Map.cs" />
     <Compile Include="Utility\Method.cs" />
-    <Compile Include="Utility\Range.cs" />
-    <Compile Include="Utility\RectangleExtensions.cs" />
+    <Compile Include="Utility\Particle\ParticleControl.cs" />
+    <Compile Include="Utility\Particle\Particle.cs" />
     <Compile Include="Utility\Timer.cs" />
   </ItemGroup>
   <ItemGroup>

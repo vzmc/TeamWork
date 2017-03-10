@@ -1,15 +1,11 @@
 ﻿////////////////////////////////////////////////////////////////////
 //マップ上にある物の親クラス
 //作成時間：2016/9/23
-//作成者：氷見悠人
+//作成者：張ユービン
 //最終修正時間：2016/10/30
 //修正者 葉梨竜太　BombEventの実装
 ///////////////////////////////////////////////////////////////////
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using TeamWorkGame.Device;
@@ -28,9 +24,9 @@ namespace TeamWorkGame.Actor
         protected Rectangle localColRect;    //当たり判定区域
         protected Vector2 position;     //位置
         protected int previousBottom;
-        //protected Vector2 origin;       //描画の原点
 
         protected Vector2 velocity;     //移動量（tempを整数化）
+        protected bool isGoDie;         //死亡中
         protected bool isDead;          //生きているか？
         protected bool isOnGround;      //地上にいるか？
         protected string tag;           //タグ
@@ -152,6 +148,18 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        public bool IsGoDie
+        {
+            get
+            {
+                return IsGoDie;
+            }
+            set
+            {
+                isGoDie = value;
+            }
+        }
+
         public bool IsDead
         {
             get
@@ -237,6 +245,7 @@ namespace TeamWorkGame.Actor
         /// </summary>
         public virtual void Initialize()
         {
+            isGoDie = false;
             isDead = false;
             previousBottom = ColRect.Bottom;
             isOnGround = false;
@@ -270,7 +279,7 @@ namespace TeamWorkGame.Actor
         /// <returns></returns>
         public virtual bool CollisionCheck(GameObject other)
         {
-            bool flag = false;//Method.CollisionCheck(position + colOffset, colSize.Width, colSize.Height, other.position + other.colOffset, other.colSize.Width, other.colSize.Height);
+            bool flag = false;
             flag = ColRect.Intersects(other.ColRect);
             return flag;
         }
@@ -399,13 +408,21 @@ namespace TeamWorkGame.Actor
         }
 
         /// <summary>
-        /// 透明値を返す
+        /// 透明値プロパティ
         /// </summary>
         /// <returns></returns>
-        public float GetAlpha()
+        public float Alpha
         {
-            return alpha;
+            get
+            {
+                return alpha;
+            }
+            set
+            {
+                alpha = value;
+            }
         }
+
         
         /// <summary>
         /// 衝突事件の処理

@@ -1,0 +1,2 @@
+I:\K016A1743\TeamWork1\branches\branch\TeamWorkGame\TeamWorkGame\TeamWorkGameContent\obj\x86\Release\TeamWorkGameContent.contentprojResolveAssemblyReference.cache
+C:\Users\zyb\Desktop\work\XNA\ActionGame\TeamWorkGame\TeamWorkGame\TeamWorkGameContent\obj\x86\Release\TeamWorkGameContent.contentprojResolveAssemblyReference.cache

@@ -18,5 +18,10 @@ namespace TeamWorkGame.Scene
         //シーン管理
         bool IsEnd();                   //終了チェック
         NextScene Next();                   //次のシーン
+
+        //次のシーンを取得  by柏　2017.1.11
+        //これによって、シーンごとに違うフェイド処理が実装可能
+        NextScene GetNext();    
+
     }
 }

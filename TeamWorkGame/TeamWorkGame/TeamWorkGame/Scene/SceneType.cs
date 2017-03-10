@@ -1,12 +1,9 @@
 ﻿/////////////////////////////////////////////////
 // SceneType
-// 最終修正時間：2016年10月13日
-// By　葉梨竜太
+// By 張ユービン
+// 最終修正時間：2011年1月11日
+// By　柏
 /////////////////////////////////////////////////
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace TeamWorkGame.Scene
 {
@@ -15,11 +12,14 @@ namespace TeamWorkGame.Scene
         Load,
         Title,
         Stage,
+        Credit,
         //シーンの追加
         //葉梨竜太
         //２０１６年１０月１３日
         SmallStage,
+        StageIn,        //Stageに入る時の表示Scene　By　張ユービン
         PlayScene,
-        Ending
+        Ending,
+        None,   //by柏　エラー防ぐ
     }
 }

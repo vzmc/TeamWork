@@ -2,8 +2,8 @@
 //TitleSceneの選択機能
 //作成時間：2016/10/13
 //作成者：柏杳
-//最終修正時間：2016/11/10
-//最終修正者：柏杳
+//最終修正時間：2017/01/18
+//最終修正者：長谷川
 //////////////////////////////////////////////////
 
 using System;
@@ -13,6 +13,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Graphics;
 using TeamWorkGame.Device;
 using TeamWorkGame.Utility;
 using TeamWorkGame.Def;
@@ -40,11 +41,17 @@ namespace TeamWorkGame.Scene
         private Vector2 selectPosition2;
         private Vector2 selectPosition3;
 
+        //アニメーション関係
+        private AnimationPlayer animePlayer;
+        private Animation standAnime;
+
         private bool isStarted;
         private int x;
+        private Sound sound;    //by 柏　2016.12.14 ＳＥ実装
 
-        public TitleSelect(InputState inputState)
+        public TitleSelect(InputState inputState, Sound sound)
         {
+            this.sound = sound;    //by 柏　2016.12.14 ＳＥ実装
             this.inputState = inputState;
             Initialize();
         }
@@ -58,13 +65,17 @@ namespace TeamWorkGame.Scene
             creditTextalpha = 1;
             exitTextalpha = 1;
             flashTimer = new Timer(0.2f);
-            startTextPosition = new Vector2(550, 600);
+            startTextPosition = new Vector2(320, 480);
             worldTextPosition = new Vector2(550, 400);
             creditTextPosition = new Vector2(550, 480);
             exitTextPosition = new Vector2(550, 560);
             selectPosition1 = new Vector2(470, 390);
             selectPosition2 = new Vector2(470, 470);
             selectPosition3 = new Vector2(470, 550);
+
+            animePlayer = new AnimationPlayer();
+            standAnime = new Animation(Renderer.GetTexture("standAnime"), 0.1f, true);
+            animePlayer.PlayAnimation(standAnime);
         }
 
         public void Update()
@@ -114,11 +125,13 @@ namespace TeamWorkGame.Scene
             if (!isStarted) { return; }
             if (inputState.IsKeyDown(Keys.Down) || inputState.IsKeyDown(Buttons.LeftThumbstickDown))
             {
+                sound.PlaySE("cursor");     //by柏　2016.12.14 ＳＥ実装
                 if (x == 3) { return; }
                 x++;
             }
             else if (inputState.IsKeyDown(Keys.Up) || inputState.IsKeyDown(Buttons.LeftThumbstickUp))
             {
+                sound.PlaySE("cursor");     //by柏　2016.12.14 ＳＥ実装
                 if (x == 1) { return; }
                 x--;
             }
@@ -139,11 +152,18 @@ namespace TeamWorkGame.Scene
 
 
         //状況に合わせて描画する
-        public void Draw(Renderer renderer)
+        public void Draw(Renderer renderer, GameTime gameTime)
         {
             if (!isStarted)
             {
-                renderer.DrawTexture("text", startTextPosition, new Rectangle(0, (int)Text.START, Parameter.TextWidth, Parameter.TextHeight), startTextalpha);
+                if (GamePad.GetState(PlayerIndex.One).IsConnected)
+                {
+                    renderer.DrawTexture("startText", startTextPosition, startTextalpha);
+                }
+                else
+                {
+                    renderer.DrawTexture("startText2", startTextPosition, startTextalpha); ;
+                }
                 //renderer.DrawTexture("GameStartText", startTextPosition, startTextalpha);
             }
             else {
@@ -154,14 +174,18 @@ namespace TeamWorkGame.Scene
                 renderer.DrawTexture("text", exitTextPosition, new Rectangle(0, (int)Text.EXIT * Parameter.TextHeight, Parameter.TextWidth, Parameter.TextHeight), exitTextalpha);
                 switch (x)
                 {
+                    //アニメーションに変更by長谷川
                     case 1:
-                        renderer.DrawTexture("hero", selectPosition1);
+                        animePlayer.Draw(gameTime, renderer, selectPosition1, SpriteEffects.None);
+                        //renderer.DrawTexture("hero", selectPosition1);
                         break;
                     case 2:
-                        renderer.DrawTexture("hero", selectPosition2);
+                        animePlayer.Draw(gameTime, renderer, selectPosition2, SpriteEffects.None);
+                        //renderer.DrawTexture("hero", selectPosition2);
                         break;
                     case 3:
-                        renderer.DrawTexture("hero", selectPosition3);
+                        animePlayer.Draw(gameTime, renderer, selectPosition3, SpriteEffects.None);
+                        //renderer.DrawTexture("hero", selectPosition3);
                         break;
                 }
 

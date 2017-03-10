@@ -1,6 +1,6 @@
 ﻿////////////////////////////////////////////////////////////////////////////////
 // 水滝のクラス
-// 作成者：氷見悠人
+// 作成者：張ユービン
 //////////////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
@@ -23,8 +23,7 @@ namespace TeamWorkGame.Actor
         private Map mapdata;
         private bool isCollisioned;
         private bool isDead;
-        private Timer startTimer;
-        
+        private Timer startTimer;        
 
         public bool IsDead
         {
@@ -42,6 +41,11 @@ namespace TeamWorkGame.Actor
             }
         }
 
+        /// <summary>
+        /// 氷から生成する水滝
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="anime"></param>
         public WaterLine(Vector2 pos, Animation anime)
         {
             position = pos;
@@ -52,6 +56,9 @@ namespace TeamWorkGame.Actor
             Initialize();
         }
 
+        /// <summary>
+        /// 初期化
+        /// </summary>
         public void Initialize()
         {
             waters.Clear();
@@ -94,7 +101,7 @@ namespace TeamWorkGame.Actor
 
         private void RemoveWater()
         {
-            if(waters.Count > 0)
+            if (waters.Count > 0)
             {
                 waters.RemoveAt(0);
             }
@@ -106,7 +113,7 @@ namespace TeamWorkGame.Actor
 
         private void MakeWater()
         {
-            Water water = new Water(position + (new Vector2(0, 64)) * waters.Count, Vector2.Zero);
+            Water water = new Water(position + (new Vector2(0, 64)) * waters.Count, Vector2.Zero, 1);
             waters.Add(water);
         }
 

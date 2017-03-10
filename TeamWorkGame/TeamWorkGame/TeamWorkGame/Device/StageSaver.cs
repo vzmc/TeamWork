@@ -12,7 +12,7 @@ using TeamWorkGame.Def;
 
 namespace TeamWorkGame.Device
 {
-    class StageSever
+    class StageSaver
     {
         private int playTime;
         private int currentStage;
@@ -21,7 +21,7 @@ namespace TeamWorkGame.Device
         private int charcoal;
         private int[][] stageData;
 
-        public StageSever()
+        public StageSaver()
         {
             Initialize();
         }

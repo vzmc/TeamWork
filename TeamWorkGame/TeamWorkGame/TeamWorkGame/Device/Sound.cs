@@ -20,7 +20,6 @@ namespace TeamWorkGame.Device
 
         //現在再生中のアセット名
         private string currentBGM;  
-        //private string currentSE;
 
         /// <summary>
         /// コンストラクタ
@@ -43,7 +42,6 @@ namespace TeamWorkGame.Device
 
             //何も再生していないのでnull初期化
             currentBGM = null;
-            //currentSE = null;
         }
 
         /// <summary>
@@ -235,31 +233,8 @@ namespace TeamWorkGame.Device
             }
 
             data.Play();
-
             sePlayList.Add(data);
-            ////再生中ですか？
-            //if (IsPlayingSEInstance(name))
-            //{
-            //    StopSEInstance(currentSE);
-            //}
-
-            //currentSE = name;
-
-            //seInstances[currentSE].Play();
         }
-
-        /// <summary>
-        /// インスタンス化されたSE音の停止
-        /// </summary>
-        /// <param name="name"></param>
-        //public void StopSEInstance(string name)
-        //{
-        //    //WAVインスタンス用ディクションナリをチェック
-        //    Debug.Assert(seInstances.ContainsKey(name), ErrorMessage(name));
-
-        //    seInstances[name].Stop();
-        //    currentSE = null;
-        //}
 
         /// <summary>
         /// sePlayListにある再生中の音を停止
@@ -313,20 +288,6 @@ namespace TeamWorkGame.Device
         public void Update()
         {
             RemoveSE();
-            //if (currentSE != null)
-            //{
-            //    if (seInstances[currentSE].State == SoundState.Stopped)
-            //    {
-            //        currentSE = null;
-            //    }
-            //}
-            //if (currentBGM != null)
-            //{
-            //    if (MediaPlayer.State == MediaState.Stopped)
-            //    {
-            //        currentBGM = null;
-            //    }
-            //}
         }
     }
 }
